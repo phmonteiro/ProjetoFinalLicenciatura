@@ -1,6 +1,14 @@
 <template>
-  <div class="main row">
-    <div class="col-lg-6 d-flex align-items-center left-login">
+  <div class="main row m-0">
+    <div class="languages">
+      <div v-if="language=='pt'">
+        <a v-on:click.prevent="changeLanguage()"><img :src="'/imagens/iconfinder_Portugal.png'" ></a>
+      </div>
+      <div v-else>
+        <a v-on:click.prevent="changeLanguage()"><img :src="'/imagens/iconfinder_UnitedKingdom.png'" ></a>
+      </div>
+    </div>
+    <div class="col-lg-6 p-0 d-flex align-items-center left-login">
       <div class="col">
         <div class="row">
           <div class="col">
@@ -22,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-6 d-flex align-items-center right-login">
+    <div class="col-lg-6 p-0 d-flex align-items-center right-login">
       <div class="col-lg-3"></div>
       <div class="col-lg-6">
         <div class="row login-type">
@@ -32,7 +40,7 @@
                 id="menu-nome"
                 v-on:click.prevent="nomeUtilizador()"
                 class="link-left"
-              >Nome de utilizador</button>
+              >{{ $t('nome_utilizador') }}</button>
             </div>
           </div>
           <div class="col">
@@ -41,7 +49,7 @@
                 id="menu-cc"
                 v-on:click.prevent="cartaoCid()"
                 class="link-right"
-              >Cartão de cidadão</button>
+              >{{ $t('cartao_cidadao') }}</button>
             </div>
           </div>
         </div>
@@ -49,7 +57,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <span class="numero">Nome de utilizador</span>
+                <span class="numero">{{ $t('nome_utilizador') }}</span>
                 <input
                   id="email"
                   v-model="user.email"
@@ -66,7 +74,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <span class="senha">Password</span>
+                <span class="senha">{{ $t('palavra_pass') }}</span>
                 <input
                   id="password"
                   v-model="user.password"
@@ -94,7 +102,8 @@ export default {
         email: "",
         password: ""
       },
-      cartaoCidadao: false
+      cartaoCidadao: false,
+      language: ''
     };
   },
   methods: {
@@ -120,7 +129,44 @@ export default {
     },
     nomeUtilizador() {
       this.cartaoCidadao = false;
+    },
+    changeLanguage(){
+      if(this.$i18n.locale == 'pt'){
+        this.$i18n.locale = 'en';
+        //this.$store.languagePref = "PT";
+        this.$store.commit("setLang", "en");
+        this.language= 'pt';
+      } else {
+        this.$i18n.locale = 'pt';
+        //this.$store.languagePref = "EN";
+        this.$store.commit("setLang", "pt");
+        this.language= 'en';
+      }
+    },
+  },
+  created() {
+      var languageStore = this.$store.state.languagePref;
+      this.$i18n.locale = languageStore;
+      if (languageStore=='en'){
+        this.language= 'pt';
+      } else {
+        this.language= 'en';
+      }
     }
-  }
 };
 </script>
+
+<style>
+  .languages{
+    position: absolute;
+    top:30px;
+    right: 10px;
+    padding: 10px;
+    
+    z-index: 10000;
+  }
+  .languages img {
+    width: 25px;
+  }
+</style>
+

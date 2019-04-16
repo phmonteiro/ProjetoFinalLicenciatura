@@ -19,7 +19,8 @@ const vuexSessionStorage = new VuexPersist({
 const store = new Vuex.Store({
     state: {
         token: "",
-        user: null
+        user: null,
+        languagePref: 'en'
     },
     mutations: {
         clearUserAndToken: (state) => {
@@ -72,6 +73,11 @@ const store = new Vuex.Store({
 
         check(state) {
             return !!state.token;
+        },
+
+        setLang: (state, lang) => {
+            state.languagePref = lang;
+            localStorage.setItem('lang', lang);
         }
     },
     plugins: [vuexSessionStorage.plugin]

@@ -4,11 +4,11 @@ import VueRouter from 'vue-router';
 import BootstrapVue from 'bootstrap-vue'
 import router from './routes.js';
 import store from './vuex.js';
-
+import i18n from './plugins/i18n';
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 
 window.Event = new Vue();
 
@@ -20,6 +20,7 @@ const app = new Vue({
     el: '#app',
     router,
     store,
+    i18n,
     created() {
         this.$store.commit('loadTokenAndUserFromSession');
     }
