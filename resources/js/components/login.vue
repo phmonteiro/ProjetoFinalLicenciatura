@@ -1,13 +1,6 @@
 <template>
   <div class="main row m-0">
-    <div class="languages">
-      <div v-if="language=='pt'">
-        <a v-on:click.prevent="changeLanguage()"><img :src="'/imagens/iconfinder_Portugal.png'" ></a>
-      </div>
-      <div v-else>
-        <a v-on:click.prevent="changeLanguage()"><img :src="'/imagens/iconfinder_UnitedKingdom.png'" ></a>
-      </div>
-    </div>
+    
     <div class="col-lg-6 p-0 d-flex align-items-center left-login">
       <div class="col">
         <div class="row">
@@ -130,43 +123,7 @@ export default {
     nomeUtilizador() {
       this.cartaoCidadao = false;
     },
-    changeLanguage(){
-      if(this.$i18n.locale == 'pt'){
-        this.$i18n.locale = 'en';
-        //this.$store.languagePref = "PT";
-        this.$store.commit("setLang", "en");
-        this.language= 'pt';
-      } else {
-        this.$i18n.locale = 'pt';
-        //this.$store.languagePref = "EN";
-        this.$store.commit("setLang", "pt");
-        this.language= 'en';
-      }
-    },
   },
-  created() {
-      var languageStore = this.$store.state.languagePref;
-      this.$i18n.locale = languageStore;
-      if (languageStore=='en'){
-        this.language= 'pt';
-      } else {
-        this.language= 'en';
-      }
-    }
 };
 </script>
-
-<style>
-  .languages{
-    position: absolute;
-    top:30px;
-    right: 10px;
-    padding: 10px;
-    
-    z-index: 10000;
-  }
-  .languages img {
-    width: 25px;
-  }
-</style>
 
