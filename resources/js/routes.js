@@ -18,7 +18,7 @@ let routes = [
         component: require('./components/admin/dashboard.vue').default,
         meta: {
             middlewareAuth: true
-        },
+        }
     },
     {
         path: '/services',

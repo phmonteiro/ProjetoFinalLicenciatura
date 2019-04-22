@@ -14,6 +14,9 @@ window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);
 Vue.component('nav-bar', require('./components/navbar.vue').default);
+Vue.component('edit-user', require('./components/admin/edit.vue').default);
+
+
 
 
 const app = new Vue({

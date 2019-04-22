@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', 'Auth\LoginController@login')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
 
-Route::get('/getContacts/{id}', 'StudentController@getContacts');
+Route::get('getContacts/{id}', 'StudentController@getContacts');
+
+Route::get('getUsers', 'AdminController@index');
+
+Route::post('editUser/{id}', 'AdminController@update')->name('edit');

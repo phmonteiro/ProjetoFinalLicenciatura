@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Http\Resources\UserResource;
+
 
 class AdminController extends Controller
 {
@@ -13,7 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return new UserResource($users);
     }
 
     /**
@@ -68,7 +72,18 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $dados = $request->validate([
+            'type' => 'required',
+            'loginExpirationDate' => 'required|date',
+        ]);
+
+        $user->type = $dados['type'];
+        $user->loginExpirationDate = $dados['loginExpirationDate'];
+        $user->save();
+
+        return new UserResource($user);
     }
 
     /**

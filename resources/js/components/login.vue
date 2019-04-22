@@ -1,6 +1,5 @@
 <template>
   <div class="main row m-0">
-    
     <div class="col-lg-6 p-0 d-flex align-items-center left-login">
       <div class="col">
         <div class="row">
@@ -96,7 +95,7 @@ export default {
         password: ""
       },
       cartaoCidadao: false,
-      language: ''
+      language: ""
     };
   },
   methods: {
@@ -110,6 +109,8 @@ export default {
             case "Estudante":
               this.$router.push("/student");
               break;
+            case "Administrator":
+              this.$router.push("/admin");
           }
         })
         .catch(error => {
@@ -122,8 +123,8 @@ export default {
     },
     nomeUtilizador() {
       this.cartaoCidadao = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
