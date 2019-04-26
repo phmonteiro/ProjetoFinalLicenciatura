@@ -24,3 +24,5 @@ Route::get('getContacts/{id}', 'StudentController@getContacts');
 Route::get('getUsers', 'AdminController@index');
 
 Route::post('editUser/{id}', 'AdminController@update')->name('edit');
+
+Route::get('getEnee', 'StudentController@index');

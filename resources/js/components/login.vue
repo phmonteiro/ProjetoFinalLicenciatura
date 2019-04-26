@@ -111,6 +111,10 @@ export default {
               break;
             case "Administrator":
               this.$router.push("/admin");
+              break;
+            case "Services":
+              this.$router.push("/services");
+              break;
           }
         })
         .catch(error => {

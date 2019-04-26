@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\ContactResource;
+use App\Http\Resources\UserResource;
 use App\Contact;
 use App\User;
 
@@ -16,7 +17,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $enees = User::where('enee', '1')->get();
+        return new UserResource($enees);
     }
 
     /**

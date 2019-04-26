@@ -70,6 +70,7 @@ export default {
         .post("api/editUser/" + this.currentUser.id, this.currentUser)
         .then(response => {
           this.getUsers();
+          this.currentUser = null;
         })
         .catch(error => {
           console.log(error);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Contact;
+use App\Resources\ContactResource;
 
 class ServiceController extends Controller
 {
@@ -12,9 +14,7 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.
