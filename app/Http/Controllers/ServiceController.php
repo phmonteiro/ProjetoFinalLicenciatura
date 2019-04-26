@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Contact;
-use App\Resources\ContactResource;
+use Carbon\Carbon;
+use App\Http\Resources\ContactResource;
 
 class ServiceController extends Controller
 {
@@ -15,6 +17,28 @@ class ServiceController extends Controller
      */
     public function index()
     { }
+
+    public function contact(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $dados = $request->validate([
+            'information' => 'required|string',
+            'nextContact' => 'required|date|after:today',
+            'service' => 'required|string',
+            'decision' => 'required|string'
+        ]);
+
+        $contact = new Contact();
+        $contact->studentEmail = $user->email;
+        $contact->date = Carbon::now();
+        $contact->service = $dados['service'];
+        $contact->information = $dados['information'];
+        $contact->nextContact = $dados['nextContact'];
+        $contact->decision = $dados['decision'];
+
+        $contact->save();
+        return response()->json (new ContactResource($contact), 201);
+    }
 
     /**
      * Show the form for creating a new resource.

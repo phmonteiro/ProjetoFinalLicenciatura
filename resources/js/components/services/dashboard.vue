@@ -28,16 +28,21 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                    <select class="form-control" v-model="contact.service" name="service">
-                      <option value disabled selected>Select your option</option>
-                      <option>SAPE</option>
-                      <option>SAS</option>
-                      <option>Escola</option>
-                      <option>Biblioteca</option>
-                      <option>Direção</option>
-                      <option>Professor-Tutor</option>
-                      <option>Gestor-Caso</option>
-                    </select>
+                   <b-form-select v-model="contact.service" :options="options" class="mb-3">
+                        <!-- This slot appears above the options from 'options' prop -->
+                        <template slot="first">
+                          <option :value="null" disabled>-- Selecione o serviço --</option>
+                        </template>
+
+                        <!-- These options will appear after the ones from 'options' prop -->
+                        <option value="SAPE">SAPE</option>
+                      <option value="SAS">SAS</option>
+                      <option value="Escola">Escola</option>
+                      <option value="Biblioteca">Biblioteca</option>
+                      <option value="Direção">Direção</option>
+                      <option value="Professor-Tutor">Professor-Tutor</option>
+                      <option value="Gestor-Caso">Gestor-Caso</option>
+                    </b-form-select>
                   </div>
 
                   <div class="form-group">
@@ -56,7 +61,7 @@
                     <textarea
                       class="form-control"
                       id="information"
-                      v-model="contact.infromation"
+                      v-model="contact.information"
                       name="information"
                       rows="3"
                     ></textarea>
@@ -75,9 +80,11 @@
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                    <button type="submit" class="btn btn-primary" v-on:click.prevent="setContact(row.item.id)">Confirmar</button>
                   </div>
                 </div>
+                  
+
               </div>
             </div>
           </div>
@@ -137,6 +144,17 @@ export default {
         .get("api/getEnee")
         .then(response => {
           this.users = response.data.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setContact(userId){
+      console.log(userId),
+       axios
+        .post("api/setContact/" + userId , this.contact)
+        .then(response => {
+          console.log("Sucesso contacto criado");
         })
         .catch(error => {
           console.log(error);
