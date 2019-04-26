@@ -4,7 +4,7 @@ import store from './vuex.js';
 let routes = [
     {
         path: '/',
-        component: require('./components/login.vue').default
+        component: require('./components/login.vue').default,
     },
     {
         path: '/student',
@@ -34,11 +34,26 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    console.log(to)
     if (to.meta.middlewareAuth && (store.state.user == null)) {
         next('/');
         return;
     }
+    if(to.fullPath=='/' && store.state.user != null && store.state.user.type=="Estudante"){
+        next('/student');
+        return;
+    }
+    if(to.fullPath=='/' && store.state.user != null && store.state.user.type=="Administrator"){
+        next('/admin');
+        return;
+    }
+    if(to.fullPath=='/' && store.state.user != null && store.state.user.type=="Services"){
+        next('/services');
+        return;
+    }
     next();
 });
+
+
 
 export default router;
