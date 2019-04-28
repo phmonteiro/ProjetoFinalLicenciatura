@@ -28,13 +28,11 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                   <b-form-select v-model="contact.service" :options="options" class="mb-3">
-                        <!-- This slot appears above the options from 'options' prop -->
+                   <b-form-select v-model="contact.service" class="mb-3">
                         <template slot="first">
                           <option :value="null" disabled>-- Selecione o serviço --</option>
                         </template>
 
-                        <!-- These options will appear after the ones from 'options' prop -->
                         <option value="SAPE">SAPE</option>
                       <option value="SAS">SAS</option>
                       <option value="Escola">Escola</option>
@@ -84,12 +82,12 @@
                   </div>
                 </div>
                   
-
               </div>
             </div>
           </div>
         </template>
       </b-table>
+      <meetings></meetings>
     </div>
   </div>
 </template>

@@ -103,7 +103,6 @@ export default {
       axios
         .post("api/login", this.user)
         .then(response => {
-          console.log(response);
           this.$store.commit("setUser", response.data);
           switch (response.data.type) {
             case "Estudante": //Vem do role da base de dados da universidade
@@ -118,7 +117,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.log("AQUI", error);
           this.$store.commit("clearUserAndToken");
         });
     },

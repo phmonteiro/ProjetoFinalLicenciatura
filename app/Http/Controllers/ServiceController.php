@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Contact;
+use App\Meeting;
 use Carbon\Carbon;
 use App\Http\Resources\ContactResource;
+use App\Http\Resources\MeetingResource;
 
 class ServiceController extends Controller
 {
@@ -17,6 +19,27 @@ class ServiceController extends Controller
      */
     public function index()
     { }
+
+    public function finalizeMeeting(Request $request, $id){
+        $meeting = Meeting::findOrFail($id);
+        $dados = $request->validate([
+            'info' => 'required|string',
+            'date' => 'required|date'
+        ]);
+        
+        $meeting->info = $dados['info'];
+        $meeting->date = $dados['date'];
+
+        $meeting->save();
+        return response()->json($meeting, 200);
+
+    }
+
+    public function meetings()
+    {
+        $meetings = Meeting::whereNull('date')->get();
+        return new MeetingResource($meetings);
+    }
 
     public function contact(Request $request, $id)
     {

@@ -16,15 +16,20 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+//login
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
-Route::get('getContacts/{id}', 'StudentController@getContacts');
-
+//admin
 Route::get('getUsers', 'AdminController@index');
-
 Route::post('editUser/{id}', 'AdminController@update')->name('edit');
 
+//student
 Route::get('getEnee', 'StudentController@index');
+Route::get('getContacts/{id}', 'StudentController@getContacts');
+Route::post('setMeeting/{id}', 'StudentController@setMeeting');
+Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
 
+//service
 Route::post('setContact/{id}', 'ServiceController@contact');
+Route::get('getMeetings', 'ServiceController@meetings');
+Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');

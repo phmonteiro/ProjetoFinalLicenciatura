@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\MeetingResource;
+use App\Meeting;
 use App\Contact;
 use App\User;
 
@@ -19,6 +21,32 @@ class StudentController extends Controller
     {
         $enees = User::where('enee', '1')->get();
         return new UserResource($enees);
+    }
+
+    public function myMeetings($id)
+    {
+        $user = User::findOrFail($id);
+
+        $meetings = Meeting::all();
+        return new MeetingResource($meetings);
+    }
+
+    public function setMeeting(Request $request, $id){
+        $user = User::findOrFail($id);
+        $dados = $request->validate([
+            'service' => 'required|string',
+            'comment' => 'required|string'
+        ]);
+        
+        $meeting = new Meeting();
+        $meeting->studentId = $id;
+        $meeting->email = $user->email;
+        $meeting->service = $dados['service'];
+        $meeting->comment = $dados['comment'];
+
+        $meeting->save();
+        return response()->json (new MeetingResource($meeting), 201);
+
     }
 
     /**

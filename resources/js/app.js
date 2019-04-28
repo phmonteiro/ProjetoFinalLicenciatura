@@ -13,11 +13,14 @@ Vue.use(BootstrapVue);
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);
+
 Vue.component('nav-bar', require('./components/navbar.vue').default);
+
 Vue.component('edit-user', require('./components/admin/edit.vue').default);
 
+Vue.component('meetings', require('./components/services/meetings.vue').default);
 
-
+Vue.component('myMeetings', require('./components/student/myMeetings.vue').default);
 
 const app = new Vue({
     el: '#app',
