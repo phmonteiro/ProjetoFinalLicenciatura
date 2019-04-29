@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
 //admin
+Route::get('getContacts/{id}', 'StudentController@getContacts');
+Route::get('getServices/{id}', 'StudentController@getServices');
+
+
 Route::get('getUsers', 'AdminController@index');
 Route::post('editUser/{id}', 'AdminController@update')->name('edit');
 
@@ -33,3 +37,8 @@ Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
 Route::post('setContact/{id}', 'ServiceController@contact');
 Route::get('getMeetings', 'ServiceController@meetings');
 Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
+
+Route::get('getUser/{id}', 'StudentController@getUser');
+Route::get('getContact/{id}', 'ServiceController@contactDetails');
+
+Route::post('changeNextContact/{id}', 'ServiceController@editContact');

@@ -20,19 +20,19 @@ class ServiceController extends Controller
     public function index()
     { }
 
-    public function finalizeMeeting(Request $request, $id){
+    public function finalizeMeeting(Request $request, $id)
+    {
         $meeting = Meeting::findOrFail($id);
         $dados = $request->validate([
             'info' => 'required|string',
             'date' => 'required|date'
         ]);
-        
+
         $meeting->info = $dados['info'];
         $meeting->date = $dados['date'];
 
         $meeting->save();
         return response()->json($meeting, 200);
-
     }
 
     public function meetings()
@@ -60,8 +60,27 @@ class ServiceController extends Controller
         $contact->decision = $dados['decision'];
 
         $contact->save();
-        return response()->json (new ContactResource($contact), 201);
+        return response()->json(new ContactResource($contact), 201);
     }
+
+    public function contactDetails($id)
+    {
+        $user = User::findOrFail($id);
+        $contacts = Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
+        return response()->json(new ContactResource($contacts), 201);
+    }
+
+    public function editContact(Request $request, $id)
+    {
+        $dados = $request->validate([
+            'nextContact' => 'required|date|after:today',
+        ]);
+        $contact = Contact::findOrFail($id);
+        $contact->nextContact = $dados['nextContact'];
+        $contact->save();
+        return response()->json(new ContactResource($contact), 201);
+    }
+
 
     /**
      * Show the form for creating a new resource.

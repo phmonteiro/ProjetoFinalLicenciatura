@@ -2,43 +2,54 @@
   <div>
     <div class="container">
       <b-row>
-      <b-col md="8">
-        <h6>Proximos Contactos</h6>
-        <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields"></b-table>
-      </b-col>
-      <b-col md="4">
-        <h6>Pedir Agendamento Reuniao</h6>
-        <div class="form-group">
-                   <b-form-select v-model="meeting.service" class="mb-3">
-                        <!-- This slot appears above the options from 'options' prop -->
-                        <template slot="first">
-                          <option :value="null" disabled>-- Selecione o serviço --</option>
-                        </template>
+        <b-col md="8">
+          <h6>Proximos Contactos</h6>
+          <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields"></b-table>
+        </b-col>
+        <b-col md="4">
+          <h6>Pedir Agendamento Reuniao</h6>
+          <div class="form-group">
+            <b-form-select v-model="meeting.service" class="mb-3">
+              <!-- This slot appears above the options from 'options' prop -->
+              <template slot="first">
+                <option :value="null" disabled>-- Selecione o serviço --</option>
+              </template>
 
-                        <!-- These options will appear after the ones from 'options' prop -->
-                        <option value="SAPE">SAPE</option>
-                        <option value="SAS">SAS</option>
-                        <option value="Escola">Escola</option>
-                        <option value="Biblioteca">Biblioteca</option>
-                        <option value="Direção">Direção</option>
-                        <option value="Professor-Tutor">Professor-Tutor</option>
-                        <option value="Gestor-Caso">Gestor-Caso</option>
-                    </b-form-select>
-                  </div>
-                  <div class="form-group">
-                    <label for="comment">Comentário: </label>
-                    <textarea
-                      class="form-control"
-                      id="decision"
-                      v-model="meeting.comment"
-                      name="comment"
-                      rows="3"
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary" v-on:click.prevent="setMeeting()">Perdir reunião</button>
-      </b-col>
+              <!-- These options will appear after the ones from 'options' prop -->
+              <option value="SAPE">SAPE</option>
+              <option value="SAS">SAS</option>
+              <option value="Escola">Escola</option>
+              <option value="Biblioteca">Biblioteca</option>
+              <option value="Direção">Direção</option>
+              <option value="Professor-Tutor">Professor-Tutor</option>
+              <option value="Gestor-Caso">Gestor-Caso</option>
+            </b-form-select>
+          </div>
+          <div class="form-group">
+            <label for="comment">Comentário:</label>
+            <textarea
+              class="form-control"
+              id="decision"
+              v-model="meeting.comment"
+              name="comment"
+              rows="3"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            v-on:click.prevent="setMeeting()"
+          >Perdir reunião</button>
+        </b-col>
       </b-row>
       <myMeetings></myMeetings>
+    </div>
+    <div class="container">
+      <h2 v-if="contacts">Próxima reunião: {{this.contacts[0].nextContact}}</h2>
+    </div>
+    <div class="container">
+      <h2>Serviços usufruidos</h2>
+      <b-table striped hover v-if="services" :items="services" :fields="fieldsServices"></b-table>
     </div>
   </div>
 </template>
@@ -47,6 +58,7 @@ export default {
   data() {
     return {
       contacts: null,
+      services: null,
       fields: [
         {
           key: "service",
@@ -66,8 +78,18 @@ export default {
       meeting: {
         service: null,
         comment: null
-      }
-      
+      },
+      fieldsServices: [
+        {
+          key: "name",
+          label: "Nome do serviço",
+          sortable: true
+        },
+        {
+          key: "expirationDate",
+          label: "Data de expiração do serviço"
+        }
+      ]
     };
   },
   computed: {
@@ -81,13 +103,13 @@ export default {
         .get("api/getContacts/" + this.user.id)
         .then(response => {
           this.contacts = response.data.data;
-          console.log("contactos: ",this.contacts);
+          console.log("contactos: ", this.contacts);
         })
         .catch(error => {
           console.log(error);
         });
     },
-    setMeeting(){
+    setMeeting() {
       axios
         .post("api/setMeeting/" + this.user.id, this.meeting)
         .then(response => {
@@ -96,10 +118,21 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    getServices() {
+      axios
+        .get("api/getServices/" + this.user.id)
+        .then(response => {
+          this.services = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   created() {
     this.getContacts();
+    this.getServices();
   }
 };
 </script>

@@ -9,6 +9,8 @@ use App\Http\Resources\MeetingResource;
 use App\Meeting;
 use App\Contact;
 use App\User;
+use App\Http\Resources\ServiceResource;
+use App\Service;
 
 class StudentController extends Controller
 {
@@ -121,5 +123,18 @@ class StudentController extends Controller
         $contacts = Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
 
         return new ContactResource($contacts);
+    }
+
+    public function getUser($id)
+    {
+        $user = User::findOrFail($id);
+        return new UserResource($user);
+    }
+
+    public function getServices($id)
+    {
+        $user = User::findOrFail($id);
+        $services = Service::where('email', $user->email)->get();
+        return response()->json(new ServiceResource($services), 201);
     }
 }

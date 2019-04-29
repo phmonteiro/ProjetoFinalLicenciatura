@@ -26,7 +26,17 @@ let routes = [
         meta: {
             middlewareAuth: true
         },
-    }
+    },
+    {
+        path: '/services/contacts/:id',
+        component: require('./components/services/contactDetails.vue').default,
+        meta: {
+            middlewareAuth: true
+        },
+        name: 'contactDetails',
+ 
+    },
+
 ];
 
 const router = new VueRouter({
@@ -34,7 +44,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log(to)
     if (to.meta.middlewareAuth && (store.state.user == null)) {
         next('/');
         return;

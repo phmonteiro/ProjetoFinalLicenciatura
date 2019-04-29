@@ -10,6 +10,9 @@
             data-toggle="modal"
             data-target="#exampleModal"
           >Nova interação</button>
+          <router-link class="nav-link" :to="{name: 'contactDetails', params: {id: row.item.id }}">
+            <button class="btn btn-secondary">Contactos</button>
+          </router-link>
           <div
             class="modal fade"
             id="exampleModal"
@@ -78,7 +81,11 @@
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" v-on:click.prevent="setContact(row.item.id)">Confirmar</button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      v-on:click.prevent="setContact(row.item.id)"
+                    >Confirmar</button>
                   </div>
                 </div>
                   
@@ -142,21 +149,22 @@ export default {
         .get("api/getEnee")
         .then(response => {
           this.users = response.data.data;
+          console.log(this.users);
         })
         .catch(error => {
           console.log(error);
         });
     },
-    setContact(userId){
+    setContact(userId) {
       console.log(userId),
-       axios
-        .post("api/setContact/" + userId , this.contact)
-        .then(response => {
-          console.log("Sucesso contacto criado");
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        axios
+          .post("api/setContact/" + userId, this.contact)
+          .then(response => {
+            console.log("Sucesso contacto criado");
+          })
+          .catch(error => {
+            console.log(error);
+          });
     }
   },
   created() {
