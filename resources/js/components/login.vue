@@ -104,21 +104,25 @@ export default {
         .post("api/login", this.user)
         .then(response => {
           this.$store.commit("setUser", response.data);
-          switch (response.data.type) {
-            case "Estudante": //Vem do role da base de dados da universidade
-              console.log("ver aqui",response.data);
-              if (response.data.enee == 0){
-                this.$router.push("/noStatus");
-              }
-              else
-                this.$router.push("/student");
-              break;
-            case "Administrator":
-              this.$router.push("/admin");
-              break;
-            case "Services":
-              this.$router.push("/services");
-              break;
+          //Vem do role da base de dados da universidade
+          if (
+            response.data.type == "Estudante" &&
+            (response.data.enee == 0 || response.data.enee == null)
+          ) {
+            this.$router.push("/eneeApplication");
+            return;
+          }
+          if (response.data.type == "Estudante" && response.data.enee == 0) {
+            this.$router.push("/student");
+            return;
+          }
+          if (response.data.type == "Administrador") {
+            this.$router.push("/admin");
+            return;
+          }
+          if (response.data.type == "Services") {
+            this.$router.push("/services");
+            return;
           }
         })
         .catch(error => {

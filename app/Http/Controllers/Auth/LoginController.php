@@ -45,13 +45,11 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             if (Auth::user()->loginExpirationDate != null && Carbon::now()->gte(Auth::user()->loginExpirationDate)) {
                 auth()->logout();
-                $errors = new MessageBag(['password' => ['Data de Login excedido']]);
-                //return Redirect::back()->withErrors($errors)->withInput(Input::except('password'));
+                dd("Data de Login excedido");
             }
 
             $user = Auth::user();
             if ($user->firstLogin == 1) {
-                //return redirect()->route('home');
                 return Auth::user();
             } else {
                 $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
@@ -63,13 +61,10 @@ class LoginController extends Controller
                 //$users->departmentnumber
                 //$users->streetaddress
                 $user->save();
-                //return redirect()->route('home');
                 return Auth::user();
             }
         } else {
             dd("erro");
-            $errors = new MessageBag(['password' => ['Email ou Password inválido']]);
-            //return Redirect::back()->withErrors($errors)->withInput(Input::except('password'));
         }
     }
 }
