@@ -106,7 +106,12 @@ export default {
           this.$store.commit("setUser", response.data);
           switch (response.data.type) {
             case "Estudante": //Vem do role da base de dados da universidade
-              this.$router.push("/student");
+              console.log("ver aqui",response.data);
+              if (response.data.enee == 0){
+                this.$router.push("/noStatus");
+              }
+              else
+                this.$router.push("/student");
               break;
             case "Administrator":
               this.$router.push("/admin");

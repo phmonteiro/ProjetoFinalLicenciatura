@@ -14,6 +14,13 @@ let routes = [
         },
     },
     {
+        path: '/noStatus',
+        component: require('./components/student/noStatusPage.vue').default,
+        meta: {
+            middlewareAuth: true
+        },
+    },
+    {
         path: '/admin',
         component: require('./components/admin/dashboard.vue').default,
         meta: {
