@@ -32,6 +32,7 @@ Route::get('getEnee', 'StudentController@index');
 Route::get('getContacts/{id}', 'StudentController@getContacts');
 Route::post('setMeeting/{id}', 'StudentController@setMeeting');
 Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
+Route::post('subscription/{id}', 'StudentController@subscription');
 
 //service
 Route::post('setContact/{id}', 'ServiceController@contact');

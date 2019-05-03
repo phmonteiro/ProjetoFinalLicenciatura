@@ -36,13 +36,19 @@ const routes = [
     name: 'contactDetails',
   },
   {
-    path: '/eneeApplication',
-    component: require('./components/student/form.vue').default,
+    path: '/subscription',
+    component: require('./components/student/subscription.vue').default,
     meta: {
       middlewareAuth: true,
     },
   },
-
+  {
+    path: '/studentForm',
+    component: require('./components/student/noStatusPage.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
 
 ];
 

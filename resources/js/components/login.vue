@@ -109,7 +109,7 @@ export default {
             response.data.type == "Estudante" &&
             (response.data.enee == 0 || response.data.enee == null)
           ) {
-            this.$router.push("/eneeApplication");
+            this.$router.push("/studentForm");
             return;
           }
           if (response.data.type == "Estudante" && response.data.enee == 0) {

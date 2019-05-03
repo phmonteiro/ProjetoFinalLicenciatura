@@ -1,7 +1,7 @@
 require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import BootstrapVue from 'bootstrap-vue'
+import BootstrapVue from 'bootstrap-vue';
 import router from './routes.js';
 import store from './vuex.js';
 import i18n from './plugins/i18n';
@@ -23,11 +23,11 @@ Vue.component('meetings', require('./components/services/meetings.vue').default)
 Vue.component('myMeetings', require('./components/student/myMeetings.vue').default);
 
 const app = new Vue({
-    el: '#app',
-    router,
-    store,
-    i18n,
-    created() {
-        this.$store.commit('loadTokenAndUserFromSession');
-    }
+  el: '#app',
+  router,
+  store,
+  i18n,
+  created() {
+    this.$store.commit('loadTokenAndUserFromSession');
+  },
 }).$mount('#app');

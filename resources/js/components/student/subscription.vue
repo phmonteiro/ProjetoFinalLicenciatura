@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="student != null">
     <h2>Formulário de candidatura ao estatuto de ENEE</h2>
     <div class="row">
       <div class="col-md-12 pt-4">
@@ -16,7 +16,8 @@
                   id="student-number"
                   min="1"
                   max="999999999"
-                  v-model="user.number"
+                  v-model="student.number"
+                  disabled
                 >
               </div>
               <div class="col">
@@ -27,7 +28,8 @@
                   id="student-name"
                   placeholder="Nome Estudante"
                   name="student-name"
-                  v-model="user.name"
+                  v-model="student.name"
+                  disabled
                 >
               </div>
               <div class="col">
@@ -39,7 +41,7 @@
                   id="phone-number"
                   min="1"
                   max="999999999"
-                  v-model="user.phoneNumber"
+                  v-model="student.phoneNumber"
                 >
               </div>
               <div class="col">
@@ -50,7 +52,7 @@
                   value
                   id="birth-date"
                   name="birth-date"
-                  v-model="user.birthDate"
+                  v-model="student.birthDate"
                 >
               </div>
             </div>
@@ -66,7 +68,8 @@
                   name="email"
                   placeholder="email@mail.com"
                   id="email"
-                  v-model="user.email"
+                  v-model="student.email"
+                  disabled
                 >
               </div>
             </div>
@@ -79,37 +82,22 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="residencia"
+                  id="residence"
                   placeholder="Morada"
                   name="residence"
+                  v-model="student.residence"
                 >
-                <!--Falta v-model da morada-->
               </div>
               <div class="col">
-                <label for="zip-code-1">Código Postal</label>
+                <label for="zipCode">Código Postal</label>
                 <input
                   class="form-control"
-                  type="number"
-                  pattern="[0-9]{4}"
-                  title="4 digitos"
-                  id="zip-code-1"
-                  name="zip-code-1"
+                  pattern="\d\d\d\d[-]\d\d\d"
+                  id="zipCode"
+                  name="zipCode"
+                  v-model="student.zipCode"
                 >
-                <!--Falta v-model do código de postal-->
               </div>
-              <div class="col">
-                <label for="zip-code-2">&nbsp;</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  pattern="[0-9]{3}"
-                  title="3 digitos"
-                  id="zip-code-2"
-                  name="zip-code-2"
-                >
-                <!--Falta v-model do código de postal-->
-              </div>
-
               <div class="col">
                 <label for="area">Localidade</label>
                 <input
@@ -118,8 +106,8 @@
                   id="area"
                   placeholder="Localidade"
                   name="area"
+                  v-model="student.area"
                 >
-                <!--Falta v-model da localidade-->
               </div>
             </div>
           </div>
@@ -128,12 +116,16 @@
             <div class="row">
               <div class="col">
                 <h5>Doc. Identificacao</h5>
-                <select class="custom-select" name="identification" single>
+                <select
+                  class="custom-select"
+                  name="identification"
+                  single
+                  v-model="student.identificationDocument"
+                >
                   <option selected value="cc">Cartao Cidadao</option>
                   <option value="ccond">Carta Conducao</option>
                   <option value="passp">Passaporte</option>
                 </select>
-                <!--Falta v-model do documento de identificação -->
               </div>
               <div class="col">
                 <label for="number">Nº</label>
@@ -142,10 +134,8 @@
                   type="number"
                   name="number"
                   id="number"
-                  min
-                  max
+                  v-model="student.identificationNumber"
                 >
-                <!--Falta v-model do numero do documento de identificação -->
               </div>
             </div>
           </div>
@@ -159,7 +149,7 @@
                   type="number"
                   name="niss"
                   id="NISS"
-                  v-model="user.niss"
+                  v-model="student.niss"
                 >
               </div>
               <div class="col">
@@ -169,7 +159,7 @@
                   type="number"
                   name="nif"
                   id="NIF"
-                  v-model="user.nif"
+                  v-model="student.nif"
                 >
               </div>
               <div class="col">
@@ -179,7 +169,7 @@
                   type="number"
                   name="sns"
                   id="SNS"
-                  v-model="user.sns"
+                  v-model="student.sns"
                 >
               </div>
             </div>
@@ -196,21 +186,20 @@
                   type="number"
                   name="curricular-year"
                   id="year"
-                  min
-                  max
-                  v-model="user.curricularYear"
+                  min="1"
+                  max="10"
+                  v-model="student.curricularYear"
                 >
               </div>
               <div class="col">
-                <label for="enruled-year">Ano 1ª matricula</label>
+                <label for="enruledYear">Ano 1ª matricula</label>
                 <input
                   type="text"
                   class="form-control is-valid"
-                  id="enruled-year"
-                  placeholder
-                  name="enruled-year"
+                  id="enruledYear"
+                  name="enruledYear"
+                  v-model="student.enruledYear"
                 >
-                <!--Falta o v-model do 1º ano de matricula-->
               </div>
             </div>
           </div>
@@ -221,44 +210,48 @@
           <div class="container-full-width">
             <div class="row">
               <div class="col">
-                <label for="responsible-name-1">Nome</label>
+                <label for="responsibleName">Nome</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="responsible-name-1"
+                  id="responsibleName"
                   placeholder
-                  name="responsible-name-1"
+                  name="responsibleName"
+                  v-model="student.responsibleName"
                 >
               </div>
               <div class="col">
-                <label for="responsible-phone-1">Contacto telefónico</label>
+                <label for="responsiblePhone">Contacto telefónico</label>
                 <input
                   class="form-control"
                   type="number"
-                  name="responsible-phone-1"
-                  id="responsible-phone-1"
+                  name="responsiblePhone"
+                  id="responsiblePhone"
                   min="1"
                   max="9999999999"
+                  v-model="student.responsiblePhone"
                 >
               </div>
               <div class="col">
-                <label for="responsible-kin-1">Parentesco</label>
+                <label for="responsibleKin">Parentesco</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="responsible-kin-1"
+                  id="responsibleKin"
                   placeholder
-                  name="responsible-kin-1"
+                  name="responsibleKin"
+                  v-model="student.responsibleKin"
                 >
               </div>
               <div class="col">
-                <label for="responsible-email-1">E-mail</label>
+                <label for="responsibleEmail">E-mail</label>
                 <input
                   type="email"
                   class="form-control"
-                  id="responsible-email-1"
+                  id="responsibleEmail"
                   placeholder
-                  name="responsible-email-1"
+                  name="responsibleEmail"
+                  v-model="student.responsibleEmail"
                 >
               </div>
             </div>
@@ -268,42 +261,46 @@
           <div class="container-full-width">
             <div class="row">
               <div class="col">
-                <label for="emergency-name">Nome</label>
+                <label for="emergencyName">Nome</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="emergency-name"
+                  id="emergencyName"
                   placeholder
-                  name="emergency-name"
+                  name="emergencyName"
+                  v-model="student.emergencyName"
                 >
               </div>
               <div class="col">
-                <label for="emergency-phone">Contacto telefónico</label>
+                <label for="emergencyPhone">Contacto telefónico</label>
                 <input
                   class="form-control"
                   type="number"
-                  name="emergency-phone"
-                  id="emergency-phone"
+                  name="emergencyPhone"
+                  id="emergencyPhone"
+                  v-model="student.emergencyPhone"
                 >
               </div>
               <div class="col">
-                <label for="emergency-kin">Parentesco</label>
+                <label for="emergencyKin">Parentesco</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="emergency-kin"
+                  id="emergencyKin"
                   placeholder
-                  name="emergency-kin"
+                  name="emergencyKin"
+                  v-model="student.emergencyKin"
                 >
               </div>
               <div class="col">
-                <label for="emergency-email">E-mail</label>
+                <label for="emergencYEmail">E-mail</label>
                 <input
                   type="email"
                   class="form-control"
-                  id="emergency-email"
+                  id="emergencyEmail"
                   placeholder
-                  name="emergency-email"
+                  name="emergencyEmail"
+                  v-model="student.emergencyEmail"
                 >
               </div>
             </div>
@@ -314,30 +311,56 @@
           <div class="container-full-width">
             <div class="row">
               <div class="col">
-                <label for="nee-type">Tipo de NEE</label>
+                <label for="neeType">Tipo de NEE</label>
                 <input
                   type="text"
                   class="form-control is-valid"
-                  id="nee-type"
+                  id="neeType"
                   placeholder
-                  name="nee-type"
+                  name="neeType"
+                  v-model="student.neeType"
                 >
               </div>
               <div class="col">
-                <label for="nee-severity">Grau de Incapaciade(%)</label>
+                <label for="neeSeverity">Grau de Incapaciade(%)</label>
                 <input
                   class="form-control is-valid"
                   type="number"
-                  name="nee-severity"
-                  id="nee-severity"
+                  name="neeSeverity"
+                  id="neeSeverity"
                   min="1"
                   max="99"
+                  v-model="student.neeSeverity"
                 >
               </div>
             </div>
           </div>
+          <div class="container-full-width">
+            <div class="row">
+              <div class="col">
+                <label for="neeSeverity">Descrição de apoios anteriormente usufruidos</label>
+                <textarea
+                  class="form-control is-valid"
+                  type="text"
+                  name="educationalSupport"
+                  id="educationalSupport"
+                  v-model="student.educationalSupport"
+                >Enter text here...</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="container-full-width">
+            <div class="row">
+              <div class="col">
+                <label for="neeType">Relatório médico</label>
+                <div class="field">
+                  <input type="file" id="files" ref="files" v-on:change="handleFiles()">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <button type="submit" href="#" class="btn btn-primary">Submeter</button>
+        <button type="submit" class="btn btn-primary" v-on:click.prevent="sendForm()">Submeter</button>
       </div>
     </div>
   </div>
@@ -345,9 +368,95 @@
 
 <script>
 export default {
+  data() {
+    return {
+      files: [],
+      student: {
+        name: this.$store.state.user.name,
+        number: this.$store.state.user.number,
+        email: this.$store.state.user.email,
+        phoneNumber: null,
+        birthDate: null,
+        residence: null,
+        zipCode: null,
+        area: null,
+        identificationDocument: null,
+        identificationNumber: null,
+        enruledYear: null,
+        curricularYear: null,
+        responsibleName: null,
+        responsiblePhone: null,
+        responsibleKin: null,
+        responsibleEmail: null,
+        emergencyName: null,
+        emergencyPhone: null,
+        emergencyKin: null,
+        emergencyEmail: null,
+        neeType: null,
+        neeSeverity: null,
+        educationalSupport: null,
+        niss: null,
+        nif: null,
+        sns: null
+      }
+    };
+  },
   computed: {
     user: function() {
       return this.$store.state.user;
+    }
+  },
+  methods: {
+    sendForm() {
+      const formData = new FormData();
+      formData.append("photo", this.files[0]);
+      formData.append("name", this.student.name);
+      formData.append("number", this.student.number);
+      formData.append("email", this.student.email);
+      formData.append("phoneNumber", this.student.phoneNumber);
+      formData.append("birthDate", this.student.birthDate);
+      formData.append("residence", this.student.residence);
+      formData.append("zipCode", this.student.zipCode);
+      formData.append("area", this.student.area);
+      formData.append(
+        "identificationDocument",
+        this.student.identificationDocument
+      );
+      formData.append(
+        "identificationNumber",
+        this.student.identificationNumber
+      );
+      formData.append("enruledYear", this.student.enruledYear);
+      formData.append("curricularYear", this.student.curricularYear);
+      formData.append("responsibleName", this.student.responsibleName);
+      formData.append("responsiblePhone", this.student.responsiblePhone);
+      formData.append("responsibleKin", this.student.responsibleKin);
+      formData.append("responsibleEmail", this.student.responsibleEmail);
+      formData.append("emergencyName", this.student.emergencyName);
+      formData.append("emergencyPhone", this.student.emergencyPhone);
+      formData.append("emergencyKin", this.student.emergencyKin);
+      formData.append("emergencyEmail", this.student.emergencyEmail);
+      formData.append("neeType", this.student.neeType);
+      formData.append("neeSeverity", this.student.neeSeverity);
+      formData.append("educationalSupport", this.student.educationalSupport);
+      formData.append("niss", this.student.niss);
+      formData.append("sns", this.student.sns);
+      formData.append("nif", this.student.nif);
+
+      axios
+        .post("api/subscription/" + this.$store.state.user.id, formData)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    handleFiles() {
+      let uploadedFiles = this.$refs.files.files;
+      for (var i = 0; i < uploadedFiles.length; i++) {
+        this.files.push(uploadedFiles[i]);
+      }
     }
   }
 };
