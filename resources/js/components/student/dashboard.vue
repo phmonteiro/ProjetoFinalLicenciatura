@@ -1,12 +1,15 @@
 <template>
   <div>
     <div class="container">
+      <h2>Contactos</h2>
+      <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields"></b-table>
+      <myMeetings></myMeetings>
       <b-row>
-        <b-col md="8">
-          <h6>Proximos Contactos</h6>
-          <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields"></b-table>
+        <b-col md="6">
+          <h2>Serviços usufruidos</h2>
+          <b-table striped hover v-if="services" :items="services" :fields="fieldsServices"></b-table>
         </b-col>
-        <b-col md="4">
+        <b-col md="6">
           <h6>Pedir Agendamento Reuniao</h6>
           <div class="form-group">
             <b-form-select v-model="meeting.service" class="mb-3">
@@ -39,17 +42,9 @@
             type="submit"
             class="btn btn-primary"
             v-on:click.prevent="setMeeting()"
-          >Perdir reunião</button>
+          >Pedir reunião</button>
         </b-col>
       </b-row>
-      <myMeetings></myMeetings>
-    </div>
-    <div class="container">
-      <h2 v-if="contacts">Próxima reunião: {{this.contacts[0].nextContact}}</h2>
-    </div>
-    <div class="container">
-      <h2>Serviços usufruidos</h2>
-      <b-table striped hover v-if="services" :items="services" :fields="fieldsServices"></b-table>
     </div>
   </div>
 </template>
@@ -66,12 +61,13 @@ export default {
           sortable: true
         },
         {
-          key: "decision",
-          label: "Decisão"
-        },
-        {
           key: "date",
           label: "Data",
+          sortable: true
+        },
+        {
+          key: "nextContact",
+          label: "Próximo Contacto",
           sortable: true
         }
       ],
@@ -103,7 +99,6 @@ export default {
         .get("api/getContacts/" + this.user.id)
         .then(response => {
           this.contacts = response.data.data;
-          console.log("contactos: ", this.contacts);
         })
         .catch(error => {
           console.log(error);
@@ -124,6 +119,7 @@ export default {
         .get("api/getServices/" + this.user.id)
         .then(response => {
           this.services = response.data;
+          console.log(this.services);
         })
         .catch(error => {
           console.log(error);

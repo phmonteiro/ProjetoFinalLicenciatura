@@ -14,6 +14,7 @@ use App\Service;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Carbon;
 
 class StudentController extends Controller
 {
@@ -47,9 +48,9 @@ class StudentController extends Controller
         $meeting = new Meeting();
         $meeting->studentId = $id;
         $meeting->email = $user->email;
+        $meeting->name = $user->name;
         $meeting->service = $dados['service'];
         $meeting->comment = $dados['comment'];
-
         $meeting->save();
         return response()->json(new MeetingResource($meeting), 201);
     }

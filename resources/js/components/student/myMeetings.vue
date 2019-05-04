@@ -1,9 +1,8 @@
 <template>
   <div>
-      <h2>As minhas reunioes</h2>
-      <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
-      </b-table>
-    </div>
+    <h2>Pedidos de Agendamento</h2>
+    <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields"></b-table>
+  </div>
 </template>
 
 <script>
@@ -47,7 +46,7 @@ export default {
   methods: {
     getMyMeetings() {
       axios
-        .get("api/getMyMeetings/"+ this.user.id)
+        .get("api/getMyMeetings/" + this.user.id)
         .then(response => {
           this.meetings = response.data.data;
         })

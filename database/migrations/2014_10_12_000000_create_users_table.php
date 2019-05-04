@@ -68,6 +68,7 @@ class CreateUsersTable extends Migration
         Schema::create('meetings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('service');
+            $table->string('name');
             $table->integer('studentId');
             $table->string('email');
             $table->string('comment');
@@ -79,7 +80,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('name');
-            $table->date('expirationDate');
+            $table->date('expirationDate')->nullable();
         });
 
         Schema::create('tutor', function (Blueprint $table) {
