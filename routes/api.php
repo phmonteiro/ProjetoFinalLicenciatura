@@ -31,6 +31,7 @@ Route::post('editUser/{id}', 'AdminController@update')->name('edit');
 Route::get('getEnee', 'StudentController@index');
 Route::get('getContacts/{id}', 'StudentController@getContacts');
 Route::post('setMeeting/{id}', 'StudentController@setMeeting');
+Route::post('setService/{id}', 'StudentController@setService');
 Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
 Route::post('subscription/{id}', 'StudentController@subscription');
 

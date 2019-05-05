@@ -55,6 +55,24 @@ class StudentController extends Controller
         return response()->json(new MeetingResource($meeting), 201);
     }
 
+    public function setService(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $dados = $request->validate([
+            'name' => 'required|string',
+            'reason' => 'required|string'
+        ]);
+
+        $service = new Service();
+        $service->email = $user->email;
+        $service->name = $dados['name'];
+        $service->reason = $dados['reason'];
+
+        $service->save();
+        return response()->json(new ServiceResource($service), 201);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -138,7 +156,7 @@ class StudentController extends Controller
     public function getServices($id)
     {
         $user = User::findOrFail($id);
-        $services = Service::where('email', $user->email)->get();
+        $services = Service::where('email', $user->email)->where('aprovedDate', '!=', 'null')->get();
         return response()->json(new ServiceResource($services), 201);
     }
 

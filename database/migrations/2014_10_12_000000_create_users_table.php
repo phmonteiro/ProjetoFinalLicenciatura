@@ -80,7 +80,9 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('name');
+            $table->string('reason')->nullable();
             $table->date('expirationDate')->nullable();
+            $table->date('aprovedDate')->nullable();
         });
 
         Schema::create('tutor', function (Blueprint $table) {
