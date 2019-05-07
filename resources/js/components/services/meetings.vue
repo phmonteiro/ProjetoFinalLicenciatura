@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container" v-if="this.meetings">
     <h2>Pedidos Reuniao</h2>
     <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
       <template slot="actions" slot-scope="row">
@@ -66,6 +66,7 @@
                   <button
                     type="submit"
                     class="btn btn-primary"
+                    data-dismiss="modal"
                     v-on:click.prevent="setMeeting(row.item.id)"
                   >Confirmar</button>
                 </div>
@@ -80,9 +81,9 @@
 
 <script>
 export default {
+  props: ["meetings"],
   data() {
     return {
-      meetings: null,
       fields: [
         {
           key: "name",
@@ -126,31 +127,9 @@ export default {
     };
   },
   methods: {
-    getMeetings() {
-      axios
-        .get("api/getMeetings")
-        .then(response => {
-          this.meetings = response.data.data;
-          console.log(this.meetings);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
     setMeeting(meetingId) {
-      console.log(meetingId),
-        axios
-          .post("api/finalizeMeeting/" + meetingId, this.meeting)
-          .then(response => {
-            console.log("Reuniao marcada");
-          })
-          .catch(error => {
-            console.log(error);
-          });
+      this.$emit("setMeeting", meetingId, this.meeting);
     }
-  },
-  created() {
-    this.getMeetings();
   }
 };
 </script>

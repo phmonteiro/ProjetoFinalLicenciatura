@@ -85,13 +85,13 @@ class CreateUsersTable extends Migration
             $table->date('aprovedDate')->nullable();
         });
 
-        Schema::create('tutor', function (Blueprint $table) {
+        Schema::create('tutors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('studentEmail')->unique();
             $table->string('tutorEmail')->unique();
         });
 
-        Schema::create('case manager', function (Blueprint $table) {
+        Schema::create('case_managers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('studentEmail')->unique();
             $table->string('caseManagerEmail')->unique();
@@ -116,5 +116,12 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('case_managers');
+        Schema::dropIfExists('grades');
+        Schema::dropIfExists('meetings');
+        Schema::dropIfExists('migrations');
+        Schema::dropIfExists('services');
+        Schema::dropIfExists('tutors');
+        Schema::dropIfExists('contacts');
     }
 }
