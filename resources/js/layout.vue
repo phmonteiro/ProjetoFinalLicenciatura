@@ -2,10 +2,14 @@
   <div>
     <div class="languages">
       <div v-if="language=='pt'">
-        <a v-on:click.prevent="changeLanguage()"><img :src="'/imagens/iconfinder_Portugal.png'" ></a>
+        <a v-on:click.prevent="changeLanguage()">
+          <img :src="'/imagens/iconfinder_Portugal.png'">
+        </a>
       </div>
       <div v-else>
-        <a v-on:click.prevent="changeLanguage()"><img :src="'/imagens/iconfinder_UnitedKingdom.png'" ></a>
+        <a v-on:click.prevent="changeLanguage()">
+          <img :src="'/imagens/iconfinder_UnitedKingdom.png'">
+        </a>
       </div>
     </div>
     <nav-bar v-if="user!=null"></nav-bar>
@@ -17,23 +21,23 @@
 export default {
   data() {
     return {
-      language: ''
+      language: ""
     };
   },
   methods: {
-    changeLanguage(){
-      if(this.$i18n.locale == 'pt'){
-        this.$i18n.locale = 'en';
+    changeLanguage() {
+      if (this.$i18n.locale == "pt") {
+        this.$i18n.locale = "en";
         //this.$store.languagePref = "PT";
         this.$store.commit("setLang", "en");
-        this.language= 'pt';
+        this.language = "pt";
       } else {
-        this.$i18n.locale = 'pt';
+        this.$i18n.locale = "pt";
         //this.$store.languagePref = "EN";
         this.$store.commit("setLang", "pt");
-        this.language= 'en';
+        this.language = "en";
       }
-    },
+    }
   },
   computed: {
     user: function() {
@@ -41,26 +45,26 @@ export default {
     }
   },
   created() {
-      var languageStore = this.$store.state.languagePref;
-      this.$i18n.locale = languageStore;
-      if (languageStore=='en'){
-        this.language= 'pt';
-      } else {
-        this.language= 'en';
-      }
+    var languageStore = this.$store.state.languagePref;
+    this.$i18n.locale = languageStore;
+    if (languageStore == "en") {
+      this.language = "pt";
+    } else {
+      this.language = "en";
+    }
   }
 };
 </script>
 <style>
-  .languages{
-    position: absolute;
-    top:100px;
-    right: 10px;
-    padding: 10px;
-    
-    z-index: 10000;
-  }
-  .languages img {
-    width: 25px;
-  }
+.languages {
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  padding: 10px;
+
+  z-index: 10000;
+}
+.languages img {
+  width: 25px;
+}
 </style>

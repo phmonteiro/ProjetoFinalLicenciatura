@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Contact;
 use App\Meeting;
+use App\Tutor;
+use App\CaseManager;
 use Carbon\Carbon;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
+use PDF;
 
 class ServiceController extends Controller
 {
@@ -79,6 +82,17 @@ class ServiceController extends Controller
         $contact->nextContact = $dados['nextContact'];
         $contact->save();
         return response()->json(new ContactResource($contact), 201);
+    }
+
+    public function downloadPDF($id)
+    {
+        $user = User::findOrFail($id);
+        $tutor = Tutor::where('studentEmail', $user->email)->get();
+        $caseManager = CaseManager::where('studentEmail', $user->email)->get();
+        $pdf = PDF::loadView('pdf.PDF', compact('user', 'caseManager', 'tutor'));
+        $filename = base_path('storage/app/public/medicalHistory/' . $user->number . '.pdf');
+        $pdf->save($filename);
+        return \Response::download($filename);
     }
 
 

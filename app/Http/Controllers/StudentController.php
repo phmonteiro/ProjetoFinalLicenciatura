@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\MeetingResource;
+use App\Http\Resources\ZipCodeResource;
 use App\Meeting;
 use App\Contact;
+use App\ZipCode;
 use App\User;
 use App\Http\Resources\ServiceResource;
 use App\Service;
@@ -186,7 +188,7 @@ class StudentController extends Controller
             'emergencyEmail' => 'required|email',
             'emergencyKin' => 'required|string',
             'neeType' => 'required|string',
-            'neeSeverity' => 'required|size:2',
+            'neeSeverity' => 'required|integer',
             'nif' => 'required|size:9',
             'niss' => 'required|size:11',
             'sns' => 'required|size:9',
@@ -227,5 +229,21 @@ class StudentController extends Controller
         $user->save();
 
         return response()->json(new UserResource($user), 201);
+    }
+
+    public function getZipCode(Request $request, $zip){
+        $zipCode = str_split($zip,4);
+        $zipCode[1]=substr($zipCode[1], 1);
+        $zipCodes = ZipCode::where('cpo_cod4',$zipCode[0])->Where('cpo_cod3',$zipCode[1])->get();
+
+        return response()->json(new ZipCodeResource($zipCodes), 201);
+
+    }
+
+    public function getResidence(Request $request, $residence){
+        $residence = ZipCode::where('art_desig',$residence)->get();
+
+        return response()->json(new ZipCodeResource($residence), 201);
+
     }
 }

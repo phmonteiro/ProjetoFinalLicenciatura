@@ -24,7 +24,7 @@
                 <label for="student-name">Nome</label>
                 <input
                   type="text"
-                  class="form-control is-valid"
+                  class="form-control"
                   id="student-name"
                   placeholder="Nome Estudante"
                   name="student-name"
@@ -35,7 +35,7 @@
               <div class="col">
                 <label for="phone-number">Contacto Telefónico</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="number"
                   name="phone-number"
                   id="phone-number"
@@ -47,7 +47,7 @@
               <div class="col">
                 <label for="birth-date">Data Nascimento</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="date"
                   value
                   id="birth-date"
@@ -63,7 +63,7 @@
               <div class="col">
                 <label for="email">E-mail</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="email"
                   name="email"
                   placeholder="email@mail.com"
@@ -86,6 +86,8 @@
                   placeholder="Morada"
                   name="residence"
                   v-model="student.residence"
+                  v-on:change="getResidence()"
+
                 >
               </div>
               <div class="col">
@@ -95,7 +97,9 @@
                   pattern="\d\d\d\d[-]\d\d\d"
                   id="zipCode"
                   name="zipCode"
+                  placeholder="1234-567"
                   v-model="student.zipCode"
+                  v-on:keyup="getZipCode()"
                 >
               </div>
               <div class="col">
@@ -130,7 +134,7 @@
               <div class="col">
                 <label for="number">Nº</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="number"
                   name="number"
                   id="number"
@@ -145,32 +149,21 @@
               <div class="col">
                 <label for="niss">NISS</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="number"
                   name="niss"
                   id="NISS"
+                  placeholder="Niss"
                   v-model="student.niss"
                 >
               </div>
               <div class="col">
                 <label for="nif">NIF</label>
-                <input
-                  class="form-control is-valid"
-                  type="number"
-                  name="nif"
-                  id="NIF"
-                  v-model="student.nif"
-                >
+                <input class="form-control" type="number" name="nif" id="NIF" v-model="student.nif">
               </div>
               <div class="col">
                 <label for="sns">SNS</label>
-                <input
-                  class="form-control is-valid"
-                  type="number"
-                  name="sns"
-                  id="SNS"
-                  v-model="student.sns"
-                >
+                <input class="form-control" type="number" name="sns" id="SNS" v-model="student.sns">
               </div>
             </div>
           </div>
@@ -182,7 +175,7 @@
               <div class="col">
                 <label for="curricular-year">Ano Curricular</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="number"
                   name="curricular-year"
                   id="year"
@@ -195,7 +188,7 @@
                 <label for="enruledYear">Ano 1ª matricula</label>
                 <input
                   type="text"
-                  class="form-control is-valid"
+                  class="form-control"
                   id="enruledYear"
                   name="enruledYear"
                   v-model="student.enruledYear"
@@ -314,7 +307,7 @@
                 <label for="neeType">Tipo de NEE</label>
                 <input
                   type="text"
-                  class="form-control is-valid"
+                  class="form-control"
                   id="neeType"
                   placeholder
                   name="neeType"
@@ -324,7 +317,7 @@
               <div class="col">
                 <label for="neeSeverity">Grau de Incapaciade(%)</label>
                 <input
-                  class="form-control is-valid"
+                  class="form-control"
                   type="number"
                   name="neeSeverity"
                   id="neeSeverity"
@@ -340,7 +333,7 @@
               <div class="col">
                 <label for="neeSeverity">Descrição de apoios anteriormente usufruidos</label>
                 <textarea
-                  class="form-control is-valid"
+                  class="form-control"
                   type="text"
                   name="educationalSupport"
                   id="educationalSupport"
@@ -457,6 +450,34 @@ export default {
       for (var i = 0; i < uploadedFiles.length; i++) {
         this.files.push(uploadedFiles[i]);
       }
+    },
+    getZipCode() {
+      if(this.student.zipCode.length == 8){
+      axios
+        .get("api/zipCode/"+ this.student.zipCode)
+        .then(response => {
+          if(response.data[0].art_desig){
+          this.student.residence = response.data[0].art_desig;
+          }
+          if(response.data[0].dsc_pos){
+          this.student.area = response.data[0].dsc_pos;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    },
+    getResidence(){
+      axios
+        .get("api/residence/"+ this.student.residence)
+        .then(response => {
+          this.student.zipCode = response.data[0].cpo_cod4+"-"+response.data[0].cpo_cod3;
+          this.student.area = response.data[0].dsc_pos;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };

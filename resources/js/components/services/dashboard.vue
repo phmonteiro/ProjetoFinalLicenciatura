@@ -5,6 +5,12 @@
       <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
         <template slot="actions" slot-scope="row">
           <button
+            type="submit"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            v-on:click.prevent="downloadPDF(row.item)"
+          >Download Histórico</button>
+          <button
             type="button"
             class="btn btn-secondary"
             data-toggle="modal"
@@ -31,12 +37,12 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                   <b-form-select v-model="contact.service" class="mb-3">
-                        <template slot="first">
-                          <option :value="null" disabled>-- Selecione o serviço --</option>
-                        </template>
+                    <b-form-select v-model="contact.service" class="mb-3">
+                      <template slot="first">
+                        <option :value="null" disabled>-- Selecione o serviço --</option>
+                      </template>
 
-                        <option value="SAPE">SAPE</option>
+                      <option value="SAPE">SAPE</option>
                       <option value="SAS">SAS</option>
                       <option value="Escola">Escola</option>
                       <option value="Biblioteca">Biblioteca</option>
@@ -84,11 +90,11 @@
                     <button
                       type="submit"
                       class="btn btn-primary"
+                      data-dismiss="modal"
                       v-on:click.prevent="setContact(row.item.id)"
                     >Confirmar</button>
                   </div>
                 </div>
-                  
               </div>
             </div>
           </div>
@@ -165,6 +171,25 @@ export default {
           .catch(error => {
             console.log(error);
           });
+    },
+    downloadPDF(user) {
+      axios({
+        url: "api/downloadHistory/" + user.id,
+        method: "GET",
+        responseType: "blob"
+      })
+        .then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", user.number + ".pdf");
+          document.body.appendChild(link);
+          link.click();
+          console.log("success");
+        })
+        .catch(error => {
+          console.log("error");
+        });
     }
   },
   created() {

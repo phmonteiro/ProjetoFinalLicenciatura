@@ -12,6 +12,62 @@ const routes = [
     meta: {
       middlewareAuth: true,
     },
+    children: [
+      {
+        path: '/student/contact',
+        name: 'contact',
+        component: require('./components/student/contact.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/student/subscription',
+        component: require('./components/student/subscription.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/student/studentForm',
+        component: require('./components/student/noStatusPage.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/student/myMeetings',
+        name: 'myMeetings',
+        component: require('./components/student/myMeetings.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/student/serviceRequest',
+        name: 'serviceRequest',
+        component: require('./components/student/serviceRequest.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/student/setMeeting',
+        name: 'setMeeting',
+        component: require('./components/student/setMeeting.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/student/usedServices',
+        name: 'usedServices',
+        component: require('./components/student/usedServices.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+    ],
   },
   {
     path: '/admin',
@@ -35,20 +91,7 @@ const routes = [
     },
     name: 'contactDetails',
   },
-  {
-    path: '/subscription',
-    component: require('./components/student/subscription.vue').default,
-    meta: {
-      middlewareAuth: true,
-    },
-  },
-  {
-    path: '/studentForm',
-    component: require('./components/student/noStatusPage.vue').default,
-    meta: {
-      middlewareAuth: true,
-    },
-  },
+
 
 ];
 

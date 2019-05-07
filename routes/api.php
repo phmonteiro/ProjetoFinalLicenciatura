@@ -34,6 +34,9 @@ Route::post('setMeeting/{id}', 'StudentController@setMeeting');
 Route::post('setService/{id}', 'StudentController@setService');
 Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
 Route::post('subscription/{id}', 'StudentController@subscription');
+Route::get('zipCode/{zip}', 'StudentController@getZipCode');
+Route::get('residence/{residence}', 'StudentController@getResidence');
+
 
 //service
 Route::post('setContact/{id}', 'ServiceController@contact');
@@ -44,3 +47,5 @@ Route::get('getUser/{id}', 'StudentController@getUser');
 Route::get('getContact/{id}', 'ServiceController@contactDetails');
 
 Route::post('changeNextContact/{id}', 'ServiceController@editContact');
+
+Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
