@@ -6,12 +6,14 @@ import router from './routes.js';
 import store from './vuex.js';
 import i18n from './plugins/i18n';
 import Toasted from 'vue-toasted';
+import {VueSpinners} from '@saeris/vue-spinners';
 
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(Toasted);
+Vue.use(VueSpinners);
 
 
 window.Event = new Vue();

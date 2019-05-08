@@ -1,12 +1,17 @@
 <template>
   <div>
-    <div v-if="this.$store.state.languagePref=='pt'">
-      <h2>Contactos</h2>
-      <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields"></b-table>
+    <div class="loader">
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
     </div>
-    <div v-else>
-      <h2>Contact</h2>
-      <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields2"></b-table>
+    <div v-if="contacts">
+      <div v-if="this.$store.state.languagePref=='pt'">
+        <h2>Contactos</h2>
+        <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields"></b-table>
+      </div>
+      <div v-else>
+        <h2>Contact</h2>
+        <b-table striped hover v-if="contacts!=null" :items="contacts" :fields="fields2"></b-table>
+      </div>
     </div>
   </div>
 </template>
@@ -16,6 +21,7 @@ export default {
   data() {
     return {
       contacts: null,
+      loading: true,
       fields: [
         {
           key: "service",
@@ -58,6 +64,7 @@ export default {
         .get("api/getContacts/" + this.user.id)
         .then(response => {
           this.contacts = response.data.data;
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);

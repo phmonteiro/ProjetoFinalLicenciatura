@@ -1,7 +1,7 @@
 <template>
-  <div class="container" v-if="this.users">
+  <div class="container" v-if="users">
     <h2>Lista de enees</h2>
-    <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
+    <b-table striped hover :items="users" :fields="fields">
       <template slot="actions" slot-scope="row">
         <button
           type="submit"
@@ -104,9 +104,9 @@
 
 <script>
 export default {
+  props: ["users"],
   data() {
     return {
-      users: null,
       fields: [
         {
           key: "name",
@@ -147,17 +147,6 @@ export default {
     };
   },
   methods: {
-    getEnee() {
-      axios
-        .get("api/getEnee")
-        .then(response => {
-          this.users = response.data.data;
-          console.log(this.users);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
     downloadPDF(user) {
       axios({
         url: "api/downloadHistory/" + user.id,
@@ -217,9 +206,6 @@ export default {
             );
           });
     }
-  },
-  created() {
-    this.getEnee();
   }
 };
 </script>

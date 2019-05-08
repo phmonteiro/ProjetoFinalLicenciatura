@@ -1,7 +1,12 @@
 <template>
   <div>
-    <h2>Serviços usufruidos</h2>
-    <b-table striped hover v-if="services" :items="services" :fields="fieldsServices"></b-table>
+    <div class="loader">
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
+    </div>
+    <div v-if="services">
+      <h2>Serviços usufruidos</h2>
+      <b-table striped hover v-if="services" :items="services" :fields="fieldsServices"></b-table>
+    </div>
   </div>
 </template>
 
@@ -10,6 +15,7 @@ export default {
   data() {
     return {
       services: null,
+      loading: true,
       fieldsServices: [
         {
           key: "name",
@@ -29,7 +35,7 @@ export default {
         .get("api/getServices/" + this.user.id)
         .then(response => {
           this.services = response.data;
-          console.log(this.services);
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);

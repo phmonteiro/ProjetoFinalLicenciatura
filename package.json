@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@saeris/vue-spinners": "^1.0.8",
         "bootstrap-vue": "^2.0.0-rc.18",
         "vue-full-loading": "^1.2.1",
         "vue-i18n": "^8.10.0",

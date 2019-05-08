@@ -39,10 +39,21 @@ export default {
       axios
         .post("api/setService/" + this.user.id, this.service)
         .then(response => {
-          console.log("service requested!");
+          this.$toasted.success("Pedido de serviço realizado com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
         })
         .catch(error => {
-          console.log(error);
+          this.$toasted.error(
+            "Erro ao fazer pedido de serviço. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     }
   },

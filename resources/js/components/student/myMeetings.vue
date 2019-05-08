@@ -1,7 +1,12 @@
 <template>
   <div>
-    <h2>Pedidos de Agendamento</h2>
-    <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields"></b-table>
+    <div class="loader">
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
+    </div>
+    <div v-if="meetings">
+      <h2>Pedidos de Agendamento</h2>
+      <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields"></b-table>
+    </div>
   </div>
 </template>
 
@@ -10,6 +15,7 @@ export default {
   data() {
     return {
       meetings: null,
+      loading: true,
       fields: [
         {
           key: "service",
@@ -49,6 +55,7 @@ export default {
         .get("api/getMyMeetings/" + this.user.id)
         .then(response => {
           this.meetings = response.data.data;
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);

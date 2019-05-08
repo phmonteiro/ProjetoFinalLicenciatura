@@ -1,17 +1,22 @@
 <template>
-  <div class="container">
-    <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
-    <div class="container">
-      <h2>Lista de utilizadores</h2>
-      <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
-        <template slot="actions" slot-scope="row">
-          <button
-            class="btn btn-secondary"
-            v-on:click.prevent="editUser(row.item)"
-            v-if="row.item.number != user.number"
-          >Editar utilizador</button>
-        </template>
-      </b-table>
+  <div>
+    <div class="loader">
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
+    </div>
+    <div class="container" v-if="users">
+      <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
+      <div class="container">
+        <h2>Lista de utilizadores</h2>
+        <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
+          <template slot="actions" slot-scope="row">
+            <button
+              class="btn btn-secondary"
+              v-on:click.prevent="editUser(row.item)"
+              v-if="row.item.number != user.number"
+            >Editar utilizador</button>
+          </template>
+        </b-table>
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +24,7 @@
 export default {
   data() {
     return {
+      loading: true,
       users: null,
       fields: [
         {
@@ -55,6 +61,7 @@ export default {
         .get("api/getUsers/")
         .then(response => {
           this.users = response.data.data;
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);

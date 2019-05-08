@@ -1,7 +1,12 @@
 <template>
   <div>
-    <enee-list :user="user" :contact="contact"></enee-list>
-    <meetings :meetings="meetings" @setMeeting="setMeeting"></meetings>
+    <div class="loader">
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
+    </div>
+    <div v-if="meetings">
+      <enee-list :users="users" :user="user" :contact="contact"></enee-list>
+      <meetings :meetings="meetings" @setMeeting="setMeeting"></meetings>
+    </div>
   </div>
 </template>
 
@@ -9,9 +14,11 @@
 export default {
   data() {
     return {
+      loading: true,
       meetings: null,
       user: null,
-      contact: null
+      contact: null,
+      users: null
     };
   },
   methods: {
@@ -44,6 +51,18 @@ export default {
         .get("api/getMeetings")
         .then(response => {
           this.meetings = response.data.data;
+          this.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getEnee() {
+      axios
+        .get("api/getEnee")
+        .then(response => {
+          this.users = response.data.data;
+          console.log(this.users);
         })
         .catch(error => {
           console.log(error);
@@ -52,6 +71,7 @@ export default {
   },
   created() {
     this.getMeetings();
+    this.getEnee();
   }
 };
 </script>

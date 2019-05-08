@@ -50,9 +50,22 @@ export default {
         .post("api/setMeeting/" + this.user.id, this.meeting)
         .then(response => {
           console.log("meeting requested!");
+          this.$toasted.success("Pedido de reunião realizado sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
         })
         .catch(error => {
           console.log(error);
+          this.$toasted.error(
+            "Erro ao fazer pedido de reunião. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     }
   },
