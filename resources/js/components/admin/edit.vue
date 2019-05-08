@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-group">
-      <label for="date">Login expiration date</label>
+      <label for="date">Data de expiração do login</label>
       <input
         id="loginExpirationDate"
         type="date"
@@ -47,7 +47,7 @@
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-secondary" name="ok" v-on:click.prevent="save()">Guardar</button>
-      <a class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</a>
+      <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
     </div>
   </div>
 </template>

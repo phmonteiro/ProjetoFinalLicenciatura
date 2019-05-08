@@ -171,10 +171,24 @@ export default {
           link.setAttribute("download", user.number + ".pdf");
           document.body.appendChild(link);
           link.click();
-          console.log("success");
+          this.$toasted.success(
+            "Download do histórico do estudante feito com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         })
         .catch(error => {
-          console.log("error");
+          this.$toasted.error(
+            "Error ao fazer download do histórico do estudante. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     },
     setContact(userId) {
@@ -182,10 +196,25 @@ export default {
         axios
           .post("api/setContact/" + userId, this.contact)
           .then(response => {
-            console.log("Sucesso contacto criado");
+            this.$toasted.success(
+              "Interação com estudante criada com sucesso.",
+              {
+                duration: 4000,
+                position: "top-center",
+                theme: "bubble"
+              }
+            );
           })
           .catch(error => {
             console.log(error);
+            this.$toasted.error(
+              "Erro ao criar interação com estudante, por favor tente novamente.",
+              {
+                duration: 4000,
+                position: "top-center",
+                theme: "bubble"
+              }
+            );
           });
     }
   },

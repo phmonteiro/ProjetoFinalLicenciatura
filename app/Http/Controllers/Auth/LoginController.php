@@ -45,7 +45,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             if (Auth::user()->loginExpirationDate != null && Carbon::now()->gte(Auth::user()->loginExpirationDate)) {
                 auth()->logout();
-                dd("Data de Login excedido");
+                return response()->json(['message' => 'Login expirado. Contacte o administrador.'], 419);
             }
 
             $user = Auth::user();
@@ -58,13 +58,12 @@ class LoginController extends Controller
                 $user->school = $users->company[0];
                 $user->number = $users->mailnickname[0];
                 $user->firstLogin = 1;
-                //$users->departmentnumber
-                //$users->streetaddress
                 $user->save();
                 return Auth::user();
             }
         } else {
-            dd("erro");
+            auth()->logout();
+            return response()->json(['message' => 'Credenciais inválidas. Por favor tente novamente.'], 401);
         }
     }
 }

@@ -42,6 +42,7 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
               <button
                 type="submit"
+                data-dismiss="modal"
                 v-on:click.prevent="changeNextContact()"
                 class="btn btn-primary"
               >Confirmar</button>
@@ -109,11 +110,26 @@ export default {
       axios
         .post("api/changeNextContact/" + this.contact[0].id, contactDate)
         .then(response => {
-          console.log("Sucesso");
           this.getContact();
+          this.$toasted.success(
+            "Alteração da próxima interação feita com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         })
         .catch(error => {
           console.log(error);
+          this.$toasted.error(
+            "Erro ao alterar a data da próxima interação. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     }
   }

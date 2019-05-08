@@ -76,14 +76,14 @@ class AdminController extends Controller
 
         $dados = $request->validate([
             'type' => 'required',
-            'loginExpirationDate' => 'required|date',
+            'loginExpirationDate' => '',
         ]);
 
         $user->type = $dados['type'];
         $user->loginExpirationDate = $dados['loginExpirationDate'];
         $user->save();
 
-        return new UserResource($user);
+        return response()->json(new UserResource($user), 200);
     }
 
     /**

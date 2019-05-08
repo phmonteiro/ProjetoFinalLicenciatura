@@ -117,6 +117,8 @@ export default {
       axios
         .post("api/login", this.user)
         .then(response => {
+          console.log(response);
+
           this.$store.commit("setUser", response.data);
           this.loading = false;
           //Vem do role da base de dados da universidade
@@ -142,8 +144,13 @@ export default {
         })
         .catch(error => {
           this.loading = false;
-          console.log(error);
+          console.log(error.response);
           this.$store.commit("clearUserAndToken");
+          this.$toasted.error(error.response.data.message, {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
         });
     },
     cartaoCid() {

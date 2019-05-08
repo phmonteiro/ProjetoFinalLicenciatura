@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
     <div class="container">
       <h2>Lista de utilizadores</h2>
@@ -8,6 +8,7 @@
           <button
             class="btn btn-secondary"
             v-on:click.prevent="editUser(row.item)"
+            v-if="row.item.number != user.number"
           >Editar utilizador</button>
         </template>
       </b-table>
@@ -71,14 +72,32 @@ export default {
         .then(response => {
           this.getUsers();
           this.currentUser = null;
+          this.$toasted.success("Utilizador editado com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
         })
         .catch(error => {
           console.log(error);
+          this.$toasted.error(
+            "Erro ao editar utilizador. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     }
   },
   created() {
     this.getUsers();
+  },
+  computed: {
+    user: function() {
+      return this.$store.state.user;
+    }
   }
 };
 </script>

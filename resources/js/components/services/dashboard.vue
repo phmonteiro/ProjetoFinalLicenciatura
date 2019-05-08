@@ -22,7 +22,7 @@ export default {
           .then(response => {
             this.getMeetings();
             this.$toasted.success("Reunião marcada.", {
-              duration: 3000,
+              duration: 4000,
               position: "top-center",
               theme: "bubble"
             });
@@ -32,7 +32,7 @@ export default {
             this.$toasted.error(
               "Erro ao marcar reunião, por favor tente novamente.",
               {
-                duration: 3000,
+                duration: 4000,
                 position: "top-center",
                 theme: "bubble"
               }
