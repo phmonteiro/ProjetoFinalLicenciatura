@@ -87,7 +87,6 @@
                   name="residence"
                   v-model="student.residence"
                   v-on:change="getResidence()"
-
                 >
               </div>
               <div class="col">
@@ -452,27 +451,28 @@ export default {
       }
     },
     getZipCode() {
-      if(this.student.zipCode.length == 8){
-      axios
-        .get("api/zipCode/"+ this.student.zipCode)
-        .then(response => {
-          if(response.data[0].art_desig){
-          this.student.residence = response.data[0].art_desig;
-          }
-          if(response.data[0].dsc_pos){
-          this.student.area = response.data[0].dsc_pos;
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+      if (this.student.zipCode.length == 8) {
+        axios
+          .get("api/zipCode/" + this.student.zipCode)
+          .then(response => {
+            if (response.data[0].art_desig) {
+              this.student.residence = response.data[0].art_desig;
+            }
+            if (response.data[0].dsc_pos) {
+              this.student.area = response.data[0].dsc_pos;
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     },
-    getResidence(){
+    getResidence() {
       axios
-        .get("api/residence/"+ this.student.residence)
+        .get("api/residence/" + this.student.residence)
         .then(response => {
-          this.student.zipCode = response.data[0].cpo_cod4+"-"+response.data[0].cpo_cod3;
+          this.student.zipCode =
+            response.data[0].cpo_cod4 + "-" + response.data[0].cpo_cod3;
           this.student.area = response.data[0].dsc_pos;
         })
         .catch(error => {

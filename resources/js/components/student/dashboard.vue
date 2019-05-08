@@ -1,45 +1,42 @@
 <template>
-    <div>
-      <div class="sidenav">
-        <a href="#"><router-link class="nav-link" :to="{name: 'contact'}">Contacts</router-link></a>
-        <a href="#"><router-link class="nav-link" :to="{name: 'myMeetings'}">Meetings</router-link></a>
-        <a href="#"><router-link class="nav-link" :to="{name: 'serviceRequest'}">Request Service</router-link></a>
-        <a href="#"><router-link class="nav-link" :to="{name: 'setMeeting'}">Set meeting</router-link></a>
-        <a href="#"><router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link></a>
-      </div>
+  <div>
+    <div class="sidenav">
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'contact'}">Contacts</router-link>
+      </a>
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'myMeetings'}">Meetings</router-link>
+      </a>
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'serviceRequest'}">Request Service</router-link>
+      </a>
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'setMeeting'}">Set meeting</router-link>
+      </a>
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link>
+      </a>
+    </div>
 
-      <div class="main">
-        <b-container>
-                  <b-row align-v="center">
-                      <b-col>
-                          <router-view></router-view>
-                      </b-col>
-                  </b-row>
-              </b-container>
-      </div> 
-        <!-- <router-link class="nav-link" :to="{name: 'contact'}">Contact</router-link>
+    <router-view></router-view>
+
+    <!-- <router-link class="nav-link" :to="{name: 'contact'}">Contact</router-link>
     <router-link class="nav-link" :to="{name: 'myMeetings'}">Meetings</router-link>
     <router-link class="nav-link" :to="{name: 'serviceRequest'}">Service request</router-link>
     <router-link class="nav-link" :to="{name: 'setMeeting'}">Set meeting</router-link>
-    <router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link> -->
-        
-    </div>
+    <router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link>-->
+  </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-
-            };
-
-        },
-        methods: {}
-    }
-
+export default {
+  data() {
+    return {};
+  },
+  methods: {}
+};
 </script>
 
 <style>
-
 .sidenav {
   width: 130px;
   position: fixed;
@@ -69,8 +66,12 @@
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 </style>
 

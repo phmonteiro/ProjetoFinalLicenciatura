@@ -22,20 +22,6 @@ const routes = [
         },
       },
       {
-        path: '/student/subscription',
-        component: require('./components/student/subscription.vue').default,
-        meta: {
-          middlewareAuth: true,
-        },
-      },
-      {
-        path: '/student/studentForm',
-        component: require('./components/student/noStatusPage.vue').default,
-        meta: {
-          middlewareAuth: true,
-        },
-      },
-      {
         path: '/student/myMeetings',
         name: 'myMeetings',
         component: require('./components/student/myMeetings.vue').default,
@@ -68,6 +54,21 @@ const routes = [
         },
       },
     ],
+  },
+  {
+    path: '/studentForm',
+    component: require('./components/student/noStatusPage.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
+
+    path: '/subscription',
+    component: require('./components/student/subscription.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
   },
   {
     path: '/admin',
