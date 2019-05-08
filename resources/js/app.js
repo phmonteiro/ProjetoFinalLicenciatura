@@ -15,7 +15,6 @@ Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);
 
-
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);

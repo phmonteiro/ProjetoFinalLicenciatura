@@ -1,6 +1,7 @@
 <template>
+<b-container>
   <b-row>
-    <b-col>
+    <b-col class="top100">
       <h2>Pedir Agendamento Reuniao</h2>
       <div class="form-group">
         <b-form-select v-model="meeting.service" class="mb-3">
@@ -32,6 +33,7 @@
       <button type="submit" class="btn btn-primary" v-on:click.prevent="setMeeting()">Pedir reunião</button>
     </b-col>
   </b-row>
+  </b-container>
 </template>
 
 <script>
