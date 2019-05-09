@@ -34,7 +34,7 @@ Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
 Route::post('subscription/{id}', 'StudentController@subscription');
 Route::get('zipCode/{zip}', 'StudentController@getZipCode');
 Route::get('residence/{residence}', 'StudentController@getResidence');
-Route::get('getUser/{id}', 'StudentController@getUser');
+Route::get('getUser/{id}', 'StudentController@show');
 
 
 //service

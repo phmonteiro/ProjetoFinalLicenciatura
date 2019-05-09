@@ -16,8 +16,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return new UserResource($users);
+        return UserResource::collection(User::Orderby('number')->paginate(10));
     }
 
     /**

@@ -23,79 +23,6 @@ class ServiceController extends Controller
     public function index()
     { }
 
-    public function finalizeMeeting(Request $request, $id)
-    {
-        $meeting = Meeting::findOrFail($id);
-        $dados = $request->validate([
-            'info' => 'required|string',
-            'date' => 'required|date'
-        ]);
-
-        $meeting->info = $dados['info'];
-        $meeting->date = $dados['date'];
-
-        $meeting->save();
-        return response()->json($meeting, 200);
-    }
-
-    public function meetings()
-    {
-        $meetings = Meeting::whereNull('date')->get();
-        return new MeetingResource($meetings);
-    }
-
-    public function contact(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $dados = $request->validate([
-            'information' => 'required|string',
-            'nextContact' => 'required|date|after:today',
-            'service' => 'required|string',
-            'decision' => 'required|string'
-        ]);
-
-        $contact = new Contact();
-        $contact->studentEmail = $user->email;
-        $contact->date = Carbon::now();
-        $contact->service = $dados['service'];
-        $contact->information = $dados['information'];
-        $contact->nextContact = $dados['nextContact'];
-        $contact->decision = $dados['decision'];
-
-        $contact->save();
-        return response()->json(new ContactResource($contact), 201);
-    }
-
-    public function contactDetails($id)
-    {
-        $user = User::findOrFail($id);
-        $contacts = Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
-        return response()->json(new ContactResource($contacts), 201);
-    }
-
-    public function editContact(Request $request, $id)
-    {
-        $dados = $request->validate([
-            'nextContact' => 'required|date|after:today',
-        ]);
-        $contact = Contact::findOrFail($id);
-        $contact->nextContact = $dados['nextContact'];
-        $contact->save();
-        return response()->json(new ContactResource($contact), 201);
-    }
-
-    public function downloadPDF($id)
-    {
-        $user = User::findOrFail($id);
-        $tutor = Tutor::where('studentEmail', $user->email)->get();
-        $caseManager = CaseManager::where('studentEmail', $user->email)->get();
-        $pdf = PDF::loadView('pdf.PDF', compact('user', 'caseManager', 'tutor'));
-        $filename = base_path('storage/app/public/medicalHistory/' . $user->number . '.pdf');
-        $pdf->save($filename);
-        return \Response::download($filename);
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -160,5 +87,76 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function finalizeMeeting(Request $request, $id)
+    {
+        $meeting = Meeting::findOrFail($id);
+        $dados = $request->validate([
+            'info' => 'required|string',
+            'date' => 'required|date'
+        ]);
+
+        $meeting->info = $dados['info'];
+        $meeting->date = $dados['date'];
+
+        $meeting->save();
+        return response()->json($meeting, 200);
+    }
+
+    public function meetings()
+    {
+        return MeetingResource::collection(Meeting::whereNull('date')->paginate(10));
+    }
+
+    public function contact(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $dados = $request->validate([
+            'information' => 'required|string',
+            'nextContact' => 'required|date|after:today',
+            'service' => 'required|string',
+            'decision' => 'required|string'
+        ]);
+
+        $contact = new Contact();
+        $contact->studentEmail = $user->email;
+        $contact->date = Carbon::now();
+        $contact->service = $dados['service'];
+        $contact->information = $dados['information'];
+        $contact->nextContact = $dados['nextContact'];
+        $contact->decision = $dados['decision'];
+
+        $contact->save();
+        return response()->json(new ContactResource($contact), 201);
+    }
+
+    public function contactDetails($id)
+    {
+        $user = User::findOrFail($id);
+        $contacts = Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
+        return response()->json(new ContactResource($contacts), 201);
+    }
+
+    public function editContact(Request $request, $id)
+    {
+        $dados = $request->validate([
+            'nextContact' => 'required|date|after:today',
+        ]);
+        $contact = Contact::findOrFail($id);
+        $contact->nextContact = $dados['nextContact'];
+        $contact->save();
+        return response()->json(new ContactResource($contact), 201);
+    }
+
+    public function downloadPDF($id)
+    {
+        $user = User::findOrFail($id);
+        $tutor = Tutor::where('studentEmail', $user->email)->get();
+        $caseManager = CaseManager::where('studentEmail', $user->email)->get();
+        $pdf = PDF::loadView('pdf.PDF', compact('user', 'caseManager', 'tutor'));
+        $filename = base_path('storage/app/public/medicalHistory/' . $user->number . '.pdf');
+        $pdf->save($filename);
+        return \Response::download($filename);
     }
 }

@@ -27,53 +27,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $enees = User::where('enee', '1')->get();
-        return new UserResource($enees);
+        return UserResource::collection(User::where('enee', '1')->paginate(10));
     }
-
-    public function myMeetings($id)
-    {
-        $user = User::findOrFail($id);
-
-        $meetings = Meeting::all();
-        return new MeetingResource($meetings);
-    }
-
-    public function setMeeting(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $dados = $request->validate([
-            'service' => 'required|string',
-            'comment' => 'required|string'
-        ]);
-
-        $meeting = new Meeting();
-        $meeting->studentId = $id;
-        $meeting->email = $user->email;
-        $meeting->name = $user->name;
-        $meeting->service = $dados['service'];
-        $meeting->comment = $dados['comment'];
-        $meeting->save();
-        return response()->json(new MeetingResource($meeting), 201);
-    }
-
-    public function setService(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $dados = $request->validate([
-            'name' => 'required|string',
-            'reason' => 'required|string'
-        ]);
-
-        $service = new Service();
-        $service->email = $user->email;
-        $service->name = $dados['name'];
-        $service->reason = $dados['reason'];
-
-        $service->save();
-        return response()->json(new ServiceResource($service), 201);
-    }
-
 
     /**
      * Show the form for creating a new resource.
@@ -104,7 +59,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return UserResource::collection($user);
     }
 
     /**
@@ -144,22 +100,13 @@ class StudentController extends Controller
     public function getContacts($id)
     {
         $user = User::findOrFail($id);
-        $contacts = Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
-
-        return new ContactResource($contacts);
-    }
-
-    public function getUser($id)
-    {
-        $user = User::findOrFail($id);
-        return new UserResource($user);
+        return ContactResource::collection(Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->paginate(10));
     }
 
     public function getServices($id)
     {
         $user = User::findOrFail($id);
-        $services = Service::where('email', $user->email)->where('aprovedDate', '!=', 'null')->get();
-        return response()->json(new ServiceResource($services), 201);
+        return ServiceResource::collection(Service::where('email', $user->email)->where('aprovedDate', '!=', 'null')->paginate(10));
     }
 
     public function subscription(Request $request, $id)
@@ -231,19 +178,59 @@ class StudentController extends Controller
         return response()->json(new UserResource($user), 201);
     }
 
-    public function getZipCode(Request $request, $zip){
-        $zipCode = str_split($zip,4);
-        $zipCode[1]=substr($zipCode[1], 1);
-        $zipCodes = ZipCode::where('cpo_cod4',$zipCode[0])->Where('cpo_cod3',$zipCode[1])->get();
+    public function getZipCode(Request $request, $zip)
+    {
+        $zipCode = str_split($zip, 4);
+        $zipCode[1] = substr($zipCode[1], 1);
+        $zipCodes = ZipCode::where('cpo_cod4', $zipCode[0])->Where('cpo_cod3', $zipCode[1])->get();
 
         return response()->json(new ZipCodeResource($zipCodes), 201);
-
     }
 
-    public function getResidence(Request $request, $residence){
-        $residence = ZipCode::where('art_desig',$residence)->get();
+    public function getResidence(Request $request, $residence)
+    {
+        $residence = ZipCode::where('art_desig', $residence)->get();
 
         return response()->json(new ZipCodeResource($residence), 201);
+    }
+    public function myMeetings($id)
+    {
+        User::findOrFail($id);
+        return MeetingResource::collection(Meeting::Orderby('date')->paginate(10));
+    }
 
+    public function setMeeting(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $dados = $request->validate([
+            'service' => 'required|string',
+            'comment' => 'required|string'
+        ]);
+
+        $meeting = new Meeting();
+        $meeting->studentId = $id;
+        $meeting->email = $user->email;
+        $meeting->name = $user->name;
+        $meeting->service = $dados['service'];
+        $meeting->comment = $dados['comment'];
+        $meeting->save();
+        return response()->json(new MeetingResource($meeting), 201);
+    }
+
+    public function setService(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $dados = $request->validate([
+            'name' => 'required|string',
+            'reason' => 'required|string'
+        ]);
+
+        $service = new Service();
+        $service->email = $user->email;
+        $service->name = $dados['name'];
+        $service->reason = $dados['reason'];
+
+        $service->save();
+        return response()->json(new ServiceResource($service), 201);
     }
 }

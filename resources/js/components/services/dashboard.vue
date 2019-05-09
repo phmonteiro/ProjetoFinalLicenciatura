@@ -1,11 +1,8 @@
 <template>
   <div>
-    <div class="loader">
-      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
-    </div>
-    <div v-if="meetings">
-      <enee-list :users="users" :user="user" :contact="contact"></enee-list>
-      <meetings :meetings="meetings" @setMeeting="setMeeting"></meetings>
+    <div>
+      <enee-list :user="user" @downloadPDF="downloadPDF" @setContact="setContact"></enee-list>
+      <meetings @setMeeting="setMeeting"></meetings>
     </div>
   </div>
 </template>
@@ -14,11 +11,7 @@
 export default {
   data() {
     return {
-      loading: true,
-      meetings: null,
-      user: null,
-      contact: null,
-      users: null
+      user: null
     };
   },
   methods: {
@@ -46,32 +39,65 @@ export default {
             );
           });
     },
-    getMeetings() {
-      axios
-        .get("api/getMeetings")
+    downloadPDF(user) {
+      axios({
+        url: "api/downloadHistory/" + user.id,
+        method: "GET",
+        responseType: "blob"
+      })
         .then(response => {
-          this.meetings = response.data.data;
-          this.loading = false;
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", user.number + ".pdf");
+          document.body.appendChild(link);
+          link.click();
+          this.$toasted.success(
+            "Download do histórico do estudante feito com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         })
         .catch(error => {
-          console.log(error);
+          this.$toasted.error(
+            "Error ao fazer download do histórico do estudante. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     },
-    getEnee() {
-      axios
-        .get("api/getEnee")
-        .then(response => {
-          this.users = response.data.data;
-          console.log(this.users);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    setContact(userId, contact) {
+      console.log(userId),
+        axios
+          .post("api/setContact/" + userId, contact)
+          .then(response => {
+            this.$toasted.success(
+              "Interação com estudante criada com sucesso.",
+              {
+                duration: 4000,
+                position: "top-center",
+                theme: "bubble"
+              }
+            );
+          })
+          .catch(error => {
+            console.log(error);
+            this.$toasted.error(
+              "Erro ao criar interação com estudante, por favor tente novamente.",
+              {
+                duration: 4000,
+                position: "top-center",
+                theme: "bubble"
+              }
+            );
+          });
     }
-  },
-  created() {
-    this.getMeetings();
-    this.getEnee();
   }
 };
 </script>

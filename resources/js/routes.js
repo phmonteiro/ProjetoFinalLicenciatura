@@ -117,6 +117,10 @@ router.beforeEach((to, from, next) => {
     next('/services');
     return;
   }
+  if (store.state.user != null && (to.fullPath=='/student' || to.fullPath=='/student/contact' || to.fullPath=='/student/myMeetings' || to.fullPath=='/student/serviceRequest' || to.fullPath=='/student/setMeeting' || to.fullPath=='/student/usedServices') && store.state.user.type!='Estudante' ) {
+    return;
+  }
+  // Falta fazer para o resto (só fiz para student) e ver se dá para fazer com middleware em vez de ser aqui
   next();
 });
 

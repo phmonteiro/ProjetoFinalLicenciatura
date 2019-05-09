@@ -2,7 +2,7 @@
   <div>
     <div class="sidenav">
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'contact'}">Contacts</router-link>
+        <router-link class="nav-link" :to="{name: 'contact'}">Contactos</router-link>
       </a>
       <a href="#">
         <router-link class="nav-link" :to="{name: 'myMeetings'}">Meetings</router-link>
