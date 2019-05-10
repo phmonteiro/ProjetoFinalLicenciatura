@@ -346,7 +346,7 @@
               <div class="col">
                 <label for="neeType">Relatório médico</label>
                 <div class="field">
-                  <input type="file" id="files" ref="files" v-on:change="handleFiles()">
+                  <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple>
                 </div>
               </div>
             </div>
@@ -401,7 +401,10 @@ export default {
   methods: {
     sendForm() {
       const formData = new FormData();
-      formData.append("photo", this.files[0]);
+      for (var i = 0; i < this.files.length; i++) {
+        formData.append("photo" + i, this.files[i]);
+      }
+      formData.append("numberPhotos", this.files.length);
       formData.append("name", this.student.name);
       formData.append("number", this.student.number);
       formData.append("email", this.student.email);

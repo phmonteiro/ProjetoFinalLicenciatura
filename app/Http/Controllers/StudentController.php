@@ -142,11 +142,13 @@ class StudentController extends Controller
             'educationalSupport' => ''
 
         ]);
+        for ($i = 0; $i < $request->numberPhotos; $i++) {
+            $file = Input::file('photo' . $i);
+            $ext = $file->getClientOriginalExtension();
+            $uploadedFile = "MedicalReport - " . $dados['number'] . "-" . $i . '.' . $ext;
+            Storage::disk('public')->put('medicalReport/' . $uploadedFile, File::get($file));
+        }
 
-        $file = Input::file('photo');
-        $ext = $file->getClientOriginalExtension();
-        $uploadedFile = "MedicalReport - " . $dados['number'] . '.' . $ext;
-        Storage::disk('public')->put('medicalReport/' . $uploadedFile, File::get($file));
 
         $user->phoneNumber = $dados['phoneNumber'];
         $user->birthDate = $dados['birthDate'];
