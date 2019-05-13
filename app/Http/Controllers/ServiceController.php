@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
 use PDF;
+use App\MedicalFile;
+use ZipArchive;
 
 class ServiceController extends Controller
 {
@@ -157,6 +159,34 @@ class ServiceController extends Controller
         $pdf = PDF::loadView('pdf.PDF', compact('user', 'caseManager', 'tutor'));
         $filename = base_path('storage/app/public/medicalHistory/' . $user->number . '.pdf');
         $pdf->save($filename);
-        return \Response::download($filename);
+        $files = MedicalFile::where('email', $user->email)->get();
+        /*$filesDownload = new Collection();
+        foreach ($files as $key => $file) {
+            $filesDownload->push(base_path('storage/app/public/medicalHistory/' . $file->fileName));
+        }
+        $filesDownload->push($filename);*/
+
+        $public_dir = base_path('storage/app/public/zip');
+        // Zip File Name
+        $zipFileName = $user->number . '.zip';
+        // Create ZipArchive Obj
+        $zip = new ZipArchive;
+        if ($zip->open($public_dir . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
+            // Add Multiple file   
+            foreach ($files as $file) {
+                $zip->addFile(base_path('storage/app/public/medicalReport/' . $file->fileName), $file->fileName);
+            }
+            $zip->addFile($filename, $user->number . '.pdf');
+            $zip->close();
+        }
+        // Set Header
+        $headers = array(
+            'Content-Type' => 'application/octet-stream',
+        );
+        $filetopath = $public_dir . '/' . $zipFileName;
+        // Create Download Response
+        if (file_exists($filetopath)) {
+            return response()->download($filetopath, $zipFileName, $headers);
+        }
     }
 }

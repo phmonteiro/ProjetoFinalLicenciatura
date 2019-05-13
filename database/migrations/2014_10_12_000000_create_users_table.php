@@ -37,7 +37,6 @@ class CreateUsersTable extends Migration
             $table->boolean('enee')->nullable();
             $table->string('neeType')->nullable();
             $table->integer('neeSeverity')->nullable();
-            $table->string('medicalReport')->nullable();
             $table->text('educationalSupport')->nullable();
             $table->date('eneeExpirationDate')->nullable();
             $table->date('loginExpirationDate')->nullable();
@@ -53,6 +52,12 @@ class CreateUsersTable extends Migration
             $table->string('emergencyKin')->nullable();
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::create('medical_files', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('email');
+            $table->string('fileName');
         });
 
         Schema::create('grades', function (Blueprint $table) {

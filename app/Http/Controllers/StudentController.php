@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Carbon;
+use App\MedicalFile;
 
 class StudentController extends Controller
 {
@@ -147,6 +148,10 @@ class StudentController extends Controller
             $ext = $file->getClientOriginalExtension();
             $uploadedFile = "MedicalReport - " . $dados['number'] . "-" . $i . '.' . $ext;
             Storage::disk('public')->put('medicalReport/' . $uploadedFile, File::get($file));
+            $medicalFile = new MedicalFile();
+            $medicalFile->email = $user->email;
+            $medicalFile->fileName = $uploadedFile;
+            $medicalFile->save();
         }
 
 
@@ -173,7 +178,6 @@ class StudentController extends Controller
         $user->niss = $dados['niss'];
         $user->sns = $dados['sns'];
         $user->educationalSupport = $dados['educationalSupport'];
-        $user->medicalReport = $uploadedFile;
 
         $user->save();
 
