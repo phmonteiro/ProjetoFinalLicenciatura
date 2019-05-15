@@ -33,7 +33,7 @@ Route::get('getServices/{id}', 'StudentController@getServices');
 Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
 Route::post('subscription/{id}', 'StudentController@subscription');
 Route::get('zipCode/{zip}', 'StudentController@getZipCode');
-Route::get('residence/{residence}', 'StudentController@getResidence');
+Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
 Route::get('getUser/{id}', 'StudentController@show');
 
 

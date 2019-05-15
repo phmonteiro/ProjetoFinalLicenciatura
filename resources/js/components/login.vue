@@ -129,7 +129,7 @@ export default {
             this.$router.push("/studentForm");
             return;
           }
-          if (response.data.type == "Estudante" && response.data.enee == 0) {
+          if (response.data.type == "Estudante" && response.data.enee == 1) {
             this.$router.push("/student");
             return;
           }

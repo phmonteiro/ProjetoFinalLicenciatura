@@ -35,8 +35,6 @@ class CreateUsersTable extends Migration
             $table->bigInteger('niss')->nullable();
             $table->bigInteger('sns')->nullable();
             $table->boolean('enee')->nullable();
-            $table->string('neeType')->nullable();
-            $table->integer('neeSeverity')->nullable();
             $table->text('educationalSupport')->nullable();
             $table->date('eneeExpirationDate')->nullable();
             $table->date('loginExpirationDate')->nullable();
@@ -110,6 +108,13 @@ class CreateUsersTable extends Migration
             $table->string('decision');
             $table->text('information');
             $table->date('nextContact');
+        });
+
+        Schema::create('nees', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('studentEmail');
+            $table->string('name');
+            $table->integer('severity');
         });
     }
 

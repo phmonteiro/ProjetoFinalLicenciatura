@@ -79,15 +79,14 @@
             <div class="row">
               <div class="col-6">
                 <label for="residence">Residencia em época de aulas</label>
-                <input
-                  type="text"
+                <vue-google-autocomplete
                   class="form-control"
                   id="residence"
                   placeholder="Morada"
                   name="residence"
-                  v-model="student.residence"
-                  v-on:change="getResidence()"
-                >
+                  v-on:placechanged="getAddressData"
+                  country="pt"
+                ></vue-google-autocomplete>
               </div>
               <div class="col">
                 <label for="zipCode">Código Postal</label>
@@ -299,38 +298,133 @@
           </div>
 
           <div class="dropdown-divider"></div>
-          <h5>NEE</h5>
+          <h5>Tipos de NEE</h5>
           <div class="container-full-width">
             <div class="row">
               <div class="col">
-                <label for="neeType">Tipo de NEE</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="neeType"
-                  placeholder
-                  name="neeType"
-                  v-model="student.neeType"
-                >
+                <b-form-checkbox v-model="student.neeTypeSight" name="check-button" switch>Visão</b-form-checkbox>
               </div>
+
               <div class="col">
-                <label for="neeSeverity">Grau de Incapaciade(%)</label>
+                <label for="neeSeverity">Grau de Incapaciade Visão(%)</label>
                 <input
                   class="form-control"
                   type="number"
                   name="neeSeverity"
-                  id="neeSeverity"
+                  id="neeSeverity0"
                   min="1"
                   max="99"
-                  v-model="student.neeSeverity"
+                  v-model="student.neeSeveritySight"
+                  :disabled="!student.neeTypeSight"
                 >
               </div>
             </div>
           </div>
+          <div class="dropdown-divider"></div>
+
           <div class="container-full-width">
             <div class="row">
               <div class="col">
-                <label for="neeSeverity">Descrição de apoios anteriormente usufruidos</label>
+                <b-form-checkbox v-model="student.neeTypeEaring" name="check-button" switch>Audição</b-form-checkbox>
+              </div>
+
+              <div class="col">
+                <label for="neeSeverity">Grau de Incapaciade Audição(%)</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="neeSeverity"
+                  id="neeSeverity0"
+                  min="1"
+                  max="99"
+                  v-model="student.neeSeverityEaring"
+                  :disabled="!student.neeTypeEaring"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+
+          <div class="container-full-width">
+            <div class="row">
+              <div class="col">
+                <b-form-checkbox v-model="student.neeTypeMotor" name="check-button" switch>Motora</b-form-checkbox>
+              </div>
+
+              <div class="col">
+                <label for="neeSeverity">Grau de Incapaciade Motor(%)</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="neeSeverity"
+                  id="neeSeverity0"
+                  min="1"
+                  max="99"
+                  v-model="student.neeSeverityMotor"
+                  :disabled="!student.neeTypeMotor"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+
+          <div class="container-full-width">
+            <div class="row">
+              <div class="col">
+                <b-form-checkbox v-model="student.neeTypeDisease" name="check-button" switch>Doença</b-form-checkbox>
+              </div>
+
+              <div class="col">
+                <label for="neeSeverity">Grau de Incapaciade Doença(%)</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="neeSeverity"
+                  id="neeSeverity0"
+                  min="1"
+                  max="99"
+                  v-model="student.neeSeverityDisease"
+                  :disabled="!student.neeTypeDisease"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+
+          <div class="container-full-width">
+            <div class="row">
+              <div class="col">
+                <b-form-checkbox
+                  v-model="student.neeTypeLearning"
+                  name="check-button"
+                  switch
+                >Dificuldades de aprendizagem específicas</b-form-checkbox>
+              </div>
+
+              <div class="col">
+                <label
+                  for="neeSeverity"
+                >Grau de incapaciade de dificuldades de aprendizagem específicas (%)</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="neeSeverity"
+                  id="neeSeverity0"
+                  min="1"
+                  max="99"
+                  v-model="student.neeSeverityLearning"
+                  :disabled="!student.neeTypeLearning"
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <div class="container-full-width">
+            <div class="row">
+              <div class="col">
+                <label for="description">Descrição de apoios anteriormente usufruidos</label>
                 <textarea
                   class="form-control"
                   type="text"
@@ -359,9 +453,22 @@
 </template>
 
 <script>
+import VueGoogleAutocomplete from "vue-google-autocomplete";
+
 export default {
+  components: { VueGoogleAutocomplete },
   data() {
     return {
+      options: [
+        { text: "Visão", value: "visao" },
+        { text: "Audição", value: "audicao" },
+        { text: "Motora", value: "motora" },
+        { text: "Doença", value: "doenca" },
+        {
+          text: "Dificuldades de aprendizagem especifica",
+          value: "aprendizagem"
+        }
+      ],
       files: [],
       student: {
         name: this.$store.state.user.name,
@@ -384,13 +491,22 @@ export default {
         emergencyPhone: null,
         emergencyKin: null,
         emergencyEmail: null,
-        neeType: null,
-        neeSeverity: null,
+        neeTypeSight: false,
+        neeSeveritySight: null,
+        neeTypeEaring: false,
+        neeSeverityEaring: null,
+        neeTypeMotor: false,
+        neeSeverityMotor: null,
+        neeTypeDisease: false,
+        neeSeverityDisease: null,
+        neeTypeLearning: false,
+        neeSeveritLearning: null,
         educationalSupport: null,
         niss: null,
         nif: null,
         sns: null
-      }
+      },
+      index: 0
     };
   },
   computed: {
@@ -399,6 +515,17 @@ export default {
     }
   },
   methods: {
+    getAddressData(addressData, placeResultData, id) {
+      this.student.residence = addressData.route;
+      this.student.area = addressData.locality;
+      this.student.zipCode = addressData.postal_code;
+      console.log(this.student.residence);
+      let aux = this.student.residence.split(",");
+
+      if (this.student.zipCode == undefined) {
+        this.getResidence();
+      }
+    },
     sendForm() {
       const formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
@@ -431,8 +558,16 @@ export default {
       formData.append("emergencyPhone", this.student.emergencyPhone);
       formData.append("emergencyKin", this.student.emergencyKin);
       formData.append("emergencyEmail", this.student.emergencyEmail);
-      formData.append("neeType", this.student.neeType);
-      formData.append("neeSeverity", this.student.neeSeverity);
+      formData.append("neeTypeSight", this.student.neeTypeSight);
+      formData.append("neeSeveritySight", this.student.neeSeveritySight);
+      formData.append("neeTypeEaring", this.student.neeTypeEaring);
+      formData.append("neeSeverityEaring", this.student.neeSeverityEaring);
+      formData.append("neeTypeMotor", this.student.neeTypeMotor);
+      formData.append("neeSeverityMotor", this.student.neeSeverityMotor);
+      formData.append("neeTypeDisease", this.student.neeTypeDisease);
+      formData.append("neeSeverityDisease", this.student.neeSeverityDisease);
+      formData.append("neeTypeLearning", this.student.neeTypeLearning);
+      formData.append("neeSeverityLearning", this.student.neeSeverityLearning);
       formData.append("educationalSupport", this.student.educationalSupport);
       formData.append("niss", this.student.niss);
       formData.append("sns", this.student.sns);
@@ -471,12 +606,17 @@ export default {
       }
     },
     getResidence() {
+      console.log(this.student.area);
+
       axios
-        .get("api/residence/" + this.student.residence)
+        .get(
+          "api/residence/" + this.student.residence + "/" + this.student.area
+        )
         .then(response => {
+          console.log(response);
+
           this.student.zipCode =
-            response.data[0].cpo_cod4 + "-" + response.data[0].cpo_cod3;
-          this.student.area = response.data[0].dsc_pos;
+            response.data.cpo_cod4 + "-" + response.data.cpo_cod3;
         })
         .catch(error => {
           console.log(error);

@@ -5,13 +5,13 @@
         <router-link class="nav-link" :to="{name: 'contact'}">Contactos</router-link>
       </a>
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'myMeetings'}">Meetings</router-link>
+        <router-link class="nav-link" :to="{name: 'myMeetings'}">Reuniões</router-link>
       </a>
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'serviceRequest'}">Request Service</router-link>
+        <router-link class="nav-link" :to="{name: 'serviceRequest'}">Apoios</router-link>
       </a>
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'setMeeting'}">Set meeting</router-link>
+        <router-link class="nav-link" :to="{name: 'setMeeting'}">Agendar reunião</router-link>
       </a>
       <a href="#">
         <router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link>
@@ -19,12 +19,6 @@
     </div>
 
     <router-view></router-view>
-
-    <!-- <router-link class="nav-link" :to="{name: 'contact'}">Contact</router-link>
-    <router-link class="nav-link" :to="{name: 'myMeetings'}">Meetings</router-link>
-    <router-link class="nav-link" :to="{name: 'serviceRequest'}">Service request</router-link>
-    <router-link class="nav-link" :to="{name: 'setMeeting'}">Set meeting</router-link>
-    <router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link>-->
   </div>
 </template>
 <script>

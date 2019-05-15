@@ -4,7 +4,7 @@
       <b-row>
         <b-col></b-col>
         <b-col>
-          <div>
+          <div class="loader">
             <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
           </div>
         </b-col>

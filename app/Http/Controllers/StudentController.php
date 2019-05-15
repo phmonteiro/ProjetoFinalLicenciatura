@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Carbon;
 use App\MedicalFile;
+use App\Nee;
 
 class StudentController extends Controller
 {
@@ -113,7 +114,6 @@ class StudentController extends Controller
     public function subscription(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
         $dados = $request->validate([
             'name' => 'required|string',
             'number' => 'required|integer',
@@ -135,8 +135,11 @@ class StudentController extends Controller
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
             'emergencyKin' => 'required|string',
-            'neeType' => 'required|string',
-            'neeSeverity' => 'required|integer',
+            'neeSeveritySight' => 'required_if:neeTypeSight,true',
+            'neeSeverityEaring' => 'required_if:neeTypeEaring,true',
+            'neeSeverityMotor' => 'required_if:neeTypeMotor,true',
+            'neeSeverityDisease' => 'required_if:neeTypeDisease,true',
+            'neeSeverityLearning' => 'required_if:neeTypeLearning,true',
             'nif' => 'required|size:9',
             'niss' => 'required|size:11',
             'sns' => 'required|size:9',
@@ -153,8 +156,6 @@ class StudentController extends Controller
             $medicalFile->fileName = $uploadedFile;
             $medicalFile->save();
         }
-
-
         $user->phoneNumber = $dados['phoneNumber'];
         $user->birthDate = $dados['birthDate'];
         $user->residence = $dados['residence'];
@@ -172,12 +173,50 @@ class StudentController extends Controller
         $user->emergencyPhone = $dados['emergencyPhone'];
         $user->emergencyEmail = $dados['emergencyEmail'];
         $user->emergencyKin = $dados['emergencyKin'];
-        $user->neeType = $dados['neeType'];
-        $user->neeSeverity = $dados['neeSeverity'];
         $user->nif = $dados['nif'];
         $user->niss = $dados['niss'];
         $user->sns = $dados['sns'];
         $user->educationalSupport = $dados['educationalSupport'];
+
+        if ($request->neeTypeSight  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Visão';
+            $nee->severity = $dados['neeSeveritySight'];
+            $nee->save();
+        }
+
+        if ($request->neeTypeEaring  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Audição';
+            $nee->severity = $dados['neeSeverityEaring'];
+            $nee->save();
+        }
+
+        if ($request->neeTypeMotor  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Motora';
+            $nee->severity = $dados['neeSeverityMotor'];
+            $nee->save();
+        }
+
+        if ($request->neeTypeDisease  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Doença';
+            $nee->severity = $dados['neeSeverityDisease'];
+            $nee->save();
+        }
+
+        if ($request->neeTypeLearning  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Dificuldade de aprendizagem';
+            $nee->severity = $dados['neeSeverityLearning'];
+            $nee->save();
+        }
 
         $user->save();
 
@@ -193,10 +232,9 @@ class StudentController extends Controller
         return response()->json(new ZipCodeResource($zipCodes), 201);
     }
 
-    public function getResidence(Request $request, $residence)
+    public function getResidence($residence, $area)
     {
-        $residence = ZipCode::where('art_desig', $residence)->get();
-
+        $residence = ZipCode::where('art_desig', $residence)->where('dsc_pos', $area)->first();
         return response()->json(new ZipCodeResource($residence), 201);
     }
     public function myMeetings($id)

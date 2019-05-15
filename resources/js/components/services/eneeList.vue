@@ -94,7 +94,7 @@
                       type="submit"
                       class="btn btn-primary"
                       data-dismiss="modal"
-                      v-on:click.prevent="setContact(row.item.id)"
+                      v-on:click.prevent="setContact(row.item)"
                     >Confirmar</button>
                   </div>
                 </div>
@@ -181,6 +181,7 @@ export default {
     },
     setContact(userId) {
       this.$emit("setContact", userId, this.contact);
+      console.log(userId);
     },
     getEnee(page_url) {
       let pg = this;
