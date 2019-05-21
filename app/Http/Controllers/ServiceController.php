@@ -121,8 +121,6 @@ class ServiceController extends Controller
             'decision' => 'required|string'
         ]);
 
-        dd($user);
-
         $contact = new Contact();
         $contact->studentEmail = $user->email;
         $contact->date = Carbon::now();

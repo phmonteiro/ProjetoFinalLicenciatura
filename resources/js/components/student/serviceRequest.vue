@@ -3,7 +3,7 @@
     <b-container class="top100">
       <b-row>
         <b-col>
-          <h2>Pedido de serviços</h2>
+          <h2>Pedido de apoio</h2>
           <div class="form-group">
             <b-form-select v-model="service.name" class="mb-3">
               <!-- This slot appears above the options from 'options' prop -->

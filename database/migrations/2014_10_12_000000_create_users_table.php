@@ -48,6 +48,7 @@ class CreateUsersTable extends Migration
             $table->integer('emergencyPhone')->nullable();
             $table->string('emergencyEmail')->nullable();
             $table->string('emergencyKin')->nullable();
+            $table->text('functionalAnalysis')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -114,7 +115,6 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('studentEmail');
             $table->string('name');
-            $table->integer('severity');
         });
     }
 

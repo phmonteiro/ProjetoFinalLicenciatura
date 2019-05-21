@@ -15,7 +15,7 @@
       <b-row>
         <b-col class="top100">
           <div v-if="meetings">
-            <h2>Pedidos de Agendamento</h2>
+            <h2>Pedidos de agendamento de reunião</h2>
             <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields"></b-table>
             <nav aria-label="Page navigation">
               <ul class="pagination">

@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col class="top100">
-        <h2>Pedir Agendamento Reuniao</h2>
+        <h2>Pedir agendamento de reuniao</h2>
         <div class="form-group">
           <b-form-select v-model="meeting.service" class="mb-3">
             <!-- This slot appears above the options from 'options' prop -->
