@@ -36,7 +36,6 @@ Route::get('zipCode/{zip}', 'StudentController@getZipCode');
 Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
 Route::get('getUser/{id}', 'StudentController@show');
 
-
 //service
 Route::post('setContact/{id}', 'ServiceController@contact');
 Route::get('getMeetings', 'ServiceController@meetings');
@@ -44,3 +43,11 @@ Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
 Route::get('getContact/{id}', 'ServiceController@contactDetails');
 Route::post('changeNextContact/{id}', 'ServiceController@editContact');
 Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
+
+//Director
+Route::post('setCM/{id}', 'DirectorController@setCM');
+
+//Case managers Responsible
+Route::get('getCaseManagers', 'CaseManagerController@index');
+Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
+Route::post('approveCM/{id}', 'CaseManagerController@approveCM');

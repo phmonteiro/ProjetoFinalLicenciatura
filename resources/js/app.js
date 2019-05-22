@@ -26,6 +26,7 @@ Vue.component('nav-bar', require('./components/navbar.vue').default);
 Vue.component('edit-user', require('./components/admin/edit.vue').default);
 Vue.component('meetings', require('./components/services/meetings.vue').default);
 Vue.component('enee-list', require('./components/services/eneeList.vue').default);
+Vue.component('set-cm', require('./components/director/setCM.vue').default);
 
 const app = new Vue({
   el: '#app',

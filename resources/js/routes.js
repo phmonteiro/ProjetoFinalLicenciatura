@@ -78,6 +78,48 @@ const routes = [
     },
   },
   {
+    path: '/director',
+    component: require('./components/director/dashboard.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+    children: [
+      {
+        path: '/director/manageCM',
+        name: 'manageCM',
+        component: require('./components/director/manageCM.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+    ],
+  },
+  {
+    path: '/caseManagerResponsible',
+    component: require('./components/caseManagerResponsible/dashboard.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+    children: [
+      {
+        path: '/caseManagerResponsible/cmList',
+        name: 'cmList',
+        component: require('./components/caseManagerResponsible/cmList.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/caseManagerResponsible/cmForApproval',
+        name: 'cmForApproval',
+        component: require('./components/caseManagerResponsible/cmForApproval.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      }
+    ],
+  },
+  {
     path: '/services',
     component: require('./components/services/dashboard.vue').default,
     meta: {
@@ -115,6 +157,14 @@ router.beforeEach((to, from, next) => {
   }
   if (to.fullPath=='/' && store.state.user != null && store.state.user.type=='Services') {
     next('/services');
+    return;
+  }
+  if (to.fullPath=='/' && store.state.user != null && store.state.user.type=='Director') {
+    next('/director');
+    return;
+  }
+  if (to.fullPath=='/' && store.state.user != null && store.state.user.type=='CaseManagerResponsible') {
+    next('/CaseManagerResponsible');
     return;
   }
   next();

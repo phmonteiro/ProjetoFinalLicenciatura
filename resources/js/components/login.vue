@@ -141,6 +141,14 @@ export default {
             this.$router.push("/services");
             return;
           }
+          if (response.data.type == "Director") {
+            this.$router.push("/director");
+            return;
+          }
+          if (response.data.type == "CaseManagerResponsible") {
+            this.$router.push("/caseManagerResponsible");
+            return;
+          }
         })
         .catch(error => {
           this.loading = false;
