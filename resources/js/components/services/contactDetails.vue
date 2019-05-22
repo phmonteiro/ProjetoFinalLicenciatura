@@ -6,7 +6,7 @@
     <div class="container" v-if="user && contact">
       <h2>{{this.user.name}}</h2>
       <div>
-        <h2 v-if="contact">Próximo contacto {{this.contact[0].nextContact}}</h2>
+        <h2>Próximo contacto {{this.contact[0].nextContact}}</h2>
         <button
           type="button"
           class="btn btn-secondary"
@@ -21,7 +21,6 @@
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        v-if="contact"
       >
         <div class="modal-dialog" id="modal" role="document">
           <div class="modal-content">
@@ -100,14 +99,21 @@ export default {
   },
   methods: {
     getUser() {
-      axios.get("api/getUser/" + this.userId).then(response => {
-        this.user = response.data.data;
-      });
+      axios
+        .get("api/getUser/" + this.userId)
+        .then(response => {
+          console.log(response.data);
+          this.user = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     getContact() {
       axios
         .get("api/getContact/" + this.userId)
         .then(response => {
+          console.log(response.data);
           this.contact = response.data;
           this.loading = false;
         })

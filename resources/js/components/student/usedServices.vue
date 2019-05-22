@@ -15,7 +15,7 @@
       <b-row>
         <b-col class="top100">
           <div v-if="services">
-            <h2>Serviços usufruidos</h2>
+            <h2>Apoios usufruidos</h2>
             <b-table striped hover :items="services" :fields="fieldsServices"></b-table>
             <nav aria-label="Page navigation">
               <ul class="pagination">

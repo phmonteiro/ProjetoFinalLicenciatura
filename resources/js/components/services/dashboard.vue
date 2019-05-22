@@ -73,30 +73,26 @@ export default {
         });
     },
     setContact(userId, contact) {
-      console.log(userId),
-        axios
-          .post("api/setContact/" + userId, contact)
-          .then(response => {
-            this.$toasted.success(
-              "Interação com estudante criada com sucesso.",
-              {
-                duration: 4000,
-                position: "top-center",
-                theme: "bubble"
-              }
-            );
-          })
-          .catch(error => {
-            console.log(error);
-            this.$toasted.error(
-              "Erro ao criar interação com estudante, por favor tente novamente.",
-              {
-                duration: 4000,
-                position: "top-center",
-                theme: "bubble"
-              }
-            );
+      axios
+        .post("api/setContact/" + userId.id, contact)
+        .then(response => {
+          this.$toasted.success("Interação com estudante criada com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
           });
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error(
+            "Erro ao criar interação com estudante, por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
+        });
     }
   }
 };

@@ -43,10 +43,10 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // if (Auth::user()->loginExpirationDate != null && Carbon::now()->gte(Auth::user()->loginExpirationDate)) {
-            //     auth()->logout();
-            //     return response()->json(['message' => 'Login expirado. Contacte o administrador.'], 419);
-            // }
+            /*if (Auth::user()->loginExpirationDate != null && Carbon::now()->gte(Auth::user()->loginExpirationDate)) {
+                auth()->logout();
+                return response()->json(['message' => 'Login expirado. Contacte o administrador.'], 419);
+            }*/
 
             $user = Auth::user();
             if ($user->firstLogin == 1) {

@@ -181,7 +181,6 @@ export default {
     },
     setContact(userId) {
       this.$emit("setContact", userId, this.contact);
-      console.log(userId);
     },
     getEnee(page_url) {
       let pg = this;

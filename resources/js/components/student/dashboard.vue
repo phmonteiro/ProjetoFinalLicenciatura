@@ -8,13 +8,14 @@
         <router-link class="nav-link" :to="{name: 'myMeetings'}">Reuniões</router-link>
       </a>
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'serviceRequest'}">Apoios</router-link>
-      </a>
-      <a href="#">
         <router-link class="nav-link" :to="{name: 'setMeeting'}">Agendar reunião</router-link>
       </a>
+
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'usedServices'}">Used Services</router-link>
+        <router-link class="nav-link" :to="{name: 'usedServices'}">Apoios usufruidos</router-link>
+      </a>
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'serviceRequest'}">Pedido de apoios</router-link>
       </a>
     </div>
 

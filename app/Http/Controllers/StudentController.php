@@ -62,7 +62,7 @@ class StudentController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return UserResource::collection($user);
+        return response()->json(new UserResource($user), 200);
     }
 
     /**
@@ -135,17 +135,14 @@ class StudentController extends Controller
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
             'emergencyKin' => 'required|string',
-            'neeSeveritySight' => 'required_if:neeTypeSight,true',
-            'neeSeverityEaring' => 'required_if:neeTypeEaring,true',
-            'neeSeverityMotor' => 'required_if:neeTypeMotor,true',
-            'neeSeverityDisease' => 'required_if:neeTypeDisease,true',
-            'neeSeverityLearning' => 'required_if:neeTypeLearning,true',
             'nif' => 'required|size:9',
             'niss' => 'required|size:11',
             'sns' => 'required|size:9',
-            'educationalSupport' => ''
-
+            'educationalSupport' => '',
+            'neeTypeDisease' => 'required_if:neeTypeAnotherDisease,true|string',
+            'functionalAnalysis' => ''
         ]);
+
         for ($i = 0; $i < $request->numberPhotos; $i++) {
             $file = Input::file('photo' . $i);
             $ext = $file->getClientOriginalExtension();
@@ -177,12 +174,12 @@ class StudentController extends Controller
         $user->niss = $dados['niss'];
         $user->sns = $dados['sns'];
         $user->educationalSupport = $dados['educationalSupport'];
+        $user->functionalAnalysis = $dados['functionalAnalysis'];
 
         if ($request->neeTypeSight  == "true") {
             $nee = new Nee();
             $nee->studentEmail = $user->email;
             $nee->name = 'Visão';
-            $nee->severity = $dados['neeSeveritySight'];
             $nee->save();
         }
 
@@ -190,7 +187,6 @@ class StudentController extends Controller
             $nee = new Nee();
             $nee->studentEmail = $user->email;
             $nee->name = 'Audição';
-            $nee->severity = $dados['neeSeverityEaring'];
             $nee->save();
         }
 
@@ -198,23 +194,34 @@ class StudentController extends Controller
             $nee = new Nee();
             $nee->studentEmail = $user->email;
             $nee->name = 'Motora';
-            $nee->severity = $dados['neeSeverityMotor'];
             $nee->save();
         }
 
-        if ($request->neeTypeDisease  == "true") {
+        if ($request->neeTypeAnotherDisease  == "true") {
             $nee = new Nee();
             $nee->studentEmail = $user->email;
-            $nee->name = 'Doença';
-            $nee->severity = $dados['neeSeverityDisease'];
+            $nee->name = $dados['neeTypeDisease'];
+            $nee->save();
+        }
+
+        if ($request->neeTypeCommunication  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Dislexia/Disortografia/Disgrafia';
             $nee->save();
         }
 
         if ($request->neeTypeLearning  == "true") {
             $nee = new Nee();
             $nee->studentEmail = $user->email;
-            $nee->name = 'Dificuldade de aprendizagem';
-            $nee->severity = $dados['neeSeverityLearning'];
+            $nee->name = 'Síndrome de Asperger/Deficit atenção';
+            $nee->save();
+        }
+
+        if ($request->neeTypeMental  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Doenças do Foro Psicológico/neurológico/psiquiátrico';
             $nee->save();
         }
 
@@ -223,14 +230,6 @@ class StudentController extends Controller
         return response()->json(new UserResource($user), 201);
     }
 
-    public function getZipCode(Request $request, $zip)
-    {
-        $zipCode = str_split($zip, 4);
-        $zipCode[1] = substr($zipCode[1], 1);
-        $zipCodes = ZipCode::where('cpo_cod4', $zipCode[0])->Where('cpo_cod3', $zipCode[1])->get();
-
-        return response()->json(new ZipCodeResource($zipCodes), 201);
-    }
 
     public function getResidence($residence, $area)
     {
