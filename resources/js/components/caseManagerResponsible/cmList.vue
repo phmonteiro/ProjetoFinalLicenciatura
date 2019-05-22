@@ -2,7 +2,7 @@
     <div>
         <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>
         <div class="container">
-            <h2>Lista de Gestores de caso por aprovar</h2>
+            <h2>Lista de Gestores de caso</h2>
             <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
                 <!-- <template slot="actions" slot-scope="row">
                     <button class="btn btn-success" v-on:click.prevent="editUser(row.item)"

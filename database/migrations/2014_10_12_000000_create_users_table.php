@@ -98,7 +98,10 @@ class CreateUsersTable extends Migration
         Schema::create('case_managers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('studentEmail')->unique();
+            $table->string('studentName');
             $table->string('caseManagerEmail')->unique();
+            $table->string('caseManagerName');
+            $table->string('approved')->nullable();
         });
 
         Schema::create('contacts', function (Blueprint $table) {

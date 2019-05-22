@@ -9,6 +9,9 @@
             <a href="#">
                 <router-link class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
             </a>
+            <a href="#">
+                <router-link class="nav-link" :to="{name: 'manageENEE'}">ENEE</router-link>
+            </a>
             
         </div>
 

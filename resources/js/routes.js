@@ -92,6 +92,14 @@ const routes = [
           middlewareAuth: true,
         },
       },
+      {
+        path: '/director/manageENEE',
+        name: 'manageENEE',
+        component: require('./components/director/manageENEE.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      }
     ],
   },
   {
