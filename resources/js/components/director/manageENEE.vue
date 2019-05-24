@@ -1,6 +1,6 @@
 <template>
     <div>
-        <eneeOptions :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></eneeOptions>
+        <eneeOptions :user="currentUser" :studentSupports="supportsForStudent" @save-user="saveUser" @cancel-edit="cancelEdit()"></eneeOptions>
         <div class="container">
             <h2>Lista de ENEE</h2>
             <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
@@ -36,38 +36,38 @@
                 pagination: {},
                 loading: true,
                 enee: null,
-                fields: [
-                    {
-                    key: "name",
-                    label: "Nome",
-                    sortable: true
+                fields: [{
+                        key: "name",
+                        label: "Nome",
+                        sortable: true
                     },
                     {
-                    key: "email",
-                    label: "Email",
-                    sortable: true
+                        key: "email",
+                        label: "Email",
+                        sortable: true
                     },
                     {
-                    key: "number",
-                    label: "Número",
-                    sortable: true
+                        key: "number",
+                        label: "Número",
+                        sortable: true
                     },
                     {
-                    key: "course",
-                    label: "Curso",
-                    sortable: true
+                        key: "course",
+                        label: "Curso",
+                        sortable: true
                     },
                     {
-                    key: "school",
-                    label: "Escola",
-                    sortable: true
+                        key: "school",
+                        label: "Escola",
+                        sortable: true
                     },
                     {
-                    key: "actions",
-                    label: "Ações Utilizador"
+                        key: "actions",
+                        label: "Ações Utilizador"
                     }
                 ],
-                currentUser: null
+                currentUser: null,
+                supportsForStudent: null
             };
         },
         methods: {
@@ -97,32 +97,46 @@
             },
             editUser(row) {
                 this.currentUser = Object.assign({}, row);
+                this.getStudentSupports();
+
             },
             cancelEdit: function () {
                 this.currentUser = null;
             },
-            saveUser() {
-                // axios
-                //     .post("api/setCM/" + this.currentUser.id, this.currentUser)
-                //     .then(response => {
-                //         this.getEnee();
-                //         this.currentUser = null;
-                //         this.$toasted.success("Utilizador editado com sucesso.", {
-                //             duration: 4000,
-                //             position: "top-center",
-                //             theme: "bubble"
-                //         });
-                //     })
-                //     .catch(error => {
-                //         console.log(error);
-                //         this.$toasted.error(
-                //             "Erro ao editar utilizador. Por favor tente novamente.", {
-                //                 duration: 4000,
-                //                 position: "top-center",
-                //                 theme: "bubble"
-                //             }
-                //         );
-                //     });
+            getStudentSupports(){
+                axios.get("api/getStudentSupports/" + this.currentUser.email).then(
+                        response => {
+                            console.log(response);
+                            this.supportsForStudent = response.data;
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            saveUser(data) {
+                axios
+                    .post("api/updateStudentSupports/", data)
+                    .then(response => {
+                        this.getStudentSupports();
+                        this.currentUser = null;
+                        this.$toasted.success("Estudante guardado com sucesso.", {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toasted.error(
+                            "Erro ao guardar. Por favor tente novamente.", {
+                                duration: 4000,
+                                position: "top-center",
+                                theme: "bubble"
+                            }
+                        );
+                    });
+                    
             }
         },
         created() {

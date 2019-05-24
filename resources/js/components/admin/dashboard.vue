@@ -1,151 +1,44 @@
 <template>
-  <div>
-    <div class="loader">
-      <ClipLoader sizeUnit="px" v-if="loading" :size="50"/>
-    </div>
-    <div class="container" v-if="users">
-      <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
-      <div class="container">
-        <h2>Lista de utilizadores</h2>
-        <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
-          <template slot="actions" slot-scope="row">
-            <button
-              class="btn btn-secondary"
-              v-on:click.prevent="editUser(row.item)"
-              v-if="row.item.number != user.number"
-            >Editar utilizador</button>
-          </template>
-        </b-table>
-        <nav aria-label="Page navigation" v-if="users">
-          <ul class="pagination">
-            <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="getUsers(pagination.prev_page_url)"
-              >Anterior</a>
-            </li>
+    <div>
+        <div class="container pt-3">
+            <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
+            <h3>Sou Admin</h3>
+        </div>
 
-            <li class="page-item disabled">
-              <a
-                class="page-link text-dark"
-                href="#"
-              >Página {{ pagination.current_page }} de {{ pagination.last_page }}</a>
-            </li>
+        <div class="sidenav">
+            <a href="#">
+                <router-link class="nav-link" :to="{name: 'editUsers'}">Editar Utilizadores</router-link>
+            </a>
 
-            <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="getUsers(pagination.next_page_url)"
-              >Próximo</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+            <a href="#">
+                <router-link class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
+            </a>
+
+            
+
+        </div>
+        <router-view></router-view>
+
+        
     </div>
-  </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      pagination: {},
-      loading: true,
-      users: null,
-      fields: [
-        {
-          key: "name",
-          label: "Nome",
-          sortable: true
+    export default {
+        data() {
+            return {
+                
+            };
         },
-        {
-          key: "email",
-          label: "Email",
-          sortable: true
-        },
-        {
-          key: "type",
-          label: "Tipo de utilizador",
-          sortable: true
-        },
-        {
-          key: "loginExpirationDate",
-          label: "Data expiração login",
-          sortable: true
-        },
-        {
-          key: "actions",
-          label: "Editar Utilizador"
-        }
-      ],
-      currentUser: null
-    };
-  },
-  methods: {
-    getUsers(page_url) {
-      let pg = this;
-      page_url = page_url || "api/getUsers?page=1";
-      axios
-        .get(page_url)
-        .then(response => {
-          this.loading = false;
-          this.users = response.data.data;
-          pg.makePagination(response.data.meta, response.data.links);
-        })
-        .catch(error => {
-          console.log(error);
-          this.loading = false;
-        });
-    },
-    makePagination(meta, links) {
-      let pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
-      };
-      this.pagination = pagination;
-    },
-    editUser(row) {
-      this.currentUser = Object.assign({}, row);
-    },
-    cancelEdit: function() {
-      this.currentUser = null;
-    },
-    saveUser() {
-      axios
-        .post("api/editUser/" + this.currentUser.id, this.currentUser)
-        .then(response => {
-          this.getUsers();
-          this.currentUser = null;
-          this.$toasted.success("Utilizador editado com sucesso.", {
-            duration: 4000,
-            position: "top-center",
-            theme: "bubble"
-          });
-        })
-        .catch(error => {
-          console.log(error);
-          this.$toasted.error(
-            "Erro ao editar utilizador. Por favor tente novamente.",
-            {
-              duration: 4000,
-              position: "top-center",
-              theme: "bubble"
-            }
-          );
-        });
-    }
-  },
-  created() {
-    this.getUsers();
-  },
-  computed: {
-    user: function() {
-      return this.$store.state.user;
-    }
-  }
-};
-</script>
+        methods: {
 
+        },
+        created() {
+        },
+        computed: {
+            user: function () {
+                return this.$store.state.user;
+            }
+        }
+    };
+
+</script>

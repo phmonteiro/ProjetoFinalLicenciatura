@@ -76,6 +76,24 @@ const routes = [
     meta: {
       middlewareAuth: true,
     },
+    children: [
+      {
+        path: '/admin/manageSupports',
+        name: 'manageSupports',
+        component: require('./components/admin/manageSupports.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      },
+      {
+        path: '/admin/editUsers',
+        name: 'editUsers',
+        component: require('./components/admin/editUsers.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      }
+    ],
   },
   {
     path: '/director',

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Supports;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\SupportResource;
+
 
 
 class AdminController extends Controller
@@ -18,6 +21,7 @@ class AdminController extends Controller
     {
         return UserResource::collection(User::Orderby('number')->paginate(10));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -85,7 +89,8 @@ class AdminController extends Controller
         return response()->json(new UserResource($user), 200);
     }
 
-    /**
+
+     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

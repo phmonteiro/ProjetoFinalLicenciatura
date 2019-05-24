@@ -16,13 +16,9 @@
         </b-form-group>
 
         <b-form-group label="Apoios ao estudante">
-            <b-form-checkbox-group
-                v-model="selected"
-                :options="options"
-                switches
-            ></b-form-checkbox-group>
+            <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
         </b-form-group>
-
+        
         <div class="form-group">
             <button type="submit" class="btn btn-secondary" name="ok" v-on:click.prevent="save()">Guardar</button>
             <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
@@ -31,7 +27,7 @@
 </template>
 <script>
     export default {
-        props: ["user"],
+        props: ["user", "studentSupports"],
         data: function () {
             return {
                 data: {
@@ -52,18 +48,10 @@
                     "Temporária",
                     "Permanente"
                 ],
-                selected: [],
                 options: [
-                    { text: 'Prioridade', value: 'priority' },
-                    { text: 'Apoios em sala de aula', value: 'classroomSupport' },
-                    { text: 'Apoio à componente letiva', value: 'teachingSupport' },
-                    { text: 'Acompanhamento individualizado', value: 'individualSupport' },
-                    { text: 'Acompanhamento por professor Tutor', value: 'tutorSupport' },
-                    { text: 'Métodos e provas de avaliação adaptados', value: 'adaptativeExams' },
-                    { text: 'Acesso a épocas especiais de exame', value: 'specialExams' }
-
-
-                ]
+                    
+                ],
+                childData: ''
             };
         },
         methods: {
@@ -71,34 +59,28 @@
                 this.$emit("cancel-edit");
             },
             save: function () {
-                this.setCM();
-                this.$emit("save-user");
+                let data= {
+                    email: this.user.email,
+                    supports: this.studentSupports
+                }
+                this.$emit("save-user", data);
             },
-            setCM() {
-                this.data.studentName = this.user.name;
-                axios
-                    .post("api/setCM/" + this.user.id, this.data)
-                    .then(response => {
-                        this.$toasted.success(
-                            "O responsavel será notificado para aprovacao.", {
-                                duration: 4000,
-                                position: "top-center",
-                                theme: "bubble"
-                            }
-                        );
-                    })
+            getAllSupports() {
+                axios.get("api/getSupports").then(
+                        response => {
+                            this.options = response.data;
+                            console.log("supports aqui"+this.options);
+                        }
+                    )
                     .catch(error => {
                         console.log(error);
-                        this.$toasted.error(
-                            "Erro ao atribuir gestor caso. Por favor tente novamente.", {
-                                duration: 4000,
-                                position: "top-center",
-                                theme: "bubble"
-                            }
-                        );
                     });
-            }
-        }
+            },
+            
+        },
+        created() {
+            this.getAllSupports();
+        },
     };
 
 </script>

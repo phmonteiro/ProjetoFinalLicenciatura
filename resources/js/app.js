@@ -28,6 +28,7 @@ Vue.component('meetings', require('./components/services/meetings.vue').default)
 Vue.component('enee-list', require('./components/services/eneeList.vue').default);
 Vue.component('set-cm', require('./components/director/setCM.vue').default);
 Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').default);
+Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
 
 const app = new Vue({
   el: '#app',

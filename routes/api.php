@@ -22,6 +22,10 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 //admin
 Route::get('getUsers', 'AdminController@index');
 Route::post('editUser/{id}', 'AdminController@update')->name('edit');
+Route::post('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
+Route::post('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
+Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
+Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
 
 //student
 Route::get('getEnee', 'StudentController@index');
@@ -45,6 +49,8 @@ Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
 
 //Director
 Route::post('setCM/{id}', 'DirectorController@setCM');
+Route::get('getSupports', 'SupportController@index');
+Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
 
 //Case managers Responsible
 Route::get('getCaseManagers', 'CaseManagerController@index');
