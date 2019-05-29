@@ -48,11 +48,10 @@ Route::post('changeNextContact/{id}', 'ServiceController@editContact');
 Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
 
 //Director
-Route::post('setCM/{id}', 'DirectorController@setCM');
 Route::get('getSupports', 'SupportController@index');
 Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
 
 //Case managers Responsible
 Route::get('getCaseManagers', 'CaseManagerController@index');
 Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
-Route::post('approveCM/{id}', 'CaseManagerController@approveCM');
+Route::post('setCM/{id}', 'CaseManagerController@setCM');

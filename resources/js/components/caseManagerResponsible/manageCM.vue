@@ -96,27 +96,7 @@
                 this.currentUser = null;
             },
             saveUser() {
-                // axios
-                //     .post("api/setCM/" + this.currentUser.id, this.currentUser)
-                //     .then(response => {
-                //         this.getUsers();
-                //         this.currentUser = null;
-                //         this.$toasted.success("Utilizador editado com sucesso.", {
-                //             duration: 4000,
-                //             position: "top-center",
-                //             theme: "bubble"
-                //         });
-                //     })
-                //     .catch(error => {
-                //         console.log(error);
-                //         this.$toasted.error(
-                //             "Erro ao editar utilizador. Por favor tente novamente.", {
-                //                 duration: 4000,
-                //                 position: "top-center",
-                //                 theme: "bubble"
-                //             }
-                //         );
-                //     });
+                this.currentUser = null;
             }
         },
         created() {

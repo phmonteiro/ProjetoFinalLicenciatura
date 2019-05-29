@@ -10,10 +10,8 @@
                 <router-link class="nav-link" :to="{name: 'cmList'}">Gestores Caso</router-link>
             </a>
             <a href="#">
-                <router-link class="nav-link" :to="{name: 'cmForApproval'}">Aprovar Gestores Caso</router-link>
+                <router-link class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
             </a>
-            
-            
         </div>
 
         <router-view></router-view>

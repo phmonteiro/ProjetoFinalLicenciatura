@@ -103,14 +103,6 @@ const routes = [
     },
     children: [
       {
-        path: '/director/manageCM',
-        name: 'manageCM',
-        component: require('./components/director/manageCM.vue').default,
-        meta: {
-          middlewareAuth: true,
-        },
-      },
-      {
         path: '/director/manageENEE',
         name: 'manageENEE',
         component: require('./components/director/manageENEE.vue').default,
@@ -136,9 +128,9 @@ const routes = [
         },
       },
       {
-        path: '/caseManagerResponsible/cmForApproval',
-        name: 'cmForApproval',
-        component: require('./components/caseManagerResponsible/cmForApproval.vue').default,
+        path: '/caseManagerResponsible/manageCM',
+        name: 'manageCM',
+        component: require('./components/caseManagerResponsible/manageCM.vue').default,
         meta: {
           middlewareAuth: true,
         },
