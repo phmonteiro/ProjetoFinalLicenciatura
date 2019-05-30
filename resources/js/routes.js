@@ -114,6 +114,23 @@ const routes = [
     ],
   },
   {
+    path: '/coordinator',
+    component: require('./components/coordinator/dashboard.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+    children: [
+      {
+        path: '/coordinator/eneeRequests',
+        name: 'eneeRequests',
+        component: require('./components/coordinator/eneeRequests.vue').default,
+        meta: {
+          middlewareAuth: true,
+        },
+      }
+    ],
+  },
+  {
     path: '/caseManagerResponsible',
     component: require('./components/caseManagerResponsible/dashboard.vue').default,
     meta: {
@@ -184,6 +201,10 @@ router.beforeEach((to, from, next) => {
   }
   if (to.fullPath=='/' && store.state.user != null && store.state.user.type=='CaseManagerResponsible') {
     next('/CaseManagerResponsible');
+    return;
+  }
+  if (to.fullPath=='/' && store.state.user != null && store.state.user.type=='Coordinator') {
+    next('/coordinator');
     return;
   }
   next();

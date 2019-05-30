@@ -151,7 +151,11 @@ export default {
             this.$router.push("/director");
             return;
           }
-          if (response.data.user.type == "CaseManagerResponsible") {
+          if (response.data.type == "Coordinator") {
+            this.$router.push("/coordinator");
+            return;
+          }
+          if (response.data.type == "CaseManagerResponsible") {
             this.$router.push("/caseManagerResponsible");
             return;
           }

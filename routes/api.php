@@ -53,9 +53,14 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
     Route::post('reproveSubscription/{id}', 'SupportController@reproveSubscription');
 
+    //Coordinator
+    Route::get('getRequests', 'CoordinatorController@requests');
+    Route::post('approveEneeStatus/{id}', 'CoordinatorController@approve');
+    Route::post('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
     Route::get('getCaseManagers', 'CaseManagerController@index');
     Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
     Route::post('setCM/{id}', 'CaseManagerController@setCM');
+    Route::get('getStudents', 'CaseManagerController@getStudents');
 });
