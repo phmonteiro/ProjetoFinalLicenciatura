@@ -23,7 +23,7 @@ class SupportController extends Controller
         return Student_Supports::where('email', $email)->pluck('support_value');
     }
 
-
+    
 
     public function updateStudentSupports(Request $request)
     {
@@ -36,26 +36,8 @@ class SupportController extends Controller
 
         ]);
 
-        $user = User::Where('email', $dados['email'])->first();
-        $user->enee = "approved";
-
-        if ($dados['date']) {
-            $dado = $request->validate([
-                'date' => 'after:today'
-            ]);
-            $user->eneeExpirationDate = $dado['date'];
-        }
-
-        $user->save();
-
-
-
-        if ($dados['tutor'] != null) {
-            $tutor = new Tutor();
-            $tutor->studentEmail = $user->email;
-            $tutor->tutorEmail = $dados['tutor'];
-        }
-
+        //dd($dados);
+        
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
 
         if (sizeof($existingSupports) == 0) {

@@ -11,6 +11,7 @@ use App\CaseManager;
 use Carbon\Carbon;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
+use App\Http\Resources\UserResource;
 use PDF;
 use App\MedicalFile;
 use ZipArchive;
@@ -92,6 +93,34 @@ class ServiceController extends Controller
         //
     }
 
+    public function approve($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->servicesApproval = 'approved';
+
+        $user->save();
+
+        return response()->json(200);
+    }
+
+    public function deny($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->servicesApproval = 'denied';
+
+        $user->save();
+
+        return response()->json(200);
+    }
+
+    public function getServicesRequests()
+    {
+        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->where('servicesApproval', 'requested')->paginate(10));
+    }
+
+    
     public function finalizeMeeting(Request $request, $id)
     {
         $meeting = Meeting::findOrFail($id);
