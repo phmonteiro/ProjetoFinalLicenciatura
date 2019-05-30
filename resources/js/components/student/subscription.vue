@@ -1,415 +1,436 @@
 <template>
   <div class="container" v-if="student != null">
-    <h2>Formulário de candidatura ao estatuto de ENEE</h2>
-    <div class="row">
-      <div class="col-md-12 pt-4">
-        <h4>Identificação Estudante</h4>
-        <div class="form-group">
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="student-number">Nr. Estudante</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="student-number"
-                  id="student-number"
-                  min="1"
-                  max="999999999"
-                  v-model="student.number"
-                  disabled
-                >
-              </div>
-              <div class="col">
-                <label for="student-name">Nome</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="student-name"
-                  placeholder="Nome Estudante"
-                  name="student-name"
-                  v-model="student.name"
-                  disabled
-                >
-              </div>
-              <div class="col">
-                <label for="phone-number">Contacto Telefónico</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="phone-number"
-                  id="phone-number"
-                  min="1"
-                  max="999999999"
-                  v-model="student.phoneNumber"
-                >
-              </div>
-              <div class="col">
-                <label for="birth-date">Data Nascimento</label>
-                <input
-                  class="form-control"
-                  type="date"
-                  value
-                  id="birth-date"
-                  name="birth-date"
-                  v-model="student.birthDate"
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="email">E-mail</label>
-                <input
-                  class="form-control"
-                  type="email"
-                  name="email"
-                  placeholder="email@mail.com"
-                  id="email"
-                  v-model="student.email"
-                  disabled
-                >
+    <div v-if="student.enee=='awaiting' || student.enee=='approved'">
+      <h1>Já</h1>
+    </div>
+    <div>
+      <h2>Formulário de candidatura ao estatuto de ENEE</h2>
+      <div class="row">
+        <div class="col-md-12 pt-4">
+          <h4>Identificação Estudante</h4>
+          <div class="form-group">
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="student-number">Nr. Estudante</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="student-number"
+                    id="student-number"
+                    min="1"
+                    max="999999999"
+                    v-model="student.number"
+                    disabled
+                  >
+                </div>
+                <div class="col">
+                  <label for="student-name">Nome</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="student-name"
+                    placeholder="Nome Estudante"
+                    name="student-name"
+                    v-model="student.name"
+                    disabled
+                  >
+                </div>
+                <div class="col">
+                  <label for="phone-number">Contacto Telefónico</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="phone-number"
+                    id="phone-number"
+                    min="1"
+                    max="999999999"
+                    v-model="student.phoneNumber"
+                  >
+                </div>
+                <div class="col">
+                  <label for="birth-date">Data Nascimento</label>
+                  <input
+                    class="form-control"
+                    type="date"
+                    value
+                    id="birth-date"
+                    name="birth-date"
+                    v-model="student.birthDate"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col-6">
-                <label for="residence">Residencia em época de aulas</label>
-                <vue-google-autocomplete
-                  class="form-control"
-                  id="residence"
-                  placeholder="Morada"
-                  name="residence"
-                  v-on:placechanged="getAddressData"
-                  country="pt"
-                ></vue-google-autocomplete>
-              </div>
-              <div class="col">
-                <label for="zipCode">Código Postal</label>
-                <input
-                  class="form-control"
-                  pattern="\d\d\d\d[-]\d\d\d"
-                  id="zipCode"
-                  name="zipCode"
-                  placeholder="1234-567"
-                  v-model="student.zipCode"
-                >
-              </div>
-              <div class="col">
-                <label for="area">Localidade</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="area"
-                  placeholder="Localidade"
-                  name="area"
-                  v-model="student.area"
-                >
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="email">E-mail</label>
+                  <input
+                    class="form-control"
+                    type="email"
+                    name="email"
+                    placeholder="email@mail.com"
+                    id="email"
+                    v-model="student.email"
+                    disabled
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <h5>Doc. Identificacao</h5>
-                <select
-                  class="custom-select"
-                  name="identification"
-                  single
-                  v-model="student.identificationDocument"
-                >
-                  <option selected value="cc">Cartao Cidadao</option>
-                  <option value="ccond">Carta Conducao</option>
-                  <option value="passp">Passaporte</option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="number">Nº</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="number"
-                  id="number"
-                  v-model="student.identificationNumber"
-                >
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col-6">
+                  <label for="residence">Residencia em época de aulas</label>
+                  <vue-google-autocomplete
+                    class="form-control"
+                    id="residence"
+                    placeholder="Morada"
+                    name="residence"
+                    v-on:placechanged="getAddressData"
+                    country="pt"
+                  ></vue-google-autocomplete>
+                </div>
+                <div class="col">
+                  <label for="zipCode">Código Postal</label>
+                  <input
+                    class="form-control"
+                    pattern="\d\d\d\d[-]\d\d\d"
+                    id="zipCode"
+                    name="zipCode"
+                    placeholder="1234-567"
+                    v-model="student.zipCode"
+                  >
+                </div>
+                <div class="col">
+                  <label for="area">Localidade</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="area"
+                    placeholder="Localidade"
+                    name="area"
+                    v-model="student.area"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="niss">NISS</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="niss"
-                  id="NISS"
-                  placeholder="Niss"
-                  v-model="student.niss"
-                >
-              </div>
-              <div class="col">
-                <label for="nif">NIF</label>
-                <input class="form-control" type="number" name="nif" id="NIF" v-model="student.nif">
-              </div>
-              <div class="col">
-                <label for="sns">SNS</label>
-                <input class="form-control" type="number" name="sns" id="SNS" v-model="student.sns">
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <h5>Doc. Identificacao</h5>
+                  <select
+                    class="custom-select"
+                    name="identification"
+                    single
+                    v-model="student.identificationDocument"
+                  >
+                    <option selected value="cc">Cartao Cidadao</option>
+                    <option value="ccond">Carta Conducao</option>
+                    <option value="passp">Passaporte</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="number">Nº</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="number"
+                    id="number"
+                    v-model="student.identificationNumber"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="dropdown-divider"></div>
-
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="curricular-year">Ano Curricular</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="curricular-year"
-                  id="year"
-                  min="1"
-                  max="10"
-                  v-model="student.curricularYear"
-                >
-              </div>
-              <div class="col">
-                <label for="enruledYear">Ano 1ª matricula</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="enruledYear"
-                  name="enruledYear"
-                  v-model="student.enruledYear"
-                >
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="niss">NISS</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="niss"
+                    id="NISS"
+                    placeholder="Niss"
+                    v-model="student.niss"
+                  >
+                </div>
+                <div class="col">
+                  <label for="nif">NIF</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="nif"
+                    id="NIF"
+                    v-model="student.nif"
+                  >
+                </div>
+                <div class="col">
+                  <label for="sns">SNS</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="sns"
+                    id="SNS"
+                    v-model="student.sns"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="dropdown-divider"></div>
+            <div class="dropdown-divider"></div>
 
-          <h5>Identificação do Reponsavel</h5>
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="responsibleName">Nome</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="responsibleName"
-                  placeholder
-                  name="responsibleName"
-                  v-model="student.responsibleName"
-                >
-              </div>
-              <div class="col">
-                <label for="responsiblePhone">Contacto telefónico</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="responsiblePhone"
-                  id="responsiblePhone"
-                  min="1"
-                  max="9999999999"
-                  v-model="student.responsiblePhone"
-                >
-              </div>
-              <div class="col">
-                <label for="responsibleKin">Parentesco</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="responsibleKin"
-                  placeholder
-                  name="responsibleKin"
-                  v-model="student.responsibleKin"
-                >
-              </div>
-              <div class="col">
-                <label for="responsibleEmail">E-mail</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="responsibleEmail"
-                  placeholder
-                  name="responsibleEmail"
-                  v-model="student.responsibleEmail"
-                >
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="curricular-year">Ano Curricular</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="curricular-year"
+                    id="year"
+                    min="1"
+                    max="10"
+                    v-model="student.curricularYear"
+                  >
+                </div>
+                <div class="col">
+                  <label for="enruledYear">Ano 1ª matricula</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="enruledYear"
+                    name="enruledYear"
+                    v-model="student.enruledYear"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <h5>Identificação do Contacto de Emergencia</h5>
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="emergencyName">Nome</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="emergencyName"
-                  placeholder
-                  name="emergencyName"
-                  v-model="student.emergencyName"
-                >
-              </div>
-              <div class="col">
-                <label for="emergencyPhone">Contacto telefónico</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  name="emergencyPhone"
-                  id="emergencyPhone"
-                  v-model="student.emergencyPhone"
-                >
-              </div>
-              <div class="col">
-                <label for="emergencyKin">Parentesco</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="emergencyKin"
-                  placeholder
-                  name="emergencyKin"
-                  v-model="student.emergencyKin"
-                >
-              </div>
-              <div class="col">
-                <label for="emergencYEmail">E-mail</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="emergencyEmail"
-                  placeholder
-                  name="emergencyEmail"
-                  v-model="student.emergencyEmail"
-                >
+            <div class="dropdown-divider"></div>
+
+            <h5>Identificação do Reponsavel</h5>
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="responsibleName">Nome</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="responsibleName"
+                    placeholder
+                    name="responsibleName"
+                    v-model="student.responsibleName"
+                  >
+                </div>
+                <div class="col">
+                  <label for="responsiblePhone">Contacto telefónico</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="responsiblePhone"
+                    id="responsiblePhone"
+                    min="1"
+                    max="9999999999"
+                    v-model="student.responsiblePhone"
+                  >
+                </div>
+                <div class="col">
+                  <label for="responsibleKin">Parentesco</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="responsibleKin"
+                    placeholder
+                    name="responsibleKin"
+                    v-model="student.responsibleKin"
+                  >
+                </div>
+                <div class="col">
+                  <label for="responsibleEmail">E-mail</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="responsibleEmail"
+                    placeholder
+                    name="responsibleEmail"
+                    v-model="student.responsibleEmail"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="dropdown-divider"></div>
-
-          <h5>Tipos de NEE</h5>
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <b-form-checkbox v-model="student.neeTypeSight" name="check-button" switch>Visão</b-form-checkbox>
-              </div>
-              <div class="col">
-                <b-form-checkbox
-                  v-model="student.neeTypeCommunication"
-                  name="check-button"
-                  switch
-                >Dislexia/Disortografia/Disgrafia</b-form-checkbox>
+            <h5>Identificação do Contacto de Emergencia</h5>
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="emergencyName">Nome</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="emergencyName"
+                    placeholder
+                    name="emergencyName"
+                    v-model="student.emergencyName"
+                  >
+                </div>
+                <div class="col">
+                  <label for="emergencyPhone">Contacto telefónico</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="emergencyPhone"
+                    id="emergencyPhone"
+                    v-model="student.emergencyPhone"
+                  >
+                </div>
+                <div class="col">
+                  <label for="emergencyKin">Parentesco</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="emergencyKin"
+                    placeholder
+                    name="emergencyKin"
+                    v-model="student.emergencyKin"
+                  >
+                </div>
+                <div class="col">
+                  <label for="emergencYEmail">E-mail</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="emergencyEmail"
+                    placeholder
+                    name="emergencyEmail"
+                    v-model="student.emergencyEmail"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <b-form-checkbox v-model="student.neeTypeEaring" name="check-button" switch>Audição</b-form-checkbox>
-              </div>
-              <div class="col">
-                <b-form-checkbox
-                  v-model="student.neeTypeLearning"
-                  name="check-button"
-                  switch
-                >Síndrome de Asperger, Deficit atenção</b-form-checkbox>
+            <div class="dropdown-divider"></div>
+
+            <h5>Tipos de NEE</h5>
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <b-form-checkbox v-model="student.neeTypeSight" name="check-button" switch>Visão</b-form-checkbox>
+                </div>
+                <div class="col">
+                  <b-form-checkbox
+                    v-model="student.neeTypeCommunication"
+                    name="check-button"
+                    switch
+                  >Dislexia/Disortografia/Disgrafia</b-form-checkbox>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <b-form-checkbox v-model="student.neeTypeMotor" name="check-button" switch>Motora</b-form-checkbox>
-              </div>
-              <div class="col">
-                <b-form-checkbox
-                  v-model="student.neeTypeMental"
-                  name="check-button"
-                  switch
-                >Doenças do Foro Psicológico, neurológico ou psiquiátrico</b-form-checkbox>
-              </div>
-            </div>
-          </div>
-
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <b-form-checkbox
-                  v-model="student.neeTypeAnotherDisease"
-                  name="check-button"
-                  switch
-                >Outras doenças</b-form-checkbox>
-              </div>
-              <div v-if="student.neeTypeAnotherDisease" class="col">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="anotherDisease"
-                  name="anotherDisease"
-                  v-model="student.neeTypeDisease"
-                  placeholder="Indique o nome da doença"
-                >
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <b-form-checkbox
+                    v-model="student.neeTypeEaring"
+                    name="check-button"
+                    switch
+                  >Audição</b-form-checkbox>
+                </div>
+                <div class="col">
+                  <b-form-checkbox
+                    v-model="student.neeTypeLearning"
+                    name="check-button"
+                    switch
+                  >Síndrome de Asperger, Deficit atenção</b-form-checkbox>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label>Análise funcional do problema / Informação sobre implicações no desempenho académico</label>
-                <textarea
-                  class="form-control"
-                  type="text"
-                  name="functionalAnalysis"
-                  id="functionalAnalysis"
-                  v-model="student.functionalAnalysis"
-                ></textarea>
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <b-form-checkbox v-model="student.neeTypeMotor" name="check-button" switch>Motora</b-form-checkbox>
+                </div>
+                <div class="col">
+                  <b-form-checkbox
+                    v-model="student.neeTypeMental"
+                    name="check-button"
+                    switch
+                  >Doenças do Foro Psicológico, neurológico ou psiquiátrico</b-form-checkbox>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="dropdown-divider"></div>
-
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="description">Descrição de apoios anteriormente usufruidos</label>
-                <textarea
-                  class="form-control"
-                  type="text"
-                  name="educationalSupport"
-                  id="educationalSupport"
-                  v-model="student.educationalSupport"
-                ></textarea>
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <b-form-checkbox
+                    v-model="student.neeTypeAnotherDisease"
+                    name="check-button"
+                    switch
+                  >Outras doenças</b-form-checkbox>
+                </div>
+                <div v-if="student.neeTypeAnotherDisease" class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="anotherDisease"
+                    name="anotherDisease"
+                    v-model="student.neeTypeDisease"
+                    placeholder="Indique o nome da doença"
+                  >
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="container-full-width">
-            <div class="row">
-              <div class="col">
-                <label for="neeType">Relatório médico</label>
-                <div class="field">
-                  <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple>
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label>Análise funcional do problema / Informação sobre implicações no desempenho académico</label>
+                  <textarea
+                    class="form-control"
+                    type="text"
+                    name="functionalAnalysis"
+                    id="functionalAnalysis"
+                    v-model="student.functionalAnalysis"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="description">Descrição de apoios anteriormente usufruidos</label>
+                  <textarea
+                    class="form-control"
+                    type="text"
+                    name="educationalSupport"
+                    id="educationalSupport"
+                    v-model="student.educationalSupport"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-full-width">
+              <div class="row">
+                <div class="col">
+                  <label for="neeType">Relatório médico</label>
+                  <div class="field">
+                    <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <button type="submit" class="btn btn-primary" v-on:click.prevent="sendForm()">Submeter</button>
         </div>
-        <button type="submit" class="btn btn-primary" v-on:click.prevent="sendForm()">Submeter</button>
       </div>
     </div>
   </div>

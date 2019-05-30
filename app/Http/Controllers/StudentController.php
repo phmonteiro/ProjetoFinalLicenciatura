@@ -175,6 +175,7 @@ class StudentController extends Controller
         $user->sns = $dados['sns'];
         $user->educationalSupport = $dados['educationalSupport'];
         $user->functionalAnalysis = $dados['functionalAnalysis'];
+        $user->enee = 'awaiting';
 
         if ($request->neeTypeSight  == "true") {
             $nee = new Nee();
