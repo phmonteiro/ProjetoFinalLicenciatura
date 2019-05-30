@@ -40,18 +40,22 @@ Route::middleware('auth:api')->group(function () {
     Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
     Route::get('getUser/{id}', 'StudentController@show');
 
-    //service
+    //services
     Route::post('setContact/{id}', 'ServiceController@contact');
     Route::get('getMeetings', 'ServiceController@meetings');
     Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
     Route::get('getContact/{id}', 'ServiceController@contactDetails');
     Route::post('changeNextContact/{id}', 'ServiceController@editContact');
     Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
-
+    Route::get('getServicesRequests', 'ServiceController@getServicesRequests');
+    Route::post('approveEneeStatusByServices/{id}', 'ServiceController@approve');
+    Route::post('denyEneeStatusByServices/{id}', 'ServiceController@deny');
+    
     //Director
     Route::get('getSupports', 'SupportController@index');
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
     Route::post('reproveSubscription/{id}', 'SupportController@reproveSubscription');
+    Route::post('servicesApprovalRequest/{id}', 'DirectorController@approvalRequest');
 
     //Coordinator
     Route::get('getRequests', 'CoordinatorController@requests');

@@ -27,9 +27,22 @@
 
     <div class="form-group">
       <label for="coordinatorApproval">Opinião coordenador de curso:</label>
-      <p v-if="user.coordinatorAproval==1">Aprovado</p>
-      <p v-if="user.coordinatorAproval==0">Rejeitado</p>
-      <p v-if="user.coordinatorAproval==null">Ainda sem parecer</p>
+      <p v-if="user.coordinatorAproval==1"><b>Aprovado</b> </p>
+      <p v-if="user.coordinatorAproval==0"><b>Rejeitado</b> </p>
+      <p v-if="user.coordinatorAproval==null"><b>Ainda sem parecer</b> </p>
+    </div>
+
+
+    
+
+    <div class="form-group">
+      <label for="servicesApproval">Opinião servicos: </label>
+      <p v-if="user.servicesApproval=='approved'"><b>Aprovado</b> </p>
+      <p v-if="user.servicesApproval=='denied'"><b>Rejeitado</b> </p>
+      <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' "><b>Ainda sem parecer</b> </p>
+      
+      <button v-if="user.servicesApproval==null" type="submit" class="btn btn-secondary" name="ok" v-on:click.prevent="askForServicesApproval()">Pedir parecer</button>
+
     </div>
 
     <b-form-group id="input-group-3" label="Duracao da NEE:" label-for="input-3">
@@ -57,7 +70,7 @@
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-secondary" name="ok" v-on:click.prevent="save()">Aprovar</button>
+      <button type="submit" class="btn btn-success" name="ok" v-on:click.prevent="save()">Aprovar</button>
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
     </div>
   </div>
@@ -91,6 +104,25 @@ export default {
     cancel() {
       this.$emit("cancel-edit");
     },
+    askForServicesApproval(){
+      axios
+        .post("api/servicesApprovalRequest/" + this.user.id)
+        .then(response => {
+          this.$emit("refresh");
+          this.$toasted.success("Pedido efetuado com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
+        })
+        .catch(error => {
+          this.$toasted.error("Erro ao pedir. Por favor tente novamente.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
+        });
+    },
     save: function() {
       let data = {
         email: this.user.email,
@@ -115,6 +147,11 @@ export default {
   },
   created() {
     this.getAllSupports();
-  }
+  },
+  computed: {
+      state() {
+        return this.value.length === 1
+      }
+    }
 };
 </script>

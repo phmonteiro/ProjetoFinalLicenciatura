@@ -3,6 +3,7 @@
     <eneeOptions
       :user="currentUser"
       :studentSupports="supportsForStudent"
+      @refresh="getEnee"
       @save-user="saveUser"
       @cancel-edit="cancelEdit()"
     ></eneeOptions>
@@ -11,7 +12,7 @@
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template slot="enee" slot-scope="row">
           <p v-if="row.item.enee=='awaiting'">Aguardando</p>
-          <p v-if="row.item.enee=='reproved'">Reprovado</p>
+          <p v-if="row.item.enee=='denied'">Reprovado</p>
           <p v-if="row.item.enee=='approved'">Aprovado</p>
         </template>
         <template slot="actions" slot-scope="row">

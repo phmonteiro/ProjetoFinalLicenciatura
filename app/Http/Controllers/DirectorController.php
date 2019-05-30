@@ -11,5 +11,12 @@ use App\Http\Resources\CaseManagerResource;
 
 class DirectorController extends Controller
 {
-    //
+    public function approvalRequest($id)
+    {
+        $user = User::findOrFail($id);
+        $user->servicesApproval = 'requested';
+
+        $user->save();
+        return response()->json($user, 200);
+    }
 }

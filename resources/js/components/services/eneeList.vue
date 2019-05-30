@@ -177,10 +177,59 @@ export default {
   },
   methods: {
     downloadPDF(user) {
-      this.$emit("downloadPDF", user);
+      axios({
+        url: "api/downloadHistory/" + user.id,
+        method: "GET",
+        responseType: "blob"
+      })
+        .then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", user.number + ".zip");
+          document.body.appendChild(link);
+          link.click();
+          this.$toasted.success(
+            "Download do histórico do estudante feito com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
+        })
+        .catch(error => {
+          this.$toasted.error(
+            "Error ao fazer download do histórico do estudante. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
+        });
     },
     setContact(userId) {
-      this.$emit("setContact", userId, this.contact);
+      axios
+        .post("api/setContact/" + userId.id, this.contact)
+        .then(response => {
+          this.$toasted.success("Interação com estudante criada com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error(
+            "Erro ao criar interação com estudante, por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
+        });
     },
     getEnee(page_url) {
       let pg = this;

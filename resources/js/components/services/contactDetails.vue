@@ -55,7 +55,7 @@
         </div>
       </div>
       <b-table striped hover :items="contact" :fields="fields"></b-table>
-      <router-link class="btn btn-secondary" to="/services">Voltar</router-link>
+      <router-link class="btn btn-secondary" to="/services/eneeList">Voltar</router-link>
     </div>
   </div>
 </template>
