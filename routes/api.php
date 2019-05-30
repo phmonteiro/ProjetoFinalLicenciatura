@@ -48,11 +48,14 @@ Route::middleware('auth:api')->group(function () {
     Route::post('changeNextContact/{id}', 'ServiceController@editContact');
     Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
 
-//Director
-Route::get('getSupports', 'SupportController@index');
-Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
+    //Director
+    Route::get('getSupports', 'SupportController@index');
+    Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
+    Route::post('reproveSubscription/{id}', 'SupportController@reproveSubscription');
 
-//Case managers Responsible
-Route::get('getCaseManagers', 'CaseManagerController@index');
-Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
-Route::post('setCM/{id}', 'CaseManagerController@setCM');
+
+    //Case managers Responsible
+    Route::get('getCaseManagers', 'CaseManagerController@index');
+    Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
+    Route::post('setCM/{id}', 'CaseManagerController@setCM');
+});

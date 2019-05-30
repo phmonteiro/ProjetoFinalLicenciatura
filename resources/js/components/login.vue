@@ -126,14 +126,15 @@ export default {
           //Vem do role da base de dados da universidade
           if (
             response.data.user.type == "Estudante" &&
-            (response.data.user.enee == 0 || response.data.user.enee == null)
+            response.data.user.enee == null
           ) {
             this.$router.push("/studentForm");
             return;
           }
           if (
             response.data.user.type == "Estudante" &&
-            response.data.user.enee == 1
+            (response.data.user.enee != "waiting" &&
+              response.data.user.enee != "null")
           ) {
             this.$router.push("/student");
             return;

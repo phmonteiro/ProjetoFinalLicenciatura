@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
 			$table->bigInteger('nif')->nullable();
 			$table->bigInteger('niss')->nullable();
 			$table->bigInteger('sns')->nullable();
-			$table->boolean('enee')->nullable();
+			$table->string('enee')->nullable();
 			$table->text('educationalSupport', 65535)->nullable();
 			$table->date('eneeExpirationDate')->nullable();
 			$table->date('loginExpirationDate')->nullable();
@@ -45,11 +45,12 @@ class CreateUsersTable extends Migration
 			$table->string('responsibleEmail')->nullable();
 			$table->string('responsibleKin')->nullable();
 			$table->string('emergencyName')->nullable();
-			$table->string('functionalAnalysis')->nullable();
+			$table->text('functionalAnalysis', 65535)->nullable();
 			$table->integer('emergencyPhone')->nullable();
 			$table->string('emergencyEmail')->nullable();
 			$table->string('emergencyKin')->nullable();
 			$table->string('remember_token', 100)->nullable();
+			$table->boolean('coordinatorApproval');
 			$table->timestamps();
 		});
 	}

@@ -31,7 +31,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::where('enee', '1')->paginate(10));
+        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->orWhere('enee', 'reproved')->paginate(10));
     }
 
     /**

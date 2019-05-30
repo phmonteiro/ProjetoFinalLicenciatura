@@ -1,25 +1,31 @@
 <template>
-  <div>
-    <div class="sidenav">
-      <a href="#">
-        <router-link class="nav-link" :to="{name: 'contact'}">Contactos</router-link>
-      </a>
-      <a href="#">
-        <router-link class="nav-link" :to="{name: 'myMeetings'}">Reuniões</router-link>
-      </a>
-      <a href="#">
-        <router-link class="nav-link" :to="{name: 'setMeeting'}">Agendar reunião</router-link>
-      </a>
+  <div v-if="student!=null">
+    <div v-if="(student.enee!='awaiting' && student.enee!='reproved')">
+      <div class="sidenav">
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'contact'}">Contactos</router-link>
+        </a>
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'myMeetings'}">Reuniões</router-link>
+        </a>
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'setMeeting'}">Agendar reunião</router-link>
+        </a>
 
-      <a href="#">
-        <router-link class="nav-link" :to="{name: 'usedServices'}">Apoios usufruidos</router-link>
-      </a>
-      <a href="#">
-        <router-link class="nav-link" :to="{name: 'serviceRequest'}">Pedido de apoios</router-link>
-      </a>
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'usedServices'}">Apoios usufruidos</router-link>
+        </a>
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'serviceRequest'}">Pedido de apoios</router-link>
+        </a>
+      </div>
+      <router-view></router-view>
     </div>
-
-    <router-view></router-view>
+    <div v-else>
+      <h1>O seu pedido ao estatuto de estudante com necessidades educativas especais está no estado de:</h1>
+      <h1 v-if="student.enee=='reproved'">Reprovado</h1>
+      <h1 v-if="student.enee=='awaiting'">A aguardar aprovação</h1>
+    </div>
   </div>
 </template>
 <script>
@@ -27,7 +33,12 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {},
+  computed: {
+    student: function() {
+      return this.$store.state.user;
+    }
+  }
 };
 </script>
 

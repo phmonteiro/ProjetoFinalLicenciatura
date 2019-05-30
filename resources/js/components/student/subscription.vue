@@ -1,9 +1,6 @@
 <template>
-  <div class="container" v-if="student != null">
-    <div v-if="student.enee=='awaiting' || student.enee=='approved'">
-      <h1>Já</h1>
-    </div>
-    <div>
+  <div class="container" v-if="user != null">
+    <div v-if="user.enee!='awaiting' && user.enee!='approved'">
       <h2>Formulário de candidatura ao estatuto de ENEE</h2>
       <div class="row">
         <div class="col-md-12 pt-4">
@@ -554,12 +551,16 @@ export default {
       axios
         .post("api/subscription/" + this.$store.state.user.id, formData)
         .then(response => {
-          console.log(response);
-          this.$toasted.success("Pedido de candidatura em análise.", {
-            duration: 4000,
-            position: "top-center",
-            theme: "bubble"
-          });
+          this.$store.commit("setUser", response.data);
+          this.$router.push("/student");
+          this.$toasted.success(
+            "Candidatura ao estatuto de ENEE submetida com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         })
         .catch(error => {
           console.log(error);

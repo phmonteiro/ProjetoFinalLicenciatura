@@ -9,6 +9,7 @@ const routes = [
   {
     path: '/student',
     component: require('./components/student/dashboard.vue').default,
+    name: 'student',
     meta: {
       middlewareAuth: true,
     },
@@ -92,7 +93,7 @@ const routes = [
         meta: {
           middlewareAuth: true,
         },
-      }
+      },
     ],
   },
   {
@@ -109,7 +110,7 @@ const routes = [
         meta: {
           middlewareAuth: true,
         },
-      }
+      },
     ],
   },
   {
@@ -134,7 +135,7 @@ const routes = [
         meta: {
           middlewareAuth: true,
         },
-      }
+      },
     ],
   },
   {

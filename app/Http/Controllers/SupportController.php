@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Supports;
 use App\Student_Supports;
 use App\Http\Resources\SupportResource;
+use App\User;
+use App\Tutor;
+use App\Http\Resources\UserResource;
 
 class SupportController extends Controller
 {
@@ -13,29 +16,50 @@ class SupportController extends Controller
     {
         return Supports::orderBy('text', 'asc')->get();
     }
-    
+
 
     public function byEmail($email)
     {
         return Student_Supports::where('email', $email)->pluck('support_value');
     }
 
-    
+
 
     public function updateStudentSupports(Request $request)
     {
-        
         $dados = $request->validate([
-            'email' => 'required',
-            'supports' => ''
+            'email' => 'required|email',
+            'supports' => '',
+            'tutor' => '',
+            'duration' => 'required|string',
+            'date' => ''
+
         ]);
 
-        //dd($dados);
-        
+        $user = User::Where('email', $dados['email'])->first();
+        $user->enee = "approved";
+
+        if ($dados['date']) {
+            $dado = $request->validate([
+                'date' => 'after:today'
+            ]);
+            $user->eneeExpirationDate = $dado['date'];
+        }
+
+        $user->save();
+
+
+
+        if ($dados['tutor'] != null) {
+            $tutor = new Tutor();
+            $tutor->studentEmail = $user->email;
+            $tutor->tutorEmail = $dados['tutor'];
+        }
+
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
 
-        if(sizeof($existingSupports)==0){
-            foreach($dados['supports'] as &$support){
+        if (sizeof($existingSupports) == 0) {
+            foreach ($dados['supports'] as &$support) {
                 $newStudent_Supports = new Student_Supports();
                 $newStudent_Supports->email = $dados['email'];
                 $newStudent_Supports->support_value = $support;
@@ -43,9 +67,9 @@ class SupportController extends Controller
             }
         }
 
-        if(sizeof($existingSupports)!=0){
+        if (sizeof($existingSupports) != 0) {
             $newSupports = array_diff($dados['supports'], $existingSupports);
-            foreach($newSupports as &$support){
+            foreach ($newSupports as &$support) {
                 $newStudent_Supports = new Student_Supports();
                 $newStudent_Supports->email = $dados['email'];
                 $newStudent_Supports->support_value = $support;
@@ -53,14 +77,23 @@ class SupportController extends Controller
             }
         }
 
-        if(sizeof($existingSupports)!=0){
+        if (sizeof($existingSupports) != 0) {
             $newSupports = array_diff($existingSupports, $dados['supports']);
-            foreach($newSupports as &$support){
+            foreach ($newSupports as &$support) {
                 Student_Supports::where('email', $dados['email'])->where('support_value', $support)->delete();
             }
         }
 
+        return response()->json(new UserResource($user), 200);
+    }
 
+    public function reproveSubscription(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->enee = "reproved";
+        $user->save();
+
+        return response()->json(new UserResource($user), 200);
     }
 
     public function supportCreate(Request $request)
@@ -72,7 +105,7 @@ class SupportController extends Controller
         $newSupport = new Supports();
 
         $newSupport->text = $dados['text'];
-        
+
         $newSupport->save();
 
         return response()->json(new SupportResource($newSupport), 200);
@@ -95,7 +128,7 @@ class SupportController extends Controller
     public function supportDelete($value)
     {
         $support = Supports::findOrFail($value);
-        
+
         $support->delete();
 
         return response()->json(new SupportResource($support), 200);
