@@ -27,6 +27,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.18",
+        "@fortawesome/free-solid-svg-icons": "^5.8.2",
+        "@fortawesome/vue-fontawesome": "^0.1.6",
         "@saeris/vue-spinners": "^1.0.8",
         "bootstrap-vue": "^2.0.0-rc.18",
         "google-autocomplete-vue": "^1.0.17",

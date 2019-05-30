@@ -55,3 +55,8 @@ Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
 Route::get('getCaseManagers', 'CaseManagerController@index');
 Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
 Route::post('setCM/{id}', 'CaseManagerController@setCM');
+
+//Coordinator
+Route::get('getRequests', 'CoordinatorController@requests');
+Route::post('approveEneeStatus/{id}', 'CoordinatorController@approve');
+Route::post('denyEneeStatus/{id}', 'CoordinatorController@deny');
