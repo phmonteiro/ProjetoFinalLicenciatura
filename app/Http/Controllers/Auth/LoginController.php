@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Mail;
+use GuzzleHttp\Client;
 use Carbon\Carbon;
 
 class LoginController extends Controller
@@ -50,7 +52,8 @@ class LoginController extends Controller
 
             $user = Auth::user();
             if ($user->firstLogin == 1) {
-                return Auth::user();
+                $token = $user->createToken(rand())->accessToken;
+                return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
             } else {
                 $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
                 $user->type = $users->title[0];
@@ -59,7 +62,8 @@ class LoginController extends Controller
                 $user->number = $users->mailnickname[0];
                 $user->firstLogin = 1;
                 $user->save();
-                return Auth::user();
+                $token = $user->createToken(rand())->accessToken;
+                return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
             }
         } else {
             auth()->logout();

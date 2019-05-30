@@ -19,33 +19,34 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //login
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
-//admin
-Route::get('getUsers', 'AdminController@index');
-Route::post('editUser/{id}', 'AdminController@update')->name('edit');
-Route::post('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
-Route::post('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
-Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
-Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
+Route::middleware('auth:api')->group(function () {
+    //admin
+    Route::get('getUsers', 'AdminController@index');
+    Route::post('editUser/{id}', 'AdminController@update')->name('edit');
+    Route::post('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
+    Route::post('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
+    Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
+    Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
 
-//student
-Route::get('getEnee', 'StudentController@index');
-Route::get('getContacts/{id}', 'StudentController@getContacts');
-Route::post('setMeeting/{id}', 'StudentController@setMeeting');
-Route::post('setService/{id}', 'StudentController@setService');
-Route::get('getContacts/{id}', 'StudentController@getContacts');
-Route::get('getServices/{id}', 'StudentController@getServices');
-Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
-Route::post('subscription/{id}', 'StudentController@subscription');
-Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
-Route::get('getUser/{id}', 'StudentController@show');
+    //student
+    Route::get('getEnee', 'StudentController@index');
+    Route::get('getContacts/{id}', 'StudentController@getContacts');
+    Route::post('setMeeting/{id}', 'StudentController@setMeeting');
+    Route::post('setService/{id}', 'StudentController@setService');
+    Route::get('getContacts/{id}', 'StudentController@getContacts');
+    Route::get('getServices/{id}', 'StudentController@getServices');
+    Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
+    Route::post('subscription/{id}', 'StudentController@subscription');
+    Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
+    Route::get('getUser/{id}', 'StudentController@show');
 
-//service
-Route::post('setContact/{id}', 'ServiceController@contact');
-Route::get('getMeetings', 'ServiceController@meetings');
-Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
-Route::get('getContact/{id}', 'ServiceController@contactDetails');
-Route::post('changeNextContact/{id}', 'ServiceController@editContact');
-Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
+    //service
+    Route::post('setContact/{id}', 'ServiceController@contact');
+    Route::get('getMeetings', 'ServiceController@meetings');
+    Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
+    Route::get('getContact/{id}', 'ServiceController@contactDetails');
+    Route::post('changeNextContact/{id}', 'ServiceController@editContact');
+    Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
 
 //Director
 Route::get('getSupports', 'SupportController@index');

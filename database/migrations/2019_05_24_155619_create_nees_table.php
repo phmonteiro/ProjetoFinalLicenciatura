@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateNeesTable extends Migration {
+class CreateNeesTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,12 +13,10 @@ class CreateNeesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('nees', function(Blueprint $table)
-		{
+		Schema::create('nees', function (Blueprint $table) {
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('studentEmail');
 			$table->string('name');
-			$table->integer('severity');
 		});
 	}
 
@@ -31,5 +30,4 @@ class CreateNeesTable extends Migration {
 	{
 		Schema::drop('nees');
 	}
-
 }

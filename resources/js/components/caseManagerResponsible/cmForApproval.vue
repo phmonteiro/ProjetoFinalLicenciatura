@@ -2,12 +2,14 @@
     <div>
         <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>
         <div class="container">
-            <h2>Lista de Gestores de caso</h2>
+            <h2>Lista de Gestores de caso por aprovar</h2>
             <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
-                <!-- <template slot="actions" slot-scope="row">
-                    <button class="btn btn-success" v-on:click.prevent="editUser(row.item)"
+                <template slot="actions" slot-scope="row">
+                    <button class="btn btn-success" v-on:click.prevent="approveCM(row.item)"
                         v-if="row.item.number != user.number">Aprovar</button>
-                </template> -->
+                    <button class="btn btn-danger" v-on:click.prevent="rejectCM(row.item)"
+                        v-if="row.item.number != user.number">Rejeitar</button>
+                </template>
             </b-table>
             <nav aria-label="Page navigation" v-if="caseManagers">
                 <ul class="pagination">
@@ -67,7 +69,7 @@
         methods: {
             getcaseManagers(page_url) {
                 let pg = this;
-                page_url = page_url || "api/getCaseManagers?page=1";
+                page_url = page_url || "api/getCaseManagersForApproval?page=1";
                 axios
                     .get(page_url)
                     .then(response => {
@@ -89,12 +91,24 @@
                 };
                 this.pagination = pagination;
             },
-            // editUser(row) {
-            //     this.currentUser = Object.assign({}, row);
-            // },
-            // cancelEdit: function () {
-            //     this.currentUser = null;
-            // },
+            approveCM(row) {
+                axios
+                    .post("api/approveCM/"+row.id)
+                    .then(response => {
+                        this.$toasted.success("Gestor de caso atribuido com sucesso.", {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        });
+                        this.getcaseManagers();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            rejectCM(row) {
+                this.currentUser = Object.assign({}, row);
+            },
         },
         created() {
             this.getcaseManagers();

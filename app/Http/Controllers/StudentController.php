@@ -19,9 +19,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Carbon;
 use App\MedicalFile;
 use App\Nee;
+use App\History;
 
 class StudentController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -227,6 +229,12 @@ class StudentController extends Controller
         }
 
         $user->save();
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "Candidatou-se ao estatuto de estudante com necessidade educativas especiais";
+        $history->date = Carbon::now();
+        $history->save();
 
         return response()->json(new UserResource($user), 201);
     }

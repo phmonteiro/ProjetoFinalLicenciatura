@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateContactsTable extends Migration {
+class CreateContactsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,8 +13,7 @@ class CreateContactsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('contacts', function(Blueprint $table)
-		{
+		Schema::create('contacts', function (Blueprint $table) {
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('studentEmail');
 			$table->date('date');
@@ -34,5 +34,4 @@ class CreateContactsTable extends Migration {
 	{
 		Schema::drop('contacts');
 	}
-
 }

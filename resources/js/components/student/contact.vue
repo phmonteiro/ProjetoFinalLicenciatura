@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     getContacts(page_url) {
+      console.log(this.user.id);
       let pg = this;
       page_url = page_url || "api/getContacts/" + this.user.id + "?page=1";
       axios

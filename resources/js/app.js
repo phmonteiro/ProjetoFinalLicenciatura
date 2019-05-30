@@ -30,6 +30,20 @@ Vue.component('set-cm', require('./components/caseManagerResponsible/setCM.vue')
 Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').default);
 Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
 
+
+axios.interceptors.request.use(
+    (config) => {
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        config.headers['Authorization'] = `Bearer ${ token }`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+);
+
 const app = new Vue({
   el: '#app',
   router,

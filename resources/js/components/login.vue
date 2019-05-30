@@ -117,35 +117,40 @@ export default {
       axios
         .post("api/login", this.user)
         .then(response => {
-          console.log(response);
+          console.log(response.headers.authorization);
 
-          this.$store.commit("setUser", response.data);
+          this.$store.commit("setUser", response.data.user);
+          this.$store.commit("setToken", response.headers.authorization);
+
           this.loading = false;
           //Vem do role da base de dados da universidade
           if (
-            response.data.type == "Estudante" &&
-            (response.data.enee == 0 || response.data.enee == null)
+            response.data.user.type == "Estudante" &&
+            (response.data.user.enee == 0 || response.data.user.enee == null)
           ) {
             this.$router.push("/studentForm");
             return;
           }
-          if (response.data.type == "Estudante" && response.data.enee == 1) {
+          if (
+            response.data.user.type == "Estudante" &&
+            response.data.user.enee == 1
+          ) {
             this.$router.push("/student");
             return;
           }
-          if (response.data.type == "Administrador") {
+          if (response.data.user.type == "Administrador") {
             this.$router.push("/admin");
             return;
           }
-          if (response.data.type == "Services") {
+          if (response.data.user.type == "Services") {
             this.$router.push("/services");
             return;
           }
-          if (response.data.type == "Director") {
+          if (response.data.user.type == "Director") {
             this.$router.push("/director");
             return;
           }
-          if (response.data.type == "CaseManagerResponsible") {
+          if (response.data.user.type == "CaseManagerResponsible") {
             this.$router.push("/caseManagerResponsible");
             return;
           }
