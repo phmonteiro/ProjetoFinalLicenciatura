@@ -117,11 +117,8 @@ export default {
       axios
         .post("api/login", this.user)
         .then(response => {
-          console.log(response.headers.authorization);
-
           this.$store.commit("setUser", response.data.user);
           this.$store.commit("setToken", response.headers.authorization);
-
           this.loading = false;
           //Vem do role da base de dados da universidade
           if (

@@ -14,6 +14,7 @@ use App\Http\Resources\MeetingResource;
 use PDF;
 use App\MedicalFile;
 use ZipArchive;
+use App\History;
 
 class ServiceController extends Controller
 {
@@ -98,11 +99,18 @@ class ServiceController extends Controller
             'info' => 'required|string',
             'date' => 'required|date'
         ]);
-
         $meeting->info = $dados['info'];
         $meeting->date = $dados['date'];
-
         $meeting->save();
+
+        $user = User::findOrFail($meeting->studentId);
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O " . $meeting->service . " agendou uma reunião com o estudante";
+        $history->date = Carbon::now();
+        $history->save();
+
         return response()->json($meeting, 200);
     }
 
@@ -128,8 +136,14 @@ class ServiceController extends Controller
         $contact->information = $dados['information'];
         $contact->nextContact = $dados['nextContact'];
         $contact->decision = $dados['decision'];
-
         $contact->save();
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O " . $contact->service . " teve uma reunião com o estudante";
+        $history->date = Carbon::now();
+        $history->save();
+
         return response()->json(new ContactResource($contact), 201);
     }
 
@@ -148,6 +162,13 @@ class ServiceController extends Controller
         $contact = Contact::findOrFail($id);
         $contact->nextContact = $dados['nextContact'];
         $contact->save();
+
+        $history = new History();
+        $history->studentEmail = $contact->studentEmail;
+        $history->description = "O " . $contact->service . " alterou a data da reunião com o estudante";
+        $history->date = Carbon::now();
+        $history->save();
+
         return response()->json(new ContactResource($contact), 201);
     }
 

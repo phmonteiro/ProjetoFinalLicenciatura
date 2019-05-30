@@ -7,6 +7,8 @@ use App\Http\Resources\CaseManagerResource;
 use App\CaseManager;
 use App\User;
 use App\Http\Resources\UserResource;
+use Carbon\Carbon;
+use App\History;
 
 class CaseManagerController extends Controller
 {
@@ -28,9 +30,8 @@ class CaseManagerController extends Controller
             'cmEmail' => 'required|email',
             'studentName' => 'required'
         ]);
-        $cmName = \Adldap\Laravel\Facades\Adldap::search()->users()->paginate(1000)->getResults();
 
-        dd($cmName);
+        $cmName = User::where('email', $dados['cmEmail'])->pluck('name');
         //dd($cmName);
         $caseManager = new CaseManager();
         $caseManager->studentEmail = $user->email;
@@ -38,6 +39,12 @@ class CaseManagerController extends Controller
         $caseManager->caseManagerEmail = $dados['cmEmail'];
         $caseManager->caseManagerName = $cmName[0];
         //mandar alerta
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "Foi atribuido um gestor de caso ao aluno";
+        $history->date = Carbon::now();
+        $history->save();
 
         $caseManager->save();
 

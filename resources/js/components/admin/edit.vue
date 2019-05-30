@@ -27,12 +27,14 @@
     <div class="form-group">
       <label for="inputType">Tipo de utilizador:</label>
       <select class="form-control" v-model="user.type" id="type" name="type">
-        <option>Administrador</option>
-        <option>Professor</option>
-        <option>Services</option>
-        <option>Estudante</option>
-        <option>CaseManagerResponsible</option>
-        <option>CaseManager</option>
+        <option value="Administrator">Administrador</option>
+        <option value="Professor">Professor</option>
+        <option value="Services">Serviços</option>
+        <option value="Estudante">Estudante</option>
+        <option value="CaseManagerResponsible">Responsável Gestor de Caso</option>
+        <option value="CaseManager">Gestor de Caso</option>
+        <option value="Coordinator">Coordenador de Curso</option>
+        <option value="Director">Director</option>
       </select>
     </div>
 

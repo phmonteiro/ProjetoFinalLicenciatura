@@ -266,6 +266,13 @@ class StudentController extends Controller
         $meeting->service = $dados['service'];
         $meeting->comment = $dados['comment'];
         $meeting->save();
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O estudante pediu para agendar uma reunião com o" . $meeting->service;
+        $history->date = Carbon::now();
+        $history->save();
+
         return response()->json(new MeetingResource($meeting), 201);
     }
 
@@ -281,6 +288,12 @@ class StudentController extends Controller
         $service->email = $user->email;
         $service->name = $dados['name'];
         $service->reason = $dados['reason'];
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O estudante requereu ao diretor mais apoios";
+        $history->date = Carbon::now();
+        $history->save();
 
         $service->save();
         return response()->json(new ServiceResource($service), 201);
