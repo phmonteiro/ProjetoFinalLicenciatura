@@ -44,13 +44,15 @@ Route::middleware('auth:api')->group(function () {
     Route::post('setContact/{id}', 'ServiceController@contact');
     Route::get('getMeetings', 'ServiceController@meetings');
     Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
-    Route::get('getContact/{id}', 'ServiceController@contactDetails');
+    Route::get('getHistory/{id}', 'ServiceController@getHistory');
     Route::post('changeNextContact/{id}', 'ServiceController@editContact');
     Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
     Route::get('getServicesRequests', 'ServiceController@getServicesRequests');
     Route::post('approveEneeStatusByServices/{id}', 'ServiceController@approve');
     Route::post('denyEneeStatusByServices/{id}', 'ServiceController@deny');
-    
+    Route::get('getEnees', 'ServiceController@index');
+
+
     //Director
     Route::get('getSupports', 'SupportController@index');
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');

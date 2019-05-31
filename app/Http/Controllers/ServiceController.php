@@ -11,6 +11,7 @@ use App\CaseManager;
 use Carbon\Carbon;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
+use App\Http\Resources\HistoryResource;
 use App\Http\Resources\UserResource;
 use PDF;
 use App\MedicalFile;
@@ -25,7 +26,9 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { }
+    {
+        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -120,7 +123,7 @@ class ServiceController extends Controller
         return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->where('servicesApproval', 'requested')->paginate(10));
     }
 
-    
+
     public function finalizeMeeting(Request $request, $id)
     {
         $meeting = Meeting::findOrFail($id);
@@ -176,11 +179,11 @@ class ServiceController extends Controller
         return response()->json(new ContactResource($contact), 201);
     }
 
-    public function contactDetails($id)
+    public function getHistory($id)
     {
         $user = User::findOrFail($id);
-        $contacts = Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
-        return response()->json(new ContactResource($contacts), 201);
+        $histories = History::where('studentEmail', $user->email)->orderBy('date', 'desc')->get();
+        return response()->json(new HistoryResource($histories), 200);
     }
 
     public function editContact(Request $request, $id)

@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div>
+    <div class="loader">
       <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
     </div>
     <div class="container" v-if="users">
       <h2>Lista de enees</h2>
       <b-table striped hover :items="users" :fields="fields">
         <template slot="actions" slot-scope="row">
-          <button
+          <!--<button
             type="submit"
             class="btn btn-secondary"
             data-dismiss="modal"
             v-on:click.prevent="downloadPDF(row.item)"
-          >Download Histórico</button>
+          >Download Histórico</button>-->
           <button
             type="button"
             class="btn btn-secondary"
@@ -20,7 +20,7 @@
             data-target="#exampleModal"
           >Nova interação</button>
           <router-link class="nav-link" :to="{name: 'contactDetails', params: {id: row.item.id }}">
-            <button class="btn btn-secondary">Contactos</button>
+            <button class="btn btn-secondary">Histórico</button>
           </router-link>
           <div
             class="modal fade"
@@ -233,7 +233,7 @@ export default {
     },
     getEnee(page_url) {
       let pg = this;
-      page_url = page_url || "api/getEnee?page=1";
+      page_url = page_url || "api/getEnees?page=1";
       axios
         .get(page_url)
         .then(response => {

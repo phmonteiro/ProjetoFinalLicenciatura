@@ -1,61 +1,10 @@
 <template>
   <div>
     <div class="loader">
-      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="150"/>
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
     </div>
-    <div class="container" v-if="user && contact">
-      <h2>{{this.user.name}}</h2>
-      <div>
-        <h2>Próximo contacto {{this.contact[0].nextContact}}</h2>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-toggle="modal"
-          data-target="#exampleModal"
-        >Alterar data do contato</button>
-      </div>
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" id="modal" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Interação com {{this.user.name}}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="date">Próximo contacto {{this.contact[0].nextContact}}</label>
-                <input
-                  id="nextContact"
-                  type="date"
-                  class="form-control"
-                  name="nextContact"
-                  v-model="nextContact"
-                >
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button
-                  type="submit"
-                  data-dismiss="modal"
-                  v-on:click.prevent="changeNextContact()"
-                  class="btn btn-primary"
-                >Confirmar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <b-table striped hover :items="contact" :fields="fields"></b-table>
-      <router-link class="btn btn-secondary" to="/services/eneeList">Voltar</router-link>
+    <div class="container" v-if="user && history">
+      <b-table striped hover :items="history" :fields="fields"></b-table>
     </div>
   </div>
 </template>
@@ -66,28 +15,18 @@ export default {
     return {
       userId: this.$route.params.id,
       user: null,
-      contact: null,
+      history: null,
       nextContact: null,
       loading: true,
       fields: [
         {
-          key: "service",
-          label: "Serviço",
+          key: "description",
+          label: "Descrição",
           sortable: true
         },
         {
-          key: "decision",
-          label: "Decisão",
-          sortable: true
-        },
-        {
-          key: "information",
-          label: "Informação",
-          sortable: true
-        },
-        {
-          key: "nextContact",
-          label: "Próximo contacto",
+          key: "date",
+          label: "Data",
           sortable: true
         }
       ]
@@ -95,26 +34,25 @@ export default {
   },
   created() {
     this.getUser();
-    this.getContact();
+    this.getHistory();
   },
   methods: {
     getUser() {
       axios
         .get("api/getUser/" + this.userId)
         .then(response => {
-          console.log(response.data);
           this.user = response.data;
         })
         .catch(error => {
           console.log(error);
         });
     },
-    getContact() {
+    getHistory() {
       axios
-        .get("api/getContact/" + this.userId)
+        .get("api/getHistory/" + this.userId)
         .then(response => {
           console.log(response.data);
-          this.contact = response.data;
+          this.history = response.data;
           this.loading = false;
         })
         .catch(error => {
