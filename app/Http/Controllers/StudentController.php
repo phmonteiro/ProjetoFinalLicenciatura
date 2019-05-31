@@ -7,15 +7,21 @@ use App\Http\Resources\ContactResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\ZipCodeResource;
+use App\Http\Resources\Student_SupportsResource;
+use App\Http\Resources\SupportResource;
+
 use App\Meeting;
 use App\Contact;
 use App\ZipCode;
+use App\Supports;
+use App\Student_Supports;
 use App\User;
 use App\Http\Resources\ServiceResource;
 use App\Service;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\MedicalFile;
 use App\Nee;
@@ -110,7 +116,25 @@ class StudentController extends Controller
     public function getServices($id)
     {
         $user = User::findOrFail($id);
+
+        // $supports = Supports::all();
+        // $test = array(5,6);
+
+        // $idSupports = Student_SupportsResource::collection(Student_Supports::Where('email', $user->email)->pluck('support_value'));
+                
+        //dd($idSupports);
+        
+        //dd(Supports->supports());
+
+        $studentSupports = $supports->whereIn('value', $idSupports);//= $supports->whereIn('value', $idSupports);
+        dd($studentSupports);
+        
+        
+        //dd($idSupports);
+        
         return ServiceResource::collection(Service::where('email', $user->email)->where('aprovedDate', '!=', 'null')->paginate(10));
+
+
     }
 
     public function subscription(Request $request, $id)

@@ -36,8 +36,26 @@ class SupportController extends Controller
 
         ]);
 
-        //dd($dados);
-        
+        $user = User::Where('email', $dados['email'])->first();
+        $user->enee = "approved";
+
+        if ($dados['date']) {
+            $dado = $request->validate([
+                'date' => 'after:today'
+            ]);
+            $user->eneeExpirationDate = $dado['date'];
+        }
+
+        $user->save();
+
+
+
+        if ($dados['tutor'] != null) {
+            $tutor = new Tutor();
+            $tutor->studentEmail = $user->email;
+            $tutor->tutorEmail = $dados['tutor'];
+        }
+
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
 
         if (sizeof($existingSupports) == 0) {

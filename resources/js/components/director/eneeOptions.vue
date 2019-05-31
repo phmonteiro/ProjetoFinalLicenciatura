@@ -27,9 +27,9 @@
 
     <div class="form-group">
       <label for="coordinatorApproval">Opinião coordenador de curso:</label>
-      <p v-if="user.coordinatorAproval==1"><b>Aprovado</b> </p>
-      <p v-if="user.coordinatorAproval==0"><b>Rejeitado</b> </p>
-      <p v-if="user.coordinatorAproval==null"><b>Ainda sem parecer</b> </p>
+      <p v-if="user.coordinatorApproval==1"><b>Aprovado</b> </p>
+      <p v-if="user.coordinatorApproval==0"><b>Rejeitado</b> </p>
+      <p v-if="user.coordinatorApproval==null"><b>Ainda sem parecer</b> </p>
     </div>
 
 
