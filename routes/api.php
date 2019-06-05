@@ -52,7 +52,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('denyEneeStatusByServices/{id}', 'ServiceController@deny');
     Route::get('getEnees', 'ServiceController@index');
 
-
     //Director
     Route::get('getSupports', 'SupportController@index');
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
@@ -69,4 +68,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
     Route::post('setCM/{id}', 'CaseManagerController@setCM');
     Route::get('getStudents', 'CaseManagerController@getStudents');
+    Route::get('getStudentCMs/{email}', 'CaseManagerController@getStudentCMs');
+    Route::post('removeCM/{email}', 'CaseManagerController@removeCM');
+
 });

@@ -22,6 +22,20 @@ class CaseManagerController extends Controller
         $students = User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10);
         return response()->json(new UserResource($students), 200);
     }
+    
+    public function getStudentCMs($email)
+    {
+        return CaseManagerResource::collection(CaseManager::Where('studentEmail', $email)->paginate(10));
+    }
+
+    public function removeCM($email)
+    {
+        $user = CaseManager::Where('studentEmail', $email)->first();
+        $user->delete();
+        
+        return response()->json(new CaseManagerResource($user), 200);
+    }
+
     public function setCM(Request $request, $id)
     {
         $user = User::findOrFail($id);
