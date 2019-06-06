@@ -58,7 +58,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('denyEneeStatusByServices/{id}', 'ServiceController@deny');
     Route::get('getEnees', 'ServiceController@index');
 
-
     //Director
     Route::get('getSupports', 'SupportController@index');
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
@@ -71,8 +70,15 @@ Route::middleware('auth:api')->group(function () {
     Route::post('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
-    Route::get('getCaseManagers', 'CaseManagerController@index');
-    Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
-    Route::post('setCM/{id}', 'CaseManagerController@setCM');
-    Route::get('getStudents', 'CaseManagerController@getStudents');
+    Route::get('getCaseManagers', 'CaseManagerResponsibleController@index');
+    Route::get('getCaseManagersForApproval', 'CaseManagerResponsibleController@forApproval');
+    Route::post('setCM/{id}', 'CaseManagerResponsibleController@setCM');
+    Route::get('getStudents', 'CaseManagerResponsibleController@getStudents');
+    Route::get('getStudentCMs/{email}', 'CaseManagerResponsibleController@getStudentCMs');
+    Route::post('removeCM/{email}', 'CaseManagerResponsibleController@removeCM');
+
+    //Case Manager
+    Route::get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');
+    Route::post('setInteraction', 'CaseManagerController@setInteraction');
+
 });

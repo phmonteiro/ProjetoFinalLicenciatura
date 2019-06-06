@@ -156,6 +156,10 @@ export default {
             this.$router.push("/caseManagerResponsible");
             return;
           }
+          if (response.data.type == "CaseManager") {
+            this.$router.push("/caseManager");
+            return;
+          }
         })
         .catch(error => {
           this.loading = false;

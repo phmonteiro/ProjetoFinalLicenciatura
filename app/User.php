@@ -34,4 +34,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Student_Supports', 'email', 'email');
     }
+
+    public function cm(){
+        return $this->hasMany('App\CaseManager', 'caseManagerEmail', 'email');
+    }
 }

@@ -1,53 +1,63 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\ContactResource;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\CaseManagerResource;
-use App\CaseManager;
-use App\User;
-use App\Http\Resources\UserResource;
 use Carbon\Carbon;
-use App\History;
+
+use App\User;
+use App\CaseManager;
+use App\Contact;
+
 
 class CaseManagerController extends Controller
 {
-    public function index()
-    {
-        return CaseManagerResource::collection(CaseManager::Orderby('studentName')->paginate(10));
-    }
-
-    public function getStudents()
-    {
-        $students = User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10);
-        return response()->json(new UserResource($students), 200);
-    }
-    public function setCM(Request $request, $id)
+    public function getCmEnee($id)
     {
         $user = User::findOrFail($id);
 
+        $enees = $user->cm;
+
+        
+
+        $subset = $enees->map(function ($enee) {
+            return collect($enee->toArray())
+                ->only(['studentEmail'])
+                ->all();
+        });
+
+
+        $eneeInfo = User::whereIn('email', $subset->toArray())->get();
+
+        return response()->json(new UserResource($eneeInfo), 200);
+    }
+    public function setInteraction(Request $request)
+    {
+
         $dados = $request->validate([
-            'cmEmail' => 'required|email',
-            'studentName' => 'required'
+            'email' => 'required|email',
+            'interactionDate' => '',
+            'nextInteraction' => 'required|date',
+            'service' => 'required',
+            'decision' => 'required',
+            'information' => 'required'
         ]);
 
-        $cmName = User::where('email', $dados['cmEmail'])->pluck('name');
-        //dd($cmName);
-        $caseManager = new CaseManager();
-        $caseManager->studentEmail = $user->email;
-        $caseManager->studentName = $dados['studentName'];
-        $caseManager->caseManagerEmail = $dados['cmEmail'];
-        $caseManager->caseManagerName = $cmName[0];
-        //mandar alerta
+        $contact = new Contact();
+        $contact->studentEmail = $dados['email'];
+        if($dados['interactionDate']==null){
+            $contact->date = Carbon::now();
+        } else {
+            $contact->date = $dados['interactionDate'];
+        }
+        $contact->service = $dados['service'];
+        $contact->decision = $dados['decision'];
+        $contact->information = $dados['information'];
+        $contact->nextContact = $dados['nextInteraction'];
 
-        $history = new History();
-        $history->studentEmail = $user->email;
-        $history->description = "Foi atribuido um gestor de caso ao aluno";
-        $history->date = Carbon::now();
-        $history->save();
-
-        $caseManager->save();
-
-        return response()->json(new CaseManagerResource($caseManager), 200);
+        $contact->save();
+        return response()->json(new ContactResource($contact), 200);
     }
 }

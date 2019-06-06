@@ -10,15 +10,15 @@ import i18n from './plugins/i18n';
 import Toasted from 'vue-toasted';
 import {VueSpinners} from '@saeris/vue-spinners';
 import Vuelidate from 'vuelidate';
+import DatePicker from 'vue2-datepicker'
+//icons
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faEye, faHandshake, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-// icons
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {faEye} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-
-library.add(faEye);
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-// --
+library.add(faEye, faHandshake, faEyeSlash)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+//--
 
 
 window.Vue = require('vue');
@@ -27,7 +27,7 @@ Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);
 Vue.use(Vuelidate);
-
+Vue.use(DatePicker);
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);
@@ -39,6 +39,8 @@ Vue.component('edit-support-hours', require('./components/student/editSupportHou
 Vue.component('set-cm', require('./components/caseManagerResponsible/setCM.vue').default);
 Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').default);
 Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
+Vue.component('set-inter', require('./components/caseManager/setInteraction.vue').default);
+
 
 
 const app = new Vue({

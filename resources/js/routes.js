@@ -202,8 +202,64 @@ const routes = [{
         middlewareAuth: true,
       },
     },
-  ],
-},
+    {
+        path: '/services',
+        component: require('./components/services/dashboard.vue').default,
+        meta: {
+            middlewareAuth: true,
+        },
+        children: [
+          {
+            path: '/services/meetings',
+            name: 'meetings',
+            component: require('./components/services/meetings.vue').default,
+            meta: {
+                middlewareAuth: true,
+            },
+          },
+          {
+            path: '/services/eneeList',
+            name: 'eneeList',
+            component: require('./components/services/eneeList.vue').default,
+            meta: {
+                middlewareAuth: true,
+            },
+          },
+          {
+              path: '/services/contacts/:id',
+              component: require('./components/services/contactDetails.vue').default,
+              meta: {
+                  middlewareAuth: true,
+              },
+              name: 'contactDetails',
+          },
+          {
+            path: '/services/eneeOpinion',
+            name: 'eneeOpinion',
+            component: require('./components/services/eneeOpinion.vue').default,
+            meta: {
+                middlewareAuth: true,
+            },
+          }
+      ]
+    },
+    {
+        path: '/caseManager',
+        component: require('./components/caseManager/dashboard.vue').default,
+        meta: {
+            middlewareAuth: true,
+        },
+        children: [
+            {
+                path: '/caseManager/cmEneeList',
+                name: 'cmEneeList',
+                component: require('./components/caseManager/cmEneeList.vue').default,
+                meta: {
+                    middlewareAuth: true,
+                },
+            }
+        ],
+    }
 ];
 
 const router = new VueRouter({
@@ -211,35 +267,39 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.middlewareAuth && (store.state.user == null)) {
-    next('/');
-    return;
-  }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Estudante') {
-    next('/student');
-    return;
-  }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Administrator') {
-    next('/admin');
-    return;
-  }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Services') {
-    next('/services');
-    return;
-  }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Director') {
-    next('/director');
-    return;
-  }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'CaseManagerResponsible') {
-    next('/CaseManagerResponsible');
-    return;
-  }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Coordinator') {
-    next('/coordinator');
-    return;
-  }
-  next();
+    if (to.meta.middlewareAuth && (store.state.user == null)) {
+        next('/');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Estudante') {
+        next('/student');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Administrator') {
+        next('/admin');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Services') {
+        next('/services');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Director') {
+        next('/director');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'CaseManagerResponsible') {
+        next('/CaseManagerResponsible');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Coordinator') {
+        next('/coordinator');
+        return;
+    }
+    if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'CaseManager') {
+        next('/caseManager');
+        return;
+    }
+    next();
 });
 
 
