@@ -59,7 +59,7 @@ export default {
   methods: {
     setService() {
       axios
-        .post("api/setService/" + this.user.id, this.service)
+        .post("api/setService/", this.service)
         .then(response => {
           this.$toasted.success("Pedido de serviço realizado com sucesso.", {
             duration: 4000,

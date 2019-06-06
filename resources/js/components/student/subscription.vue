@@ -549,7 +549,7 @@ export default {
       formData.append("nif", this.student.nif);
 
       axios
-        .post("api/subscription/" + this.$store.state.user.id, formData)
+        .post("api/subscription", formData)
         .then(response => {
           this.$store.commit("setUser", response.data);
           this.$router.push("/student");

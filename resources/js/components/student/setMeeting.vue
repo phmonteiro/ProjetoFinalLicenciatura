@@ -9,14 +9,6 @@
             <template slot="first">
               <option :value="null" disabled>-- Selecione o serviço --</option>
             </template>
-
-            <!-- These options will appear after the ones from 'options' prop -->
-            <option value="SAPE">SAPE</option>
-            <option value="SAS">SAS</option>
-            <option value="Escola">Escola</option>
-            <option value="Biblioteca">Biblioteca</option>
-            <option value="Direção">Direção</option>
-            <option value="Professor-Tutor">Professor-Tutor</option>
             <option value="Gestor-Caso">Gestor-Caso</option>
           </b-form-select>
         </div>
@@ -53,7 +45,7 @@ export default {
   methods: {
     setMeeting() {
       axios
-        .post("api/setMeeting/" + this.user.id, this.meeting)
+        .post("api/setMeeting", this.meeting)
         .then(response => {
           console.log("meeting requested!");
           this.$toasted.success("Pedido de reunião realizado sucesso.", {

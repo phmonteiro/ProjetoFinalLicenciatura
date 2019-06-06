@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //login
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
+
+
 Route::middleware('auth:api')->group(function () {
+    Route::get('getAuthUser', 'Auth\LoginController@getAuthUser');
     //admin
     Route::get('getUsers', 'AdminController@index');
     Route::post('editUser/{id}', 'AdminController@update')->name('edit');
@@ -30,15 +33,18 @@ Route::middleware('auth:api')->group(function () {
 
     //student
     Route::get('getEnee', 'StudentController@index');
-    Route::get('getContacts/{id}', 'StudentController@getContacts');
-    Route::post('setMeeting/{id}', 'StudentController@setMeeting');
-    Route::post('setService/{id}', 'StudentController@setService');
-    Route::get('getContacts/{id}', 'StudentController@getContacts');
-    Route::get('getServices/{id}', 'StudentController@getServices');
-    Route::get('getMyMeetings/{email}', 'StudentController@myMeetings');
-    Route::post('subscription/{id}', 'StudentController@subscription');
+    Route::get('getContacts', 'StudentController@getContacts');
+    Route::post('setMeeting', 'StudentController@setMeeting');
+    Route::post('setService', 'StudentController@setService');
+    Route::get('getContacts', 'StudentController@getContacts');
+    Route::get('getServices', 'StudentController@getServices');
+    Route::get('getMyMeetings/{id}', 'StudentController@myMeetings');
+    Route::post('subscription', 'StudentController@subscription');
     Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
     Route::get('getUser/{id}', 'StudentController@show');
+    Route::get('supportHours', 'StudentController@supportHours');
+    Route::post('setSupportHours', 'StudentController@setSupportHours');
+    Route::post('editProfile', 'StudentController@edit');
 
     //services
     Route::post('setContact/{id}', 'ServiceController@contact');

@@ -99,6 +99,8 @@ export default {
         .then(response => {
           this.loading = false;
           this.meetings = response.data.data;
+          console.log(this.meetings);
+
           pg.makePagination(response.data.meta, response.data.links);
         })
         .catch(error => {

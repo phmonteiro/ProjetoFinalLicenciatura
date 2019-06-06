@@ -9,7 +9,7 @@
         <h2>Lista de utilizadores</h2>
         <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
           <template slot="type" slot-scope="row">
-            <p v-if="row.item.type=='Serices'">Serviços</p>
+            <p v-if="row.item.type=='Services'">Serviços</p>
             <p v-if="row.item.type=='CaseManagerResponsible'">Responsável Gestor de Caso</p>
             <p v-if="row.item.type=='CaseManager'">Gestor de Caso</p>
             <p v-if="row.item.type=='Coordinator'">Coordenador de Curso</p>
@@ -119,6 +119,7 @@ export default {
       this.pagination = pagination;
     },
     editUser(row) {
+      console.log(row);
       this.currentUser = Object.assign({}, row);
     },
     cancelEdit: function() {

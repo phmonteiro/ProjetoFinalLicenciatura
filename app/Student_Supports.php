@@ -8,8 +8,9 @@ class Student_Supports extends Model
 {
     public $timestamps = false;
     protected $table = "student_supports";
-    public function supports()
+
+    public function support()
     {
-        return $this->hasMany('App\Supports');
+        return $this->belongsTo('App\Supports', 'support_value',  'value');
     }
 }

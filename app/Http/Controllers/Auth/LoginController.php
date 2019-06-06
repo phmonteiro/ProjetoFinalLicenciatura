@@ -39,7 +39,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('getAuthUser', 'logout');
     }
 
     public function login(Request $request)
@@ -60,6 +60,7 @@ class LoginController extends Controller
                 $user->course = $users->description[0];
                 $user->school = $users->company[0];
                 $user->number = $users->mailnickname[0];
+                $user->departmentNumber = $users->departmentnumber[0];
                 $user->firstLogin = 1;
                 $user->save();
                 $token = $user->createToken(rand())->accessToken;
@@ -69,5 +70,10 @@ class LoginController extends Controller
             auth()->logout();
             return response()->json(['message' => 'Credenciais inválidas. Por favor tente novamente.'], 401);
         }
+    }
+
+    public function getAuthUser()
+    {
+        return Auth::user();
     }
 }

@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('name');
 			$table->string('email')->unique();
+			$table->string('secondEmail')->nullable()();
 			$table->integer('number')->nullable()->unique();
 			$table->integer('phoneNumber')->nullable()->unique('users_phonenumber_unique');
 			$table->string('residence')->nullable();
@@ -50,7 +51,7 @@ class CreateUsersTable extends Migration
 			$table->string('emergencyEmail')->nullable();
 			$table->string('emergencyKin')->nullable();
 			$table->string('remember_token', 100)->nullable();
-			$table->boolean('coordinatorApproval');
+			$table->boolean('coordinatorApproval')->nullable();
 			$table->timestamps();
 		});
 	}

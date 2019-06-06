@@ -1,4 +1,5 @@
 <?php
+/* eslint-disable */
 
 namespace App\Http\Controllers;
 
@@ -7,9 +8,6 @@ use App\Http\Resources\ContactResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\ZipCodeResource;
-use App\Http\Resources\Student_SupportsResource;
-use App\Http\Resources\SupportResource;
-
 use App\Meeting;
 use App\Contact;
 use App\ZipCode;
@@ -21,11 +19,14 @@ use App\Service;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\MedicalFile;
 use App\Nee;
 use App\History;
+use Illuminate\Support\Facades\Auth;
+use App\Subject;
+use App\Http\Resources\SubjectResource;
+use PHPUnit\Framework\Constraint\IsEqual;
 
 class StudentController extends Controller
 {
@@ -79,9 +80,34 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $user = Auth::user();
+        $dados = $request->validate([
+            'email' => 'required|email',
+            'secondEmail' => 'nullable|email',
+            'responsibleName' => 'required|string',
+            'responsibleEmail' => 'required|email',
+            'responsibleKin' => 'required|string',
+            'responsiblePhone' => 'required|integer|regex:/[0-9]{9}/',
+            'emergencyName' => 'required|string',
+            'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
+            'emergencyEmail' => 'required|email',
+            'emergencyKin' => 'required|string',
+        ]);
+
+        $user->secondEmail = $dados['secondEmail'];
+        $user->responsibleName = $dados['responsibleName'];
+        $user->responsibleEmail = $dados['responsibleEmail'];
+        $user->responsibleKin = $dados['responsibleKin'];
+        $user->responsiblePhone = $dados['responsiblePhone'];
+        $user->emergencyName = $dados['emergencyName'];
+        $user->emergencyPhone = $dados['emergencyPhone'];
+        $user->emergencyEmail = $dados['emergencyEmail'];
+        $user->emergencyKin = $dados['emergencyKin'];
+
+        $user->save();
+        return response()->json(new UserResource($user), 200);
     }
 
     /**
@@ -107,39 +133,28 @@ class StudentController extends Controller
         //
     }
 
-    public function getContacts($id)
+    public function getContacts()
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
         return ContactResource::collection(Contact::where('studentEmail', $user->email)->orderBy('date', 'desc')->paginate(10));
     }
 
-    public function getServices($id)
+    public function getServices()
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
 
-        // $supports = Supports::all();
-        // $test = array(5,6);
-
-        // $idSupports = Student_SupportsResource::collection(Student_Supports::Where('email', $user->email)->pluck('support_value'));
-                
-        //dd($idSupports);
-        
-        //dd(Supports->supports());
-
-        $studentSupports = $supports->whereIn('value', $idSupports);//= $supports->whereIn('value', $idSupports);
-        dd($studentSupports);
-        
-        
-        //dd($idSupports);
-        
-        return ServiceResource::collection(Service::where('email', $user->email)->where('aprovedDate', '!=', 'null')->paginate(10));
+        $supports = Supports::all();
+        $idSupports = Student_Supports::Where('email', $user->email)->pluck('support_value');
+        $studentSupports = $supports->whereIn('value', $idSupports);
 
 
+        return response()->json($studentSupports);
     }
 
-    public function subscription(Request $request, $id)
+    public function subscription(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
+
         $dados = $request->validate([
             'name' => 'required|string',
             'number' => 'required|integer',
@@ -275,16 +290,16 @@ class StudentController extends Controller
         return MeetingResource::collection(Meeting::Orderby('date')->paginate(10));
     }
 
-    public function setMeeting(Request $request, $id)
+    public function setMeeting(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
         $dados = $request->validate([
             'service' => 'required|string',
             'comment' => 'required|string'
         ]);
 
         $meeting = new Meeting();
-        $meeting->studentId = $id;
+        $meeting->studentId = $user->id;
         $meeting->email = $user->email;
         $meeting->name = $user->name;
         $meeting->service = $dados['service'];
@@ -300,9 +315,9 @@ class StudentController extends Controller
         return response()->json(new MeetingResource($meeting), 201);
     }
 
-    public function setService(Request $request, $id)
+    public function setService(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
         $dados = $request->validate([
             'name' => 'required|string',
             'reason' => 'required|string'
@@ -321,5 +336,61 @@ class StudentController extends Controller
 
         $service->save();
         return response()->json(new ServiceResource($service), 201);
+    }
+
+    public function supportHours()
+    {
+        if (!Subject::where('studentEmail', Auth::user()->email)->exists()) {
+            $client = new \GuzzleHttp\Client();
+            $aux = str_split(Carbon::now()->year, 2);
+            if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
+                $yearLective = Carbon::now()->year . "" . (int)$aux[1] + 1;
+            } else {
+                $yearLective = $aux[0] . "" . (int)$aux[1] - 1 . ""  . $aux[1];
+            }
+
+            $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . Auth::user()->departmentNumber . '&estado=1&naluno=' . Auth::user()->number . '');
+            $aux = $response->getBody()->getContents();
+            $response = explode(';', $aux);
+            $subjects = array();
+            for ($i = 5; $i < sizeof($response); $i += 8) {
+                $subject = new Subject();
+                $subject->studentEmail = Auth::user()->email;
+                $subject->nome = trim(mb_convert_encoding($response[$i], 'UTF-8', 'html-entities'));
+                $subject->semester = $response[$i + 1];
+                $subject->hours = 0;
+                $subject->save();
+                array_push($subjects, $subject);
+            }
+
+            return response()->json(new SubjectResource($subjects), 201);
+        }
+        return response()->json(new SubjectResource(Subject::where('studentEmail', Auth::user()->email)->get()), 200);
+    }
+
+    public function setSupportHours(Request $request)
+    {
+        $user = Auth::user();
+
+        $subject = Subject::where('studentEmail', $user->email)->pluck('hours');
+        $subjectName = Subject::where('studentEmail', $user->email)->pluck('nome');
+        if ($request->hours > 40) {
+            return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
+        }
+
+        $aux = 0;
+        for ($i = 0; $i < sizeof($subject); $i++) {
+            if (strcmp($subjectName[$i], $request->nome) != 0) {
+                $aux += $subject[$i];
+            }
+        }
+        if ($aux + $request->hours <= 40) {
+            $subject = Subject::Where('studentEmail', $user->email)->where('nome', $request->nome)->first();
+            $subject->hours = $request->hours;
+            $subject->save();
+            return response()->json(new SubjectResource($subject), 200);
+        } else {
+            return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
+        }
     }
 }

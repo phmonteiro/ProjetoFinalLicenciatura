@@ -18,6 +18,12 @@
         <a href="#">
           <router-link class="nav-link" :to="{name: 'serviceRequest'}">Pedido de apoios</router-link>
         </a>
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'editProfile'}">Editar perfil</router-link>
+        </a>
+        <a href="#">
+          <router-link class="nav-link" :to="{name: 'supportHours'}">Acompanhamento</router-link>
+        </a>
       </div>
       <router-view></router-view>
     </div>

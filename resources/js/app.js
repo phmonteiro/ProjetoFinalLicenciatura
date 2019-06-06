@@ -11,14 +11,14 @@ import Toasted from 'vue-toasted';
 import {VueSpinners} from '@saeris/vue-spinners';
 import Vuelidate from 'vuelidate';
 
-//icons
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// icons
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faEye} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faEye)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-//--
+library.add(faEye);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+// --
 
 
 window.Vue = require('vue');
@@ -33,8 +33,9 @@ window.Event = new Vue();
 Vue.component('vue-layout', require('./layout.vue').default);
 Vue.component('nav-bar', require('./components/navbar.vue').default);
 Vue.component('edit-user', require('./components/admin/edit.vue').default);
-//Vue.component('meetings', require('./components/services/meetings.vue').default);
-//Vue.component('enee-list', require('./components/services/eneeList.vue').default);
+Vue.component('edit-support-hours', require('./components/student/editSupportHours.vue').default);
+// Vue.component('meetings', require('./components/services/meetings.vue').default);
+// Vue.component('enee-list', require('./components/services/eneeList.vue').default);
 Vue.component('set-cm', require('./components/caseManagerResponsible/setCM.vue').default);
 Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').default);
 Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
