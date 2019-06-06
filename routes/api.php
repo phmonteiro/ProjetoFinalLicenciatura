@@ -30,7 +30,6 @@ Route::middleware('auth:api')->group(function () {
 
     //student
     Route::get('getEnee', 'StudentController@index');
-    Route::get('getContacts/{id}', 'StudentController@getContacts');
     Route::post('setMeeting/{id}', 'StudentController@setMeeting');
     Route::post('setService/{id}', 'StudentController@setService');
     Route::get('getContacts/{id}', 'StudentController@getContacts');
@@ -64,11 +63,15 @@ Route::middleware('auth:api')->group(function () {
     Route::post('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
-    Route::get('getCaseManagers', 'CaseManagerController@index');
-    Route::get('getCaseManagersForApproval', 'CaseManagerController@forApproval');
-    Route::post('setCM/{id}', 'CaseManagerController@setCM');
-    Route::get('getStudents', 'CaseManagerController@getStudents');
-    Route::get('getStudentCMs/{email}', 'CaseManagerController@getStudentCMs');
-    Route::post('removeCM/{email}', 'CaseManagerController@removeCM');
+    Route::get('getCaseManagers', 'CaseManagerResponsibleController@index');
+    Route::get('getCaseManagersForApproval', 'CaseManagerResponsibleController@forApproval');
+    Route::post('setCM/{id}', 'CaseManagerResponsibleController@setCM');
+    Route::get('getStudents', 'CaseManagerResponsibleController@getStudents');
+    Route::get('getStudentCMs/{email}', 'CaseManagerResponsibleController@getStudentCMs');
+    Route::post('removeCM/{email}', 'CaseManagerResponsibleController@removeCM');
+
+    //Case Manager
+    Route::get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');
+    Route::post('setInteraction', 'CaseManagerController@setInteraction');
 
 });

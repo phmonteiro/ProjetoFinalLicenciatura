@@ -88,13 +88,7 @@
                     prev_page_url: links.prev
                 };
                 this.pagination = pagination;
-            },
-            // editUser(row) {
-            //     this.currentUser = Object.assign({}, row);
-            // },
-            // cancelEdit: function () {
-            //     this.currentUser = null;
-            // },
+            }
         },
         created() {
             this.getcaseManagers();

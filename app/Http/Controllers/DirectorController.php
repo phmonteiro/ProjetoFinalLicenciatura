@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\CaseManager;
 use App\Http\Resources\UserResource;
-use App\Http\Resources\CaseManagerResource;
+use App\Http\Resources\CaseManagerResponsibleResource;
 
 
 class DirectorController extends Controller

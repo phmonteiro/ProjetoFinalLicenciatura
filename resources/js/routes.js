@@ -196,9 +196,9 @@ const routes = [{
         },
         children: [
             {
-                path: '/caseManagerResponsible/cmList',
-                name: 'cmList',
-                component: require('./components/caseManagerResponsible/cmList.vue').default,
+                path: '/caseManager/cmEneeList',
+                name: 'cmEneeList',
+                component: require('./components/caseManager/cmEneeList.vue').default,
                 meta: {
                     middlewareAuth: true,
                 },
@@ -241,7 +241,7 @@ router.beforeEach((to, from, next) => {
         return;
     }
     if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'CaseManager') {
-        next('/CaseManager');
+        next('/caseManager');
         return;
     }
     next();

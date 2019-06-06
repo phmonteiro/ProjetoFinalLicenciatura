@@ -10,13 +10,13 @@ import i18n from './plugins/i18n';
 import Toasted from 'vue-toasted';
 import {VueSpinners} from '@saeris/vue-spinners';
 import Vuelidate from 'vuelidate';
-
+import DatePicker from 'vue2-datepicker'
 //icons
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faHandshake, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faEye)
+library.add(faEye, faHandshake, faEyeSlash)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 //--
 
@@ -27,7 +27,7 @@ Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);
 Vue.use(Vuelidate);
-
+Vue.use(DatePicker);
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);
@@ -38,6 +38,8 @@ Vue.component('edit-user', require('./components/admin/edit.vue').default);
 Vue.component('set-cm', require('./components/caseManagerResponsible/setCM.vue').default);
 Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').default);
 Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
+Vue.component('set-inter', require('./components/caseManager/setInteraction.vue').default);
+
 
 
 const app = new Vue({
