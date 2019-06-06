@@ -1,12 +1,12 @@
 <template>
   <div>
-    <eneeEdit
+    <eneeOptions
       :user="currentUser"
       :studentSupports="supportsForStudent"
       @refresh="getEnee"
       @save-user="saveUser"
       @cancel-edit="cancelEdit()"
-    ></eneeEdit>
+    ></eneeOptions>
     <div class="container">
       <h2>Lista de candidatos a ENEE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
@@ -16,7 +16,17 @@
           <p v-if="row.item.enee=='approved'">Aprovado</p>
         </template>
         <template slot="actions" slot-scope="row">
-          <button class="btn btn-info" v-on:click.prevent="editUser(row.item)">Editar estatuto</button>
+          <button
+            class="btn btn-info"
+            v-on:click.prevent="editUser(row.item)"
+            v-if="row.item.number != user.number && row.item.enee!='approved'"
+          >Avaliar</button>
+
+          <button
+            class="btn btn-danger"
+            v-on:click.prevent="reprovedSubscription(row.item)"
+            v-if="row.item.number != user.number && row.item.enee!='reproved'"
+          >Reprovar</button>
         </template>
       </b-table>
       <nav aria-label="Page navigation" v-if="enee">
@@ -95,7 +105,7 @@ export default {
   methods: {
     getEnee(page_url) {
       let pg = this;
-      page_url = page_url || "api/getApprovedEnee?page=1";
+      page_url = page_url || "api/getEnee?page=1";
       axios
         .get(page_url)
         .then(response => {
@@ -119,12 +129,33 @@ export default {
     },
     editUser(row) {
       this.currentUser = Object.assign({}, row);
-      console.log(row);
-
       this.getStudentSupports();
     },
     cancelEdit: function() {
       this.currentUser = null;
+    },
+    reprovedSubscription(row) {
+      axios
+        .post("api/reproveSubscription/" + row.id)
+        .then(response => {
+          this.getEnee();
+          this.$toasted.success("Candidatura reprovada com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error(
+            "Erro ao rejeitar candidatura. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
+        });
     },
     getStudentSupports() {
       axios
@@ -137,9 +168,10 @@ export default {
           console.log(error);
         });
     },
+
     saveUser(data) {
       axios
-        .post("api/updateEnee/", data)
+        .post("api/updateStudentSupports/", data)
         .then(response => {
           this.getEnee();
           this.currentUser = null;

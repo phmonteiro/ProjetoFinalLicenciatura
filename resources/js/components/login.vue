@@ -123,7 +123,8 @@ export default {
           //Vem do role da base de dados da universidade
           if (
             response.data.user.type == "Estudante" &&
-            response.data.user.enee == null
+            (response.data.user.enee == null ||
+              response.data.user.enee == "rejected")
           ) {
             this.$router.push("/studentForm");
             return;

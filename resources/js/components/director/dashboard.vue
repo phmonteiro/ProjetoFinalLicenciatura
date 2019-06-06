@@ -7,7 +7,10 @@
 
     <div class="sidenav">
       <a href="#">
-        <router-link class="nav-link" :to="{name: 'manageENEE'}">Candidatos a ENEE</router-link>
+        <router-link class="nav-link" :to="{name: 'manageRequestENEE'}">Candidatos a ENEE</router-link>
+      </a>
+      <a href="#">
+        <router-link class="nav-link" :to="{name: 'manageENEE'}">ENEE</router-link>
       </a>
     </div>
 

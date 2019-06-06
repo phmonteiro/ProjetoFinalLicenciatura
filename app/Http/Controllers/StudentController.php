@@ -176,6 +176,7 @@ class StudentController extends Controller
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
             'emergencyKin' => 'required|string',
+            'gender' => 'required|string',
             'nif' => 'required|size:9',
             'niss' => 'required|size:11',
             'sns' => 'required|size:9',
@@ -211,6 +212,7 @@ class StudentController extends Controller
         $user->emergencyPhone = $dados['emergencyPhone'];
         $user->emergencyEmail = $dados['emergencyEmail'];
         $user->emergencyKin = $dados['emergencyKin'];
+        $user->gender = $dados['gender'];
         $user->nif = $dados['nif'];
         $user->niss = $dados['niss'];
         $user->sns = $dados['sns'];
@@ -392,5 +394,10 @@ class StudentController extends Controller
         } else {
             return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
         }
+    }
+
+    public function enee()
+    {
+        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10));
     }
 }

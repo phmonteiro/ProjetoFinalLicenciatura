@@ -24,49 +24,6 @@
         disabled
       >
     </div>
-    <div>
-      <div class="form-group">
-        <label for="coordinatorApproval">Opinião coordenador de curso:</label>
-        <p v-if="user.coordinatorApproval==1">
-          <b>Aprovado</b>
-        </p>
-        <p v-if="user.coordinatorApproval==0">
-          <b>Rejeitado</b>
-        </p>
-        <p v-if="user.coordinatorApproval==null">
-          <b>Ainda sem parecer</b>
-        </p>
-      </div>
-
-      <div class="form-group">
-        <label for="servicesApproval">Opinião servicos:</label>
-        <p v-if="user.servicesApproval=='approved'">
-          <b>Aprovado</b>
-        </p>
-        <p v-if="user.servicesApproval=='denied'">
-          <b>Rejeitado</b>
-        </p>
-        <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' ">
-          <b>Ainda sem parecer</b>
-        </p>
-
-        <button
-          v-if="user.servicesApproval==null"
-          type="submit"
-          class="btn btn-secondary"
-          name="ok"
-          v-on:click.prevent="askForServicesApproval()"
-        >Pedir parecer</button>
-      </div>
-
-      <b-form-group id="input-group-3" label="Duracao da NEE:" label-for="input-3">
-        <b-form-select id="input-3" v-model="form.duration" :options="durationOpts" required></b-form-select>
-        <div v-if="form.duration=='Temporária'">
-          <label for="date">Data de fim de estatuto ENEE</label>
-          <input class="form-control" type="date" value id="date" name="date" v-model="data.date">
-        </div>
-      </b-form-group>
-    </div>
 
     <b-form-group label="Apoios ao estudante">
       <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
@@ -96,21 +53,11 @@ export default {
   data: function() {
     return {
       data: {
-        tutor: "",
-        date: ""
+        tutor: ""
       },
       form: {
         duration: null
       },
-      durationOpts: [
-        {
-          text: "Escolha uma",
-          disabled: true,
-          value: null
-        },
-        "Temporária",
-        "Permanente"
-      ],
       options: [],
       childData: ""
     };
@@ -142,9 +89,7 @@ export default {
       let data = {
         email: this.user.email,
         supports: this.studentSupports,
-        tutor: this.data.tutor,
-        date: this.data.date,
-        duration: this.form.duration
+        tutor: this.data.tutor
       };
       this.$emit("save-user", data);
     },

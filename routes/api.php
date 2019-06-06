@@ -29,10 +29,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
     Route::post('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
     Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
-    Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
 
     //student
     Route::get('getEnee', 'StudentController@index');
+    Route::get('getApprovedEnee', 'StudentController@enee');
     Route::get('getContacts', 'StudentController@getContacts');
     Route::post('setMeeting', 'StudentController@setMeeting');
     Route::post('setService', 'StudentController@setService');
@@ -63,6 +63,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
     Route::post('reproveSubscription/{id}', 'SupportController@reproveSubscription');
     Route::post('servicesApprovalRequest/{id}', 'DirectorController@approvalRequest');
+    Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
+    Route::post('updateEnee', 'DirectorController@updateEnee');
+
 
     //Coordinator
     Route::get('getRequests', 'CoordinatorController@requests');
@@ -80,5 +83,4 @@ Route::middleware('auth:api')->group(function () {
     //Case Manager
     Route::get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');
     Route::post('setInteraction', 'CaseManagerController@setInteraction');
-
 });

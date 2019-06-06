@@ -61,7 +61,7 @@
 
             <div class="container-full-width">
               <div class="row">
-                <div class="col">
+                <div class="col-8">
                   <label for="email">E-mail</label>
                   <input
                     class="form-control"
@@ -72,6 +72,19 @@
                     v-model="student.email"
                     disabled
                   >
+                </div>
+                <div class="col-4">
+                  <label for="gender">Género</label>
+                  <select
+                    class="custom-select"
+                    name="identification"
+                    single
+                    v-model="student.gender"
+                  >
+                    <option selected value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -453,6 +466,7 @@ export default {
         identificationDocument: null,
         identificationNumber: null,
         enruledYear: null,
+        gender: null,
         curricularYear: null,
         responsibleName: null,
         responsiblePhone: null,
@@ -510,6 +524,7 @@ export default {
       formData.append("residence", this.student.residence);
       formData.append("zipCode", this.student.zipCode);
       formData.append("area", this.student.area);
+      formData.append("gender", this.student.gender);
       formData.append(
         "identificationDocument",
         this.student.identificationDocument
