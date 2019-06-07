@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\ContactResource;
 
@@ -10,10 +13,12 @@ use Carbon\Carbon;
 use App\User;
 use App\CaseManager;
 use App\Contact;
+use App\Contacts_Files;
 
 
 class CaseManagerController extends Controller
 {
+
     public function getCmEnee($id)
     {
         $user = User::findOrFail($id);
@@ -35,7 +40,6 @@ class CaseManagerController extends Controller
     }
     public function setInteraction(Request $request)
     {
-
         $dados = $request->validate([
             'email' => 'required|email',
             'interactionDate' => '',
@@ -44,6 +48,8 @@ class CaseManagerController extends Controller
             'decision' => 'required',
             'information' => 'required'
         ]);
+
+       
 
         $contact = new Contact();
         $contact->studentEmail = $dados['email'];
@@ -58,6 +64,18 @@ class CaseManagerController extends Controller
         $contact->nextContact = $dados['nextInteraction'];
 
         $contact->save();
+
+        for ($i = 0; $i < $request->numberFiles; $i++) {
+            $file = Input::file('file' . $i);
+            $ext = $file->getClientOriginalExtension();
+            $uploadedFile = "InteractionFile - " . $contact->id . "-" . $i . '.' . $ext;
+            Storage::disk('public')->put('interactionFiles/' . $uploadedFile, File::get($file));
+            $interactionFile = new Contacts_Files();
+            $interactionFile->contact_id = $contact->id;
+            $interactionFile->filename = $uploadedFile;
+            $interactionFile->save();
+        }
+
         return response()->json(new ContactResource($contact), 200);
     }
 }

@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration
-{
+class CreateUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,11 +12,12 @@ class CreateUsersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('users', function (Blueprint $table) {
+		Schema::create('users', function(Blueprint $table)
+		{
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('name');
 			$table->string('email')->unique();
-			$table->string('secondEmail')->nullable()();
+			$table->string('secondEmail')->nullable();
 			$table->integer('number')->nullable()->unique();
 			$table->integer('phoneNumber')->nullable()->unique('users_phonenumber_unique');
 			$table->string('residence')->nullable();
@@ -35,8 +35,11 @@ class CreateUsersTable extends Migration
 			$table->bigInteger('nif')->nullable();
 			$table->bigInteger('niss')->nullable();
 			$table->bigInteger('sns')->nullable();
-			$table->string('enee')->nullable();
+			$table->string('enee', 50)->nullable();
+			$table->boolean('coordinatorApproval')->nullable();
+			$table->string('servicesApproval', 50)->nullable();
 			$table->text('educationalSupport', 65535)->nullable();
+			$table->text('functionalAnalysis', 65535)->nullable();
 			$table->date('eneeExpirationDate')->nullable();
 			$table->date('loginExpirationDate')->nullable();
 			$table->string('password');
@@ -46,12 +49,10 @@ class CreateUsersTable extends Migration
 			$table->string('responsibleEmail')->nullable();
 			$table->string('responsibleKin')->nullable();
 			$table->string('emergencyName')->nullable();
-			$table->text('functionalAnalysis', 65535)->nullable();
 			$table->integer('emergencyPhone')->nullable();
 			$table->string('emergencyEmail')->nullable();
 			$table->string('emergencyKin')->nullable();
 			$table->string('remember_token', 100)->nullable();
-			$table->boolean('coordinatorApproval')->nullable();
 			$table->timestamps();
 		});
 	}
@@ -66,4 +67,5 @@ class CreateUsersTable extends Migration
 	{
 		Schema::drop('users');
 	}
+
 }

@@ -11,10 +11,10 @@
 
                             </b-form-checkbox>
                             <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                                <font-awesome-icon icon="eye"/>
+                                <font-awesome-icon icon="eye" />
                             </div>
                             <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                                <font-awesome-icon icon="eye-slash"/>
+                                <font-awesome-icon icon="eye-slash" />
                             </div>
 
                         </b-col>
@@ -146,10 +146,26 @@
             cancelEdit: function () {
                 this.currentUser = null;
             },
-            saveInteraction(data) {
+            saveInteraction(data, files) { 
+                console.log(data);
+                               
+                const formData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("file" + i, files[i]);
+                }
+                
                 data.email = this.currentUser.email;
+
+                formData.append("decision",data.decision);
+                formData.append("email",data.email);
+                formData.append("information",data.information);
+                formData.append("interactionDate",data.interactionDate);
+                formData.append("nextInteraction",data.nextInteraction);
+                formData.append("service",data.service);
+                formData.append("numberFiles", files.length);
+
                 axios
-                    .post("api/setInteraction/", data)
+                    .post("api/setInteraction/", formData)
                     .then(response => {
                         this.getCmEnee();
                         this.currentUser = null;
