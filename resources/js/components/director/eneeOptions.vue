@@ -24,6 +24,30 @@
         disabled
       >
     </div>
+    <div class="form-group">
+      <label for="inputNee">Necessidades educativas especiais</label>
+      <input
+        v-for="aux in nee"
+        type="text"
+        class="form-control"
+        v-model="aux.name"
+        name="nee"
+        id="nee"
+        disabled
+      >
+    </div>
+
+    <div class="form-group" v-if="user.functionalAnalysis != null">
+      <label for="inputAnalysis">Análise Funcional</label>
+      <input
+        type="text"
+        class="form-control"
+        v-model="user.functionalAnalysis"
+        name="functionalAnalysis"
+        id="functionalAnalysis"
+        disabled
+      >
+    </div>
     <div>
       <div class="form-group">
         <label for="coordinatorApproval">Opinião coordenador de curso:</label>
@@ -49,6 +73,12 @@
         <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' ">
           <b>Ainda sem parecer</b>
         </p>
+
+        <button
+          class="btn btn-secondary"
+          v-on:click.prevent="downloadPDF(user.id)"
+          v-if="user.enee!='reproved'"
+        >Download ficheiros médicos</button>
 
         <button
           v-if="user.servicesApproval==null"
@@ -92,7 +122,7 @@
 </template>
 <script>
 export default {
-  props: ["user", "studentSupports"],
+  props: ["user", "studentSupports", "nee"],
   data: function() {
     return {
       data: {
@@ -116,6 +146,28 @@ export default {
     };
   },
   methods: {
+    downloadPDF(id) {
+      axios({
+        url: "api/medicalReport/download/" + id,
+        method: "GET",
+        responseType: "blob"
+      })
+        .then(response => {
+          console.log(response);
+
+          /*
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "Medical  report" + id + ".pdf");
+          document.body.appendChild(link);
+          link.click();
+          console.log("success");*/
+        })
+        .catch(error => {
+          console.log("error");
+        });
+    },
     cancel() {
       this.$emit("cancel-edit");
     },
@@ -163,6 +215,7 @@ export default {
   created() {
     this.getAllSupports();
   },
+
   computed: {
     state() {
       return this.value.length === 1;

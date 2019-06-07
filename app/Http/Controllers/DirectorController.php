@@ -9,6 +9,9 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\CaseManagerResponsibleResource;
 use App\Tutor;
 use App\Student_Supports;
+use App\MedicalFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class DirectorController extends Controller
 {
@@ -68,5 +71,29 @@ class DirectorController extends Controller
         }
 
         return response()->json(new UserResource($user), 200);
+    }
+
+    public function downloadStudentDocuments($id)
+    {
+        $user = User::findOrFail($id);
+        $files = MedicalFile::where('email', $user->email)->get();
+
+        $zip_file = 'user.zip'; // Name of our archive to download
+        Storage::disk('public')->put('medicalReport/' . $zip_file, File::get($zip_file));
+
+        $zip = new \ZipArchive();
+        $zip->open($zip_file, \ZipArchive::CREATE);
+        $zip->addFile(base_path('storage/app/medicalReport/MedicalReport-' . $user->number . '-' . 1 . '.pdf'), 'MedicalReport - 2160852-0.pdf');
+        $zip->close();
+        return \Response::download($zip_file);
+
+        /*$zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        return response()->download($zip_file);
+        for ($i = 0; $i < sizeof($files); $i++) {
+            $zip->addFile(base_path('storage/app/public/medicalReport/MedicalReport-' . $user->number . '-' . $i . '.pdf'));
+        }
+        $zip->close();
+        return \Response::download($zip_file);*/
     }
 }

@@ -3,6 +3,7 @@
     <eneeOptions
       :user="currentUser"
       :studentSupports="supportsForStudent"
+      :nee="nee"
       @refresh="getEnee"
       @save-user="saveUser"
       @cancel-edit="cancelEdit()"
@@ -16,17 +17,22 @@
           <p v-if="row.item.enee=='approved'">Aprovado</p>
         </template>
         <template slot="actions" slot-scope="row">
-          <button
-            class="btn btn-info"
-            v-on:click.prevent="editUser(row.item)"
-            v-if="row.item.number != user.number && row.item.enee!='approved'"
-          >Avaliar</button>
-
-          <button
-            class="btn btn-danger"
-            v-on:click.prevent="reprovedSubscription(row.item)"
-            v-if="row.item.number != user.number && row.item.enee!='reproved'"
-          >Reprovar</button>
+          <b-row class="text-center">
+            <b-col md="6" sm="12">
+              <button
+                class="btn btn-info"
+                v-on:click.prevent="editUser(row.item)"
+                v-if="row.item.enee!='approved'"
+              >Avaliar</button>
+            </b-col>
+            <b-col md="6" sm="12">
+              <button
+                class="btn btn-danger"
+                v-on:click.prevent="reprovedSubscription(row.item)"
+                v-if="row.item.enee!='reproved'"
+              >Reprovar</button>
+            </b-col>
+          </b-row>
         </template>
       </b-table>
       <nav aria-label="Page navigation" v-if="enee">
@@ -99,7 +105,8 @@ export default {
         }
       ],
       currentUser: null,
-      supportsForStudent: null
+      supportsForStudent: null,
+      nee: null
     };
   },
   methods: {
@@ -130,6 +137,7 @@ export default {
     editUser(row) {
       this.currentUser = Object.assign({}, row);
       this.getStudentSupports();
+      this.getNee();
     },
     cancelEdit: function() {
       this.currentUser = null;
@@ -163,6 +171,18 @@ export default {
         .then(response => {
           console.log(response);
           this.supportsForStudent = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getNee() {
+      axios
+        .get("api/getNee/" + this.user.id)
+        .then(response => {
+          console.log(response.data);
+
+          this.nee = response.data;
         })
         .catch(error => {
           console.log(error);

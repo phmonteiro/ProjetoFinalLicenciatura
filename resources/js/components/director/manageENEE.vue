@@ -8,7 +8,7 @@
       @cancel-edit="cancelEdit()"
     ></eneeEdit>
     <div class="container">
-      <h2>Lista de candidatos a ENEE</h2>
+      <h2>Lista de ENEE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template slot="enee" slot-scope="row">
           <p v-if="row.item.enee=='awaiting'">Aguardando</p>
@@ -16,7 +16,11 @@
           <p v-if="row.item.enee=='approved'">Aprovado</p>
         </template>
         <template slot="actions" slot-scope="row">
-          <button class="btn btn-info" v-on:click.prevent="editUser(row.item)">Editar estatuto</button>
+          <b-row class="text-center">
+            <b-col md="12" sm="12">
+              <button class="btn btn-info" v-on:click.prevent="editUser(row.item)">Editar estatuto</button>
+            </b-col>
+          </b-row>
         </template>
       </b-table>
       <nav aria-label="Page navigation" v-if="enee">

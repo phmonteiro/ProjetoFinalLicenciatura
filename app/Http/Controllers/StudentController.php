@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Subject;
 use App\Http\Resources\SubjectResource;
 use PHPUnit\Framework\Constraint\IsEqual;
+use App\Http\Resources\NeeResource;
 
 class StudentController extends Controller
 {
@@ -244,7 +245,8 @@ class StudentController extends Controller
         if ($request->neeTypeAnotherDisease  == "true") {
             $nee = new Nee();
             $nee->studentEmail = $user->email;
-            $nee->name = $dados['neeTypeDisease'];
+            $nee->name = "Outro";
+            $nee->otherName = $dados["neeTypeDisease"];
             $nee->save();
         }
 
@@ -361,10 +363,10 @@ class StudentController extends Controller
                 $subject->nome = trim(mb_convert_encoding($response[$i], 'UTF-8', 'html-entities'));
                 $subject->semester = $response[$i + 1];
                 $subject->hours = 0;
+                $subject->subjectCode = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));
                 $subject->save();
                 array_push($subjects, $subject);
             }
-
             return response()->json(new SubjectResource($subjects), 201);
         }
         return response()->json(new SubjectResource(Subject::where('studentEmail', Auth::user()->email)->get()), 200);
@@ -399,5 +401,12 @@ class StudentController extends Controller
     public function enee()
     {
         return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10));
+    }
+
+    public function getNee($id)
+    {
+        $user = User::findOrFail($id);
+        $nees = Nee::where('studentEmail', $user->email)->get();
+        return response()->json(new NeeResource($nees), 200);
     }
 }

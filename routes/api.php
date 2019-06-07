@@ -45,6 +45,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('supportHours', 'StudentController@supportHours');
     Route::post('setSupportHours', 'StudentController@setSupportHours');
     Route::post('editProfile', 'StudentController@edit');
+    Route::get('getNee/{id}', 'StudentController@getNee');
 
     //services
     Route::post('setContact/{id}', 'ServiceController@contact');
@@ -65,6 +66,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('servicesApprovalRequest/{id}', 'DirectorController@approvalRequest');
     Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
     Route::post('updateEnee', 'DirectorController@updateEnee');
+    Route::get('medicalReport/download/{id}', 'DirectorController@downloadStudentDocuments');
 
 
     //Coordinator
