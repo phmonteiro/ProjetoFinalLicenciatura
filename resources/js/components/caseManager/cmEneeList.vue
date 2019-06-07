@@ -24,22 +24,13 @@
           </b-row>
         </template>
 
-        <template slot="row-details" slot-scope="row">
-          <b-card>
-            <b-row class="mb-2">
-              <b-col sm="4" class="text-sm-right">
-                <b>Nascido em:</b>
-                {{row.item.birthDate}}
-              </b-col>
-              <b-col>
-                <b-row class="mb-2">
-                  <b-col sm="4" class="text-sm-right">
-                    <b>Ano curricular:</b>
-                    {{row.item.curricularYear}}
-                  </b-col>
-                </b-row>
-              </b-col>
-            </b-row>
+                            </b-form-checkbox>
+                            <div v-if="row.detailsShowing" style="margin-left: -8px;">
+                                <font-awesome-icon icon="eye" />
+                            </div>
+                            <div v-if="!row.detailsShowing" style="margin-left: -8px;">
+                                <font-awesome-icon icon="eye-slash" />
+                            </div>
 
             <b-row class="mb-2">
               <b-col sm="4" class="text-sm-right">
@@ -117,10 +108,70 @@ export default {
           label: "Nome Estudande",
           sortable: true
         },
-        {
-          key: "email",
-          label: "Email Estudante",
-          sortable: true
+        methods: {
+            getCmEnee() {
+                axios
+                    .get("api/getCmEnee/" + this.user.id)
+                    .then(response => {
+                        this.enee = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            makePagination(meta, links) {
+                let pagination = {
+                    current_page: meta.current_page,
+                    last_page: meta.last_page,
+                    next_page_url: links.next,
+                    prev_page_url: links.prev
+                };
+                this.pagination = pagination;
+            },
+            setInteraction(row) {
+                this.currentUser = Object.assign({}, row);
+            },
+            cancelEdit: function () {
+                this.currentUser = null;
+            },
+            saveInteraction(data, files) { 
+                console.log(data);
+                               
+                const formData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("file" + i, files[i]);
+                }
+                
+                data.email = this.currentUser.email;
+
+                formData.append("decision",data.decision);
+                formData.append("email",data.email);
+                formData.append("information",data.information);
+                formData.append("interactionDate",data.interactionDate);
+                formData.append("nextInteraction",data.nextInteraction);
+                formData.append("service",data.service);
+                formData.append("numberFiles", files.length);
+
+                axios
+                    .post("api/setInteraction/", formData)
+                    .then(response => {
+                        this.getCmEnee();
+                        this.currentUser = null;
+                        this.$toasted.success("Guardado com sucesso.", {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toasted.error("Erro ao guardar. Por favor tente novamente.", {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        });
+                    });
+            }
         },
         {
           key: "phoneNumber",

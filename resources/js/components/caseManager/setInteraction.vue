@@ -35,8 +35,7 @@
 
         <div class="form-group">
             <label for="decision">Medida</label>
-            <textarea class="form-control" id="decision" v-model="data.decision" name="decision" rows="3"
-                ></textarea>
+            <textarea class="form-control" id="decision" v-model="data.decision" name="decision" rows="3"></textarea>
         </div>
 
         <div class="form-group">
@@ -48,6 +47,13 @@
         <div class="form-group">
             <label for="nextInteraction">Proxima interação: </label>
             <date-picker v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
+        </div>
+
+        <div class="form-group p-2">
+        <label for="neeType">Anexos Opcionais</label>
+        <div class="field p-1">
+            <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple>
+        </div>
         </div>
 
         <b-button variant="outline-success" v-on:click.prevent="save()">Guardar</b-button>
@@ -65,13 +71,15 @@
                     nextInteraction: '',
                     service: '',
                     decision: '',
-                    information: ''
+                    information: '',
+
                 },
                 meeting: {
                     info: null,
                     date: null
                 },
                 format: "d MMMM yyyy",
+                files: []
 
             };
 
@@ -81,9 +89,15 @@
                 this.$emit("cancel-edit");
             },
             save: function () {
-                this.$emit("save-interaction", this.data);
+                this.$emit("save-interaction", this.data, this.files);
                 //this.data = Object.assign({}, {});
-            }
+            },
+            handleFiles() {
+                let uploadedFiles = this.$refs.files.files;
+                for (var i = 0; i < uploadedFiles.length; i++) {
+                    this.files.push(uploadedFiles[i]);
+                }
+            },
         },
         mounted() {},
 
