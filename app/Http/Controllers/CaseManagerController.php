@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
@@ -14,7 +15,8 @@ use App\User;
 use App\CaseManager;
 use App\Contact;
 use App\Contacts_Files;
-
+use Illuminate\Support\Arr;
+use App\Nee;
 
 class CaseManagerController extends Controller
 {
@@ -25,7 +27,7 @@ class CaseManagerController extends Controller
 
         $enees = $user->cm;
 
-        
+
 
         $subset = $enees->map(function ($enee) {
             return collect($enee->toArray())
@@ -49,11 +51,11 @@ class CaseManagerController extends Controller
             'information' => 'required'
         ]);
 
-       
+
 
         $contact = new Contact();
         $contact->studentEmail = $dados['email'];
-        if($dados['interactionDate']==null){
+        if ($dados['interactionDate'] == null) {
             $contact->date = Carbon::now();
         } else {
             $contact->date = $dados['interactionDate'];
@@ -77,5 +79,37 @@ class CaseManagerController extends Controller
         }
 
         return response()->json(new ContactResource($contact), 200);
+    }
+
+    public function statistics($stats)
+    {
+        if ($stats == "curso") {
+            $user = User::where('type', 'Estudante')->where('enee', 'approved')->pluck('course');
+            $aux = array_count_values($user->toArray());
+            $values = Arr::divide($aux);
+
+            return $values;
+        }
+        if ($stats == "nee") {
+            $nees = Nee::all()->pluck('name');
+            $aux = array_count_values($nees->toArray());
+            $values = Arr::divide($aux);
+
+            return $values;
+        }
+        if ($stats == "escola") {
+            $user = User::where('type', 'Estudante')->where('enee', 'approved')->pluck('school');
+            $aux = array_count_values($user->toArray());
+            $values = Arr::divide($aux);
+
+            return $values;
+        }
+        if ($stats == "sexo") {
+            $user = User::where('type', 'Estudante')->where('enee', 'approved')->pluck('gender');
+            $aux = array_count_values($user->toArray());
+            $values = Arr::divide($aux);
+
+            return $values;
+        }
     }
 }

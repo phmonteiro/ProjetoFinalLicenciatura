@@ -16,6 +16,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faHandshake, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
+import VueApexCharts from 'vue-apexcharts';
 library.add(faEye, faHandshake, faEyeSlash);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
@@ -31,6 +32,7 @@ Vue.use(DatePicker);
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);
+Vue.component('apexchart', VueApexCharts);
 Vue.component('nav-bar', require('./components/navbar.vue').default);
 Vue.component('edit-user', require('./components/admin/edit.vue').default);
 Vue.component('edit-support-hours', require('./components/student/editSupportHours.vue').default);

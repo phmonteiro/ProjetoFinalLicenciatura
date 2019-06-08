@@ -12,6 +12,8 @@ use App\Student_Supports;
 use App\MedicalFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Chumper\Zipper\Zipper;
+use Carbon\Carbon;
 
 class DirectorController extends Controller
 {
@@ -34,6 +36,7 @@ class DirectorController extends Controller
 
         $user = User::Where('email', $dados['email'])->first();
         $user->enee = "approved";
+        $user->dateEneeApproved = Carbon::now();
 
 
         if ($dados['tutor'] != null) {
@@ -77,23 +80,13 @@ class DirectorController extends Controller
     {
         $user = User::findOrFail($id);
         $files = MedicalFile::where('email', $user->email)->get();
-
-        $zip_file = 'user.zip'; // Name of our archive to download
-        Storage::disk('public')->put('medicalReport/' . $zip_file, File::get($zip_file));
-
-        $zip = new \ZipArchive();
-        $zip->open($zip_file, \ZipArchive::CREATE);
-        $zip->addFile(base_path('storage/app/medicalReport/MedicalReport-' . $user->number . '-' . 1 . '.pdf'), 'MedicalReport - 2160852-0.pdf');
-        $zip->close();
-        return \Response::download($zip_file);
-
-        /*$zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
-        return response()->download($zip_file);
+        $array =  array();
         for ($i = 0; $i < sizeof($files); $i++) {
-            $zip->addFile(base_path('storage/app/public/medicalReport/MedicalReport-' . $user->number . '-' . $i . '.pdf'));
+            $file = base_path('storage/app/public/medicalReport/' . $files[$i]->fileName);
+            array_push($array, $file);
         }
-        $zip->close();
-        return \Response::download($zip_file);*/
+        $zipper = new Zipper();
+        $zipper->make('medicalReport/mytest12.zip')->add($array);
+        return response()->download(public_path('medicalReport/mytest12.zip'));
     }
 }

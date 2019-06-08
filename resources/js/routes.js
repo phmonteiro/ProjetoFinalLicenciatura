@@ -211,22 +211,29 @@ const routes = [{
         middlewareAuth: true,
       },
     },
+  ]},
+{
+  path: '/caseManager',
+  component: require('./components/caseManager/dashboard.vue').default,
+  meta: {
+    middlewareAuth: true,
+  },
+  children: [
     {
-      path: '/caseManager',
-      component: require('./components/caseManager/dashboard.vue').default,
+      path: '/caseManager/cmEneeList',
+      name: 'cmEneeList',
+      component: require('./components/caseManager/cmEneeList.vue').default,
       meta: {
         middlewareAuth: true,
       },
-      children: [
-        {
-          path: '/caseManager/cmEneeList',
-          name: 'cmEneeList',
-          component: require('./components/caseManager/cmEneeList.vue').default,
-          meta: {
-            middlewareAuth: true,
-          },
-        },
-      ],
+    },
+    {
+      path: '/caseManager/statistics',
+      name: 'statistics',
+      component: require('./components/caseManager/statistics.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
   ],
 },

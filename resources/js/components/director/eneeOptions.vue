@@ -37,7 +37,7 @@
       >
     </div>
 
-    <div class="form-group" v-if="user.functionalAnalysis != null">
+    <div class="form-group" v-if="user.functionalAnalysis!=null">
       <label for="inputAnalysis">Análise Funcional</label>
       <input
         type="text"
@@ -48,9 +48,17 @@
         disabled
       >
     </div>
+
+    <div class="form-group">
+      <button
+        class="btn btn-secondary"
+        v-on:click.prevent="downloadPDF(user.id)"
+        v-if="user.enee!='reproved'"
+      >Download ficheiros médicos</button>
+    </div>
     <div>
       <div class="form-group">
-        <label for="coordinatorApproval">Opinião coordenador de curso:</label>
+        <h4 for="coordinatorApproval">Opinião coordenador de curso:</h4>
         <p v-if="user.coordinatorApproval==1">
           <b>Aprovado</b>
         </p>
@@ -63,7 +71,7 @@
       </div>
 
       <div class="form-group">
-        <label for="servicesApproval">Opinião servicos:</label>
+        <h4 for="servicesApproval">Opinião servicos:</h4>
         <p v-if="user.servicesApproval=='approved'">
           <b>Aprovado</b>
         </p>
@@ -73,13 +81,13 @@
         <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' ">
           <b>Ainda sem parecer</b>
         </p>
-
-        <button
-          class="btn btn-secondary"
-          v-on:click.prevent="downloadPDF(user.id)"
-          v-if="user.enee!='reproved'"
-        >Download ficheiros médicos</button>
-
+        <select class="custom-select" name="services" single v-model="services">
+          <option value="sape">Serviços de Apoio ao Estudante</option>
+          <option value="crid">Centro de Recursos para a Inclusão Digital</option>
+          <option value="sas">Serviços de Ação Social</option>
+          <option value="ued">Unidade de Ensino á Distância</option>
+          <option value="dst">Direção de Serviços Técnicos</option>
+        </select>
         <button
           v-if="user.servicesApproval==null"
           type="submit"
@@ -129,6 +137,7 @@ export default {
         tutor: "",
         date: ""
       },
+      services: "",
       form: {
         duration: null
       },
@@ -155,14 +164,13 @@ export default {
         .then(response => {
           console.log(response);
 
-          /*
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "Medical  report" + id + ".pdf");
+          link.setAttribute("download", "Medical  report" + user.name + ".zip");
           document.body.appendChild(link);
           link.click();
-          console.log("success");*/
+          console.log("success");
         })
         .catch(error => {
           console.log("error");

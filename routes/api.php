@@ -84,5 +84,6 @@ Route::middleware('auth:api')->group(function () {
 
     //Case Manager
     Route::get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');
+    Route::get('statistics/{stats}', 'CaseManagerController@statistics');
     Route::post('setInteraction', 'CaseManagerController@setInteraction');
 });
