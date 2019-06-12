@@ -85,8 +85,9 @@ class DirectorController extends Controller
             $file = base_path('storage/app/public/medicalReport/' . $files[$i]->fileName);
             array_push($array, $file);
         }
+        $seed = rand();
         $zipper = new Zipper();
-        $zipper->make('medicalReport/mytest12.zip')->add($array);
-        return response()->download(public_path('medicalReport/mytest12.zip'));
+        $zipper->make('medicalReport/'.$seed.'.zip')->add($array)->close();
+        return response()->download(public_path('medicalReport/'.$seed.'.zip'));
     }
 }

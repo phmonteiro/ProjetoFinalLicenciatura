@@ -32,9 +32,22 @@ class CaseManagerController extends Controller
             $file = base_path('storage/app/public/interactionFiles/' . $contactFiles[$i]->filename);
             array_push($array, $file);
         }
+        $seed = rand();
         $zipper = new Zipper();
-        $zipper->make('interactionFiles/mytest12.zip')->add($array);
-        return response()->download(public_path('interactionFiles/mytest12.zip'));
+        //$zipper->make('interactionFiles/'.$seed.'.zip');
+        $zipper->make('interactionFiles/'.$seed.'.zip');
+        
+        $zipper->add($array)->close();
+        
+
+        // $exists = file_exists(base_path('public/interactionFiles/'.$seed.'.zip'));
+        // dd($exists);
+        // while(!$exists){
+        //     $exists = Storage::exists('interactionFiles/'.$seed.'.zip');
+        // };
+        //sleep(2);
+
+        return response()->download(public_path('interactionFiles/'.$seed.'.zip'));
     }
 
     public function getEneeInteractions($email){

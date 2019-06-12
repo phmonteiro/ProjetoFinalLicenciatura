@@ -587,6 +587,7 @@ export default {
         });
     },
     handleFiles() {
+      this.files = [];
       let uploadedFiles = this.$refs.files.files;
       for (var i = 0; i < uploadedFiles.length; i++) {
         this.files.push(uploadedFiles[i]);

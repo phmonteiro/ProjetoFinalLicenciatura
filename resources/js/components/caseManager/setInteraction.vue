@@ -89,10 +89,12 @@
                 this.$emit("cancel-edit");
             },
             save: function () {
+                
                 this.$emit("save-interaction", this.data, this.files);
                 //this.data = Object.assign({}, {});
             },
             handleFiles() {
+                this.files = [];
                 let uploadedFiles = this.$refs.files.files;
                 for (var i = 0; i < uploadedFiles.length; i++) {
                     this.files.push(uploadedFiles[i]);
