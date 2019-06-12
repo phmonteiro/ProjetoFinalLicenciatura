@@ -13,11 +13,11 @@ import Vuelidate from 'vuelidate';
 import DatePicker from 'vue2-datepicker';
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faEye, faHandshake, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faHandshake, faEyeSlash, faArrowAltCircleDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 import VueApexCharts from 'vue-apexcharts';
-library.add(faEye, faHandshake, faEyeSlash);
+library.add(faEye, faHandshake, faEyeSlash, faArrowAltCircleDown);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
 
@@ -43,6 +43,7 @@ Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').de
 Vue.component('eneeEdit', require('./components/director/editENEE.vue').default);
 Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
 Vue.component('set-inter', require('./components/caseManager/setInteraction.vue').default);
+Vue.component('interactionsDetails', require('./components/caseManager/interactionsDetails.vue')).default;
 
 
 const app = new Vue({
