@@ -23,7 +23,7 @@
                             </b-button>
                         </b-col>
                         <b-col md="4" sm="12">
-                            <b-button size="sm" v-on:click.prevent="setInteraction(row.item)">Ver Interações
+                            <b-button size="sm" v-on:click.prevent="seeInteractions(row.item)">Ver Interações
                                 <font-awesome-icon icon="handshake" />
                             </b-button>
                         </b-col>
@@ -84,7 +84,7 @@
                 </ul>
             </nav>
         </div>
-        <interactionsDetails></interactionsDetails>
+        <interactionsDetails :user="userInteractions" :interactions="interactions" @cancel-edit="cancelInteractions()"></interactionsDetails>
     </div>
 </template>
 
@@ -120,7 +120,9 @@
                         label: "Ações"
                     }
                 ],
-                currentUser: null
+                currentUser: null,
+                userInteractions: null,
+                interactions: null
             };
         },
         methods: {
@@ -143,16 +145,49 @@
                 };
                 this.pagination = pagination;
             },
+            seeInteractions(row) {
+                this.userInteractions = Object.assign({}, row);
+                this.getEneeInteractions(this.userInteractions);
+            },
+            getEneeInteractions(user) {
+                axios
+                    .get("api/getEneeInteractions/" + user.email)
+                    .then(response => {
+                        this.interactions = response.data.data;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
             setInteraction(row) {
                 this.currentUser = Object.assign({}, row);
             },
             cancelEdit: function () {
                 this.currentUser = null;
             },
-            saveInteraction(data) {
+            cancelInteractions: function(){
+                this.userInteractions = null;
+            },
+            saveInteraction(data, files) { 
+                console.log(data);
+                               
+                const formData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("file" + i, files[i]);
+                }
+                
                 data.email = this.currentUser.email;
+
+                formData.append("decision",data.decision);
+                formData.append("email",data.email);
+                formData.append("information",data.information);
+                formData.append("interactionDate",data.interactionDate);
+                formData.append("nextInteraction",data.nextInteraction);
+                formData.append("service",data.service);
+                formData.append("numberFiles", files.length);
+
                 axios
-                    .post("api/setInteraction/", data)
+                    .post("api/setInteraction/", formData)
                     .then(response => {
                         this.getCmEnee();
                         this.currentUser = null;

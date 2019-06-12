@@ -11,6 +11,8 @@ use App\Http\Resources\ContactResource;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use Chumper\Zipper\Zipper;
+
 use App\User;
 use App\CaseManager;
 use App\Contact;
@@ -20,6 +22,24 @@ use App\Nee;
 
 class CaseManagerController extends Controller
 {
+    public function downloadContactFiles($id)
+    {
+        
+        $contact = Contact::findOrFail($id);
+        $contactFiles = Contacts_Files::where('contact_id', $contact->id)->get();
+        $array =  array();
+        for ($i = 0; $i < sizeof($contactFiles); $i++) {
+            $file = base_path('storage/app/public/interactionFiles/' . $contactFiles[$i]->filename);
+            array_push($array, $file);
+        }
+        $zipper = new Zipper();
+        $zipper->make('interactionFiles/mytest12.zip')->add($array);
+        return response()->download(public_path('interactionFiles/mytest12.zip'));
+    }
+
+    public function getEneeInteractions($email){
+        return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->paginate(10));
+    }
 
     public function getCmEnee($id)
     {
@@ -64,19 +84,25 @@ class CaseManagerController extends Controller
         $contact->decision = $dados['decision'];
         $contact->information = $dados['information'];
         $contact->nextContact = $dados['nextInteraction'];
-
         $contact->save();
 
-        for ($i = 0; $i < $request->numberFiles; $i++) {
-            $file = Input::file('file' . $i);
-            $ext = $file->getClientOriginalExtension();
-            $uploadedFile = "InteractionFile - " . $contact->id . "-" . $i . '.' . $ext;
-            Storage::disk('public')->put('interactionFiles/' . $uploadedFile, File::get($file));
-            $interactionFile = new Contacts_Files();
-            $interactionFile->contact_id = $contact->id;
-            $interactionFile->filename = $uploadedFile;
-            $interactionFile->save();
+        if ($request->numberFiles!=null && $request->numberFiles >0)
+        {
+            $contact->hasFiles = '1';
+            $contact->save();
+            
+            for ($i = 0; $i < $request->numberFiles; $i++) {
+                $file = Input::file('file' . $i);
+                $ext = $file->getClientOriginalExtension();
+                $uploadedFile = "InteractionFile - " . $contact->id . "-" . $i . '.' . $ext;
+                Storage::disk('public')->put('interactionFiles/' . $uploadedFile, File::get($file));
+                $interactionFile = new Contacts_Files();
+                $interactionFile->contact_id = $contact->id;
+                $interactionFile->filename = $uploadedFile;
+                $interactionFile->save();
+            }
         }
+        
 
         return response()->json(new ContactResource($contact), 200);
     }
