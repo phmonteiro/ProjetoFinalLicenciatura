@@ -71,14 +71,14 @@
                     nextInteraction: '',
                     service: '',
                     decision: '',
-                    information: '',
+                    information: ''
 
                 },
+                
                 meeting: {
                     info: null,
                     date: null
                 },
-                format: "d MMMM yyyy",
                 files: []
 
             };
@@ -102,7 +102,6 @@
             },
         },
         mounted() {},
-
     };
 
 </script>

@@ -24,7 +24,8 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.6.10",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "vuejs-timepicker": "git+https://github.com/xxRockOnxx/vue2-timepicker.git"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.18",
@@ -41,9 +42,9 @@
         "vue-google-autocomplete": "^1.1.0",
         "vue-i18n": "^8.10.0",
         "vue-router": "^3.0.3",
+        "vue-timeselector": "^0.1.7",
         "vue-toasted": "^1.1.26",
         "vue2-datepicker": "^2.11.2",
-        "vuejs-datepicker": "^1.5.4",
         "vuelidate": "^0.7.4",
         "vuemit": "^1.0.9",
         "vuex": "^3.1.0",

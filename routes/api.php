@@ -88,4 +88,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('statistics/{stats}', 'CaseManagerController@statistics');
     Route::post('setInteraction', 'CaseManagerController@setInteraction');
     Route::get('contact/download/{id}', 'CaseManagerController@downloadContactFiles');
+    Route::post('setEneeMeeting/{id}', 'CaseManagerController@setEneeMeeting');
+    Route::get('getEneePlan/{id}', 'CaseManagerController@getEneePlan');
+    Route::post('updatePlan/{id}', 'CaseManagerController@updatePlan');
+    Route::post('setPlan', 'CaseManagerController@setPlan');
+
+    
+    
 });

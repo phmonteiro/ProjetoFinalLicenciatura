@@ -16,7 +16,37 @@
         <b-col class="top100">
           <div v-if="meetings">
             <h2>Pedidos de agendamento de reunião</h2>
-            <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields"></b-table>
+            <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
+              <template slot="actions" slot-scope="row">
+                    <b-row class="text-center">
+                        <b-col md="4" sm="12">
+                            <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+
+                            </b-form-checkbox>
+                            <div v-if="row.detailsShowing" style="margin-left: -8px;">
+                                <font-awesome-icon icon="eye"/>
+                            </div>
+                            <div v-if="!row.detailsShowing" style="margin-left: -8px;">
+                                <font-awesome-icon icon="eye-slash"/>
+                            </div>
+                        </b-col>
+                    </b-row>
+
+                </template>
+                <template slot="row-details" slot-scope="row">
+                    <b-card>
+                        <b-row class="mb-2">
+                            <b-col  class="text"><b>Informacao: </b>{{row.item.info}}</b-col>
+                            
+                        </b-row>
+                        <b-row class="mb-2">
+                            <b-col class="text"><b>Comentario: </b>{{row.item.comment}}</b-col>
+                            
+                        </b-row>
+                        <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
+                    </b-card>
+                </template>
+            </b-table>
             <nav aria-label="Page navigation">
               <ul class="pagination">
                 <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -64,18 +94,23 @@ export default {
           sortable: true
         },
         {
-          key: "comment",
-          label: "Comentário",
-          sortable: true
-        },
-        {
-          key: "info",
-          label: "Informacao Adicional",
+          key: "place",
+          label: "Local",
           sortable: true
         },
         {
           key: "date",
           label: "Data",
+          sortable: true
+        },
+        {
+          key: "time",
+          label: "Hora",
+          sortable: true
+        },
+        {
+          key: "actions",
+          label: "Acoes",
           sortable: true
         }
       ],

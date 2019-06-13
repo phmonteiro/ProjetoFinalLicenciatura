@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\ContactResource;
+use App\Http\Resources\MeetingResource;
+use App\Http\Resources\EneeDiagnosticResource;
+
+
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -16,12 +20,80 @@ use Chumper\Zipper\Zipper;
 use App\User;
 use App\CaseManager;
 use App\Contact;
+use App\Meeting;
+use App\History;
+use App\EneeDiagnostic;
 use App\Contacts_Files;
 use Illuminate\Support\Arr;
 use App\Nee;
 
 class CaseManagerController extends Controller
 {
+
+    public function setPlan(Request $request)
+    {  
+        $dados = $request->validate([
+            'studentId' => 'required|integer',
+            'plan' => 'required|string',
+            'diagnostic' => 'required|string',
+        ]);
+        
+
+        $plan = new EneeDiagnostic();
+        $plan->studentId = $dados['studentId'];
+        $plan->plan = $dados['plan'];
+        $plan->diagnostic = $dados['diagnostic'];
+        $plan->save();
+
+        return response()->json(new EneeDiagnosticResource($plan), 201);
+    }
+
+    public function updatePlan($id, Request $request)
+    { 
+        $plan = EneeDiagnostic::findOrFail($id);
+
+        $dados = $request->validate([
+            'plan' => 'required|string',
+            'diagnostic' => 'required|string',
+        ]);
+        
+        $plan->plan = $dados['plan'];
+        $plan->diagnostic = $dados['diagnostic'];
+        $plan->save();
+
+        return response()->json(new EneeDiagnosticResource($plan), 201);
+    }
+
+    public function getEneePlan($studentId){
+        return EneeDiagnosticResource::collection(EneeDiagnostic::Where('studentId', $studentId)->get());
+    }
+
+    public function setEneeMeeting($id, Request $request)
+    {
+        $meeting = Meeting::findOrFail($id);
+
+        $dados = $request->validate([
+            'info' => 'required|string',
+            'place' => 'required|string',
+            'date' => 'required|date_format:Y-m-d',
+            'time' => 'required|date_format:H:i',
+        ]);
+        
+        $meeting->info = $dados['info'];
+        $meeting->place = $dados['place'];
+        $meeting->date = $dados['date'];
+        $meeting->time = $dados['time'];
+        $meeting->save();
+
+        $history = new History();
+        $history->studentEmail = $meeting->email;
+        $history->description = "Reuniao marcada com " . $meeting->service;
+        $history->date = Carbon::now();
+        $history->save();
+
+        return response()->json(new MeetingResource($meeting), 201);
+    }
+
     public function downloadContactFiles($id)
     {
         
@@ -34,24 +106,15 @@ class CaseManagerController extends Controller
         }
         $seed = rand();
         $zipper = new Zipper();
-        //$zipper->make('interactionFiles/'.$seed.'.zip');
         $zipper->make('interactionFiles/'.$seed.'.zip');
         
         $zipper->add($array)->close();
-        
-
-        // $exists = file_exists(base_path('public/interactionFiles/'.$seed.'.zip'));
-        // dd($exists);
-        // while(!$exists){
-        //     $exists = Storage::exists('interactionFiles/'.$seed.'.zip');
-        // };
-        //sleep(2);
 
         return response()->download(public_path('interactionFiles/'.$seed.'.zip'));
     }
 
     public function getEneeInteractions($email){
-        return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->paginate(10));
+        return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->orderBy('nextContact', 'desc')->paginate(10));
     }
 
     public function getCmEnee($id)

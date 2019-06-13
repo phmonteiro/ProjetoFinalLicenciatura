@@ -11,13 +11,16 @@ import Toasted from 'vue-toasted';
 import {VueSpinners} from '@saeris/vue-spinners';
 import Vuelidate from 'vuelidate';
 import DatePicker from 'vue2-datepicker';
+import TimeSelector from 'vue-timeselector';
+
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faEye, faHandshake, faEyeSlash, faArrowCircleDown} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
+
 import VueApexCharts from 'vue-apexcharts';
-library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown);
+library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
 
@@ -29,6 +32,7 @@ Vue.use(Toasted);
 Vue.use(VueSpinners);
 Vue.use(Vuelidate);
 Vue.use(DatePicker);
+Vue.use(TimeSelector);
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);
@@ -43,6 +47,8 @@ Vue.component('eneeOptions', require('./components/director/eneeOptions.vue').de
 Vue.component('eneeEdit', require('./components/director/editENEE.vue').default);
 Vue.component('edit-support', require('./components/admin/editSupport.vue').default);
 Vue.component('set-inter', require('./components/caseManager/setInteraction.vue').default);
+Vue.component('manage-plan', require('./components/caseManager/managePlan.vue').default);
+Vue.component('set-meeting', require('./components/caseManager/setMeeting.vue').default);
 Vue.component('interactionsDetails', require('./components/caseManager/interactionsDetails.vue').default);
 
 
@@ -53,5 +59,5 @@ const app = new Vue({
   i18n,
   created() {
     this.$store.commit('loadTokenAndUserFromSession');
-  },
+  }
 }).$mount('#app');
