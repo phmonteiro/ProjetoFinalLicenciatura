@@ -22,7 +22,7 @@ class CaseManagerResponsibleController extends Controller
         $students = User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10);
         return response()->json(new UserResource($students), 200);
     }
-    
+
     public function getStudentCMs($email)
     {
         return CaseManagerResponsibleResource::collection(CaseManager::Where('studentEmail', $email)->paginate(10));
@@ -32,7 +32,7 @@ class CaseManagerResponsibleController extends Controller
     {
         $user = CaseManager::Where('studentEmail', $email)->first();
         $user->delete();
-        
+
         return response()->json(new CaseManagerResponsibleResource($user), 200);
     }
 
@@ -45,14 +45,13 @@ class CaseManagerResponsibleController extends Controller
             'studentName' => 'required'
         ]);
 
-        $cmName = User::where('email', $dados['cmEmail'])->pluck('name');
-        //dd($cmName);
+        $cm = \Adldap\Laravel\Facades\Adldap::search()->find($dados['cmEmail']);
+
         $caseManager = new CaseManager();
         $caseManager->studentEmail = $user->email;
         $caseManager->studentName = $dados['studentName'];
         $caseManager->caseManagerEmail = $dados['cmEmail'];
-        $caseManager->caseManagerName = $cmName[0];
-        //mandar alerta
+        $caseManager->caseManagerName = $cm->cn[0];
 
         $history = new History();
         $history->studentEmail = $user->email;

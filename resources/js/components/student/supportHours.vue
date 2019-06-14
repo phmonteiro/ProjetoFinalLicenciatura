@@ -1,10 +1,5 @@
 <template>
   <div>
-    <edit-support-hours
-      :support="currentSupport"
-      @save-support="setSupportHours"
-      @cancel-support="cancelSupport()"
-    ></edit-support-hours>
     <b-container>
       <b-row>
         <b-col></b-col>
@@ -36,6 +31,11 @@
         </b-col>
       </b-row>
     </b-container>
+    <edit-support-hours
+      :support="currentSupport"
+      @save-support="setSupportHours"
+      @cancel-support="cancelSupport()"
+    ></edit-support-hours>
   </div>
 </template>
 
@@ -125,6 +125,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

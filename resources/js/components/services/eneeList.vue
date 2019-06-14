@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div class="loader">
-      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
-    </div>
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
     <div class="container" v-if="users">
       <h2>Lista de enees</h2>
       <b-table striped hover :items="users" :fields="fields">

@@ -225,7 +225,6 @@ class ServiceController extends Controller
         $user = User::findOrFail($id);
 
         $user->servicesApproval = 'approved';
-
         $user->save();
 
         return response()->json(200);
@@ -236,7 +235,6 @@ class ServiceController extends Controller
         $user = User::findOrFail($id);
 
         $user->servicesApproval = 'denied';
-
         $user->save();
 
         return response()->json(200);

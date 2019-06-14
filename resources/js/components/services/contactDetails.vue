@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div class="loader">
-      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
-    </div>
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
     <div class="container" v-if="user && history">
       <b-table striped hover :items="history" :fields="fields"></b-table>
     </div>

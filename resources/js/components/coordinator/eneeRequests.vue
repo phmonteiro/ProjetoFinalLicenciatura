@@ -1,5 +1,16 @@
 <template>
   <div>
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
     <div class="container">
       <h2>Lista de pedidos</h2>
       <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">

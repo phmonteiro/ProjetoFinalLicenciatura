@@ -8,6 +8,17 @@
       @save-user="saveUser"
       @cancel-edit="cancelEdit()"
     ></eneeOptions>
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
     <div class="container">
       <h2>Lista de candidatos a ENEE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
@@ -119,6 +130,7 @@ export default {
           this.loading = false;
           this.enee = response.data.data;
           pg.makePagination(response.data.meta, response.data.links);
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);

@@ -23,7 +23,7 @@ class SupportController extends Controller
         return Student_Supports::where('email', $email)->pluck('support_value');
     }
 
-    
+
 
     public function updateStudentSupports(Request $request)
     {
@@ -47,8 +47,6 @@ class SupportController extends Controller
         }
 
         $user->save();
-
-
 
         if ($dados['tutor'] != null) {
             $tutor = new Tutor();

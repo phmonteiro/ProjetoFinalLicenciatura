@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container pt-3">
+    <div class="container pt-3 content">
       <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
       <h3>Sou Diretor</h3>
     </div>

@@ -87,7 +87,7 @@ class DirectorController extends Controller
         }
         $seed = rand();
         $zipper = new Zipper();
-        $zipper->make('medicalReport/'.$seed.'.zip')->add($array)->close();
-        return response()->download(public_path('medicalReport/'.$seed.'.zip'));
+        $zipper->make('medicalReport/' . $seed . '.zip')->add($array)->close();
+        return response()->download(public_path('medicalReport/' . $seed . '.zip'));
     }
 }

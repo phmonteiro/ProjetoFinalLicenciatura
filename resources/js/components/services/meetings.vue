@@ -1,9 +1,16 @@
 <template>
   <div>
-    <div>
-      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
-    </div>
-
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
     <div class="container" v-if="this.meetings">
       <h2>Pedidos Reuniao</h2>
       <b-table striped hover :items="meetings" :fields="fields">
@@ -162,27 +169,27 @@ export default {
   },
   methods: {
     setMeeting(meetingId) {
-        axios
-          .post("api/finalizeMeeting/" + meetingId, this.meeting)
-          .then(response => {
-            this.getMeetings();
-            this.$toasted.success("Reunião marcada.", {
+      axios
+        .post("api/finalizeMeeting/" + meetingId, this.meeting)
+        .then(response => {
+          this.getMeetings();
+          this.$toasted.success("Reunião marcada.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error(
+            "Erro ao marcar reunião, por favor tente novamente.",
+            {
               duration: 4000,
               position: "top-center",
               theme: "bubble"
-            });
-          })
-          .catch(error => {
-            console.log(error);
-            this.$toasted.error(
-              "Erro ao marcar reunião, por favor tente novamente.",
-              {
-                duration: 4000,
-                position: "top-center",
-                theme: "bubble"
-              }
-            );
-          });
+            }
+          );
+        });
     },
     getMeetings(page_url) {
       let pg = this;

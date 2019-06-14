@@ -76,21 +76,18 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
         $dados = $request->validate([
             'type' => 'required',
-            'loginExpirationDate' => '',
         ]);
 
         $user->type = $dados['type'];
-        $user->loginExpirationDate = $dados['loginExpirationDate'];
         $user->save();
 
         return response()->json(new UserResource($user), 200);
     }
 
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

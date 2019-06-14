@@ -15,9 +15,8 @@
           <div class="row">
             <div class="col">
               <div class="titulo justify-content-center">
-                <p>Plataforma de</p>
-                <p>acompanhamento de</p>
-                <p>ENEE</p>
+                <p>Plataforma</p>
+                <p>100%IN</p>
                 <p>2018.2019</p>
               </div>
             </div>

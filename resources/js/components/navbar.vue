@@ -1,6 +1,6 @@
 <template>
   <nav id="navbar" class="navbar navbar-expand-md navbar-light navbar-laravel">
-    <a class="navbar-brand">
+    <a href="/" class="navbar-brand">
       <img src="/imagens/logo-ipl.png">
     </a>
     <button
@@ -21,9 +21,8 @@
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav ml-auto">
         <!-- Authentication Links -->
-        <li class="nav-item">
-          <a class="nav-link" v-if="!user" href>Login</a>
-          <a class="nav-link" v-else>{{user.name}}</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link" v-if="user">{{user.name}}</a>
         </li>
         <li class="nav-item dropdown">
           <a

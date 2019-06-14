@@ -1,13 +1,9 @@
 <template>
-  <div>
+  <div class="center">
     <b-container fluid>
       <b-row>
         <b-col>
-          <h4>Ir para</h4>
-          <a class="btn btn-secondary" href="https://ead.ipleiria.pt/">EAD</a>
-        </b-col>
-        <b-col>
-          <h4>Não tem estatuto de ENEE</h4>
+          <h2>Bem vindo á plataforma 100%IN</h2>
           <a class="btn btn-secondary" v-on:click.prevent="subscribe()" href>Pedir estatuto</a>
         </b-col>
       </b-row>
@@ -27,3 +23,10 @@ export default {
   }
 };
 </script>
+<style>
+.center {
+  text-align: center;
+  margin-top: 20%;
+}
+</style>
+

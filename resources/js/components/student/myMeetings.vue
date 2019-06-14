@@ -129,7 +129,7 @@ export default {
   methods: {
     getMyMeetings(page_url) {
       let pg = this;
-      page_url = page_url || "api/getMyMeetings/" + this.user.id + "?page=1";
+      page_url = page_url || "api/getMyMeetings/?page=1";
       axios
         .get(page_url)
         .then(response => {

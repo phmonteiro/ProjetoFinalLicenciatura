@@ -38,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('setService', 'StudentController@setService');
     Route::get('getContacts', 'StudentController@getContacts');
     Route::get('getServices', 'StudentController@getServices');
-    Route::get('getMyMeetings/{id}', 'StudentController@myMeetings');
+    Route::get('getMyMeetings', 'StudentController@myMeetings');
     Route::post('subscription', 'StudentController@subscription');
     Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
     Route::get('getUser/{id}', 'StudentController@show');

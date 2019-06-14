@@ -42,17 +42,6 @@
         <option value="SA">Serviços Académicos</option>
       </select>
     </div>
-
-    <div class="form-group">
-      <label for="date">Data de expiração do login</label>
-      <input
-        id="loginExpirationDate"
-        type="date"
-        v-model="user.loginExpirationDate"
-        class="form-control"
-        name="loginExpirationDate"
-      >
-    </div>
     <div class="form-group">
       <button type="submit" class="btn btn-secondary" name="ok" v-on:click.prevent="save()">Guardar</button>
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>

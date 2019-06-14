@@ -274,12 +274,12 @@ router.beforeEach((to, from, next) => {
     next('/admin');
     return;
   }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Services' && store.state.user.type == 'SAPE' &&
-  store.state.user.type == 'SAS' &&
-  store.state.user.type == 'CRID' &&
-  store.state.user.type == 'UED' &&
-  store.state.user.type == 'DST' &&
-  store.state.user.type == 'SA') {
+  if (to.fullPath == '/' && store.state.user != null && (store.state.user.type == 'Services' || store.state.user.type == 'SAPE' ||
+  store.state.user.type == 'SAS' ||
+  store.state.user.type == 'CRID'||
+  store.state.user.type == 'UED' ||
+  store.state.user.type == 'DST' ||
+  store.state.user.type == 'SA')) {
     next('/services');
     return;
   }

@@ -31,13 +31,13 @@ class CaseManagerController extends Controller
 {
 
     public function setPlan(Request $request)
-    {  
+    {
         $dados = $request->validate([
             'studentId' => 'required|integer',
             'plan' => 'required|string',
             'diagnostic' => 'required|string',
         ]);
-        
+
 
         $plan = new EneeDiagnostic();
         $plan->studentId = $dados['studentId'];
@@ -49,14 +49,14 @@ class CaseManagerController extends Controller
     }
 
     public function updatePlan($id, Request $request)
-    { 
+    {
         $plan = EneeDiagnostic::findOrFail($id);
 
         $dados = $request->validate([
             'plan' => 'required|string',
             'diagnostic' => 'required|string',
         ]);
-        
+
         $plan->plan = $dados['plan'];
         $plan->diagnostic = $dados['diagnostic'];
         $plan->save();
@@ -64,7 +64,8 @@ class CaseManagerController extends Controller
         return response()->json(new EneeDiagnosticResource($plan), 201);
     }
 
-    public function getEneePlan($studentId){
+    public function getEneePlan($studentId)
+    {
         return EneeDiagnosticResource::collection(EneeDiagnostic::Where('studentId', $studentId)->get());
     }
 
@@ -78,7 +79,7 @@ class CaseManagerController extends Controller
             'date' => 'required|date_format:Y-m-d',
             'time' => 'required|date_format:H:i',
         ]);
-        
+
         $meeting->info = $dados['info'];
         $meeting->place = $dados['place'];
         $meeting->date = $dados['date'];
@@ -105,14 +106,15 @@ class CaseManagerController extends Controller
         }
         $seed = rand();
         $zipper = new Zipper();
-        $zipper->make('interactionFiles/'.$seed.'.zip');
-        
+        $zipper->make('interactionFiles/' . $seed . '.zip');
+
         $zipper->add($array)->close();
 
-        return response()->download(public_path('interactionFiles/'.$seed.'.zip'));
+        return response()->download(public_path('interactionFiles/' . $seed . '.zip'));
     }
 
-    public function getEneeInteractions($email){
+    public function getEneeInteractions($email)
+    {
         return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->orderBy('nextContact', 'desc')->paginate(10));
     }
 
@@ -121,8 +123,6 @@ class CaseManagerController extends Controller
         $user = User::findOrFail($id);
 
         $enees = $user->cm;
-
-
 
         $subset = $enees->map(function ($enee) {
             return collect($enee->toArray())
@@ -145,9 +145,6 @@ class CaseManagerController extends Controller
             'decision' => 'required',
             'information' => 'required'
         ]);
-
-
-
         $contact = new Contact();
         $contact->studentEmail = $dados['email'];
         if ($dados['interactionDate'] == null) {
