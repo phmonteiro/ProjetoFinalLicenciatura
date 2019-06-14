@@ -29,7 +29,7 @@
     <div v-else>
       <h1>O seu pedido ao estatuto de estudante com necessidades educativas especais está no estado de:</h1>
       <h1 v-if="student.enee=='reproved'">Reprovado</h1>
-      <h1 v-if="student.enee=='awaiting'">A aguardar aprovação {{student}}</h1>
+      <h1 v-if="student.enee=='awaiting'">A aguardar aprovação</h1>
     </div>
   </div>
 </template>

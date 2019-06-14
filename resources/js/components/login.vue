@@ -147,7 +147,8 @@ export default {
             response.data.user.type == "SAS" ||
             response.data.user.type == "CRID" ||
             response.data.user.type == "UED" ||
-            response.data.user.type == "DST"
+            response.data.user.type == "DST" ||
+            response.data.user.type == "SA"
           ) {
             this.$router.push("/services");
             return;

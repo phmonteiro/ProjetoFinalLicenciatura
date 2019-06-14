@@ -38,6 +38,7 @@
         <option value="SAS">Serviços de Ação Social</option>
         <option value="UED">Unidade de Ensino á Distância</option>
         <option value="DST">Direção de Serviços Técnicos</option>
+        <option value="SA">Serviços Académicos</option>
       </select>
     </div>
 

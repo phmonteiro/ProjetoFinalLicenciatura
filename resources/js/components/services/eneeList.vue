@@ -7,12 +7,6 @@
       <h2>Lista de enees</h2>
       <b-table striped hover :items="users" :fields="fields">
         <template slot="actions" slot-scope="row">
-          <!--<button
-            type="submit"
-            class="btn btn-secondary"
-            data-dismiss="modal"
-            v-on:click.prevent="downloadPDF(row.item)"
-          >Download Histórico</button>-->
           <button
             type="button"
             class="btn btn-secondary"

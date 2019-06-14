@@ -50,6 +50,7 @@ Vue.component('set-inter', require('./components/caseManager/setInteraction.vue'
 Vue.component('manage-plan', require('./components/caseManager/managePlan.vue').default);
 Vue.component('set-meeting', require('./components/caseManager/setMeeting.vue').default);
 Vue.component('interactionsDetails', require('./components/caseManager/interactionsDetails.vue').default);
+Vue.component('eneeServiceEvaluation', require('./components/services/eneeServiceEvaluation.vue').default);
 
 
 const app = new Vue({
@@ -59,5 +60,5 @@ const app = new Vue({
   i18n,
   created() {
     this.$store.commit('loadTokenAndUserFromSession');
-  }
+  },
 }).$mount('#app');

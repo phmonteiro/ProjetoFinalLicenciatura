@@ -137,7 +137,16 @@ export default {
     editUser(row) {
       this.currentUser = Object.assign({}, row);
       this.getStudentSupports();
-      this.getNee();
+      axios
+        .get("api/getNee/" + row.id)
+        .then(response => {
+          console.log(response.data);
+
+          this.nee = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     cancelEdit: function() {
       this.currentUser = null;
@@ -171,18 +180,6 @@ export default {
         .then(response => {
           console.log(response);
           this.supportsForStudent = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    getNee() {
-      axios
-        .get("api/getNee/" + this.user.id)
-        .then(response => {
-          console.log(response.data);
-
-          this.nee = response.data;
         })
         .catch(error => {
           console.log(error);

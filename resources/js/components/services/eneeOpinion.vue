@@ -1,68 +1,25 @@
 <template>
   <div>
+    <eneeServiceEvaluation
+      :user="currentUser"
+      :nee="nee"
+      @approve="approve"
+      @cancel-edit="cancelEdit()"
+    ></eneeServiceEvaluation>
     <div class="container">
-      <h2>Lista de pedidos</h2>
+      <h2>Lista de aprovação Enee</h2>
       <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">
         <template slot="actions" slot-scope="row">
           <button
-            type="button"
-            class="btn btn-secondary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-          >
-            <font-awesome-icon icon="eye"/>
-          </button>
-          <button
-            class="btn btn-success"
-            v-on:click.prevent="approve(row.item.id)"
-            v-if="row.item.number != user.number"
-          >Aprovar</button>
+            class="btn btn-info"
+            v-on:click.prevent="editUser(row.item)"
+            v-if="row.item.enee!='approved'"
+          >Avaliar</button>
           <button
             class="btn btn-danger"
             v-on:click.prevent="deny(row.item.id)"
             v-if="row.item.number != user.number"
           >Rejeitar</button>
-          <!-- modal da info -->
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Estudante: {{row.item.name}}</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">Nascido em: {{row.item.birthDate}}</div>
-
-                  <div class="form-group">Escola: {{row.item.school}}</div>
-
-                  <div class="form-group">Curso: {{row.item.course}}</div>
-
-                  <div class="form-group">Ano curricular: {{row.item.curricularYear}}</div>
-
-                  <div class="form-group">Entrou na escola em: {{row.item.enruledYear}}</div>
-
-                  <div class="form-group">Incapacidade: {{row.item.functionalAnalysis}}</div>
-
-                  <div class="form-group">Pedido: {{row.item.educationalSupport}}</div>
-
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                    v-on:click.prevent="setContact(row.item)">Confirmar</button>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </template>
       </b-table>
       <nav aria-label="Page navigation" v-if="requests">
@@ -129,15 +86,27 @@ export default {
         }
       ],
       currentUser: null,
-      supportsForStudent: null
+      supportsForStudent: null,
+      nee: null
     };
   },
   methods: {
+    editUser(row) {
+      this.currentUser = Object.assign({}, row);
+      axios
+        .get("api/getNee/" + row.id)
+        .then(response => {
+          this.nee = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     getRequests(page_url) {
       let pg = this;
       page_url = page_url || "api/getServicesRequests?page=1";
       axios
-        .get(page_url)
+        .get(page_url, this.user.type)
         .then(response => {
           this.loading = false;
           this.requests = response.data.data;

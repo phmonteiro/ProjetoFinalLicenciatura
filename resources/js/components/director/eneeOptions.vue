@@ -81,7 +81,13 @@
         <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' ">
           <b>Ainda sem parecer</b>
         </p>
-        <select class="custom-select" name="services" single v-model="services">
+        <select
+          class="custom-select"
+          name="services"
+          single
+          v-model="services"
+          v-if="user.servicesApproval != 'approved' && user.servicesApproval != 'denied'"
+        >
           <option value="sape">Serviços de Apoio ao Estudante</option>
           <option value="crid">Centro de Recursos para a Inclusão Digital</option>
           <option value="sas">Serviços de Ação Social</option>

@@ -4,8 +4,8 @@
       <enee-list :user="user" @downloadPDF="downloadPDF" @setContact="setContact"></enee-list>
       <meetings @setMeeting="setMeeting"></meetings>
     </div>
-  </div> -->
-   <div>
+  </div>-->
+  <div>
     <div class="container pt-3">
       <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
       <h3>Sou dos servicos</h3>
@@ -21,6 +21,9 @@
       <a href="#">
         <router-link class="nav-link" :to="{name: 'eneeOpinion'}">Parecer ENEE</router-link>
       </a>
+      <a href="#" v-if="user.type == 'SA'">
+        <router-link class="nav-link" :to="{name: 'eneeAdd'}">Adicionar Estudante</router-link>
+      </a>
     </div>
     <router-view></router-view>
   </div>
@@ -29,12 +32,9 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {
-    
-  },
+  methods: {},
   computed: {
     user: function() {
       return this.$store.state.user;

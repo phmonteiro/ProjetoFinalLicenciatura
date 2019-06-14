@@ -741,5 +741,5 @@
 </tbody>
 </table>
 </body>
-<footer style="text-align: center; margin: 0;  margin: auto; width: 50%; color:#6c757d"><span style="font-size: 10px;"><strong>IPL- Plataforma 100%IN</strong></span></footer>
+<footer style="text-align: center; margin: 0;  margin: auto; width: 50%; color:#6c757d"><span style="font-size: 10px;"><strong>Esta comunicação é gerada automaticamente. As mensagens enviadas diretamente para este endereço não serão tratadas. <br>IPL- Plataforma 100%IN </strong></span></footer>
 </html>

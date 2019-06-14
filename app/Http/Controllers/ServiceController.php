@@ -17,6 +17,8 @@ use PDF;
 use App\MedicalFile;
 use ZipArchive;
 use App\History;
+use App\Nee;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -35,10 +37,132 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user  = new User();
+
+        $dados = $request->validate([
+            'name' => 'required|string',
+            'number' => 'required|integer',
+            'email' => 'required|email',
+            'phoneNumber' => 'required|size:9',
+            'birthDate' => 'required|date',
+            'residence' => 'required|string',
+            'zipCode' => 'required|regex:"\d\d\d\d[-]\d\d\d"',
+            'area' => 'required|string',
+            'identificationDocument' => 'required|string',
+            'identificationNumber' => 'required|integer',
+            'enruledYear' => 'required|size:4',
+            'curricularYear' => 'required|integer|min:0',
+            'responsibleName' => 'required|string',
+            'responsibleEmail' => 'required|email',
+            'responsibleKin' => 'required|string',
+            'responsiblePhone' => 'required|integer|regex:/[0-9]{9}/',
+            'emergencyName' => 'required|string',
+            'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
+            'emergencyEmail' => 'required|email',
+            'emergencyKin' => 'required|string',
+            'gender' => 'required|string',
+            'nif' => 'required|size:9',
+            'niss' => 'required|size:11',
+            'sns' => 'required|size:9',
+            'educationalSupport' => '',
+            'neeTypeDisease' => 'required_if:neeTypeAnotherDisease,true|string',
+            'functionalAnalysis' => ''
+        ]);
+
+        $user->name = $dados['name'];
+        $user->email = $dados['email'];
+        $user->number = $dados['number'];
+        $user->phoneNumber = $dados['phoneNumber'];
+        $user->birthDate = $dados['birthDate'];
+        $user->residence = $dados['residence'];
+        $user->zipCode = $dados['zipCode'];
+        $user->area = $dados['area'];
+        $user->identificationDocument = $dados['identificationDocument'];
+        $user->identificationNumber = $dados['identificationNumber'];
+        $user->enruledYear = $dados['enruledYear'];
+        $user->curricularYear = $dados['curricularYear'];
+        $user->responsibleName = $dados['responsibleName'];
+        $user->responsibleEmail = $dados['responsibleEmail'];
+        $user->responsibleKin = $dados['responsibleKin'];
+        $user->responsiblePhone = $dados['responsiblePhone'];
+        $user->emergencyName = $dados['emergencyName'];
+        $user->emergencyPhone = $dados['emergencyPhone'];
+        $user->emergencyEmail = $dados['emergencyEmail'];
+        $user->emergencyKin = $dados['emergencyKin'];
+        $user->gender = $dados['gender'];
+        $user->nif = $dados['nif'];
+        $user->niss = $dados['niss'];
+        $user->sns = $dados['sns'];
+        $user->educationalSupport = $dados['educationalSupport'];
+        $user->functionalAnalysis = $dados['functionalAnalysis'];
+        $user->enee = 'approved';
+        $user->typeApplication = 'DGES';
+
+        $user->save();
+
+
+        if ($request->neeTypeSight  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Visão';
+            $nee->save();
+        }
+
+        if ($request->neeTypeEaring  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Audição';
+            $nee->save();
+        }
+
+        if ($request->neeTypeMotor  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Motora';
+            $nee->save();
+        }
+
+        if ($request->neeTypeAnotherDisease  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = "Outro";
+            $nee->otherName = $dados["neeTypeDisease"];
+            $nee->save();
+        }
+
+        if ($request->neeTypeCommunication  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Dislexia/Disortografia/Disgrafia';
+            $nee->save();
+        }
+
+        if ($request->neeTypeLearning  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Síndrome de Asperger/Deficit atenção';
+            $nee->save();
+        }
+
+        if ($request->neeTypeMental  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Doenças do Foro Psicológico/neurológico/psiquiátrico';
+            $nee->save();
+        }
+
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "Serviços académicos adicionaram estudante com necessidades educativas especiais";
+        $history->date = Carbon::now();
+        $history->save();
+
+        return response()->json(new UserResource($user), 201);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -118,9 +242,9 @@ class ServiceController extends Controller
         return response()->json(200);
     }
 
-    public function getServicesRequests()
+    public function getServicesRequests(Request $request)
     {
-        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->where('servicesApproval', 'requested')->paginate(10));
+        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->where('servicesApproval', 'requested')->where('serviceNameApproval', Auth::user()->type)->paginate(10));
     }
 
 

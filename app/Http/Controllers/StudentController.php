@@ -221,6 +221,7 @@ class StudentController extends Controller
         $user->functionalAnalysis = $dados['functionalAnalysis'];
         $user->enee = 'awaiting';
         $user->dateEneeRequested = Carbon::now();
+        $user->typeApplication = "Normal";
 
         if ($request->neeTypeSight  == "true") {
             $nee = new Nee();

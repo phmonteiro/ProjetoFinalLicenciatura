@@ -58,6 +58,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('approveEneeStatusByServices/{id}', 'ServiceController@approve');
     Route::post('denyEneeStatusByServices/{id}', 'ServiceController@deny');
     Route::get('getEnees', 'ServiceController@index');
+    Route::post('eneeAdd', 'ServiceController@create');
+
 
     //Director
     Route::get('getSupports', 'SupportController@index');
@@ -92,7 +94,4 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getEneePlan/{id}', 'CaseManagerController@getEneePlan');
     Route::post('updatePlan/{id}', 'CaseManagerController@updatePlan');
     Route::post('setPlan', 'CaseManagerController@setPlan');
-
-    
-    
 });
