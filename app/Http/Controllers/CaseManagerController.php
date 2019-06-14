@@ -24,7 +24,6 @@ class CaseManagerController extends Controller
 {
     public function downloadContactFiles($id)
     {
-        
         $contact = Contact::findOrFail($id);
         $contactFiles = Contacts_Files::where('contact_id', $contact->id)->get();
         $array =  array();
@@ -50,7 +49,8 @@ class CaseManagerController extends Controller
         return response()->download(public_path('interactionFiles/'.$seed.'.zip'));
     }
 
-    public function getEneeInteractions($email){
+    public function getEneeInteractions($email)
+    {
         return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->paginate(10));
     }
 
@@ -99,11 +99,10 @@ class CaseManagerController extends Controller
         $contact->nextContact = $dados['nextInteraction'];
         $contact->save();
 
-        if ($request->numberFiles!=null && $request->numberFiles >0)
-        {
+        if ($request->numberFiles != null && $request->numberFiles > 0) {
             $contact->hasFiles = '1';
             $contact->save();
-            
+
             for ($i = 0; $i < $request->numberFiles; $i++) {
                 $file = Input::file('file' . $i);
                 $ext = $file->getClientOriginalExtension();
@@ -115,7 +114,7 @@ class CaseManagerController extends Controller
                 $interactionFile->save();
             }
         }
-        
+
 
         return response()->json(new ContactResource($contact), 200);
     }

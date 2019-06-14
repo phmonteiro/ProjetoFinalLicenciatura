@@ -33,8 +33,11 @@
         <option value="Estudante">Estudante</option>
         <option value="CaseManagerResponsible">Responsável Gestor de Caso</option>
         <option value="CaseManager">Gestor de Caso</option>
-        <option value="Coordinator">Coordenador de Curso</option>
-        <option value="Director">Director</option>
+        <option value="SAPE">Serviços de Apoio ao Estudante</option>
+        <option value="CRIDE">Centro de Recursos para a Inclusão Digital</option>
+        <option value="SAS">Serviços de Ação Social</option>
+        <option value="UED">Unidade de Ensino á Distância</option>
+        <option value="DST">Direção de Serviços Técnicos</option>
       </select>
     </div>
 

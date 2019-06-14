@@ -9,6 +9,7 @@ use Auth;
 use Mail;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use App\Http\Controllers\EmailController;
 
 class LoginController extends Controller
 {

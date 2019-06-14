@@ -16,7 +16,11 @@
             <p v-if="row.item.type=='Director'">Diretor</p>
             <p v-if="row.item.type=='Estudante'">Estudante</p>
             <p v-if="row.item.type=='Administrador'">Administrador</p>
-            <p v-if="row.item.type=='Professor'">Professor</p>
+            <p v-if="row.item.type=='SAPE'">Serviços de Apoio ao Estudante</p>
+            <p v-if="row.item.type=='CRIDE'">Centro de Recursos para a Inclusão Digital</p>
+            <p v-if="row.item.type=='SAS'">Serviços de Ação Social</p>
+            <p v-if="row.item.type=='DST'">Direção de Serviços Técnicos</p>
+            <p v-if="row.item.type=='UED'">Unidade de Ensino á Distância</p>
           </template>
           <template slot="actions" slot-scope="row">
             <button

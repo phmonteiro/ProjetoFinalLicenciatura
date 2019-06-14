@@ -141,7 +141,14 @@ export default {
             this.$router.push("/admin");
             return;
           }
-          if (response.data.user.type == "Services") {
+          if (
+            response.data.user.type == "Services" ||
+            response.data.user.type == "SAPE" ||
+            response.data.user.type == "SAS" ||
+            response.data.user.type == "CRID" ||
+            response.data.user.type == "UED" ||
+            response.data.user.type == "DST"
+          ) {
             this.$router.push("/services");
             return;
           }
