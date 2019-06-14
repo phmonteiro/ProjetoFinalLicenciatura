@@ -15,37 +15,38 @@
       <b-row>
         <b-col class="top100">
           <div v-if="meetings">
-            <h2>Pedidos de agendamento de reunião</h2>
+            <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
             <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
               <template slot="actions" slot-scope="row">
-                    <b-row class="text-center">
-                        <b-col md="4" sm="12">
-                            <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
-
-                            </b-form-checkbox>
-                            <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                                <font-awesome-icon icon="eye"/>
-                            </div>
-                            <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                                <font-awesome-icon icon="eye-slash"/>
-                            </div>
-                        </b-col>
-                    </b-row>
-
-                </template>
-                <template slot="row-details" slot-scope="row">
-                    <b-card>
-                        <b-row class="mb-2">
-                            <b-col  class="text"><b>Informacao: </b>{{row.item.info}}</b-col>
-                            
-                        </b-row>
-                        <b-row class="mb-2">
-                            <b-col class="text"><b>Comentario: </b>{{row.item.comment}}</b-col>
-                            
-                        </b-row>
-                        <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
-                    </b-card>
-                </template>
+                <b-row class="text-center">
+                  <b-col md="4" sm="12">
+                    <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
+                    <div v-if="row.detailsShowing" style="margin-left: -8px;">
+                      <font-awesome-icon icon="eye"/>
+                    </div>
+                    <div v-if="!row.detailsShowing" style="margin-left: -8px;">
+                      <font-awesome-icon icon="eye-slash"/>
+                    </div>
+                  </b-col>
+                </b-row>
+              </template>
+              <template slot="row-details" slot-scope="row">
+                <b-card>
+                  <b-row class="mb-2">
+                    <b-col class="text">
+                      <b>{{ $t('informação') }}</b>
+                      {{row.item.info}}
+                    </b-col>
+                  </b-row>
+                  <b-row class="mb-2">
+                    <b-col class="text">
+                      <b>{{ $t('comentário') }}</b>
+                      {{row.item.comment}}
+                    </b-col>
+                  </b-row>
+                  <b-button size="sm" @click="row.toggleDetails">{{ $t('esconder') }}</b-button>
+                </b-card>
+              </template>
             </b-table>
             <nav aria-label="Page navigation">
               <ul class="pagination">
@@ -54,14 +55,14 @@
                     class="page-link"
                     href="#"
                     @click.prevent="getMyMeetings(pagination.prev_page_url)"
-                  >Anterior</a>
+                  >{{ $t('anterior') }}</a>
                 </li>
 
                 <li class="page-item disabled">
                   <a
                     class="page-link text-dark"
                     href="#"
-                  >Página {{ pagination.current_page }} de {{ pagination.last_page }}</a>
+                  >{{ $t('página') }} {{ pagination.current_page }} {{ $t('de') }} {{ pagination.last_page }}</a>
                 </li>
 
                 <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
@@ -69,7 +70,7 @@
                     class="page-link"
                     href="#"
                     @click.prevent="getMyMeetings(pagination.next_page_url)"
-                  >Próximo</a>
+                  >{{ $t('próximo') }}</a>
                 </li>
               </ul>
             </nav>
@@ -90,27 +91,27 @@ export default {
       fields: [
         {
           key: "service",
-          label: "Serviço",
+          label: this.$t("serviço"),
           sortable: true
         },
         {
           key: "place",
-          label: "Local",
+          label: this.$t("local"),
           sortable: true
         },
         {
           key: "date",
-          label: "Data",
+          label: this.$t("data"),
           sortable: true
         },
         {
           key: "time",
-          label: "Hora",
+          label: this.$t("hora"),
           sortable: true
         },
         {
           key: "actions",
-          label: "Acoes",
+          label: this.$t("ação"),
           sortable: true
         }
       ],

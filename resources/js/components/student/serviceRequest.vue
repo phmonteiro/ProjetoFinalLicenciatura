@@ -3,31 +3,30 @@
     <b-container class="top100">
       <b-row>
         <b-col>
-          <h2>Pedido de apoio</h2>
+          <h2>{{ $t('pedido_apoio') }}</h2>
           <div class="form-group">
             <b-form-select v-model="service.name" class="mb-3">
               <!-- This slot appears above the options from 'options' prop -->
               <template slot="first">
-                <option :value="null" disabled>-- Selecione o serviço pretendido --</option>
+                <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
               </template>
 
               <!-- These options will appear after the ones from 'options' prop -->
-              <option value="prioridade">Prioridade</option>
-              <option value="apioSalaAula">Apoios em sala de aula</option>
-              <option value="apoioComponenteLetiva">Apoio à componente letiva</option>
-              <option value="acompanhamentoIndividualizado">Acompanhamento individualizado</option>
-              <option value="apoioComponenteLetiva">Apoio à componente letiva</option>
-              <option value="acopanhamenteProfessorTutor">Acompanhamento por professor tutor</option>
-              <option value="metodosProvasAdaptados">Métodos e provas de avaliação adaptados</option>
-              <option value="apoioSocial">Apoio social</option>
-              <option value="acessorEpocaEspecial">Acesso a épocas especiais de exame</option>
+              <option value="prioridade">{{ $t('prioridade') }}</option>
+              <option value="apioSalaAula">{{ $t('apoio_sala_aula') }}</option>
+              <option value="apoioComponenteLetiva">{{ $t('apoio_componente_letiva') }}</option>
               <option
-                value="localAulas"
-              >Adequação na atribuição de local para realização das unidades curriculares de estágio, de educação clínica, de ensino clínico e de práticas pedagógicas</option>
+                value="acompanhamentoIndividualizado"
+              >{{ $t('acompanhamento_individualizado') }}</option>
+              <option value="acopanhamenteProfessorTutor">{{ $t('acompanhament_professor_tutor') }}</option>
+              <option value="metodosProvasAdaptados">{{ $t('provas_adaptadas') }}</option>
+              <option value="apoioSocial">{{ $t('apoio_social') }}</option>
+              <option value="acessorEpocaEspecial">{{ $t('epoca_especial') }}</option>
+              <option value="localAulas">{{ $t('local_aulas') }}</option>
             </b-form-select>
           </div>
           <div class="form-group">
-            <label for="comment">Motivo:</label>
+            <label for="comment">{{ $t('motivo') }}</label>
             <textarea
               class="form-control"
               id="reason"
@@ -36,10 +35,11 @@
               rows="3"
             ></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" v-on:click.prevent="setService()">
-            Pedir
-            serviço
-          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            v-on:click.prevent="setService()"
+          >{{ $t('pedir_serviço') }}</button>
         </b-col>
       </b-row>
     </b-container>

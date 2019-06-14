@@ -31,6 +31,7 @@
         <option value="Professor">Professor</option>
         <option value="Services">Serviços</option>
         <option value="Estudante">Estudante</option>
+        <option value="Director">Diretor</option>
         <option value="CaseManagerResponsible">Responsável Gestor de Caso</option>
         <option value="CaseManager">Gestor de Caso</option>
         <option value="SAPE">Serviços de Apoio ao Estudante</option>

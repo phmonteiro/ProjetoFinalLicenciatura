@@ -20,8 +20,8 @@
       <b-row>
         <b-col class="top100">
           <div v-if="supports">
-            <h2>Acompanhamento personalizado</h2>
-            <h3>Quantidade de horas utilizadas {{this.totalHours}}/40 ano</h3>
+            <h2>{{ $t('acompanhamento_individualizado') }}</h2>
+            <h3>{{ $t('quantidade_horas_utilizadas') }} {{this.totalHours}}/40 {{ $t('ano') }}</h3>
             <b-table striped hover :items="supports" :fields="fields">
               <template slot="actions" slot-scope="row">
                 <button
@@ -29,7 +29,7 @@
                   class="btn btn-secondary"
                   data-dismiss="modal"
                   v-on:click.prevent="editSupportHours(row.item)"
-                >Editar quantidade de horas</button>
+                >{{ $t('editar_quantidade_horas_utilizadas') }}</button>
               </template>
             </b-table>
           </div>
@@ -50,22 +50,22 @@ export default {
       fields: [
         {
           key: "nome",
-          label: "Nome",
+          label: this.$t("nome"),
           sortable: true
         },
         {
           key: "semester",
-          label: "Semestre",
+          label: this.$t("semestre"),
           sortable: true
         },
         {
           key: "hours",
-          label: "Horas de acompanhamento",
+          label: this.$t("horas_acompanhamento"),
           sortable: true
         },
         {
           key: "actions",
-          label: "Acção"
+          label: this.$t("ação")
         }
       ]
     };

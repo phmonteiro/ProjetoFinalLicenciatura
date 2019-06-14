@@ -3,33 +3,33 @@
     <div v-if="(student.enee!='awaiting' && student.enee!='reproved')">
       <div class="sidenav">
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'contact'}">Contactos</router-link>
+          <router-link class="nav-link" :to="{name: 'contact'}">{{ $t('contatos') }}</router-link>
         </a>
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'myMeetings'}">Reuniões</router-link>
+          <router-link class="nav-link" :to="{name: 'myMeetings'}">{{ $t('reuniões') }}</router-link>
         </a>
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'setMeeting'}">Agendar reunião</router-link>
+          <router-link class="nav-link" :to="{name: 'setMeeting'}">{{ $t('agendar_reunião') }}</router-link>
         </a>
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'usedServices'}">Apoios usufruidos</router-link>
+          <router-link class="nav-link" :to="{name: 'usedServices'}">{{ $t('apoios_usufruidos') }}</router-link>
         </a>
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'serviceRequest'}">Pedido de apoios</router-link>
+          <router-link class="nav-link" :to="{name: 'serviceRequest'}">{{ $t('pedidos_apoios') }}</router-link>
         </a>
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'editProfile'}">Editar perfil</router-link>
+          <router-link class="nav-link" :to="{name: 'editProfile'}">{{ $t('editar_perfil') }}</router-link>
         </a>
         <a href="#">
-          <router-link class="nav-link" :to="{name: 'supportHours'}">Acompanhamento</router-link>
+          <router-link class="nav-link" :to="{name: 'supportHours'}">{{ $t('acompanhamento') }}</router-link>
         </a>
       </div>
       <router-view></router-view>
     </div>
     <div v-else>
-      <h1>O seu pedido ao estatuto de estudante com necessidades educativas especais está no estado de:</h1>
-      <h1 v-if="student.enee=='reproved'">Reprovado</h1>
-      <h1 v-if="student.enee=='awaiting'">A aguardar aprovação</h1>
+      <h1>{{ $t('mensagem_estudante') }}</h1>
+      <h1 v-if="student.enee=='reproved'">{{ $t('reprovado') }}</h1>
+      <h1 v-if="student.enee=='awaiting'">{{ $t('aguardar_aprovação') }}</h1>
     </div>
   </div>
 </template>

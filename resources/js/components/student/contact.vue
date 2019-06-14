@@ -15,7 +15,7 @@
       <b-row>
         <b-col class="top100">
           <div v-if="contacts">
-            <h2>Contactos</h2>
+            <h2>{{ $t('contatos') }}</h2>
             <b-table striped hover :items="contacts" :fields="fields"></b-table>
             <nav aria-label="Page navigation">
               <ul class="pagination">
@@ -60,17 +60,17 @@ export default {
       fields: [
         {
           key: "service",
-          label: "Serviço",
+          label: this.$t("serviço"),
           sortable: true
         },
         {
           key: "date",
-          label: "Data",
+          label: this.$t("data"),
           sortable: true
         },
         {
           key: "nextContact",
-          label: "Próximo Contacto",
+          label: this.$t("proximo_contacto"),
           sortable: true
         }
       ]

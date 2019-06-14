@@ -15,7 +15,7 @@
       <b-row>
         <b-col class="top100">
           <div v-if="services">
-            <h2>Apoios usufruidos</h2>
+            <h2>{{$t('apoios_usufruidos')}}</h2>
             <b-table striped hover :items="services" :fields="fieldsServices"></b-table>
           </div>
         </b-col>
@@ -34,7 +34,7 @@ export default {
       fieldsServices: [
         {
           key: "text",
-          label: "Nome do serviço",
+          label: this.$t("nome_serviço"),
           sortable: true
         }
       ]

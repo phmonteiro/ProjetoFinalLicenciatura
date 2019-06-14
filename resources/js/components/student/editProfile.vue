@@ -1,13 +1,13 @@
 <template>
   <div class="container" v-if="user">
-    <h2>Editar perfil</h2>
+    <h2>{{ $t('editar_perfil') }}</h2>
     <div class="row"></div>
     <div class="col-md-12 pt-4">
       <div class="form-group">
         <div class="container-full-width">
           <div class="row">
             <div class="col">
-              <label for="student-name">Nome</label>
+              <label for="student-name">{{ $t('nome') }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -21,7 +21,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <label for="email">E-mail principal</label>
+              <label for="email">{{ $t('email_principal') }}</label>
               <input
                 class="form-control"
                 type="email"
@@ -34,7 +34,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <label for="email">E-mail secundário</label>
+              <label for="email">{{ $t('email_secundário') }}</label>
               <input
                 class="form-control"
                 type="email"
@@ -47,11 +47,11 @@
         </div>
         <div class="dropdown-divider"></div>
 
-        <h5>Identificação do Reponsavel</h5>
+        <h5>{{ $t('identificação_responsável') }}</h5>
         <div class="container-full-width">
           <div class="row">
             <div class="col">
-              <label for="responsibleName">Nome</label>
+              <label for="responsibleName">{{ $t('nome') }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -62,7 +62,7 @@
               >
             </div>
             <div class="col">
-              <label for="responsiblePhone">Contacto telefónico</label>
+              <label for="responsiblePhone">{{ $t('contacto_telefónico') }}</label>
               <input
                 class="form-control"
                 type="number"
@@ -74,7 +74,7 @@
               >
             </div>
             <div class="col">
-              <label for="responsibleKin">Parentesco</label>
+              <label for="responsibleKin">{{ $t('parentesco') }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -85,7 +85,7 @@
               >
             </div>
             <div class="col">
-              <label for="responsibleEmail">E-mail</label>
+              <label for="responsibleEmail">{{ $t('email') }}</label>
               <input
                 type="email"
                 class="form-control"
@@ -99,11 +99,11 @@
 
           <div class="dropdown-divider"></div>
         </div>
-        <h5>Identificação do Contacto de Emergencia</h5>
+        <h5>{{ $t('contacto_emergencia') }}</h5>
         <div class="container-full-width">
           <div class="row">
             <div class="col">
-              <label for="emergencyName">Nome</label>
+              <label for="emergencyName">{{ $t('nome') }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -114,7 +114,7 @@
               >
             </div>
             <div class="col">
-              <label for="emergencyPhone">Contacto telefónico</label>
+              <label for="emergencyPhone">{{ $t('contacto_telefónico') }}</label>
               <input
                 class="form-control"
                 type="number"
@@ -124,7 +124,7 @@
               >
             </div>
             <div class="col">
-              <label for="emergencyKin">Parentesco</label>
+              <label for="emergencyKin">{{ $t('parentesco') }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -135,7 +135,7 @@
               >
             </div>
             <div class="col">
-              <label for="emergencYEmail">E-mail</label>
+              <label for="emergencYEmail">{{ $t('email') }}</label>
               <input
                 type="email"
                 class="form-control"
@@ -150,7 +150,11 @@
         <div class="dropdown-divider"></div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" v-on:click.prevent="editProfile()">Confirmar</button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      v-on:click.prevent="editProfile()"
+    >{{ $t('confirmar') }}</button>
   </div>
 </template>
 

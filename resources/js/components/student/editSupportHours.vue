@@ -1,21 +1,21 @@
 <template>
   <div v-if="support">
     <b-container>
-      <h2>Disciplina {{support.nome}}</h2>
-      <label for="hours">Quantidade de horas:</label>
+      <h2>{{ $t('discipline') }} {{support.nome}}</h2>
+      <label for="hours">{{ $t('quantidade_horas') }}</label>
       <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">
       <button
         type="submit"
         class="btn btn-secondary"
         data-dismiss="modal"
         v-on:click.prevent="save"
-      >Gravar</button>
+      >{{ $t('gravar') }}</button>
       <button
         type="submit"
         class="btn btn-secondary"
         data-dismiss="modal"
         v-on:click.prevent="cancel"
-      >Cancelar</button>
+      >{{ $t('cancelar') }}</button>
     </b-container>
   </div>
 </template>

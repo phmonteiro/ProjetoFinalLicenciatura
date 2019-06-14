@@ -2,18 +2,18 @@
   <b-container>
     <b-row>
       <b-col class="top100">
-        <h2>Pedir agendamento de reuniao</h2>
+        <h2>{{ $t('pedir_agendamento_reunião') }}</h2>
         <div class="form-group">
           <b-form-select v-model="meeting.service" class="mb-3">
             <!-- This slot appears above the options from 'options' prop -->
             <template slot="first">
-              <option :value="null" disabled>-- Selecione o serviço --</option>
+              <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
             </template>
-            <option value="Gestor-Caso">Gestor-Caso</option>
+            <option value="Gestor-Caso">{{ $t('gestor_caso') }}</option>
           </b-form-select>
         </div>
         <div class="form-group">
-          <label for="comment">Comentário:</label>
+          <label for="comment">{{ $t('comentário') }}</label>
           <textarea
             class="form-control"
             id="decision"
@@ -26,7 +26,7 @@
           type="submit"
           class="btn btn-primary"
           v-on:click.prevent="setMeeting()"
-        >Pedir reunião</button>
+        >{{ $t('pedir_reunião') }}</button>
       </b-col>
     </b-row>
   </b-container>
