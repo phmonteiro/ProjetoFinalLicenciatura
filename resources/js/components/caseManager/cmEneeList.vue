@@ -1,12 +1,16 @@
 <template>
     <div>
+
+        <manage-plan :user="currentUser2" :plan="currentPlan" @cancel-edit2="cancelEdit2()"> </manage-plan>
+
         <set-inter :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="cancelEdit()"> </set-inter>
+
         <div class="container">
             <h2>Lista de Enee</h2>
             <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
                 <template slot="actions" slot-scope="row">
                     <b-row class="text-center">
-                        <b-col md="4" sm="12">
+                        <b-col md="3" sm="12">
                             <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
 
                             </b-form-checkbox>
@@ -17,50 +21,88 @@
                                 <font-awesome-icon icon="eye-slash"/>
                             </div>
                         </b-col>
-                        <b-col md="4" sm="12">
+                        <b-col md="3" sm="12">
                             <b-button size="sm" v-on:click.prevent="setInteraction(row.item)">Interação
                                 <font-awesome-icon icon="handshake" />
                             </b-button>
                         </b-col>
-                        <b-col md="4" sm="12">
+                        <b-col md="3" sm="12">
                             <b-button size="sm" v-on:click.prevent="seeInteractions(row.item)">Ver Interações
                                 <font-awesome-icon icon="handshake" />
                             </b-button>
                         </b-col>
+                         <b-col md="3" sm="12">
+                            <b-button size="sm" v-on:click.prevent="managePlan(row.item)">Plano
+                                <font-awesome-icon icon="book" />
+                            </b-button>
+                        </b-col>
                     </b-row>
-
                 </template>
                 <template slot="row-details" slot-scope="row">
                     <b-card>
                         <b-row class="mb-2">
-                            <b-col sm="4" class="text-sm-right"><b>Nascido em: </b>{{row.item.birthDate}}</b-col>
+                            <b-col sm="4" class="text"><b>Nascido em: </b>{{row.item.birthDate}}</b-col>
                             <b-col>
                                 <b-row class="mb-2">
-                                    <b-col sm="4" class="text-sm-right"><b>Ano curricular:
+                                    <b-col sm="4" class="text"><b>Ano curricular:
                                         </b>{{row.item.curricularYear}}</b-col>
                                 </b-row>
                             </b-col>
                         </b-row>
 
                         <b-row class="mb-2">
-                            <b-col sm="4" class="text-sm-right"><b>Escola: </b>{{row.item.school}}</b-col>
+                            <b-col sm="4" class="text"><b>Escola: </b>{{row.item.school}}</b-col>
                             <b-col>
                                 <b-row class="mb-2">
-                                    <b-col sm="4" class="text-sm-right"><b>Entrou na escola em:
+                                    <b-col sm="4" class="text"><b>Entrou na escola em:
                                         </b>{{row.item.enruledYear}}</b-col>
                                 </b-row>
                             </b-col>
                         </b-row>
 
                         <b-row class="mb-2">
-                            <b-col sm="4" class="text-sm-right"><b>Curso: </b>{{row.item.course}}</b-col>
+                            <b-col sm="4" class="text"><b>Curso: </b>{{row.item.course}}</b-col>
                             <b-col>
                                 <b-row class="mb-2">
-                                    <b-col sm="4" class="text-sm-right"><b>Incapacidade:
+                                    <b-col sm="4" class="text"><b>Incapacidade:
                                         </b>{{row.item.functionalAnalysis}}</b-col>
                                 </b-row>
                             </b-col>
                         </b-row>
+
+                        <b-row class="mb-2">
+                            <b-col sm="4" class="text"><b>Sexo: </b>
+                            <span v-if="row.item.gender == 'masculino'">Masculino</span>
+                            <span v-if="row.item.gender == 'feminino'">Feminino</span>
+                            <span v-if="row.item.gender == 'outro'">Outro</span>
+                            </b-col>
+                            <b-col>
+                                <b-row class="mb-2">
+                                    <b-col sm="4" class="text"><b>1ª matricula:
+                                        </b>{{row.item.enruledYear}}</b-col>
+                                </b-row>
+                            </b-col>
+                        </b-row>
+
+                        <b-row class="mb-2">
+                            <b-col sm="4" class="text"><b>Estatuto: </b>
+                             <span v-if="row.item.enee == 'approved'">
+                                Aprovado
+                            </span>
+                            <span v-if="row.item.enee == 'awaiting'">A espera</span>
+                            <span v-if="row.item.enee == null">Nao pedido</span>
+                            </b-col>
+                            <b-col>
+                                <b-row class="mb-2">
+                                    <b-col sm="4" class="text"><b>Estatuto pedido a:
+                                        </b>{{row.item.dateEneeRequested}}</b-col>
+                                </b-row>
+                            </b-col>
+                        </b-row>
+                        <b-row class="mb-2">
+                            <b-col sm="4" class="text"><b>Estatuto aprovado a: {{row.item.dateEneeApproval}}</b>
+                            </b-col>
+                        </b-row>                        
                         <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
                     </b-card>
                 </template>
@@ -84,6 +126,7 @@
                 </ul>
             </nav>
         </div>
+        
         <interactionsDetails :user="userInteractions" :interactions="interactions" @cancel-edit="cancelInteractions()"></interactionsDetails>
     </div>
 </template>
@@ -92,6 +135,7 @@
     export default {
         data() {
             return {
+                yourTimeValue: {},
                 pagination: {},
                 loading: true,
                 enee: null,
@@ -121,8 +165,10 @@
                     }
                 ],
                 currentUser: null,
+                currentUser2: null,
                 userInteractions: null,
-                interactions: null
+                interactions: null,
+                currentPlan: null
             };
         },
         methods: {
@@ -159,11 +205,28 @@
                         console.log(error);
                     });
             },
+            getPlan(userId) {
+                axios
+                    .get("api/getEneePlan/" + userId)
+                    .then(response => {
+                        this.currentPlan = response.data.data[0];
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
             setInteraction(row) {
                 this.currentUser = Object.assign({}, row);
             },
+            managePlan(row){
+                this.currentUser2 = Object.assign({}, row);                
+                this.getPlan(row.id);
+            },
             cancelEdit: function () {
                 this.currentUser = null;
+            },
+            cancelEdit2: function () {
+                this.currentUser2 = null;
             },
             cancelInteractions: function(){
                 this.userInteractions = null;
@@ -196,6 +259,9 @@
                             position: "top-center",
                             theme: "bubble"
                         });
+                        if (this.userInteractions != null){
+                            this.getEneeInteractions(this.userInteractions);
+                        }
                     })
                     .catch(error => {
                         console.log(error);

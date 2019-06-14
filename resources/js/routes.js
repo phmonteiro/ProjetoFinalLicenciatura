@@ -219,10 +219,19 @@ const routes = [{
         meta: {
             middlewareAuth: true,
         },
-        children: [{
+        children: [
+            {
                 path: '/caseManager/cmEneeList',
                 name: 'cmEneeList',
                 component: require('./components/caseManager/cmEneeList.vue').default,
+                meta: {
+                    middlewareAuth: true,
+                },
+            },
+            {
+                path: '/caseManager/meetingsEneeList',
+                name: 'meetingsEneeList',
+                component: require('./components/caseManager/meetingsEneeList.vue').default,
                 meta: {
                     middlewareAuth: true,
                 },

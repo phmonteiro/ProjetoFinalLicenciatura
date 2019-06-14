@@ -10,6 +10,9 @@
         <router-link class="nav-link" :to="{name: 'cmEneeList'}">Meus ENEE</router-link>
       </a>
       <a href="#">
+        <router-link class="nav-link" :to="{name: 'meetingsEneeList'}">Reuniões</router-link>
+      </a>
+      <a href="#">
         <router-link class="nav-link" :to="{name: 'statistics'}">Estatísticas</router-link>
       </a>
     </div>
