@@ -3,7 +3,6 @@
     <div class="container pt-3">
       <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
       <h3>Sou Admin</h3>
-      <button @click="getTeacher">Teachers</button>
     </div>
 
     <div class="sidenav">
@@ -23,18 +22,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    getTeacher() {
-      axios
-        .get("api/getTeachers")
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  },
+  methods: {},
   created() {},
   computed: {
     user: function() {

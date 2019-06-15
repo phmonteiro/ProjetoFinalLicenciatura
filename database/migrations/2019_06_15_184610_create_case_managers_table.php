@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCaseManagersTable extends Migration
-{
+class CreateCaseManagersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,7 +12,8 @@ class CreateCaseManagersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('case_managers', function (Blueprint $table) {
+		Schema::create('case_managers', function(Blueprint $table)
+		{
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('studentEmail')->unique('case_managers_studentemail_unique');
 			$table->string('studentName');
@@ -33,4 +33,5 @@ class CreateCaseManagersTable extends Migration
 	{
 		Schema::drop('case_managers');
 	}
+
 }
