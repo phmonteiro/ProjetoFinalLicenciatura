@@ -39,7 +39,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->orWhere('enee', 'reproved')->paginate(10));
+        return UserResource::collection(User::where('type', 'Estudante')->where('school', Auth::user()->school)->where('enee', 'awaiting')->orWhere('enee', 'reproved')->paginate(10));
     }
 
     /**
@@ -402,7 +402,7 @@ class StudentController extends Controller
 
     public function enee()
     {
-        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10));
+        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'approved')->where('school', Auth::user()->school)->paginate(10));
     }
 
     public function getNee($id)

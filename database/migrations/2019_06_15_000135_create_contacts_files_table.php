@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateContacsFilesTable extends Migration {
+class CreateContactsFilesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateContacsFilesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('contacs_files', function(Blueprint $table)
+		Schema::create('contacts_files', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->bigInteger('contact_id')->unsigned();
@@ -28,7 +28,7 @@ class CreateContacsFilesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('contacs_files');
+		Schema::drop('contacts_files');
 	}
 
 }

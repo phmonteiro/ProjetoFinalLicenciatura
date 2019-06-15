@@ -37,8 +37,6 @@ class CreateUsersTable extends Migration {
 			$table->string('enee')->nullable();
 			$table->text('educationalSupport', 65535)->nullable();
 			$table->date('eneeExpirationDate')->nullable();
-			$table->date('loginExpirationDate')->nullable();
-			$table->string('password');
 			$table->boolean('firstLogin')->nullable();
 			$table->string('responsibleName')->nullable();
 			$table->integer('responsiblePhone')->nullable();
@@ -51,10 +49,16 @@ class CreateUsersTable extends Migration {
 			$table->string('emergencyKin')->nullable();
 			$table->string('remember_token', 100)->nullable();
 			$table->boolean('coordinatorApproval')->nullable();
+			$table->string('servicesApproval', 15)->nullable();
 			$table->timestamps();
 			$table->string('secondEmail')->nullable();
 			$table->integer('departmentNumber')->nullable();
 			$table->string('gender', 50)->nullable();
+			$table->date('dateEneeApproved')->nullable();
+			$table->date('dateEneeRequested')->nullable();
+			$table->string('serviceNameApproval')->nullable();
+			$table->string('password')->nullable();
+			$table->string('typeApplication')->nullable();
 		});
 	}
 
