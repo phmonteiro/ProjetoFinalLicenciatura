@@ -1,7 +1,7 @@
 <template>
-  <div class="container" v-if="user != null">
+  <div class="container pt-2 pb-3" v-if="user != null">
     <div v-if="user.enee!='awaiting' && user.enee!='approved'">
-      <h2>{{$t('formulário')}}</h2>
+      <h2>{{$t('formulario')}}</h2>
       <div class="row">
         <div class="col-md-12 pt-4">
           <h4>{{$t('identificação_estudante')}}</h4>
