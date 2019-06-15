@@ -29,6 +29,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
     Route::post('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
     Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
+    Route::get('getTeachers', 'AdminController@getTeachers')->name('getTeachers');
 
     //student
     Route::get('getEnee', 'StudentController@index');

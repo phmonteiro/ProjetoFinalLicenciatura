@@ -7,8 +7,9 @@ use App\User;
 use App\Supports;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\SupportResource;
-
-
+use Carbon\Carbon;
+use App\Teacher;
+use App\Http\Resources\TeacherResource;
 
 class AdminController extends Controller
 {
@@ -96,5 +97,38 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getTeachers()
+    {
+        $client = new \GuzzleHttp\Client();
+        $aux = str_split(Carbon::now()->year, 2);
+        if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
+            $yearLective = Carbon::now()->year . "" . (int)$aux[1] + 1;
+            $semester = 1;
+        } else {
+            $yearLective = $aux[0] . "" . (int)$aux[1] - 1 . ""  . $aux[1];
+            $semester = 2;
+        }
+        $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/cursos_ucs.php?anoletivo=' . $yearLective . '&periodo=S' . $semester . '');
+        $aux = $response->getBody()->getContents();
+        $response = explode(';', $aux);
+
+        $teachers = array();
+        for ($i = 4; $i < sizeof($response); $i += 4) {
+            $aux = explode(',', $response[$i]);
+            for ($h = 0; $h < sizeof($aux); $h++) {
+                $teacher = new Teacher();
+                $name = explode('(', $aux[$h]);
+                $email = explode(')', $name[1]);
+                $teacher->email = $email[0] . '@my.ipleiria.pt';
+                $teacher->name = mb_convert_encoding($name[0], 'UTF-8', 'html-entities');
+                $teacher->subject = mb_convert_encoding($response[$i - 1], 'UTF-8', 'html-entities');
+                $teacher->subjectCode = $response[$i - 2];
+                $teacher->save();
+                array_push($teachers, $teacher);
+            }
+        }
+        return response()->json(new TeacherResource($teachers), 201);
     }
 }
