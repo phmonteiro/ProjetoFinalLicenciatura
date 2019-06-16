@@ -118,3 +118,11 @@ html body {
   top: 50% !important;
   left: 50%;
 }
+
+.is-danger {
+  border-color: red;
+}
+
+.help {
+  color: red;
+}

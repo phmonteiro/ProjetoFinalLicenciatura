@@ -9,9 +9,9 @@ import store from './vuex.js';
 import i18n from './plugins/i18n';
 import Toasted from 'vue-toasted';
 import {VueSpinners} from '@saeris/vue-spinners';
-import Vuelidate from 'vuelidate';
 import DatePicker from 'vue2-datepicker';
 import TimeSelector from 'vue-timeselector';
+import VeeValidate from 'vee-validate';
 
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -30,8 +30,8 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);
-Vue.use(Vuelidate);
 Vue.use(DatePicker);
+Vue.use(VeeValidate);
 Vue.use(TimeSelector);
 window.Event = new Vue();
 

@@ -46,20 +46,32 @@
               </div>
             </div>
           </div>
-          <form class="justify-content-center" v-if="!cartaoCidadao">
+
+          <form
+            class="justify-content-center"
+            @submit.prevent="validateBeforeSubmit"
+            v-if="!cartaoCidadao"
+          >
             <div class="row">
               <div class="col">
                 <div class="form-group">
                   <span class="numero">{{ $t('nome_utilizador') }}</span>
                   <input
+                    v-validate="{ required: true, email:true }"
                     id="email"
                     v-model="user.email"
                     type="text"
                     class="form-control"
                     name="email"
+                    placeholder="email@my.ipleiria.pt"
                     required
                     autofocus
                   >
+                  <i v-show="errors.has('email')" class="fa fa-warning"></i>
+                  <span
+                    v-show="errors.has('email')"
+                    class="help is-danger"
+                  >{{ errors.first('email') }}</span>
                 </div>
               </div>
             </div>
@@ -69,6 +81,7 @@
                 <div class="form-group">
                   <span class="senha">{{ $t('palavra_pass') }}</span>
                   <input
+                    v-validate="'required'"
                     id="password"
                     v-model="user.password"
                     type="password"
@@ -76,14 +89,15 @@
                     name="password"
                     required
                   >
+                  <i v-show="errors.has('password')" class="fa fa-warning"></i>
+                  <span
+                    v-show="errors.has('password')"
+                    class="help is-danger"
+                  >{{ errors.first('password') }}</span>
                 </div>
               </div>
             </div>
-            <button
-              class="btn btn-secondary entrar"
-              v-on:click.prevent="login()"
-              type="submit"
-            >Login</button>
+            <button class="btn btn-secondary entrar" type="submit">Login</button>
           </form>
         </div>
         <div class="col-lg-3"></div>
@@ -111,8 +125,16 @@ export default {
     };
   },
   methods: {
+    validateBeforeSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.loading = true;
+          this.login();
+          return;
+        }
+      });
+    },
     login() {
-      this.loading = true;
       axios
         .post("api/login", this.user)
         .then(response => {
