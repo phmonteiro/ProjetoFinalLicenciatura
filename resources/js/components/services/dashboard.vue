@@ -1,10 +1,4 @@
 <template>
-  <!-- <div>
-    <div>
-      <enee-list :user="user" @downloadPDF="downloadPDF" @setContact="setContact"></enee-list>
-      <meetings @setMeeting="setMeeting"></meetings>
-    </div>
-  </div>-->
   <div>
     <div class="container pt-3">
       <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>

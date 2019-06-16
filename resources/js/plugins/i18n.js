@@ -6,6 +6,7 @@ Vue.use(VueI18n);
 const messages = {
   'pt': {
     formulario: 'Formulário para o estatuto de ENEE',
+    adicionar_aluno: 'Adicionar aluno com estatuto de ENEE',
     nome_utilizador: 'Nome de Utilizador',
     cartao_cidadao: 'Cartão de Cidadão',
     palavra_pass: 'Palavra Pass',
@@ -97,6 +98,7 @@ const messages = {
     relatorio_medico: 'Relatório médico',
     submeter: 'Submeter',
     ficheiro: 'Escolha os ficheiros',
+    adicionar: 'Adicionar',
   },
   'en': {
     nome_utilizador: 'Username',
@@ -190,6 +192,8 @@ const messages = {
     relatorio_medico: 'Medical report',
     submeter: 'Submit',
     ficheiro: 'Choose files',
+    adicionar_aluno: 'Add student with ENEE status',
+    adicionar: 'Add',
 
 
   },
