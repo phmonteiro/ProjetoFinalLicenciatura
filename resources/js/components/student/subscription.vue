@@ -256,8 +256,6 @@
                       class="form-control"
                       name="curricular-year"
                       id="year"
-                      min="1"
-                      max="10"
                       v-model="student.curricularYear"
                     >
                     <i v-show="errors.has('curricular-year')" class="fa fa-warning"></i>
@@ -269,7 +267,7 @@
                   <div class="col">
                     <label for="enruledYear">{{$t('ano_matricula')}}</label>
                     <input
-                      v-validate="{required:true,digits:1}"
+                      v-validate="{required:true,digits:4}"
                       class="form-control"
                       id="enruledYear"
                       name="enruledYear"

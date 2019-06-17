@@ -52,6 +52,12 @@ class SupportController extends Controller
             $tutor = new Tutor();
             $tutor->studentEmail = $user->email;
             $tutor->tutorEmail = $dados['tutor'];
+
+            $history = new History();
+            $history->studentEmail = $user->email;
+            $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
+            $history->date = Carbon::now();
+            $history->save();
         }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
@@ -82,6 +88,12 @@ class SupportController extends Controller
             }
         }
 
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O diretor aprovou o pedido de ENEE";
+        $history->date = Carbon::now();
+        $history->save();
+
         return response()->json(new UserResource($user), 200);
     }
 
@@ -90,6 +102,12 @@ class SupportController extends Controller
         $user = User::findOrFail($id);
         $user->enee = "reproved";
         $user->save();
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O diretor recusou o pedido de ENEE";
+        $history->date = Carbon::now();
+        $history->save();
 
         return response()->json(new UserResource($user), 200);
     }

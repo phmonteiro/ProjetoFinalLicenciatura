@@ -85,7 +85,7 @@
           class="custom-select"
           name="services"
           single
-          v-model="services"
+          v-model="services.name"
           v-if="user.servicesApproval != 'approved' && user.servicesApproval != 'denied'"
         >
           <option value="sape">Serviços de Apoio ao Estudante</option>
@@ -143,7 +143,9 @@ export default {
         tutor: "",
         date: ""
       },
-      services: "",
+      services: {
+        name: ""
+      },
       form: {
         duration: null
       },
@@ -187,7 +189,7 @@ export default {
     },
     askForServicesApproval() {
       axios
-        .post("api/servicesApprovalRequest/" + this.user.id)
+        .post("api/servicesApprovalRequest/" + this.user.id, this.services)
         .then(response => {
           this.$emit("refresh");
           this.$toasted.success("Pedido efetuado com sucesso.", {

@@ -262,7 +262,7 @@
                 <div class="col">
                   <label for="enruledYear">{{$t('ano_matricula')}}</label>
                   <input
-                    v-validate="{required:true,digits:1}"
+                    v-validate="{required:true,digits:4}"
                     class="form-control"
                     id="enruledYear"
                     name="enruledYear"

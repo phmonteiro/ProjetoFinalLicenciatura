@@ -31,6 +31,12 @@ class CaseManagerResponsibleController extends Controller
     public function removeCM($email)
     {
         $user = CaseManager::Where('studentEmail', $email)->first();
+        $student = User::where('email', $email);
+        $history = new History();
+        $history->studentEmail = $student->email;
+        $history->description = "Foi removido o gestor de caso ao aluno";
+        $history->date = Carbon::now();
+        $history->save();
         $user->delete();
 
         return response()->json(new CaseManagerResponsibleResource($user), 200);

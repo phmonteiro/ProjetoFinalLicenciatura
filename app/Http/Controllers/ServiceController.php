@@ -227,6 +227,14 @@ class ServiceController extends Controller
         $user->servicesApproval = 'approved';
         $user->save();
 
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O " . Auth::user()->type . ' deu o parecer de aprovado para o estudante';
+        $history->date = Carbon::now();
+        $history->save();
+
+
+
         return response()->json(200);
     }
 
@@ -236,6 +244,12 @@ class ServiceController extends Controller
 
         $user->servicesApproval = 'denied';
         $user->save();
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O " . Auth::user()->type . ' deu o parecer de reprovado para o estudante';
+        $history->date = Carbon::now();
+        $history->save();
 
         return response()->json(200);
     }

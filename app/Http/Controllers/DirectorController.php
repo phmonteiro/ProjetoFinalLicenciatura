@@ -17,10 +17,18 @@ use Carbon\Carbon;
 
 class DirectorController extends Controller
 {
-    public function approvalRequest($id)
+    public function approvalRequest(Request $request, $id)
     {
+        dd($request);
         $user = User::findOrFail($id);
         $user->servicesApproval = 'requested';
+        $user->serviceNameApproval = $request->name;
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O diretor pediu o parecer do " . $user->serviceNameApproval;
+        $history->date = Carbon::now();
+        $history->save();
 
         $user->save();
         return response()->json($user, 200);
@@ -43,6 +51,12 @@ class DirectorController extends Controller
             $tutor = new Tutor();
             $tutor->studentEmail = $user->email;
             $tutor->tutorEmail = $dados['tutor'];
+
+            $history = new History();
+            $history->studentEmail = $user->email;
+            $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
+            $history->date = Carbon::now();
+            $history->save();
         }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();

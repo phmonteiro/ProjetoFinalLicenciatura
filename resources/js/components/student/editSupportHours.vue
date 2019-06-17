@@ -1,7 +1,7 @@
 <template>
   <div v-if="support">
     <b-container>
-      <h2>{{ $t('discipline') }} {{support.nome}}</h2>
+      <h2>{{ $t('disciplina') }} {{support.nome}}</h2>
       <label for="hours">{{ $t('quantidade_horas') }}</label>
       <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">
       <button

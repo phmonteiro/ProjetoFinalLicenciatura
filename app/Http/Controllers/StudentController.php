@@ -290,7 +290,13 @@ class StudentController extends Controller
         $residence = ZipCode::where('art_desig', $residence)->where('dsc_pos', $area)->first();
         return response()->json(new ZipCodeResource($residence), 201);
     }
-    public function myMeetings()
+    public function myMeetings($id)
+    {
+        $user = User::findOrFail($id);
+        return MeetingResource::collection(Meeting::where('email', $user->email)->Orderby('date')->paginate(10));
+    }
+
+    public function myMeetingsStudent()
     {
         $user = Auth::user();
         return MeetingResource::collection(Meeting::where('email', $user->email)->Orderby('date')->paginate(10));
@@ -336,7 +342,7 @@ class StudentController extends Controller
 
         $history = new History();
         $history->studentEmail = $user->email;
-        $history->description = "O estudante requereu ao diretor mais apoios";
+        $history->description = "O estudante requereu ao diretor o apoio de " . $service->name;
         $history->date = Carbon::now();
         $history->save();
 
@@ -377,7 +383,6 @@ class StudentController extends Controller
     public function setSupportHours(Request $request)
     {
         $user = Auth::user();
-
         $subject = Subject::where('studentEmail', $user->email)->pluck('hours');
         $subjectName = Subject::where('studentEmail', $user->email)->pluck('nome');
         if ($request->hours > 40) {
@@ -394,6 +399,11 @@ class StudentController extends Controller
             $subject = Subject::Where('studentEmail', $user->email)->where('nome', $request->nome)->first();
             $subject->hours = $request->hours;
             $subject->save();
+            $history = new History();
+            $history->studentEmail = $user->email;
+            $history->description = "O estudante pediu " . $subject->hours . " horas de acompanhamento para a unidade curricular de " . $subject->nome . "";
+            $history->date = Carbon::now();
+            $history->save();
             return response()->json(new SubjectResource($subject), 200);
         } else {
             return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);

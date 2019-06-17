@@ -31,7 +31,7 @@ Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);
 Vue.use(DatePicker);
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, {fieldsBagName: 'formFields'});
 Vue.use(TimeSelector);
 window.Event = new Vue();
 

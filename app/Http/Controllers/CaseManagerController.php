@@ -173,6 +173,12 @@ class CaseManagerController extends Controller
                 $interactionFile->save();
             }
         }
+        $student = User::where('email', $dados['email']);
+        $history = new History();
+        $history->studentEmail = $student->email;
+        $history->description = "Gestor de caso reuniu com o estudante";
+        $history->date = Carbon::now();
+        $history->save();
 
 
         return response()->json(new ContactResource($contact), 200);
