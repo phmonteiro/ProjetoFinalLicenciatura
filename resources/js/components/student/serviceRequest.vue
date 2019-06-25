@@ -23,7 +23,7 @@
                 >{{ $t('acompanhamento_individualizado') }}</option>
                 <option
                   value="acopanhamenteProfessorTutor"
-                >{{ $t('acompanhament_professor_tutor') }}</option>
+                >{{ $t('acompanhamento_professor_tutor') }}</option>
                 <option value="metodosProvasAdaptados">{{ $t('provas_adaptadas') }}</option>
                 <option value="apoioSocial">{{ $t('apoio_social') }}</option>
                 <option value="acessorEpocaEspecial">{{ $t('epoca_especial') }}</option>
