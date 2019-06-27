@@ -2,13 +2,13 @@
   <div>
     <div class="languages">
       <div v-if="language=='pt'">
-        <a v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
-          <img :src="'/imagens/iconfinder_Portugal.png'">
+        <a href="#" v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
+          <img :src="'/imagens/iconfinder_Portugal.png'" alt="Bandeira Portuguesa" tabindex="-1">
         </a>
       </div>
       <div v-else>
-        <a v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
-          <img :src="'/imagens/iconfinder_UnitedKingdom.png'">
+        <a href="#" v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
+          <img :src="'/imagens/iconfinder_UnitedKingdom.png'" alt="Bandeira Inglesa" tabindex="-1">
         </a>
       </div>
     </div>

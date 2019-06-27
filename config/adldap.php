@@ -117,6 +117,7 @@ return [
                 */
 
                 'domain_controllers' => ['dc1c2.ipleiria.pt', 'dc2c2.ipleiria.pt'],
+                //'domain_controllers' => ['172.20.1.10'],
 
 
                 /*
@@ -205,7 +206,7 @@ return [
                  */
 
                 'use_ssl' => false,
-                'u se_tls' => false,
+                'use_tls' => false,
 
             ],
 

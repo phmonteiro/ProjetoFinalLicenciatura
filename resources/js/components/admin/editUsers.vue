@@ -20,7 +20,7 @@
             <p v-if="row.item.type=='CRIDE'">Centro de Recursos para a Inclusão Digital</p>
             <p v-if="row.item.type=='SAS'">Serviços de Ação Social</p>
             <p v-if="row.item.type=='DST'">Direção de Serviços Técnicos</p>
-            <p v-if="row.item.type=='UED'">Unidade de Ensino á Distância</p>
+            <p v-if="row.item.type=='UED'">Unidade de Ensino à Distância</p>
           </template>
           <template slot="actions" slot-scope="row">
             <button

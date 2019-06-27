@@ -371,6 +371,7 @@ class StudentController extends Controller
                 $subject->semester = $response[$i + 1];
                 $subject->hours = 0;
                 $subject->subjectCode = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));
+                $subject->yearLective = $yearLective;
                 $subject->save();
                 array_push($subjects, $subject);
             }

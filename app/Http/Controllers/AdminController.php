@@ -125,6 +125,8 @@ class AdminController extends Controller
                 $teacher->name = mb_convert_encoding($name[0], 'UTF-8', 'html-entities');
                 $teacher->subject = mb_convert_encoding($response[$i - 1], 'UTF-8', 'html-entities');
                 $teacher->subjectCode = $response[$i - 2];
+                $teacher->semester =  $semester;
+                $teacher->yearLective = $yearLective;
                 $teacher->save();
                 array_push($teachers, $teacher);
             }

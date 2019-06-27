@@ -104,7 +104,6 @@ html body {
 #navbar {
   background-color: #6c757d;
   color: white;
-
 }
 
 .loader {
@@ -125,4 +124,8 @@ html body {
 
 .help {
   color: red;
+}
+
+#logout {
+  padding: 8px;
 }

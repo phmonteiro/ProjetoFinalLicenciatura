@@ -14,15 +14,22 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Chumper\Zipper\Zipper;
 use Carbon\Carbon;
+use App\ServiceRequest;
+use App\History;
 
 class DirectorController extends Controller
 {
     public function approvalRequest(Request $request, $id)
     {
-        dd($request);
         $user = User::findOrFail($id);
         $user->servicesApproval = 'requested';
-        $user->serviceNameApproval = $request->name;
+
+        for ($i = 0; $i < sizeOf($request->name); $i++) {
+            $serviceRequest = new ServiceRequest();
+            $serviceRequest->name = $request->name[$i];
+            $serviceRequest->studentEmail = $user->email;
+            $serviceRequest->save();
+        }
 
         $history = new History();
         $history->studentEmail = $user->email;
