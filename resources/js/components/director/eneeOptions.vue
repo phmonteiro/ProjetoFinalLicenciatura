@@ -81,26 +81,23 @@
         <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' ">
           <b>Ainda sem parecer</b>
         </p>
-        <select
-          class="custom-select"
-          name="services"
-          single
-          v-model="services.name"
-          v-if="user.servicesApproval != 'approved' && user.servicesApproval != 'denied'"
-        >
-          <option value="sape">Serviços de Apoio ao Estudante</option>
-          <option value="crid">Centro de Recursos para a Inclusão Digital</option>
-          <option value="sas">Serviços de Ação Social</option>
-          <option value="ued">Unidade de Ensino á Distância</option>
-          <option value="dst">Direção de Serviços Técnicos</option>
-        </select>
-        <button
-          v-if="user.servicesApproval==null"
-          type="submit"
-          class="btn btn-secondary"
-          name="ok"
-          v-on:click.prevent="askForServicesApproval()"
-        >Pedir parecer</button>
+        <div v-if="user.servicesApproval==null">
+          <b-form-group>
+            <b-form-checkbox-group id="checkbox-group-2" v-model="services.name" name="service">
+              <b-form-checkbox value="SAPE">Serviços de Apoio ao Estudante</b-form-checkbox>
+              <b-form-checkbox value="CRID">Centro de Recursos para a Inclusão Digital</b-form-checkbox>
+              <b-form-checkbox value="SAS">Serviços de Ação Social</b-form-checkbox>
+              <b-form-checkbox value="UED">Unidade de Ensino á Distância</b-form-checkbox>
+              <b-form-checkbox value="DST">Direção de Serviços Técnicos</b-form-checkbox>
+            </b-form-checkbox-group>
+          </b-form-group>
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            name="ok"
+            v-on:click.prevent="askForServicesApproval()"
+          >Pedir parecer</button>
+        </div>
       </div>
 
       <b-form-group id="input-group-3" label="Duracao da NEE:" label-for="input-3">

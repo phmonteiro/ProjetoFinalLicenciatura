@@ -206,7 +206,7 @@ return [
                  */
 
                 'use_ssl' => false,
-                'u se_tls' => false,
+                'use_tls' => false,
 
             ],
 

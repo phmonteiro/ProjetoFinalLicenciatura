@@ -22,32 +22,6 @@
           >Rejeitar</button>
         </template>
       </b-table>
-      <nav aria-label="Page navigation" v-if="requests">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getRequests(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
-
-          <li class="page-item disabled">
-            <a class="page-link text-dark" href="#">
-              Página {{ pagination.current_page }} de
-              {{ pagination.last_page }}
-            </a>
-          </li>
-
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getRequests(pagination.next_page_url)"
-            >Próximo</a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 </template>
@@ -102,29 +76,18 @@ export default {
           console.log(error);
         });
     },
-    getRequests(page_url) {
-      let pg = this;
-      page_url = page_url || "api/getServicesRequests?page=1";
+    getRequests() {
       axios
-        .get(page_url, this.user.type)
+        .get("api/getServicesRequests", this.user.type)
         .then(response => {
           this.loading = false;
-          this.requests = response.data.data;
-          pg.makePagination(response.data.meta, response.data.links);
+          console.log(response.data);
+          this.requests = response.data;
         })
         .catch(error => {
           console.log(error);
           this.loading = false;
         });
-    },
-    makePagination(meta, links) {
-      let pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
-      };
-      this.pagination = pagination;
     },
     approve(userId) {
       axios
@@ -167,6 +130,9 @@ export default {
             theme: "bubble"
           });
         });
+    },
+    cancelEdit: function() {
+      this.currentUser = null;
     }
   },
   created() {

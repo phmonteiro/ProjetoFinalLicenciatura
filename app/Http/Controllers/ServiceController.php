@@ -19,6 +19,8 @@ use ZipArchive;
 use App\History;
 use App\Nee;
 use Illuminate\Support\Facades\Auth;
+use App\ServiceRequest;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -254,9 +256,17 @@ class ServiceController extends Controller
         return response()->json(200);
     }
 
-    public function getServicesRequests(Request $request)
+    public function getServicesRequests()
     {
-        return UserResource::collection(User::where('type', 'Estudante')->where('enee', 'awaiting')->where('servicesApproval', 'requested')->where('serviceNameApproval', Auth::user()->type)->paginate(10));
+        $services = ServiceRequest::where('name', Auth::user()->type)->get();
+        $users = array();
+        for ($i = 0; $i < sizeOf($services); $i++) {
+            $aux = $services[$i]->studentEmail;
+            array_push($users, $aux);
+        }
+
+        $user = DB::table('users')->whereIn('email', $users)->get();
+        return response()->json($user, 200);
     }
 
 

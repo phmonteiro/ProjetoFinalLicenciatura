@@ -7,7 +7,12 @@
           <div class="row">
             <div class="col">
               <div class="d-flex justify-content-center">
-                <img class="logo" src="/imagens/logo-ipl.png">
+                <img
+                  class="logo"
+                  alt="Logotipo do Instituto Politécnico de Leiria"
+                  src="/imagens/logo-ipl.png"
+                  tabindex="-1"
+                >
               </div>
             </div>
           </div>
@@ -26,31 +31,11 @@
       <div class="col-lg-6 p-0 d-flex align-items-center right-login">
         <div class="col-lg-3"></div>
         <div class="col-lg-6">
-          <div class="row login-type">
-            <div class="col">
-              <div class="row">
-                <button
-                  id="menu-nome"
-                  v-on:click.prevent="nomeUtilizador()"
-                  class="link-left"
-                >{{ $t('nome_utilizador') }}</button>
-              </div>
-            </div>
-            <div class="col">
-              <div class="row">
-                <button
-                  id="menu-cc"
-                  v-on:click.prevent="cartaoCid()"
-                  class="link-right"
-                >{{ $t('cartao_cidadao') }}</button>
-              </div>
-            </div>
-          </div>
-
           <form
             class="justify-content-center"
             @submit.prevent="validateBeforeSubmit"
             v-if="!cartaoCidadao"
+            autocomplete="on"
           >
             <div class="row">
               <div class="col">
@@ -201,12 +186,6 @@ export default {
             theme: "bubble"
           });
         });
-    },
-    cartaoCid() {
-      this.cartaoCidadao = true;
-    },
-    nomeUtilizador() {
-      this.cartaoCidadao = false;
     }
   }
 };
