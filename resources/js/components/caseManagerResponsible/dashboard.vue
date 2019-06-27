@@ -5,14 +5,17 @@
             <h3>Sou Responsável dos Gestores Caso</h3>
         </div>
 
-        <div class="sidenav">
-            <a href="#">
+        <section id="sidebar-menu">
+            <a href="#" id="btn-menu" @click.prevent="toggleNav()">
+                <font-awesome-icon icon="bars" size="lg" />
+            </a>
+            <div class="sidenav" :class="{ active: active}">
                 <router-link class="nav-link" :to="{name: 'cmList'}">Gestores Caso</router-link>
-            </a>
-            <a href="#">
+
                 <router-link class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
-            </a>
-        </div>
+
+            </div>
+        </section>
 
         <router-view></router-view>
     </div>
@@ -21,11 +24,15 @@
     export default {
         data() {
             return {
-                currentUser: null
+                currentUser: null,
+                active: true
             };
         },
         methods: {
-
+            toggleNav() {
+                this.active = !this.active;
+                console.log(this.active);
+            }
         },
         created() {},
         computed: {

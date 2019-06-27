@@ -5,24 +5,33 @@
       <h3>Sou Admin</h3>
     </div>
 
-    <div class="sidenav">
-      <a href="#">
+    <section id="sidebar-menu">
+            <a href="#" id="btn-menu" @click.prevent="toggleNav()">
+                <font-awesome-icon icon="bars" size="lg" />
+            </a>
+            <div class="sidenav" :class="{ active: active}">
         <router-link class="nav-link" :to="{name: 'editUsers'}">Editar Utilizadores</router-link>
-      </a>
 
-      <a href="#">
         <router-link class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
-      </a>
+        
     </div>
+    </section>
     <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      active: true
+    };
   },
-  methods: {},
+  methods: {
+    toggleNav() {
+                this.active = !this.active;
+                console.log(this.active);
+            }
+  },
   created() {},
   computed: {
     user: function() {

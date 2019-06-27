@@ -143,7 +143,6 @@ class StudentController extends Controller
     public function getServices()
     {
         $user = Auth::user();
-
         $supports = Supports::all();
         $idSupports = Student_Supports::Where('email', $user->email)->pluck('support_value');
         $studentSupports = $supports->whereIn('value', $idSupports);
