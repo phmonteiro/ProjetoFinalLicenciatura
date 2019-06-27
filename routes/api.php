@@ -48,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('setSupportHours', 'StudentController@setSupportHours');
     Route::post('editProfile', 'StudentController@edit');
     Route::get('getNee/{id}', 'StudentController@getNee');
+    Route::get('getTeachersStudent/{id}', 'StudentController@getTeacherStudent');
 
     //services
     Route::post('setContact/{id}', 'ServiceController@contact');

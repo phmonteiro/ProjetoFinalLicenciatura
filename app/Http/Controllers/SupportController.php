@@ -28,6 +28,7 @@ class SupportController extends Controller
     public function updateStudentSupports(Request $request)
     {
         $dados = $request->validate([
+            'teachers' => 'required',
             'email' => 'required|email',
             'supports' => '',
             'tutor' => '',
@@ -93,6 +94,9 @@ class SupportController extends Controller
         $history->description = "O diretor aprovou o pedido de ENEE";
         $history->date = Carbon::now();
         $history->save();
+
+        //Email $dados['teachers] tem os professores que têm de ser notificados, coordenador do curso, para estudantes, serviços académicos, professor tutor
+
 
         return response()->json(new UserResource($user), 200);
     }

@@ -28,6 +28,8 @@ use App\Subject;
 use App\Http\Resources\SubjectResource;
 use PHPUnit\Framework\Constraint\IsEqual;
 use App\Http\Resources\NeeResource;
+use App\Teacher;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -348,6 +350,30 @@ class StudentController extends Controller
 
         $service->save();
         return response()->json(new ServiceResource($service), 201);
+    }
+
+    public function getTeacherStudent($id)
+    {
+        $user = User::findOrFail($id);
+        $client = new \GuzzleHttp\Client();
+        $aux = str_split(Carbon::now()->year, 2);
+        if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
+            $yearLective = Carbon::now()->year . "" . (int)$aux[1] + 1;
+        } else {
+            $yearLective = $aux[0] . "" . (int)$aux[1] - 1 . ""  . $aux[1];
+        }
+        $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . $user->departmentNumber . '&estado=1&naluno=' . $user->number . '');
+        $aux = $response->getBody()->getContents();
+        $response = explode(';', $aux);
+        $subjects = array();
+
+        for ($i = 5; $i < sizeof($response); $i += 8) {
+            $subject = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));
+            array_push($subjects, $subject);
+        }
+
+        $teacher = DB::table('teachers')->whereIn('subjectCode', $subjects)->get();
+        return response()->json($teacher, 200);
     }
 
     public function supportHours()

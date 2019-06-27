@@ -126,17 +126,65 @@
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-success" name="ok" v-on:click.prevent="save()">Aprovar</button>
+      <button
+        type="button"
+        class="btn btn-info"
+        data-toggle="modal"
+        data-target="#myModal"
+      >Continuar</button>
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Definir professores notificados do estatuto</h4>
+          </div>
+          <div class="modal-body">
+            <div>
+              <ClipLoader sizeUnit="px" class="loading" v-if="!teachers" :size="15"/>
+            </div>
+            <div v-if="teachers">
+              <div v-for="(teacher, index) in teachers" :key="index">
+                <div class="switch-sex">
+                  <input type="radio" :value="teachers[index].email" v-model="aux[index]">
+                  <label>
+                    Professor {{teachers[index].name}}
+                    <br>
+                    Disciplina: {{teachers[index].subject}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              v-if="teachers"
+              v-b-modal.modal-1
+              type="submit"
+              class="btn btn-success"
+              name="ok"
+              v-on:click.prevent="save()"
+            >Aprovar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ["user", "studentSupports", "nee"],
+  props: ["user", "studentSupports", "nee", "teachers"],
   data: function() {
     return {
+      aux: [],
       data: {
+        selected: null,
+        options: null,
         tutor: "",
         date: ""
       },
@@ -155,7 +203,6 @@ export default {
         "Temporária",
         "Permanente"
       ],
-      options: [],
       childData: ""
     };
   },
@@ -205,6 +252,7 @@ export default {
     },
     save: function() {
       let data = {
+        teachers: this.aux,
         email: this.user.email,
         supports: this.studentSupports,
         tutor: this.data.tutor,

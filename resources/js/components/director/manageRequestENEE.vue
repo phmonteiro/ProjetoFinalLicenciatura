@@ -2,6 +2,7 @@
   <div>
     <eneeOptions
       :user="currentUser"
+      :teachers="teachers"
       :studentSupports="supportsForStudent"
       :nee="nee"
       @refresh="getEnee"
@@ -117,7 +118,8 @@ export default {
       ],
       currentUser: null,
       supportsForStudent: null,
-      nee: null
+      nee: null,
+      teachers: null
     };
   },
   methods: {
@@ -149,16 +151,26 @@ export default {
     editUser(row) {
       this.currentUser = Object.assign({}, row);
       this.getStudentSupports();
+      let user = row.id;
       axios
         .get("api/getNee/" + row.id)
         .then(response => {
-          console.log(response.data);
-
+          this.getTeachersStudent(user);
           this.nee = response.data;
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    getTeachersStudent(user) {
+      axios
+        .get("api/getTeachersStudent/" + user)
+        .then(response => {
+          console.log(response.data);
+
+          this.teachers = response.data;
+        })
+        .catch(error => {});
     },
     cancelEdit: function() {
       this.currentUser = null;
@@ -197,7 +209,6 @@ export default {
           console.log(error);
         });
     },
-
     saveUser(data) {
       axios
         .post("api/updateStudentSupports/", data)
