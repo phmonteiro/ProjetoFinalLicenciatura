@@ -15,12 +15,12 @@ import VeeValidate from 'vee-validate';
 
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 
 import VueApexCharts from 'vue-apexcharts';
-library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook);
+library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
 

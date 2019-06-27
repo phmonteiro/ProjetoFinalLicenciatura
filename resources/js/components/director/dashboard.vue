@@ -5,14 +5,17 @@
       <h3>Sou Diretor</h3>
     </div>
 
-    <div class="sidenav">
-      <a href="#">
+    <section id="sidebar-menu">
+        <a href="#" id="btn-menu" @click.prevent="toggleNav()">
+          <font-awesome-icon icon="bars" size="lg"/>
+        </a>
+        <div class="sidenav" :class="{ active: active}">
         <router-link class="nav-link" :to="{name: 'manageRequestENEE'}">Candidatos a ENEE</router-link>
-      </a>
-      <a href="#">
+      
         <router-link class="nav-link" :to="{name: 'manageENEE'}">ENEE</router-link>
-      </a>
+        
     </div>
+    </section>
 
     <router-view></router-view>
   </div>
@@ -21,10 +24,17 @@
 export default {
   data() {
     return {
-      currentUser: null
+      currentUser: null,
+      active: true
     };
   },
-  methods: {},
+  methods: {
+    toggleNav(){
+      this.active = !this.active;
+      console.log(this.active);
+      
+    }
+  },
   created() {},
   computed: {
     user: function() {

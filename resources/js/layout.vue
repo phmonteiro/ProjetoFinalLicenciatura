@@ -13,7 +13,8 @@
       </div>
     </div>
     <nav-bar v-if="user!=null"></nav-bar>
-    <router-view></router-view>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -36,7 +37,10 @@ export default {
         //this.$store.languagePref = "EN";
         this.$store.commit("setLang", "pt");
         this.language = "en";
-      }
+      }      
+    },
+    toggleNav () {
+      this.$emit('toggleNav')
     }
   },
   computed: {

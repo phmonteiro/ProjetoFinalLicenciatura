@@ -29,3 +29,9 @@ export default {
   }
 };
 </script>
+<style>
+  .navbar-nav{
+    text-align: right!important;
+  
+}
+</style>

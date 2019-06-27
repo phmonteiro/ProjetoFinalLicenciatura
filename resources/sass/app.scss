@@ -7,6 +7,44 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+// @media only screen and (max-width: 767px) {
+//   #btn-menu{
+//     top: 160px!important;
+//   }
+//   #sidebar-menu .sidenav.active{
+//     top: 190px!important;
+//   }
+// }
+
+
+#btn-menu{
+  position: fixed;
+  top: 82px;
+  left: 10px;
+  color: black;
+}
+#sidebar-menu .nav-link{
+  padding: 10px;
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: white;
+}
+#sidebar-menu .sidenav {
+  width: 190px;
+  position: fixed;
+  z-index: 1;
+  top: 110px!important;
+  left: 10px;
+  background: #6c757d;
+  overflow-x: hidden;
+  padding: 8px 0;
+  display: none;
+}
+
+#sidebar-menu .sidenav.active {
+  display: block;
+  padding: 0px;
+}
 
 .navbar-laravel {
   background-color: #fff;

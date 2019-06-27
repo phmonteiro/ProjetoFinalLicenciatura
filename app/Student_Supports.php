@@ -14,3 +14,4 @@ class Student_Supports extends Model
         return $this->belongsTo('App\Supports', 'support_value',  'value');
     }
 }
+

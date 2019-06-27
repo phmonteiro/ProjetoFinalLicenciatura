@@ -5,20 +5,21 @@
       <h3>Sou dos servicos</h3>
     </div>
 
-    <div class="sidenav">
-      <a href="#">
+    <section id="sidebar-menu">
+        <a href="#" id="btn-menu" @click.prevent="toggleNav()">
+          <font-awesome-icon icon="bars" size="lg"/>
+        </a>
+        <div class="sidenav" :class="{ active: active}">
         <router-link class="nav-link" :to="{name: 'meetings'}">Pedidos reuniao</router-link>
-      </a>
-      <a href="#">
+        
         <router-link class="nav-link" :to="{name: 'eneeList'}">Lista Enee</router-link>
-      </a>
-      <a href="#">
+        
         <router-link class="nav-link" :to="{name: 'eneeOpinion'}">Parecer ENEE</router-link>
-      </a>
-      <a href="#" v-if="user.type == 'SA'">
+        
         <router-link class="nav-link" :to="{name: 'eneeAdd'}">Adicionar Estudante</router-link>
-      </a>
+        
     </div>
+    </section>
     <router-view></router-view>
   </div>
 </template>
@@ -26,9 +27,17 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      active: true
+    };
   },
-  methods: {},
+  methods: {
+    toggleNav(){
+      this.active = !this.active;
+      console.log(this.active);
+      
+    }
+  },
   computed: {
     user: function() {
       return this.$store.state.user;
