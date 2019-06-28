@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="container pt-3">
-            <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
-            <h3>Sou dos servicos</h3>
-        </div>
+  <div>
+    <div class="container pt-3">
+      <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
+      <h3>Sou dos servicos</h3>
+    </div>
 
     <section id="sidebar-menu">
       <a href="#" id="btn-menu" @click.prevent="toggleNav()">
@@ -26,24 +26,10 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                active: true
-            };
-        },
-        methods: {
-            toggleNav() {
-                this.active = !this.active;
-                console.log(this.active);
-
-            }
-        },
-        computed: {
-            user: function () {
-                return this.$store.state.user;
-            }
-        }
+export default {
+  data() {
+    return {
+      active: true
     };
   },
   methods: {

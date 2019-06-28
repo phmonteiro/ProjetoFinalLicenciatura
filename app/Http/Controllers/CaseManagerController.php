@@ -9,14 +9,9 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\EneeDiagnosticResource;
-
-
-
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
 use Chumper\Zipper\Zipper;
-
 use App\User;
 use App\CaseManager;
 use App\Contact;
@@ -26,6 +21,8 @@ use App\EneeDiagnostic;
 use App\Contacts_Files;
 use Illuminate\Support\Arr;
 use App\Nee;
+use App\Schedule;
+use Illuminate\Support\Facades\Auth;
 
 class CaseManagerController extends Controller
 {
@@ -218,6 +215,27 @@ class CaseManagerController extends Controller
 
     public function addEvent(Request $request)
     {
-        dd($request);
+        $dados = $request->validate([
+            'title' => 'required|string',
+            'startDate' => 'required|date',
+            'timeStart' => 'required',
+            'endDate' => '',
+            'timeEnd' => '',
+        ]);
+
+        $event = new Schedule();
+        $event->email = Auth::user()->email;
+        $event->title = $dados['title'];
+        $event->startDate = $dados['startDate'];
+        $event->timeStart = $dados['timeStart'];
+        if ($dados['endDate']) {
+            $event->endDate = $dados['endDate'];
+        }
+        if ($dados['timeEnd']) {
+            $event->endDate = $dados['endDate'];
+        }
+        $event->save();
+
+        return response()->json($event, 201);
     }
 }

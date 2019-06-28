@@ -76,24 +76,15 @@
               aria-label="hora"
               aria-describedby="basic-addon1"
             >
-            <label>Todo o dia</label>
-            <input v-model="event.allDay" type="checkbox" id="exampleCheck1">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button
-              type="submit"
-              class="btn btn-primary"
+            <b-button
+              variant="success"
+              v-on:click.prevent="saveEvent()"
               data-dismiss="modal"
-              @clik.prevent="saveEvent"
-            >Gravar</button>
+            >Guardar</b-button>
           </div>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            data-dismiss="modal"
-            @clik.prevent="saveEvent"
-          >Gravar</button>
         </div>
       </div>
     </div>
@@ -122,23 +113,11 @@ export default {
         startDate: null,
         timeStart: null,
         endDate: null,
-        timeEnd: null,
-        allDay: null
+        timeEnd: null
       },
-      calendarPlugins: [
-        // plugins must be defined in the JS
-        dayGridPlugin,
-        timeGridPlugin,
-        interactionPlugin // needed for dateClick
-      ],
+      calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       calendarWeekends: true,
-      calendarEvents: [
-        {
-          title: "Rúben Lopes",
-          start: "2019-06-30 10:00",
-          allDay: true
-        }
-      ]
+      calendarEvents: []
     };
   },
   methods: {
