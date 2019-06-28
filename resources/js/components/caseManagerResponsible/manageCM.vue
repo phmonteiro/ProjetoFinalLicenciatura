@@ -83,11 +83,6 @@ export default {
           sortable: true
         },
         {
-          key: "loginExpirationDate",
-          label: "Data expiração login",
-          sortable: true
-        },
-        {
           key: "actions",
           label: "Ações"
         }
