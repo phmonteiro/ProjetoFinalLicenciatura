@@ -291,11 +291,8 @@ class StudentController extends Controller
         $residence = ZipCode::where('art_desig', $residence)->where('dsc_pos', $area)->first();
         return response()->json(new ZipCodeResource($residence), 201);
     }
-    public function myMeetings($id)
-    {
-        $user = User::findOrFail($id);
-        return MeetingResource::collection(Meeting::where('email', $user->email)->Orderby('date')->paginate(10));
-    }
+
+    
 
     public function myMeetingsStudent()
     {
