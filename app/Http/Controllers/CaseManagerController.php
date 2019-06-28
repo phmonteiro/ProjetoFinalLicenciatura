@@ -9,6 +9,9 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\EneeDiagnosticResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Chumper\Zipper\Zipper;
@@ -43,6 +46,14 @@ class CaseManagerController extends Controller
         $plan->save();
 
         return response()->json(new EneeDiagnosticResource($plan), 201);
+    }
+
+    public function myMeetings()
+    {
+        $user = Auth::user();
+        $students = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
+        $meetings = DB::table('meetings')->whereIn('email', $students)->paginate(10);
+        return response()->json($meetings, 200);
     }
 
     public function updatePlan($id, Request $request)

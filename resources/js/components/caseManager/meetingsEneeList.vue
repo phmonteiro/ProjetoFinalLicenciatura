@@ -45,31 +45,31 @@
                   </b-col>
                 </b-row>
 
-                <b-row class="mb-2">
-                  <b-col class="text">
-                    <b>Local:</b>
-                    {{row.item.place}}
-                  </b-col>
-                </b-row>
-                <b-row class="mb-2">
-                  <b-col class="text">
-                    <b>Comentario:</b>
-                    {{row.item.comment}}
-                  </b-col>
-                </b-row>
-                <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
-              </b-card>
-            </template>
-          </b-table>
-          <nav aria-label="Page navigation" v-if="meetings">
-            <ul class="pagination">
-              <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="getcaseManagers(pagination.prev_page_url)"
-                >Anterior</a>
-              </li>
+            <b-row class="mb-2">
+              <b-col class="text">
+                <b>Local:</b>
+                {{row.item.place}}
+              </b-col>
+            </b-row>
+            <b-row class="mb-2">
+              <b-col class="text">
+                <b>Comentario:</b>
+                {{row.item.comment}}
+              </b-col>
+            </b-row>
+            <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
+          </b-card>
+        </template>
+      </b-table>
+      <nav aria-label="Page navigation" v-if="meetings">
+        <ul class="pagination">
+          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="getMeetingsEnee(pagination.prev_page_url)"
+            >Anterior</a>
+          </li>
 
               <li class="page-item disabled">
                 <a class="page-link text-dark" href="#">
@@ -78,18 +78,16 @@
                 </a>
               </li>
 
-              <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="getcaseManagers(pagination.next_page_url)"
-                >Próximo</a>
-              </li>
-            </ul>
-          </nav>
-        </b-col>
-      </b-row>
-    </b-container>
+          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="getMeetingsEnee(pagination.next_page_url)"
+            >Próximo</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -138,23 +136,26 @@ export default {
     };
   },
   methods: {
-    getMeetingsEnee() {
+    getMeetingsEnee(page_url) {
+      let pg = this;
+      page_url = page_url || "api/getMyMeetings?page=1";
       axios
-        .get("api/getMyMeetings/" + this.user.id)
+        .get(page_url)
         .then(response => {
           this.meetings = response.data.data;
           this.loading = false;
+          pg.makePagination(response.data);
         })
         .catch(error => {
           console.log(error);
         });
     },
-    makePagination(meta, links) {
+    makePagination(data) {
       let pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
+        current_page: data.current_page,
+        last_page: data.last_page,
+        next_page_url: data.next_page_url,
+        prev_page_url: data.prev_page_url
       };
       this.pagination = pagination;
     },
