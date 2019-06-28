@@ -20,7 +20,7 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <div class="container">
+    <b-container>
       <h2>Lista de candidatos a ENEE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template slot="enee" slot-scope="row">
@@ -69,7 +69,7 @@
           </li>
         </ul>
       </nav>
-    </div>
+    </b-container>
   </div>
 </template>
 

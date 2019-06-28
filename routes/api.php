@@ -97,4 +97,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getEneePlan/{id}', 'CaseManagerController@getEneePlan');
     Route::post('updatePlan/{id}', 'CaseManagerController@updatePlan');
     Route::post('setPlan', 'CaseManagerController@setPlan');
+    Route::post('addEvent', 'CaseManagerController@addEvent');
 });

@@ -215,4 +215,9 @@ class CaseManagerController extends Controller
             return $values;
         }
     }
+
+    public function addEvent(Request $request)
+    {
+        dd($request);
+    }
 }

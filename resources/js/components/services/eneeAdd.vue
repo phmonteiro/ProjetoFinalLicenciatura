@@ -18,7 +18,6 @@
                     min="1"
                     max="999999999"
                     v-model="student.number"
-                    disabled
                   >
                 </div>
                 <div class="col">
@@ -29,7 +28,6 @@
                     id="student-name"
                     name="student-name"
                     v-model="student.name"
-                    disabled
                   >
                 </div>
                 <div class="col">
@@ -82,7 +80,6 @@
                     placeholder="email@mail.com"
                     id="email"
                     v-model="student.email"
-                    disabled
                   >
                 </div>
                 <div class="col-4">

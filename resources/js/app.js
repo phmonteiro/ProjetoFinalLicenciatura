@@ -12,21 +12,23 @@ import {VueSpinners} from '@saeris/vue-spinners';
 import DatePicker from 'vue2-datepicker';
 import TimeSelector from 'vue-timeselector';
 import VeeValidate from 'vee-validate';
-
+import VueApexCharts from 'vue-apexcharts';
+import feather from 'vue-icon';
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-
-import VueApexCharts from 'vue-apexcharts';
 library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
+import fullCalendar from 'vue-fullcalendar';
 
+Vue.component('full-calendar', fullCalendar);
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
+Vue.use(feather, 'v-icon');
 Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);

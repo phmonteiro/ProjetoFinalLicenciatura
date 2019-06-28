@@ -252,6 +252,14 @@ const routes = [{
         middlewareAuth: true,
       },
     },
+    {
+      path: '/caseManager/calendar',
+      name: 'calendar',
+      component: require('./components/caseManager/calendar.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
   ],
 },
 ];

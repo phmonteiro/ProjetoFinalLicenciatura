@@ -6,19 +6,20 @@
     </div>
 
     <section id="sidebar-menu">
-        <a href="#" id="btn-menu" @click.prevent="toggleNav()">
-          <font-awesome-icon icon="bars" size="lg"/>
-        </a>
-        <div class="sidenav" :class="{ active: active}">
-        <router-link class="nav-link" :to="{name: 'meetings'}">Pedidos reuniao</router-link>
-        
+      <a href="#" id="btn-menu" @click.prevent="toggleNav()">
+        <font-awesome-icon icon="bars" size="lg"/>
+      </a>
+      <div class="sidenav" :class="{ active: active}">
         <router-link class="nav-link" :to="{name: 'eneeList'}">Lista Enee</router-link>
-        
+
         <router-link class="nav-link" :to="{name: 'eneeOpinion'}">Parecer ENEE</router-link>
-        
-        <router-link class="nav-link" :to="{name: 'eneeAdd'}">Adicionar Estudante</router-link>
-        
-    </div>
+
+        <router-link
+          v-if="user.type == 'SA'"
+          class="nav-link"
+          :to="{name: 'eneeAdd'}"
+        >Adicionar Estudante</router-link>
+      </div>
     </section>
     <router-view></router-view>
   </div>
@@ -32,10 +33,9 @@ export default {
     };
   },
   methods: {
-    toggleNav(){
+    toggleNav() {
       this.active = !this.active;
       console.log(this.active);
-      
     }
   },
   computed: {
