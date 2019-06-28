@@ -61,6 +61,8 @@
           </b-card>
         </template>
       </b-table>
+        </b-col>
+      </b-row>
       <nav aria-label="Page navigation" v-if="meetings">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -87,7 +89,7 @@
           </li>
         </ul>
       </nav>
-    </div>
+    </b-container>
   </div>
 </template>
 

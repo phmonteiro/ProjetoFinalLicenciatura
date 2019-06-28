@@ -329,13 +329,13 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $dados = $request->validate([
-            'name' => 'required|string',
+            'requestedSupport' => 'required',
             'reason' => 'required|string'
         ]);
 
         $service = new Service();
         $service->email = $user->email;
-        $service->name = $dados['name'];
+        $service->support = $dados['requestedSupport'];
         $service->reason = $dados['reason'];
 
         $history = new History();

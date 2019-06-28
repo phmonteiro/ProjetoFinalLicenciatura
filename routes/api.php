@@ -71,7 +71,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
     Route::post('updateEnee', 'DirectorController@updateEnee');
     Route::get('medicalReport/download/{id}', 'DirectorController@downloadStudentDocuments');
-
+    Route::get('getSupportRequests', 'DirectorController@supportRequests');
+    Route::post('addStudentSupport/{id}', 'DirectorController@addStudentSupport');
+    Route::post('rejectStudentSupport/{id}', 'DirectorController@rejectStudentSupport');
 
     //Coordinator
     Route::get('getRequests', 'CoordinatorController@requests');

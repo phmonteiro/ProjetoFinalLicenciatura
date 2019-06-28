@@ -13,6 +13,8 @@
         <router-link class="nav-link" :to="{name: 'manageRequestENEE'}">Candidatos a ENEE</router-link>
       
         <router-link class="nav-link" :to="{name: 'manageENEE'}">ENEE</router-link>
+
+        <router-link class="nav-link" :to="{name: 'supportRequests'}">Pedidos de Apoio</router-link>
         
     </div>
     </section>
