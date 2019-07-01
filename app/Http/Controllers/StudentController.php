@@ -28,6 +28,7 @@ use App\Subject;
 use App\Http\Resources\SubjectResource;
 use PHPUnit\Framework\Constraint\IsEqual;
 use App\Http\Resources\NeeResource;
+use App\Http\Resources\SupportResource;
 use App\Teacher;
 use Illuminate\Support\Facades\DB;
 
@@ -146,11 +147,12 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $supports = Supports::all();
-        $idSupports = Student_Supports::Where('email', $user->email)->pluck('support_value');
-        $studentSupports = $supports->whereIn('value', $idSupports);
 
+        $idSupports = Student_Supports::Where('email', $user->email)->pluck('support_value')->toArray();
+        
+        $studentSupports = $supports->whereIn('value', $idSupports)->all();
 
-        return response()->json($studentSupports);
+        return response()->json(new SupportResource($studentSupports));
     }
 
     public function subscription(Request $request)
@@ -329,13 +331,13 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $dados = $request->validate([
-            'name' => 'required|string',
+            'requestedSupport' => 'required',
             'reason' => 'required|string'
         ]);
 
         $service = new Service();
         $service->email = $user->email;
-        $service->name = $dados['name'];
+        $service->support = $dados['requestedSupport'];
         $service->reason = $dados['reason'];
 
         $history = new History();

@@ -45,31 +45,33 @@
                   </b-col>
                 </b-row>
 
-                <b-row class="mb-2">
-                  <b-col class="text">
-                    <b>Local:</b>
-                    {{row.item.place}}
-                  </b-col>
-                </b-row>
-                <b-row class="mb-2">
-                  <b-col class="text">
-                    <b>Comentario:</b>
-                    {{row.item.comment}}
-                  </b-col>
-                </b-row>
-                <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
-              </b-card>
-            </template>
-          </b-table>
-          <nav aria-label="Page navigation" v-if="meetings">
-            <ul class="pagination">
-              <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="getMeetingsEnee(pagination.prev_page_url)"
-                >Anterior</a>
-              </li>
+            <b-row class="mb-2">
+              <b-col class="text">
+                <b>Local:</b>
+                {{row.item.place}}
+              </b-col>
+            </b-row>
+            <b-row class="mb-2">
+              <b-col class="text">
+                <b>Comentario:</b>
+                {{row.item.comment}}
+              </b-col>
+            </b-row>
+            <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
+          </b-card>
+        </template>
+      </b-table>
+        </b-col>
+      </b-row>
+      <nav aria-label="Page navigation" v-if="meetings">
+        <ul class="pagination">
+          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="getMeetingsEnee(pagination.prev_page_url)"
+            >Anterior</a>
+          </li>
 
               <li class="page-item disabled">
                 <a class="page-link text-dark" href="#">
@@ -78,17 +80,15 @@
                 </a>
               </li>
 
-              <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="getMeetingsEnee(pagination.next_page_url)"
-                >Próximo</a>
-              </li>
-            </ul>
-          </nav>
-        </b-col>
-      </b-row>
+          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="getMeetingsEnee(pagination.next_page_url)"
+            >Próximo</a>
+          </li>
+        </ul>
+      </nav>
     </b-container>
   </div>
 </template>

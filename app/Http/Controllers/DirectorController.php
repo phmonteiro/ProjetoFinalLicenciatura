@@ -8,6 +8,8 @@ use App\CaseManager;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\CaseManagerResponsibleResource;
 use App\Tutor;
+use App\Service;
+use App\Supports;
 use App\Student_Supports;
 use App\MedicalFile;
 use Illuminate\Support\Facades\Storage;
@@ -16,9 +18,52 @@ use Chumper\Zipper\Zipper;
 use Carbon\Carbon;
 use App\ServiceRequest;
 use App\History;
+use Illuminate\Support\Facades\DB;
 
 class DirectorController extends Controller
-{
+{    
+    public function addStudentSupport($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->aprovedDate = Carbon::now();
+        $service->save();
+
+        $studentSupport = new Student_Supports();
+        $studentSupport->email = $service->email;
+        $studentSupport->support_value = $service->support;
+        $studentSupport->save();
+
+        $history = new History();
+        $apoio = Supports::findOrFail($service->support);
+        $history->studentEmail = $service->email;
+        $history->description = "O diretor atribui o apoio " . $apoio->text;
+        $history->date = Carbon::now();
+        $history->save();
+
+        return response()->json($studentSupport, 200);
+    }
+
+    public function rejectStudentSupport($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->rejectedDate = Carbon::now();
+        $service->save();
+
+        return response()->json($service, 200);
+    }
+
+    public function supportRequests()
+    {
+        $requests = DB::table('services')
+            ->join('users', 'users.email', '=', 'services.email')
+            ->join('supports', 'value', '=', 'services.support')
+            ->whereNull('services.aprovedDate')
+            ->whereNull('services.rejectedDate')
+            ->select('services.*', 'users.name', 'supports.text')
+            ->paginate(10);
+        return response()->json($requests, 200);
+    }
+
     public function approvalRequest(Request $request, $id)
     {
         $user = User::findOrFail($id);

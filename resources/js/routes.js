@@ -132,6 +132,15 @@ const routes = [{
       middlewareAuth: true,
     },
   },
+  {
+    path: '/director/supportRequests',
+    name: 'supportRequests',
+    component: require('./components/director/supportRequests.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  }
+  
   ],
 },
 {
