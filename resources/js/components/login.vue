@@ -12,7 +12,7 @@
                   alt="Logotipo do Instituto Politécnico de Leiria"
                   src="/imagens/logo-ipl.png"
                   tabindex="-1"
-                >
+                />
               </div>
             </div>
           </div>
@@ -20,9 +20,8 @@
           <div class="row">
             <div class="col">
               <div class="titulo justify-content-center">
-                <p>Plataforma</p>
-                <p>100%IN</p>
-                <p>2018.2019</p>
+                <h1>100%IN</h1>
+                <h2>2018.2019</h2>
               </div>
             </div>
           </div>
@@ -40,8 +39,9 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <span class="numero">{{ $t('nome_utilizador') }}</span>
+                  <span aria-label="Label Emal" class="numero">{{ $t('nome_utilizador') }}</span>
                   <input
+                    aria-label="Email"
                     v-validate="{ required: true, email:true }"
                     id="email"
                     v-model="user.email"
@@ -51,7 +51,7 @@
                     placeholder="email@my.ipleiria.pt"
                     required
                     autofocus
-                  >
+                  />
                   <i v-show="errors.has('email')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('email')"
@@ -64,8 +64,9 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <span class="senha">{{ $t('palavra_pass') }}</span>
+                  <span aria-label="Label Password" class="senha">{{ $t('palavra_pass') }}</span>
                   <input
+                    aria-label="Password"
                     v-validate="'required'"
                     id="password"
                     v-model="user.password"
@@ -73,7 +74,7 @@
                     class="form-control"
                     name="password"
                     required
-                  >
+                  />
                   <i v-show="errors.has('password')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('password')"

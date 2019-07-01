@@ -1,29 +1,27 @@
 <template>
   <div v-if="student!=null">
     <div v-if="(student.enee!='awaiting' && student.enee!='reproved')">
-
       <section id="sidebar-menu">
         <a href="#" id="btn-menu" @click.prevent="toggleNav()">
-          <font-awesome-icon icon="bars" size="lg"/>
+          <font-awesome-icon icon="bars" size="lg" />
         </a>
         <div class="sidenav" :class="{ active: active}">
           <router-link class="nav-link" :to="{name: 'contact'}">{{ $t('contatos') }}</router-link>
 
           <router-link class="nav-link" :to="{name: 'myMeetings'}">{{ $t('reuniões') }}</router-link>
-          
+
           <router-link class="nav-link" :to="{name: 'setMeeting'}">{{ $t('agendar_reunião') }}</router-link>
-          
+
           <router-link class="nav-link" :to="{name: 'usedServices'}">{{ $t('apoios_usufruidos') }}</router-link>
-          
+
           <router-link class="nav-link" :to="{name: 'serviceRequest'}">{{ $t('pedidos_apoios') }}</router-link>
-          
+
           <router-link class="nav-link" :to="{name: 'editProfile'}">{{ $t('editar_perfil') }}</router-link>
-          
+
           <router-link class="nav-link" :to="{name: 'supportHours'}">{{ $t('acompanhamento') }}</router-link>
-          
-      </div>
+        </div>
       </section>
-      
+
       <router-view></router-view>
     </div>
     <div v-else>
@@ -41,10 +39,9 @@ export default {
     };
   },
   methods: {
-    toggleNav(){
+    toggleNav() {
       this.active = !this.active;
       console.log(this.active);
-      
     }
   },
   computed: {
@@ -56,7 +53,6 @@ export default {
 </script>
 
 <style>
-
 .main {
   margin-left: 140px; /* Same width as the sidebar + left position in px */
   padding: 0px;

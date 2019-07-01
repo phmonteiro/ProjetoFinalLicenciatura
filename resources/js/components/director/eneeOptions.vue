@@ -10,7 +10,7 @@
         name="name"
         id="inputName"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -22,19 +22,13 @@
         name="coordinatorAproval"
         id="inputcoordinatorAproval"
         disabled
-      >
+      />
     </div>
     <div class="form-group">
       <label for="inputNee">Necessidades educativas especiais</label>
-      <input
-        v-for="aux in nee"
-        type="text"
-        class="form-control"
-        v-model="aux.name"
-        name="nee"
-        id="nee"
-        disabled
-      >
+      <div v-for="aux in nee">
+        <l>{{aux.name}}</l>
+      </div>
     </div>
 
     <div class="form-group" v-if="user.functionalAnalysis!=null">
@@ -46,7 +40,7 @@
         name="functionalAnalysis"
         id="functionalAnalysis"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -72,13 +66,16 @@
 
       <div class="form-group">
         <h4 for="servicesApproval">Opinião servicos:</h4>
-        <p v-if="user.servicesApproval=='approved'">
-          <b>Aprovado</b>
-        </p>
-        <p v-if="user.servicesApproval=='denied'">
-          <b>Rejeitado</b>
-        </p>
-        <p v-if="user.servicesApproval==null || user.servicesApproval=='requested' ">
+        <div v-if="user.servicesApproval=='denied' || user.servicesApproval=='approved'">
+          <div class="container" v-for="aux in service">
+            <div class="row">
+              <div class="col-sm-2">{{aux.name}}</div>
+              <div class="col-sm-2">{{aux.approval}}</div>
+              <div class="col-sm-8"></div>
+            </div>
+          </div>
+        </div>
+        <p v-if="user.servicesApproval==null || user.servicesApproval=='requested'">
           <b>Ainda sem parecer</b>
         </p>
         <div v-if="user.servicesApproval==null">
@@ -104,7 +101,7 @@
         <b-form-select id="input-3" v-model="form.duration" :options="durationOpts" required></b-form-select>
         <div v-if="form.duration=='Temporária'">
           <label for="date">Data de fim de estatuto ENEE</label>
-          <input class="form-control" type="date" value id="date" name="date" v-model="data.date">
+          <input class="form-control" type="date" value id="date" name="date" v-model="data.date" />
         </div>
       </b-form-group>
     </div>
@@ -122,7 +119,7 @@
         name="tutor"
         id="tutor"
         placeholder="professor.tutor@my.ipleiria.pt"
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -145,15 +142,15 @@
           </div>
           <div class="modal-body">
             <div>
-              <ClipLoader sizeUnit="px" class="loading" v-if="!teachers" :size="15"/>
+              <ClipLoader sizeUnit="px" class="loading" v-if="!teachers" :size="15" />
             </div>
             <div v-if="teachers">
               <div v-for="(teacher, index) in teachers" :key="index">
                 <div class="switch-sex">
-                  <input type="radio" :value="teachers[index].email" v-model="aux[index]">
+                  <input type="radio" :value="teachers[index].email" v-model="aux[index]" />
                   <label>
                     Professor {{teachers[index].name}}
-                    <br>
+                    <br />
                     Disciplina: {{teachers[index].subject}}
                   </label>
                 </div>
@@ -181,6 +178,7 @@ export default {
   props: ["user", "studentSupports", "nee", "teachers"],
   data: function() {
     return {
+      service: null,
       aux: [],
       data: {
         selected: null,
@@ -271,10 +269,22 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    getServicesEvaluation() {
+      axios
+        .get("api/getServicesEvaluation/" + this.user.id)
+        .then(response => {
+          this.service = response.data;
+          console.log("ola" + this.service);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   created() {
     this.getAllSupports();
+    this.getServicesEvaluation();
   },
 
   computed: {

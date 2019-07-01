@@ -10,6 +10,7 @@
               v-validate="'required'"
               name="service"
               class="mb-3"
+              aria-label="Escolher serviço"
             >
               <template slot="first">
                 <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
@@ -23,8 +24,9 @@
             >{{ errors.first('service') }}</span>
           </div>
           <div class="form-group">
-            <label for="comment">{{ $t('comentário') }}</label>
+            <span for="comment">{{ $t('comentário') }}</span>
             <textarea
+              aria-label="Texto para escrever o comentário"
               v-validate="'required'"
               class="form-control"
               id="decision"

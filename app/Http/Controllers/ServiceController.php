@@ -21,6 +21,7 @@ use App\Nee;
 use Illuminate\Support\Facades\Auth;
 use App\ServiceRequest;
 use Illuminate\Support\Facades\DB;
+use App\Schedule;
 
 class ServiceController extends Controller
 {
@@ -229,6 +230,8 @@ class ServiceController extends Controller
         $user->servicesApproval = 'approved';
         $user->save();
 
+        $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->get();
+        $service->approval  = 'Aprovado';
         $history = new History();
         $history->studentEmail = $user->email;
         $history->description = "O " . Auth::user()->type . ' deu o parecer de aprovado para o estudante';
@@ -246,6 +249,9 @@ class ServiceController extends Controller
 
         $user->servicesApproval = 'denied';
         $user->save();
+
+        $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->get();
+        $service->approval  = 'Rejeitado';
 
         $history = new History();
         $history->studentEmail = $user->email;
@@ -387,5 +393,11 @@ class ServiceController extends Controller
         if (file_exists($filetopath)) {
             return response()->download($filetopath, $zipFileName, $headers);
         }
+    }
+    public function getServicesEvaluation($id)
+    {
+        $user = User::findOrFail($id);
+        $schedule = ServiceRequest::where('studentEmail', $user->email)->get();
+        return response()->json($schedule, 201);
     }
 }

@@ -14,10 +14,14 @@ import TimeSelector from 'vue-timeselector';
 import VeeValidate from 'vee-validate';
 import VueApexCharts from 'vue-apexcharts';
 import feather from 'vue-icon';
+import M16yPlugin from 'vue-accessibility-widget';
+
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import 'material-design-icons-iconfont/dist/material-design-icons.css'; // Ensure you are using css-loader
+
 
 library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
@@ -35,6 +39,7 @@ Vue.use(VueSpinners);
 Vue.use(DatePicker);
 Vue.use(VeeValidate, {fieldsBagName: 'formFields'});
 Vue.use(TimeSelector);
+Vue.use(M16yPlugin);
 window.Event = new Vue();
 
 Vue.component('vue-layout', require('./layout.vue').default);

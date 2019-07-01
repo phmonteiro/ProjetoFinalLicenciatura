@@ -5,7 +5,7 @@
         <b-col></b-col>
         <b-col>
           <div class="loader">
-            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
           </div>
         </b-col>
         <b-col></b-col>
@@ -20,12 +20,16 @@
               <template slot="actions" slot-scope="row">
                 <b-row class="text-center">
                   <b-col md="4" sm="12">
-                    <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
+                    <b-form-checkbox
+                      aria-label="Mostrar detalhes"
+                      v-model="row.detailsShowing"
+                      @change="row.toggleDetails"
+                    ></b-form-checkbox>
                     <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                      <font-awesome-icon icon="eye"/>
+                      <font-awesome-icon icon="eye" />
                     </div>
                     <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                      <font-awesome-icon icon="eye-slash"/>
+                      <font-awesome-icon icon="eye-slash" />
                     </div>
                   </b-col>
                 </b-row>

@@ -11,7 +11,6 @@ use App\Http\Resources\MeetingResource;
 use App\Http\Resources\EneeDiagnosticResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Chumper\Zipper\Zipper;
@@ -25,7 +24,6 @@ use App\Contacts_Files;
 use Illuminate\Support\Arr;
 use App\Nee;
 use App\Schedule;
-use Illuminate\Support\Facades\Auth;
 
 class CaseManagerController extends Controller
 {
@@ -52,7 +50,7 @@ class CaseManagerController extends Controller
     {
         $user = Auth::user();
         $students = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
-        $meetings = DB::table('meetings')->whereIn('email', $students)->paginate(10);
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->paginate(10);
         return response()->json($meetings, 200);
     }
 
@@ -229,24 +227,24 @@ class CaseManagerController extends Controller
         $dados = $request->validate([
             'title' => 'required|string',
             'startDate' => 'required|date',
-            'timeStart' => 'required',
-            'endDate' => '',
-            'timeEnd' => '',
         ]);
 
         $event = new Schedule();
         $event->email = Auth::user()->email;
         $event->title = $dados['title'];
         $event->startDate = $dados['startDate'];
-        $event->timeStart = $dados['timeStart'];
-        if ($dados['endDate']) {
-            $event->endDate = $dados['endDate'];
-        }
-        if ($dados['timeEnd']) {
-            $event->endDate = $dados['endDate'];
-        }
         $event->save();
 
         return response()->json($event, 201);
+    }
+
+    public function getEvent()
+    {
+        $user = Auth::user();
+        $students = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('date', '!=', 'NULL')->where('service', 'Gestor-Caso')->get();
+        $schedule = Schedule::where('email', $user->email)->get();
+
+        return response()->json([$meetings, $schedule], 200);
     }
 }

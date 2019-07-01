@@ -17,7 +17,7 @@
                   name="student-name"
                   v-model="user.name"
                   disabled
-                >
+                />
               </div>
             </div>
             <div class="row">
@@ -30,20 +30,21 @@
                   id="email"
                   v-model="user.email"
                   disabled
-                >
+                />
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <label for="email">{{ $t('email_secundário') }}</label>
+                <label for="secondEmail">{{ $t('email_secundário') }}</label>
                 <input
+                  aria-label="Segundo Email"
                   v-validate="{ email:true }"
                   class="form-control"
-                  type="email"
-                  name="email"
-                  id="email"
+                  type="secondEmail"
+                  name="secondEmail"
+                  id="secondEmail"
                   v-model="user.secondEmail"
-                >
+                />
                 <i v-show="errors.has('email')" class="fa fa-warning"></i>
                 <span
                   v-show="errors.has('email')"
@@ -54,7 +55,7 @@
           </div>
           <div class="dropdown-divider"></div>
 
-          <h5>{{$t('identificação_responsável')}}</h5>
+          <h3>{{$t('identificação_responsável')}}</h3>
           <div class="container-full-width">
             <div class="row">
               <div class="col">
@@ -66,7 +67,7 @@
                   id="responsibleName"
                   name="responsibleName"
                   v-model="user.responsibleName"
-                >
+                />
                 <i v-show="errors.has('responsibleName')" class="fa fa-warning"></i>
                 <span
                   v-show="errors.has('responsibleName')"
@@ -83,7 +84,7 @@
                   min="1"
                   max="9999999999"
                   v-model="user.responsiblePhone"
-                >
+                />
                 <i v-show="errors.has('responsiblePhone')" class="fa fa-warning"></i>
                 <span
                   v-show="errors.has('responsiblePhone')"
@@ -99,7 +100,7 @@
                   id="responsibleKin"
                   name="responsibleKin"
                   v-model="user.responsibleKin"
-                >
+                />
                 <i v-show="errors.has('responsibleKin')" class="fa fa-warning"></i>
                 <span
                   v-show="errors.has('responsibleKin')"
@@ -115,7 +116,7 @@
                   id="responsibleEmail"
                   name="responsibleEmail"
                   v-model="user.responsibleEmail"
-                >
+                />
                 <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                 <span
                   v-show="errors.has('responsibleEmail')"
@@ -125,7 +126,7 @@
             </div>
           </div>
 
-          <h5>{{$t('contacto_emergencia')}}</h5>
+          <h3>{{$t('contacto_emergencia')}}</h3>
           <div class="container-full-width">
             <div class="row">
               <div class="col">
@@ -137,12 +138,12 @@
                   id="emergencyName"
                   name="emergencyName"
                   v-model="user.emergencyName"
-                >
-                <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                />
+                <i v-show="errors.has('emergencyName')" class="fa fa-warning"></i>
                 <span
-                  v-show="errors.has('responsibleEmail')"
+                  v-show="errors.has('emergencyName')"
                   class="help is-danger"
-                >{{ errors.first('responsibleEmail') }}</span>
+                >{{ errors.first('emergencyName') }}</span>
               </div>
               <div class="col">
                 <label for="emergencyPhone">{{$t('contacto_telefónico')}}</label>
@@ -152,12 +153,12 @@
                   name="emergencyPhone"
                   id="emergencyPhone"
                   v-model="user.emergencyPhone"
-                >
-                <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                />
+                <i v-show="errors.has('emergencyPhone')" class="fa fa-warning"></i>
                 <span
-                  v-show="errors.has('responsibleEmail')"
+                  v-show="errors.has('emergencyPhone')"
                   class="help is-danger"
-                >{{ errors.first('responsibleEmail') }}</span>
+                >{{ errors.first('emergencyPhone') }}</span>
               </div>
               <div class="col">
                 <label for="emergencyKin">{{$t('parentesco')}}</label>
@@ -168,15 +169,15 @@
                   id="emergencyKin"
                   name="emergencyKin"
                   v-model="user.emergencyKin"
-                >
-                <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                />
+                <i v-show="errors.has('emergencyKin')" class="fa fa-warning"></i>
                 <span
-                  v-show="errors.has('responsibleEmail')"
+                  v-show="errors.has('emergencyKin')"
                   class="help is-danger"
-                >{{ errors.first('responsibleEmail') }}</span>
+                >{{ errors.first('emergencyKin') }}</span>
               </div>
               <div class="col">
-                <label for="emergencYEmail">{{$t('email')}}</label>
+                <label for="emergencyEmail">{{$t('email')}}</label>
                 <input
                   v-validate="{ required: true, email:true }"
                   type="email"
@@ -184,7 +185,7 @@
                   id="emergencyEmail"
                   name="emergencyEmail"
                   v-model="user.emergencyEmail"
-                >
+                />
                 <i v-show="errors.has('emergencyEmail')" class="fa fa-warning"></i>
                 <span
                   v-show="errors.has('emergencyEmail')"

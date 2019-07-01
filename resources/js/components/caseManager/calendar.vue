@@ -1,89 +1,110 @@
 <template>
-  <div class="demo-app">
-    <FullCalendar
-      class="demo-app-calendar"
-      ref="fullCalendar"
-      defaultView="dayGridMonth"
-      :header="{
+  <div>
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
+    <div v-if="!loading" class="demo-app">
+      <FullCalendar
+        class="demo-app-calendar"
+        ref="fullCalendar"
+        defaultView="dayGridMonth"
+        :header="{
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       }"
-      :plugins="calendarPlugins"
-      :weekends="calendarWeekends"
-      :events="calendarEvents"
-    />
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#exampleModal"
-    >Adicionar evento</button>
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Evento</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        :plugins="calendarPlugins"
+        :weekends="calendarWeekends"
+        :events="calendarEvents"
+        @eventClick="handleDateClick"
+      />
+      <button
+        id="addEvent"
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#exampleModal"
+      >Adicionar evento</button>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Evento</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <label>Titulo do evento</label>
+              <input
+                v-model="event.title"
+                type="text"
+                class="form-control"
+                aria-label="titulo"
+                aria-describedby="basic-addon1"
+              >
+              <label>Data de começo</label>
+              <input
+                v-model="event.startDate"
+                type="date"
+                class="form-control"
+                aria-label="dataComeco"
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <b-button
+                variant="success"
+                v-on:click.prevent="saveEvent()"
+                data-dismiss="modal"
+              >Guardar</b-button>
+            </div>
           </div>
-          <div class="modal-body">
-            <label>Titulo do evento</label>
-            <input
-              v-model="event.title"
-              type="text"
-              class="form-control"
-              aria-label="titulo"
-              aria-describedby="basic-addon1"
-            >
-            <label>Data de começo</label>
-            <input
-              v-model="event.startDate"
-              type="date"
-              class="form-control"
-              aria-label="dataComeco"
-              aria-describedby="basic-addon1"
-            >
-            <label>Hora de começo</label>
-            <input
-              v-model="event.timeStart"
-              type="time"
-              class="form-control"
-              aria-label="hora"
-              aria-describedby="basic-addon1"
-            >
-            <label>Data de fim</label>
-            <input
-              v-model="event.endDate"
-              type="date"
-              class="form-control"
-              aria-label="dataComeco"
-              aria-describedby="basic-addon1"
-            >
-            <label>Hora de fim</label>
-            <input
-              v-model="event.timeEnd"
-              type="time"
-              class="form-control"
-              aria-label="hora"
-              aria-describedby="basic-addon1"
-            >
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <b-button
-              variant="success"
-              v-on:click.prevent="saveEvent()"
-              data-dismiss="modal"
-            >Guardar</b-button>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="eventModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="eventModalLabel"
+        aria-hidden="true"
+      >
+        <div v-if="this.currentEvent" class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="eventModalLabel">Evento</h5>
+            </div>
+            <div class="modal-body">
+              <div>
+                <label>Titulo:</label>
+                <p>{{this.currentEvent.title}}</p>
+              </div>
+              <div>
+                <label>Data:</label>
+                <p>{{this.currentEvent.start}}</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <b-button variant="success" v-on:click.prevent="dismiss()" data-dismiss="modal">Fechar</b-button>
+            </div>
           </div>
         </div>
       </div>
@@ -110,46 +131,84 @@ export default {
     return {
       event: {
         title: null,
-        startDate: null,
-        timeStart: null,
-        endDate: null,
-        timeEnd: null
+        startDate: null
       },
       calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       calendarWeekends: true,
-      calendarEvents: []
+      calendarEvents: [],
+      currentEvent: null,
+      loading: true
     };
   },
   methods: {
-    getMeetingsCaseManager() {},
-    saveEvent() {
-      console.log("oal");
-
+    getMeetingsCaseManager() {
       axios
-        .post("api/addEvent", this.event)
+        .get("api/getEvents")
         .then(response => {
-          console.log(response);
+          for (var i = 0; i < response.data.length; i++) {
+            for (var j = 0; j < response.data[i].length; j++) {
+              if (response.data[i][j].date) {
+                let event = {
+                  title: "Reunião com " + response.data[i][j].name,
+                  start: response.data[i][j].date
+                };
+                this.calendarEvents.push(event);
+              } else {
+                let event = {
+                  title: "Reunião com " + response.data[i][j].title,
+                  start: response.data[i][j].startDate
+                };
+                this.calendarEvents.push(event);
+              }
+            }
+          }
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    saveEvent() {
+      axios
+        .post("api/addEvent", this.event)
+        .then(response => {
+          console.log(response);
+          this.getMeetingsCaseManager();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    handleDateClick(arg) {
+      $("#eventModal").modal("show");
+      this.currentEvent = arg.event;
+    },
+    dismiss() {
+      this.$router.go(0);
     }
+  },
+  created() {
+    this.getMeetingsCaseManager();
   }
 };
 </script>
 
 <style>
-.demo-app {
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-.demo-app-top {
-  margin: 0 0 3em;
+.demo-app span.fc-title {
+  font-size: 10px;
+  color: white;
 }
 
 .demo-app-calendar {
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 60%;
+}
+
+#addEvent {
+  float: right;
+  position: absolute;
+  right: 5%;
+  top: 10%;
+  display: block;
 }
 </style>

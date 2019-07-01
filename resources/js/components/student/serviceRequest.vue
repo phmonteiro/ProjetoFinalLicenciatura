@@ -7,6 +7,7 @@
             <h2>{{ $t('pedido_apoio') }}</h2>
             <div class="form-group">
               <b-form-select
+                aria-label="Escolher o serviço"
                 v-validate="'required'"
                 name="service"
                 v-model="service.name"
@@ -39,6 +40,7 @@
               <label for="comment">{{ $t('motivo') }}</label>
               <textarea
                 v-validate="'required'"
+                aria-label="Razão para pedir o suporte"
                 class="form-control"
                 id="reason"
                 v-model="service.reason"

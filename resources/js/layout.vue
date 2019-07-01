@@ -3,18 +3,17 @@
     <div class="languages">
       <div v-if="language=='pt'">
         <a href="#" v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
-          <img :src="'/imagens/iconfinder_Portugal.png'" alt="Bandeira Portuguesa" tabindex="-1">
+          <img :src="'/imagens/iconfinder_Portugal.png'" alt="Bandeira Portuguesa" tabindex="-1" />
         </a>
       </div>
       <div v-else>
         <a href="#" v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
-          <img :src="'/imagens/iconfinder_UnitedKingdom.png'" alt="Bandeira Inglesa" tabindex="-1">
+          <img :src="'/imagens/iconfinder_UnitedKingdom.png'" alt="Bandeira Inglesa" tabindex="-1" />
         </a>
       </div>
     </div>
     <nav-bar v-if="user!=null"></nav-bar>
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -37,10 +36,10 @@ export default {
         //this.$store.languagePref = "EN";
         this.$store.commit("setLang", "pt");
         this.language = "en";
-      }      
+      }
     },
-    toggleNav () {
-      this.$emit('toggleNav')
+    toggleNav() {
+      this.$emit("toggleNav");
     }
   },
   computed: {
@@ -65,10 +64,15 @@ export default {
   top: 100px;
   right: 10px;
   padding: 10px;
-
-  z-index: 10000;
+  z-index: 300;
 }
 .languages img {
   width: 25px;
+  margin-right: 200px;
+  z-index: 200;
+}
+
+.navbar-light .navbar-toggler {
+  z-index: 100;
 }
 </style>
