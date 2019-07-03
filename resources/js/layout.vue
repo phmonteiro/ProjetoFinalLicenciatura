@@ -61,7 +61,7 @@ export default {
 <style>
 .languages {
   position: absolute;
-  top: 100px;
+  top: 95px;
   right: 10px;
   padding: 10px;
   z-index: 300;
@@ -74,5 +74,10 @@ export default {
 
 .navbar-light .navbar-toggler {
   z-index: 100;
+}
+@media only screen and (max-width: 991px) {
+  .languages img {
+    margin-top: 75px !important;
+  }
 }
 </style>

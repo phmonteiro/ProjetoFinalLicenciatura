@@ -32,21 +32,10 @@
 </head>
 
 <body>
-    <div id="app" v-m16y-ctrls>
-        <vue-layout></vue-layout>
+    <div id="app">
+        <vue-layout v-m16y-ctrls></vue-layout>
     </div>
 
 </body>
 
 </html>
-<style>
-    .access-ctrls-wrapper .m-access-ctrls-btn {
-        margin-top: 94px !important;
-        padding: 0px !important;
-        margin-right: 20px;
-    }
-
-    .m-access-ctrls-btn__content {
-        font-size: 10px;
-    }
-</style>

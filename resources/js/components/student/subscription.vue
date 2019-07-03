@@ -5,7 +5,7 @@
         <h2>{{$t('formulario')}}</h2>
         <div class="row">
           <div class="col-md-12 pt-4">
-            <h4>{{$t('identificação_estudante')}}</h4>
+            <h3>{{$t('identificação_estudante')}}</h3>
             <div class="form-group">
               <div class="container-full-width">
                 <div class="row">
@@ -20,7 +20,7 @@
                       max="999999999"
                       v-model="student.number"
                       disabled
-                    >
+                    />
                   </div>
                   <div class="col">
                     <label for="student-name">{{$t('nome')}}</label>
@@ -31,7 +31,7 @@
                       name="student-name"
                       v-model="student.name"
                       disabled
-                    >
+                    />
                   </div>
                   <div class="col">
                     <label for="phone-number">{{$t('contacto_telefónico')}}</label>
@@ -44,7 +44,7 @@
                       min="1"
                       max="999999999"
                       v-model="student.phoneNumber"
-                    >
+                    />
                     <i v-show="errors.has('phone-number')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('phone-number')"
@@ -62,7 +62,7 @@
                       name="birth-date"
                       placeholder="dd/mm/yyyy"
                       v-model="student.birthDate"
-                    >
+                    />
                     <i v-show="errors.has('birth-date')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('birth-date')"
@@ -84,14 +84,15 @@
                       id="email"
                       v-model="student.email"
                       disabled
-                    >
+                    />
                   </div>
                   <div class="col-4">
                     <label for="gender">{{$t('género')}}</label>
                     <select
                       v-validate="'required' "
                       class="custom-select"
-                      name="identification"
+                      name="gender"
+                      id="gender"
                       single
                       v-model="student.gender"
                     >
@@ -99,11 +100,11 @@
                       <option value="feminino">{{$t('feminino')}}</option>
                       <option value="outro">{{$t('outro')}}</option>
                     </select>
-                    <i v-show="errors.has('identification')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('gender')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('identification')"
+                      v-show="errors.has('gender')"
                       class="help is-danger"
-                    >{{ errors.first('identification') }}</span>
+                    >{{ errors.first('gender') }}</span>
                   </div>
                 </div>
               </div>
@@ -130,7 +131,7 @@
                       name="zipCode"
                       placeholder="1234-567"
                       v-model="student.zipCode"
-                    >
+                    />
                     <i v-show="errors.has('zipCode')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('zipCode')"
@@ -146,7 +147,7 @@
                       id="area"
                       name="area"
                       v-model="student.area"
-                    >
+                    />
                     <i v-show="errors.has('area')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('area')"
@@ -159,11 +160,12 @@
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <h5>{{$t('doc_identificação')}}</h5>
+                    <label for="identification">{{$t('doc_identificação')}}</label>
                     <select
                       v-validate="'required'"
                       class="custom-select"
                       name="identification"
+                      id="identification"
                       single
                       v-model="student.identificationDocument"
                     >
@@ -185,7 +187,7 @@
                       name="number"
                       id="number"
                       v-model="student.identificationNumber"
-                    >
+                    />
                     <i v-show="errors.has('number')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('number')"
@@ -198,49 +200,50 @@
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <label for="niss">NISS</label>
+                    <label for="NISS">NISS</label>
                     <input
                       v-validate="{required:true,digits:11}"
                       class="form-control"
-                      name="niss"
+                      name="NISS"
                       id="NISS"
                       v-model="student.niss"
-                    >
-                    <i v-show="errors.has('niss')" class="fa fa-warning"></i>
+                    />
+                    <i v-show="errors.has('NISS')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('niss')"
+                      v-show="errors.has('NISS')"
                       class="help is-danger"
-                    >{{ errors.first('niss') }}</span>
+                    >{{ errors.first('NISS') }}</span>
                   </div>
                   <div class="col">
-                    <label for="nif">NIF</label>
+                    <label for="NIF">NIF</label>
                     <input
+                      aria-label="NIF"
                       v-validate="{required:true,digits:9}"
                       class="form-control"
-                      name="nif"
+                      name="NIF"
                       id="NIF"
                       v-model="student.nif"
-                    >
-                    <i v-show="errors.has('nif')" class="fa fa-warning"></i>
+                    />
+                    <i v-show="errors.has('NIF')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('nif')"
+                      v-show="errors.has('NIF')"
                       class="help is-danger"
-                    >{{ errors.first('nif') }}</span>
+                    >{{ errors.first('NIF') }}</span>
                   </div>
                   <div class="col">
-                    <label for="sns">SNS</label>
+                    <label for="SNS">SNS</label>
                     <input
                       v-validate="{required:true,digits:9}"
                       class="form-control"
-                      name="sns"
+                      name="SNS"
                       id="SNS"
                       v-model="student.sns"
-                    >
-                    <i v-show="errors.has('sns')" class="fa fa-warning"></i>
+                    />
+                    <i v-show="errors.has('SNS')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('sns')"
+                      v-show="errors.has('SNS')"
                       class="help is-danger"
-                    >{{ errors.first('sns') }}</span>
+                    >{{ errors.first('SNS') }}</span>
                   </div>
                 </div>
               </div>
@@ -250,14 +253,14 @@
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <label for="curricular-year">{{$t('ano_curricular')}}</label>
+                    <label for="year">{{$t('ano_curricular')}}</label>
                     <input
                       v-validate="'required'"
                       class="form-control"
                       name="curricular-year"
                       id="year"
                       v-model="student.curricularYear"
-                    >
+                    />
                     <i v-show="errors.has('curricular-year')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('curricular-year')"
@@ -272,7 +275,7 @@
                       id="enruledYear"
                       name="enruledYear"
                       v-model="student.enruledYear"
-                    >
+                    />
                     <i v-show="errors.has('enruledYear')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('enruledYear')"
@@ -284,7 +287,7 @@
 
               <div class="dropdown-divider"></div>
 
-              <h5>{{$t('identificação_responsável')}}</h5>
+              <h3>{{$t('identificação_responsável')}}</h3>
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
@@ -296,7 +299,7 @@
                       id="responsibleName"
                       name="responsibleName"
                       v-model="student.responsibleName"
-                    >
+                    />
                     <i v-show="errors.has('responsibleName')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsibleName')"
@@ -313,7 +316,7 @@
                       min="1"
                       max="9999999999"
                       v-model="student.responsiblePhone"
-                    >
+                    />
                     <i v-show="errors.has('responsiblePhone')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsiblePhone')"
@@ -329,7 +332,7 @@
                       id="responsibleKin"
                       name="responsibleKin"
                       v-model="student.responsibleKin"
-                    >
+                    />
                     <i v-show="errors.has('responsibleKin')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsibleKin')"
@@ -345,7 +348,7 @@
                       id="responsibleEmail"
                       name="responsibleEmail"
                       v-model="student.responsibleEmail"
-                    >
+                    />
                     <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsibleEmail')"
@@ -355,7 +358,7 @@
                 </div>
               </div>
 
-              <h5>{{$t('contacto_emergencia')}}</h5>
+              <h3>{{$t('contacto_emergencia')}}</h3>
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
@@ -367,7 +370,7 @@
                       id="emergencyName"
                       name="emergencyName"
                       v-model="student.emergencyName"
-                    >
+                    />
                     <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsibleEmail')"
@@ -382,7 +385,7 @@
                       name="emergencyPhone"
                       id="emergencyPhone"
                       v-model="student.emergencyPhone"
-                    >
+                    />
                     <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsibleEmail')"
@@ -398,7 +401,7 @@
                       id="emergencyKin"
                       name="emergencyKin"
                       v-model="student.emergencyKin"
-                    >
+                    />
                     <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('responsibleEmail')"
@@ -406,7 +409,7 @@
                     >{{ errors.first('responsibleEmail') }}</span>
                   </div>
                   <div class="col">
-                    <label for="emergencYEmail">{{$t('email')}}</label>
+                    <label for="emergencyEmail">{{$t('email')}}</label>
                     <input
                       v-validate="{ required: true, email:true }"
                       type="email"
@@ -414,7 +417,7 @@
                       id="emergencyEmail"
                       name="emergencyEmail"
                       v-model="student.emergencyEmail"
-                    >
+                    />
                     <i v-show="errors.has('emergencyEmail')" class="fa fa-warning"></i>
                     <span
                       v-show="errors.has('emergencyEmail')"
@@ -426,7 +429,8 @@
 
               <div class="dropdown-divider"></div>
 
-              <h5>{{$t('tipos_nee')}}</h5>
+              <h3>{{$t('tipos_nee')}}</h3>
+
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
@@ -501,7 +505,7 @@
                       name="anotherDisease"
                       v-model="student.neeTypeDisease"
                       placeholder="Indique o nome da doença"
-                    >
+                    />
                   </div>
                 </div>
               </div>
@@ -509,7 +513,7 @@
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <label>{{$t('analise_funcional')}}</label>
+                    <label for="functionalAnalysis">{{$t('analise_funcional')}}</label>
                     <textarea
                       class="form-control"
                       type="text"
@@ -526,7 +530,7 @@
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <label for="description">{{$t('descrição_apoio')}}</label>
+                    <label for="educationalSupport">{{$t('descrição_apoio')}}</label>
                     <textarea
                       class="form-control"
                       type="text"
@@ -541,7 +545,7 @@
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <label for="neeType">{{$t('relatorio_medico')}}</label>
+                    <label for="files">{{$t('relatorio_medico')}}</label>
                     <div class="field">
                       <input
                         type="file"
@@ -549,7 +553,7 @@
                         ref="files"
                         v-on:change="handleFiles()"
                         multiple
-                      >
+                      />
                     </div>
                   </div>
                 </div>

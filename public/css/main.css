@@ -131,3 +131,21 @@ html body {
 #logout {
   padding: 8px;
 }
+
+.access-ctrls-wrapper .m-access-ctrls-btn {
+  margin-top: 94px !important;
+  padding: 10px !important;
+  margin-right: 20px;
+}
+
+.m-access-ctrls-btn__content {
+  font-size: 12px;
+
+}
+
+@media only screen and (max-width: 991px) {
+  .access-ctrls-wrapper .m-access-ctrls-btn {
+    margin-top: 175px !important;
+
+  }
+}
