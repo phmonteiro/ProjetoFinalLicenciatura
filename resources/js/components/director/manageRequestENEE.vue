@@ -31,16 +31,16 @@
         </template>
         <template slot="actions" slot-scope="row">
           <b-row class="text-center">
-            <b-col md="6" sm="12">
+            <b-col sm="12">
               <button
-                class="btn btn-info"
+                class="btn btn-info m-1"
                 v-on:click.prevent="editUser(row.item)"
                 v-if="row.item.enee!='approved'"
               >Avaliar</button>
             </b-col>
-            <b-col md="6" sm="12">
+            <b-col sm="12">
               <button
-                class="btn btn-danger"
+                class="btn btn-danger m-1"
                 v-on:click.prevent="reprovedSubscription(row.item)"
                 v-if="row.item.enee!='reproved'"
               >Reprovar</button>

@@ -20,6 +20,7 @@
   top: 82px;
   left: 10px;
   color: black;
+  z-index: 1!important;
 }
 
 #sidebar-menu .nav-link {
@@ -30,11 +31,10 @@
 }
 
 #sidebar-menu .sidenav {
-  width: 190px;
   position: fixed;
+  width: 190px;
+  top: 110px;
   z-index: 1;
-  top: 110px !important;
-  left: 10px;
   background: #6c757d;
   overflow-x: hidden;
   padding: 8px 0;

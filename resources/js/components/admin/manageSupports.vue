@@ -44,7 +44,6 @@
                 rows: '',
                 currentPage: 1,
                 perPage: 5,
-                loading: true,
                 supports: null,
                 fields: [{
                         key: "text",
@@ -64,18 +63,17 @@
             };
         },
         methods: {
+            
             getSupports() {
                 axios
                     .get("api/getSupports")
                     .then(response => {
                         this.supports = response.data;
-                        this.rows = this.supports.length;
                         this.loading = false;
 
                     })
                     .catch(error => {
                         console.log(error);
-                        this.loading = false;
                     });
             },
 

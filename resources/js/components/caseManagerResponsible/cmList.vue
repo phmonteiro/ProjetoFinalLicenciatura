@@ -78,10 +78,6 @@ export default {
           label: "Nome Gestor Caso",
           sortable: true
         },
-        {
-          key: "actions",
-          label: "Ações"
-        }
       ],
       currentUser: null
     };

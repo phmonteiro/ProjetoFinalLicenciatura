@@ -1,23 +1,31 @@
 <template>
     <div>
-        <div class="container pt-3">
-            <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
-            <h3>Sou Responsável dos Gestores Caso</h3>
-        </div>
 
-        <section id="sidebar-menu">
-            <a href="#" id="btn-menu" @click.prevent="toggleNav()">
-                <font-awesome-icon icon="bars" size="lg" />
-            </a>
-            <div class="sidenav" :class="{ active: active}">
-                <router-link class="nav-link" :to="{name: 'cmList'}">Gestores Caso</router-link>
+        <b-container>
+            <b-row>
+                <b-col cols="2">
+                    <section id="sidebar-menu">
+                        <a href="#" id="btn-menu" @click.prevent="toggleNav()">
+                            <font-awesome-icon icon="bars" size="lg" />
+                        </a>
+                        <div class="sidenav" :class="{ active: active}">
+                            <router-link class="nav-link" :to="{name: 'cmList'}">Gestores Caso</router-link>
 
-                <router-link class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
+                            <router-link class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
 
-            </div>
-        </section>
+                        </div>
+                    </section>
+                </b-col>
+                <b-col cols="10">
+                    <div class="container pt-3">
+                        <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
+                        <h3>Sou Responsável dos Gestores Caso</h3>
+                    </div>
 
-        <router-view></router-view>
+                    <router-view></router-view>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 <script>

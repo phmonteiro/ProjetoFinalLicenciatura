@@ -119,16 +119,14 @@ class SupportController extends Controller
     public function supportCreate(Request $request)
     {
         $dados = $request->validate([
-            'text' => 'required'
+            'text' => 'required|string'
         ]);
 
         $newSupport = new Supports();
-
         $newSupport->text = $dados['text'];
-
         $newSupport->save();
 
-        return response()->json(new SupportResource($newSupport), 200);
+        return response()->json(new SupportResource($newSupport), 201);
     }
 
     public function supportUpdate(Request $request, $value)

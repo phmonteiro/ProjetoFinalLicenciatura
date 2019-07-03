@@ -13,8 +13,8 @@
       </div>
     </div>
     <nav-bar v-if="user!=null"></nav-bar>
-    <router-view></router-view>
-  </div>
+      <router-view></router-view>
+    </div>
 </template>
 
 <script>
@@ -61,23 +61,19 @@ export default {
 <style>
 .languages {
   position: absolute;
-  top: 95px;
-  right: 10px;
+  top: 150px;
+  right: 30px;
   padding: 10px;
-  z-index: 300;
 }
 .languages img {
   width: 25px;
-  margin-right: 200px;
-  z-index: 200;
 }
 
-.navbar-light .navbar-toggler {
-  z-index: 100;
-}
 @media only screen and (max-width: 991px) {
-  .languages img {
-    margin-top: 75px !important;
+  .languages{
+    top: 10px !important;
+    right: 240px;
+    z-index: 1;
   }
 }
 </style>
