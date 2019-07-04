@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateOauthPersonalAccessClientsTable extends Migration {
+class CreateServiceRequestsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateOauthPersonalAccessClientsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('oauth_personal_access_clients', function(Blueprint $table)
+		Schema::create('service_requests', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('client_id')->unsigned()->index();
-			$table->timestamps();
+			$table->string('name')->default('');
+			$table->string('studentEmail')->default('');
+			$table->string('approval')->nullable();
 		});
 	}
 
@@ -28,7 +29,7 @@ class CreateOauthPersonalAccessClientsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('oauth_personal_access_clients');
+		Schema::drop('service_requests');
 	}
 
 }

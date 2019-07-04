@@ -19,7 +19,6 @@ class CreateCaseManagersTable extends Migration {
 			$table->string('studentName');
 			$table->string('caseManagerEmail')->unique('case_managers_casemanageremail_unique');
 			$table->string('caseManagerName');
-			$table->boolean('approved')->nullable();
 		});
 	}
 

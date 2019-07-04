@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration {
 			$table->string('area')->nullable();
 			$table->string('type')->nullable();
 			$table->date('birthDate')->nullable();
-			$table->string('photo')->nullable();
 			$table->string('course')->nullable();
 			$table->integer('curricularYear')->nullable();
 			$table->integer('enruledYear')->nullable();
@@ -56,7 +55,6 @@ class CreateUsersTable extends Migration {
 			$table->string('gender', 50)->nullable();
 			$table->date('dateEneeApproved')->nullable();
 			$table->date('dateEneeRequested')->nullable();
-			$table->string('serviceNameApproval')->nullable();
 			$table->string('password')->nullable();
 			$table->string('typeApplication')->nullable();
 		});

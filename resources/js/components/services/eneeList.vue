@@ -5,7 +5,7 @@
         <b-col></b-col>
         <b-col>
           <div class="loader">
-            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
           </div>
         </b-col>
         <b-col></b-col>
@@ -47,8 +47,12 @@
                         <option :value="null" disabled>-- Selecione o serviço --</option>
                       </template>
 
-                      <option value="SAPE">SAPE</option>
-                      <option value="SAS">SAS</option>
+                      <option value="SAPE">Serviços de Apoio ao Estudante</option>
+                      <option value="CRIDE">Centro de Recursos para a Inclusão Digital</option>
+                      <option value="SAS">Serviços de Ação Social</option>
+                      <option value="UED">Unidade de Ensino á Distância</option>
+                      <option value="DST">Direção de Serviços Técnicos</option>
+                      <option value="SA">Serviços Académicos</option>
                       <option value="Escola">Escola</option>
                       <option value="Biblioteca">Biblioteca</option>
                       <option value="Direção">Direção</option>
@@ -87,7 +91,7 @@
                       class="form-control"
                       v-model="contact.nextContact"
                       name="date"
-                    >
+                    />
                   </div>
 
                   <div class="modal-footer">

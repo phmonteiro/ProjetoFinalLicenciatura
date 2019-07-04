@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateGradesTable extends Migration {
+class CreateServicesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,15 @@ class CreateGradesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('grades', function(Blueprint $table)
+		Schema::create('services', function(Blueprint $table)
 		{
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('email');
-			$table->integer('year');
-			$table->integer('semester');
 			$table->string('name');
-			$table->string('typeOfEvaluation');
-			$table->integer('grade');
+			$table->string('reason')->nullable();
+			$table->date('rejectedDate')->nullable();
+			$table->date('aprovedDate')->nullable();
+			$table->string('support')->nullable();
 		});
 	}
 
@@ -32,7 +32,7 @@ class CreateGradesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('grades');
+		Schema::drop('services');
 	}
 
 }
