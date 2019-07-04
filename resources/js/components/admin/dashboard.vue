@@ -2,7 +2,6 @@
     <div>
         <b-container>
             <b-row>
-                <b-col cols="2">
                     <section id="sidebar-menu">
                         <a href="#" id="btn-menu" @click.prevent="toggleNav()">
                             <font-awesome-icon icon="bars" size="lg" />
@@ -14,8 +13,7 @@
 
                         </div>
                     </section>
-                </b-col>
-                <b-col cols="10">
+                <b-col cols="12">
                     <div class="container pt-3">
                         <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
                         <h3>Sou Admin</h3>

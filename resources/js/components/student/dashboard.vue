@@ -3,7 +3,6 @@
         <div v-if="(student.enee!='awaiting' && student.enee!='reproved')">
             <b-container>
                 <b-row>
-                    <b-col cols="2">
                         <section id="sidebar-menu">
                             <a href="#" id="btn-menu" @click.prevent="toggleNav()">
                                 <font-awesome-icon icon="bars" size="lg" />
@@ -30,8 +29,7 @@
                                 </router-link>
                             </div>
                         </section>
-                    </b-col>
-                    <b-col cols="10">
+                    <b-col cols="12">
                         <router-view></router-view>
                     </b-col>
                 </b-row>

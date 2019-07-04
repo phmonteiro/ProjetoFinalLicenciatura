@@ -64,6 +64,7 @@ export default {
   top: 150px;
   right: 30px;
   padding: 10px;
+  z-index: 1;
 }
 .languages img {
   width: 25px;
