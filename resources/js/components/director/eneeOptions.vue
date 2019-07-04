@@ -220,10 +220,24 @@ export default {
           link.setAttribute("download", "Medical  report" + user.name + ".zip");
           document.body.appendChild(link);
           link.click();
-          console.log("success");
+          this.$toasted.success(
+            "Download do relatório médico do estudante feito com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         })
         .catch(error => {
-          console.log("error");
+          this.$toasted.error(
+            "Error ao fazer download do relatório médico do estudante. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     },
     cancel() {

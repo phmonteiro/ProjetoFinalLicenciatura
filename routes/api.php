@@ -26,9 +26,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getAuthUser', 'Auth\LoginController@getAuthUser');
     //admin
     Route::get('getUsers', 'AdminController@index');
-    Route::post('editUser/{id}', 'AdminController@update')->name('edit');
-    Route::post('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
-    Route::post('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
+    Route::patch('editUser/{id}', 'AdminController@update')->name('edit');
+    Route::patch('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
+    Route::delete('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
     Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
 
     //student
@@ -45,7 +45,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getUser/{id}', 'StudentController@show');
     Route::get('supportHours', 'StudentController@supportHours');
     Route::post('setSupportHours', 'StudentController@setSupportHours');
-    Route::post('editProfile', 'StudentController@edit');
+    Route::put('editProfile', 'StudentController@edit');
     Route::get('getNee/{id}', 'StudentController@getNee');
     Route::get('getTeachersStudent/{id}', 'StudentController@getTeacherStudent');
 
@@ -54,32 +54,31 @@ Route::middleware('auth:api')->group(function () {
     Route::get('getMeetings', 'ServiceController@meetings');
     Route::post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
     Route::get('getHistory/{id}', 'ServiceController@getHistory');
-    Route::post('changeNextContact/{id}', 'ServiceController@editContact');
+    Route::patch('changeNextContact/{id}', 'ServiceController@editContact');
     Route::get('downloadHistory/{id}', 'ServiceController@downloadPDF');
     Route::get('getServicesRequests', 'ServiceController@getServicesRequests');
-    Route::post('approveEneeStatusByServices/{id}', 'ServiceController@approve');
-    Route::post('denyEneeStatusByServices/{id}', 'ServiceController@deny');
+    Route::patch('approveEneeStatusByServices/{id}', 'ServiceController@approve');
+    Route::patch('denyEneeStatusByServices/{id}', 'ServiceController@deny');
     Route::get('getEnees', 'ServiceController@index');
     Route::get('getServicesEvaluation/{id}', 'ServiceController@getServicesEvaluation');
     Route::post('eneeAdd', 'ServiceController@create');
 
-
     //Director
     Route::get('getSupports', 'SupportController@index');
     Route::get('getStudentSupports/{email}', 'SupportController@byEmail');
-    Route::post('reproveSubscription/{id}', 'SupportController@reproveSubscription');
+    Route::patch('reproveSubscription/{id}', 'SupportController@reproveSubscription');
     Route::post('servicesApprovalRequest/{id}', 'DirectorController@approvalRequest');
-    Route::post('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
-    Route::post('updateEnee', 'DirectorController@updateEnee');
+    Route::put('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
+    Route::put('updateEnee', 'DirectorController@updateEnee');
     Route::get('medicalReport/download/{id}', 'DirectorController@downloadStudentDocuments');
     Route::get('getSupportRequests', 'DirectorController@supportRequests');
     Route::post('addStudentSupport/{id}', 'DirectorController@addStudentSupport');
-    Route::post('rejectStudentSupport/{id}', 'DirectorController@rejectStudentSupport');
+    Route::patch('rejectStudentSupport/{id}', 'DirectorController@rejectStudentSupport');
 
     //Coordinator
     Route::get('getRequests', 'CoordinatorController@requests');
-    Route::post('approveEneeStatus/{id}', 'CoordinatorController@approve');
-    Route::post('denyEneeStatus/{id}', 'CoordinatorController@deny');
+    Route::patch('approveEneeStatus/{id}', 'CoordinatorController@approve');
+    Route::patch('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
     Route::get('getCaseManagers', 'CaseManagerResponsibleController@index');
@@ -87,7 +86,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('setCM/{id}', 'CaseManagerResponsibleController@setCM');
     Route::get('getStudents', 'CaseManagerResponsibleController@getStudents');
     Route::get('getStudentCMs/{email}', 'CaseManagerResponsibleController@getStudentCMs');
-    Route::post('removeCM/{email}', 'CaseManagerResponsibleController@removeCM');
+    Route::delete('removeCM/{email}', 'CaseManagerResponsibleController@removeCM');
 
     //Case Manager
     Route::get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');
@@ -96,9 +95,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('statistics/{stats}', 'CaseManagerController@statistics');
     Route::post('setInteraction', 'CaseManagerController@setInteraction');
     Route::get('contact/download/{id}', 'CaseManagerController@downloadContactFiles');
-    Route::post('setEneeMeeting/{id}', 'CaseManagerController@setEneeMeeting');
+    Route::put('setEneeMeeting/{id}', 'CaseManagerController@setEneeMeeting');
     Route::get('getEneePlan/{id}', 'CaseManagerController@getEneePlan');
-    Route::post('updatePlan/{id}', 'CaseManagerController@updatePlan');
+    Route::put('updatePlan/{id}', 'CaseManagerController@updatePlan');
     Route::post('setPlan', 'CaseManagerController@setPlan');
     Route::post('addEvent', 'CaseManagerController@addEvent');
     Route::get('getEvents', 'CaseManagerController@getEvent');

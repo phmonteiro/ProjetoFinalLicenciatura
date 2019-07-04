@@ -10,7 +10,7 @@
         name="name"
         id="inputName"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -22,7 +22,7 @@
         name="email"
         id="inputEmail"
         disabled
-      >
+      />
     </div>
 
     <label for>Plano inclusao</label>
@@ -96,7 +96,7 @@ export default {
         this.data.diagnostic = this.plan.diagnostic;
 
         axios
-          .post("api/updatePlan/" + this.plan.id, this.data)
+          .put("api/updatePlan/" + this.plan.id, this.data)
           .then(response => {
             this.$toasted.success("Guardado com sucesso.", {
               duration: 4000,

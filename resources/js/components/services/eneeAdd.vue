@@ -18,7 +18,7 @@
                     min="1"
                     max="999999999"
                     v-model="student.number"
-                  >
+                  />
                 </div>
                 <div class="col">
                   <label for="student-name">{{$t('nome')}}</label>
@@ -28,7 +28,7 @@
                     id="student-name"
                     name="student-name"
                     v-model="student.name"
-                  >
+                  />
                 </div>
                 <div class="col">
                   <label for="phone-number">{{$t('contacto_telefónico')}}</label>
@@ -41,7 +41,7 @@
                     min="1"
                     max="999999999"
                     v-model="student.phoneNumber"
-                  >
+                  />
                   <i v-show="errors.has('phone-number')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('phone-number')"
@@ -59,7 +59,7 @@
                     name="birth-date"
                     placeholder="dd/mm/yyyy"
                     v-model="student.birthDate"
-                  >
+                  />
                   <i v-show="errors.has('birth-date')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('birth-date')"
@@ -80,7 +80,7 @@
                     placeholder="email@mail.com"
                     id="email"
                     v-model="student.email"
-                  >
+                  />
                 </div>
                 <div class="col-4">
                   <label for="gender">{{$t('género')}}</label>
@@ -126,7 +126,7 @@
                     name="zipCode"
                     placeholder="1234-567"
                     v-model="student.zipCode"
-                  >
+                  />
                   <i v-show="errors.has('zipCode')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('zipCode')"
@@ -142,7 +142,7 @@
                     id="area"
                     name="area"
                     v-model="student.area"
-                  >
+                  />
                   <i v-show="errors.has('area')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('area')"
@@ -181,7 +181,7 @@
                     name="number"
                     id="number"
                     v-model="student.identificationNumber"
-                  >
+                  />
                   <i v-show="errors.has('number')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('number')"
@@ -201,7 +201,7 @@
                     name="niss"
                     id="NISS"
                     v-model="student.niss"
-                  >
+                  />
                   <i v-show="errors.has('niss')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('niss')"
@@ -216,7 +216,7 @@
                     name="nif"
                     id="NIF"
                     v-model="student.nif"
-                  >
+                  />
                   <i v-show="errors.has('nif')" class="fa fa-warning"></i>
                   <span v-show="errors.has('nif')" class="help is-danger">{{ errors.first('nif') }}</span>
                 </div>
@@ -228,7 +228,7 @@
                     name="sns"
                     id="SNS"
                     v-model="student.sns"
-                  >
+                  />
                   <i v-show="errors.has('sns')" class="fa fa-warning"></i>
                   <span v-show="errors.has('sns')" class="help is-danger">{{ errors.first('sns') }}</span>
                 </div>
@@ -249,7 +249,7 @@
                     min="1"
                     max="10"
                     v-model="student.curricularYear"
-                  >
+                  />
                   <i v-show="errors.has('curricular-year')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('curricular-year')"
@@ -264,7 +264,7 @@
                     id="enruledYear"
                     name="enruledYear"
                     v-model="student.enruledYear"
-                  >
+                  />
                   <i v-show="errors.has('enruledYear')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('enruledYear')"
@@ -288,7 +288,7 @@
                     id="responsibleName"
                     name="responsibleName"
                     v-model="student.responsibleName"
-                  >
+                  />
                   <i v-show="errors.has('responsibleName')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsibleName')"
@@ -305,7 +305,7 @@
                     min="1"
                     max="9999999999"
                     v-model="student.responsiblePhone"
-                  >
+                  />
                   <i v-show="errors.has('responsiblePhone')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsiblePhone')"
@@ -321,7 +321,7 @@
                     id="responsibleKin"
                     name="responsibleKin"
                     v-model="student.responsibleKin"
-                  >
+                  />
                   <i v-show="errors.has('responsibleKin')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsibleKin')"
@@ -337,7 +337,7 @@
                     id="responsibleEmail"
                     name="responsibleEmail"
                     v-model="student.responsibleEmail"
-                  >
+                  />
                   <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsibleEmail')"
@@ -359,7 +359,7 @@
                     id="emergencyName"
                     name="emergencyName"
                     v-model="student.emergencyName"
-                  >
+                  />
                   <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsibleEmail')"
@@ -374,7 +374,7 @@
                     name="emergencyPhone"
                     id="emergencyPhone"
                     v-model="student.emergencyPhone"
-                  >
+                  />
                   <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsibleEmail')"
@@ -390,7 +390,7 @@
                     id="emergencyKin"
                     name="emergencyKin"
                     v-model="student.emergencyKin"
-                  >
+                  />
                   <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('responsibleEmail')"
@@ -406,7 +406,7 @@
                     id="emergencyEmail"
                     name="emergencyEmail"
                     v-model="student.emergencyEmail"
-                  >
+                  />
                   <i v-show="errors.has('emergencyEmail')" class="fa fa-warning"></i>
                   <span
                     v-show="errors.has('emergencyEmail')"
@@ -493,7 +493,7 @@
                     name="anotherDisease"
                     v-model="student.neeTypeDisease"
                     placeholder="Indique o nome da doença"
-                  >
+                  />
                 </div>
               </div>
             </div>
@@ -535,7 +535,7 @@
                 <div class="col">
                   <label for="neeType">{{$t('relatorio_medico')}}</label>
                   <div class="field">
-                    <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple>
+                    <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple />
                   </div>
                 </div>
               </div>
@@ -670,7 +670,7 @@ export default {
       axios
         .post("api/eneeAdd", formData)
         .then(response => {
-          this.$toasted.success("Estudante com nee adicionado com sucesso.", {
+          this.$toasted.success("Estudante com NEE adicionado com sucesso.", {
             duration: 4000,
             position: "top-center",
             theme: "bubble"

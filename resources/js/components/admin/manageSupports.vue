@@ -55,45 +55,44 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                loading: true,
-                rows: '',
-                currentPage: 1,
-                perPage: 5,
-                supports: null,
-                fields: [{
-                        key: "text",
-                        label: "Apoio",
-                        sortable: true
-                    },
-
-                    {
-                        key: "actions",
-                        label: "Opcoes"
-                    }
-                ],
-                currentSupport: null,
-                newSupport: {
-                    text : ''
-                }
-            };
+export default {
+  data() {
+    return {
+      loading: true,
+      rows: "",
+      currentPage: 1,
+      perPage: 5,
+      supports: null,
+      fields: [
+        {
+          key: "text",
+          label: "Apoio",
+          sortable: true
         },
-        methods: {
-            
-            getSupports() {
-                axios
-                    .get("api/getSupports")
-                    .then(response => {
-                        this.supports = response.data;
-                        this.loading = false;
 
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            },
+        {
+          key: "actions",
+          label: "Opcoes"
+        }
+      ],
+      currentSupport: null,
+      newSupport: {
+        text: ""
+      }
+    };
+  },
+  methods: {
+    getSupports() {
+      axios
+        .get("api/getSupports")
+        .then(response => {
+          this.supports = response.data;
+          this.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
 
     editSupport(row) {
       this.currentSupport = Object.assign({}, row);
@@ -123,7 +122,7 @@
     },
     deleteSupport(row) {
       axios
-        .post("api/deleteSupport/" + row.value)
+        .delete("api/deleteSupport/" + row.value)
         .then(response => {
           this.getSupports();
           this.$toasted.success("Apoio apagado com sucesso.", {
@@ -146,7 +145,7 @@
     },
     saveSupport() {
       axios
-        .post(
+        .patch(
           "api/editSupport/" + this.currentSupport.value,
           this.currentSupport
         )

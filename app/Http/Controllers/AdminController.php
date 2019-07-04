@@ -104,10 +104,10 @@ class AdminController extends Controller
         $client = new \GuzzleHttp\Client();
         $aux = str_split(Carbon::now()->year, 2);
         if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
-            $yearLective = Carbon::now()->year . "" . (int)$aux[1] + 1;
+            $yearLective = Carbon::now()->year . "" . (int) $aux[1] + 1;
             $semester = 1;
         } else {
-            $yearLective = $aux[0] . "" . (int)$aux[1] - 1 . ""  . $aux[1];
+            $yearLective = $aux[0] . "" . (int) $aux[1] - 1 . ""  . $aux[1];
             $semester = 2;
         }
         $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/cursos_ucs.php?anoletivo=' . $yearLective . '&periodo=S' . $semester . '');

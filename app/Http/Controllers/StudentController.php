@@ -110,6 +110,12 @@ class StudentController extends Controller
         $user->emergencyEmail = $dados['emergencyEmail'];
         $user->emergencyKin = $dados['emergencyKin'];
 
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O estudante atualizou o seu perfil.";
+        $history->date = Carbon::now();
+        $history->save();
+
         $user->save();
         return response()->json(new UserResource($user), 200);
     }
@@ -149,7 +155,7 @@ class StudentController extends Controller
         $supports = Supports::all();
 
         $idSupports = Student_Supports::Where('email', $user->email)->pluck('support_value')->toArray();
-        
+
         $studentSupports = $supports->whereIn('value', $idSupports)->all();
 
         return response()->json(new SupportResource($studentSupports));
@@ -199,6 +205,7 @@ class StudentController extends Controller
             $medicalFile->fileName = $uploadedFile;
             $medicalFile->save();
         }
+
         $user->phoneNumber = $dados['phoneNumber'];
         $user->birthDate = $dados['birthDate'];
         $user->residence = $dados['residence'];
@@ -294,7 +301,7 @@ class StudentController extends Controller
         return response()->json(new ZipCodeResource($residence), 201);
     }
 
-    
+
 
     public function myMeetingsStudent()
     {
@@ -356,9 +363,9 @@ class StudentController extends Controller
         $client = new \GuzzleHttp\Client();
         $aux = str_split(Carbon::now()->year, 2);
         if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
-            $yearLective = Carbon::now()->year . "" . (int)$aux[1] + 1;
+            $yearLective = Carbon::now()->year . "" . (int) $aux[1] + 1;
         } else {
-            $yearLective = $aux[0] . "" . (int)$aux[1] - 1 . ""  . $aux[1];
+            $yearLective = $aux[0] . "" . (int) $aux[1] - 1 . ""  . $aux[1];
         }
         $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . $user->departmentNumber . '&estado=1&naluno=' . $user->number . '');
         $aux = $response->getBody()->getContents();
@@ -380,9 +387,9 @@ class StudentController extends Controller
             $client = new \GuzzleHttp\Client();
             $aux = str_split(Carbon::now()->year, 2);
             if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
-                $yearLective = Carbon::now()->year . "" . (int)$aux[1] + 1;
+                $yearLective = Carbon::now()->year . "" . (int) $aux[1] + 1;
             } else {
-                $yearLective = $aux[0] . "" . (int)$aux[1] - 1 . ""  . $aux[1];
+                $yearLective = $aux[0] . "" . (int) $aux[1] - 1 . ""  . $aux[1];
             }
 
             $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . Auth::user()->departmentNumber . '&estado=1&naluno=' . Auth::user()->number . '');
@@ -400,9 +407,11 @@ class StudentController extends Controller
                 $subject->save();
                 array_push($subjects, $subject);
             }
+
+
+
             return response()->json(new SubjectResource($subjects), 201);
         }
-        return response()->json(new SubjectResource(Subject::where('studentEmail', Auth::user()->email)->get()), 200);
     }
 
     public function setSupportHours(Request $request)

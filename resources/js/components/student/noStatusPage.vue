@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row>
         <b-col>
-          <h2>Bem vindo á plataforma 100%IN</h2>
+          <h2>Bem vindo à plataforma 100%IN</h2>
           <a class="btn btn-secondary" v-on:click.prevent="subscribe()" href>Pedir estatuto</a>
         </b-col>
       </b-row>

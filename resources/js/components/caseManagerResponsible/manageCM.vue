@@ -5,7 +5,7 @@
         <b-col></b-col>
         <b-col>
           <div class="loader">
-            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
           </div>
         </b-col>
         <b-col></b-col>

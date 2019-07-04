@@ -226,14 +226,24 @@ export default {
         .then(response => {
           this.user = response.data;
           console.log(this.user);
+          this.$toasted.success("Perfil editado com sucesso.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
         })
         .catch(error => {
+          this.$toasted.error("Erro ao editar perfil de utilizador.", {
+            duration: 4000,
+            position: "top-center",
+            theme: "bubble"
+          });
           console.log(error);
         });
     },
     editProfile() {
       axios
-        .post("api/editProfile", this.user)
+        .put("api/editProfile", this.user)
         .then(response => {
           console.log(response);
         })

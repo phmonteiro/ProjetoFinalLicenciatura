@@ -21,7 +21,7 @@ use App\History;
 use Illuminate\Support\Facades\DB;
 
 class DirectorController extends Controller
-{    
+{
     public function addStudentSupport($id)
     {
         $service = Service::findOrFail($id);
@@ -48,6 +48,13 @@ class DirectorController extends Controller
         $service = Service::findOrFail($id);
         $service->rejectedDate = Carbon::now();
         $service->save();
+
+        $history = new History();
+        $apoio = Supports::findOrFail($service->support);
+        $history->studentEmail = $service->email;
+        $history->description = "O diretor rejeitou o pedido do apoio " . $apoio->text . " ao estudante.";
+        $history->date = Carbon::now();
+        $history->save();
 
         return response()->json($service, 200);
     }
@@ -138,6 +145,11 @@ class DirectorController extends Controller
                 Student_Supports::where('email', $dados['email'])->where('support_value', $support)->delete();
             }
         }
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "O diretor aprovou o estatuto.";
+        $history->date = Carbon::now();
+        $history->save();
 
         return response()->json(new UserResource($user), 200);
     }

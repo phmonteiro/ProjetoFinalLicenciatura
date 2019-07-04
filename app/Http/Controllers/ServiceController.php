@@ -365,11 +365,6 @@ class ServiceController extends Controller
         $filename = base_path('storage/app/public/medicalHistory/' . $user->number . '.pdf');
         $pdf->save($filename);
         $files = MedicalFile::where('email', $user->email)->get();
-        /*$filesDownload = new Collection();
-        foreach ($files as $key => $file) {
-            $filesDownload->push(base_path('storage/app/public/medicalHistory/' . $file->fileName));
-        }
-        $filesDownload->push($filename);*/
 
         $public_dir = base_path('storage/app/public/zip');
         // Zip File Name

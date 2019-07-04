@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="loader">
-      <ClipLoader sizeUnit="px" v-if="loading" :size="50"/>
+      <ClipLoader sizeUnit="px" v-if="loading" :size="50" />
     </div>
     <div class="container" v-if="users">
       <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
@@ -131,7 +131,7 @@ export default {
     },
     saveUser() {
       axios
-        .post("api/editUser/" + this.currentUser.id, this.currentUser)
+        .patch("api/editUser/" + this.currentUser.id, this.currentUser)
         .then(response => {
           this.getUsers();
           this.currentUser = null;

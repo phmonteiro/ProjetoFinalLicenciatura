@@ -178,7 +178,7 @@ export default {
     },
     reprovedSubscription(row) {
       axios
-        .post("api/reproveSubscription/" + row.id)
+        .patch("api/reproveSubscription/" + row.id)
         .then(response => {
           this.getEnee();
           this.$toasted.success("Candidatura reprovada com sucesso.", {
@@ -212,7 +212,7 @@ export default {
     },
     saveUser(data) {
       axios
-        .post("api/updateStudentSupports/", data)
+        .put("api/updateStudentSupports/", data)
         .then(response => {
           this.getEnee();
           this.currentUser = null;

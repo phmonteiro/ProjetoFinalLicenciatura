@@ -10,7 +10,7 @@
         name="name"
         id="inputName"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -22,7 +22,7 @@
         name="coordinatorAproval"
         id="inputcoordinatorAproval"
         disabled
-      >
+      />
     </div>
     <div class="form-group">
       <label for="inputNee">Necessidades educativas especiais</label>
@@ -34,7 +34,7 @@
         name="nee"
         id="nee"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group" v-if="user.functionalAnalysis!=null">
@@ -46,7 +46,7 @@
         name="functionalAnalysis"
         id="functionalAnalysis"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -85,9 +85,25 @@ export default {
           document.body.appendChild(link);
           link.click();
           console.log("success");
+          this.$toasted.success(
+            "Download do histórico do estudante feito com sucesso.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         })
         .catch(error => {
           console.log("error");
+          this.$toasted.error(
+            "Error ao fazer download do histórico do estudante. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     },
     cancel() {

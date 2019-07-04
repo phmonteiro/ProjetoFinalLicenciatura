@@ -5,7 +5,7 @@
         <b-col></b-col>
         <b-col>
           <div class="loader">
-            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
           </div>
         </b-col>
         <b-col></b-col>
@@ -20,32 +20,31 @@
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template slot="actions" slot-scope="row">
           <b-row class="text-center">
-            
             <b-col sm="12" class="m-1">
               <b-button size="sm" v-on:click.prevent="setInteraction(row.item)">
                 Interação
-                <font-awesome-icon icon="handshake"/>
+                <font-awesome-icon icon="handshake" />
               </b-button>
             </b-col>
             <b-col sm="12" class="m-1">
               <b-button size="sm" v-on:click.prevent="seeInteractions(row.item)">
                 Ver Interações
-                <font-awesome-icon icon="handshake"/>
+                <font-awesome-icon icon="handshake" />
               </b-button>
             </b-col>
             <b-col sm="12" class="m-1">
               <b-button size="sm" v-on:click.prevent="managePlan(row.item)">
                 Plano
-                <font-awesome-icon icon="book"/>
+                <font-awesome-icon icon="book" />
               </b-button>
             </b-col>
             <b-col sm="12" class="m-1">
               <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
               <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye"/>
+                <font-awesome-icon icon="eye" />
               </div>
               <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye-slash"/>
+                <font-awesome-icon icon="eye-slash" />
               </div>
             </b-col>
           </b-row>

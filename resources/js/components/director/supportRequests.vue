@@ -5,7 +5,7 @@
         <b-col></b-col>
         <b-col>
           <div class="loader">
-            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
           </div>
         </b-col>
         <b-col></b-col>
@@ -16,26 +16,20 @@
       <b-table striped hover v-if="supportRequests!=null" :items="supportRequests" :fields="fields">
         <template slot="actions" slot-scope="row">
           <b-row class="text-center">
-              <b-col md="4" sm="12">
+            <b-col md="4" sm="12">
               <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
               <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye"/>
+                <font-awesome-icon icon="eye" />
               </div>
               <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye-slash"/>
+                <font-awesome-icon icon="eye-slash" />
               </div>
             </b-col>
             <b-col md="4" sm="12">
-              <button
-                class="btn btn-info"
-                v-on:click.prevent="approve(row.item)"
-              >Aceitar</button>
+              <button class="btn btn-info" v-on:click.prevent="approve(row.item)">Aceitar</button>
             </b-col>
             <b-col md="4" sm="12">
-              <button
-                class="btn btn-danger"
-                v-on:click.prevent="reject(row.item)"
-              >Rejeitar</button>
+              <button class="btn btn-danger" v-on:click.prevent="reject(row.item)">Rejeitar</button>
             </b-col>
           </b-row>
         </template>
@@ -69,7 +63,11 @@
           </li>
 
           <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a class="page-link" href="#" @click.prevent="getsupportRequests(pagination.next_page_url)">Próximo</a>
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="getsupportRequests(pagination.next_page_url)"
+            >Próximo</a>
           </li>
         </ul>
       </nav>
@@ -104,7 +102,7 @@ export default {
           key: "actions",
           label: "Ações Utilizador"
         }
-      ],
+      ]
     };
   },
   methods: {
@@ -135,7 +133,7 @@ export default {
     },
     approve(data) {
       axios
-        .post("api/addStudentSupport/"+ data.id)
+        .post("api/addStudentSupport/" + data.id)
         .then(response => {
           this.getSupportRequests();
           this.$toasted.success("Apoio adicionado com sucesso.", {
@@ -155,7 +153,7 @@ export default {
     },
     reject(data) {
       axios
-        .post("api/rejectStudentSupport/"+ data.id)
+        .patch("api/rejectStudentSupport/" + data.id)
         .then(response => {
           this.getSupportRequests();
           this.$toasted.success("Apoio rejeitado com sucesso.", {
@@ -172,7 +170,7 @@ export default {
             theme: "bubble"
           });
         });
-    },
+    }
   },
   created() {
     this.getSupportRequests();

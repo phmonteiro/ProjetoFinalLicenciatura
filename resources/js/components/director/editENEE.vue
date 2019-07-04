@@ -10,7 +10,7 @@
         name="name"
         id="inputName"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -22,7 +22,7 @@
         name="coordinatorAproval"
         id="inputcoordinatorAproval"
         disabled
-      >
+      />
     </div>
 
     <b-form-group label="Apoios ao estudante">
@@ -38,7 +38,7 @@
         name="tutor"
         id="tutor"
         placeholder="professor.tutor@my.ipleiria.pt"
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -78,11 +78,14 @@ export default {
           });
         })
         .catch(error => {
-          this.$toasted.error("Erro ao pedir. Por favor tente novamente.", {
-            duration: 4000,
-            position: "top-center",
-            theme: "bubble"
-          });
+          this.$toasted.error(
+            "Erro ao fazer pedido. Por favor tente novamente.",
+            {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+            }
+          );
         });
     },
     save: function() {
@@ -98,7 +101,6 @@ export default {
         .get("api/getSupports")
         .then(response => {
           this.options = response.data;
-          console.log("supports aqui" + this.options);
         })
         .catch(error => {
           console.log(error);

@@ -13,7 +13,7 @@
           name="name"
           id="inputName"
           disabled
-        >
+        />
       </div>
       <div class="form-group">
         <label for="inputEmail">E-mail</label>
@@ -24,7 +24,7 @@
           name="email"
           id="inputEmail"
           disabled
-        >
+        />
       </div>
 
       <div v-if="studentCMs">
@@ -110,7 +110,7 @@ export default {
     },
     removeCM() {
       axios
-        .post("api/removeCM/" + this.user.email)
+        .delete("api/removeCM/" + this.user.email)
         .then(response => {
           this.$emit("refreshCMs");
           this.$toasted.success("Gestor de caso removido.", {

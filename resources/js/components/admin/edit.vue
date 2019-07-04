@@ -9,7 +9,7 @@
         name="name"
         id="inputName"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">
@@ -21,7 +21,7 @@
         name="email"
         id="inputEmail"
         disabled
-      >
+      />
     </div>
 
     <div class="form-group">

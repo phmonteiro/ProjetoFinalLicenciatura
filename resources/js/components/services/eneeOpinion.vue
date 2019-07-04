@@ -91,7 +91,7 @@ export default {
     },
     approve(userId) {
       axios
-        .post("api/approveEneeStatusByServices/" + userId)
+        .patch("api/approveEneeStatusByServices/" + userId)
         .then(response => {
           this.getRequests();
           this.currentUser = null;
@@ -112,7 +112,7 @@ export default {
     },
     deny(userId) {
       axios
-        .post("api/denyEneeStatusByServices/" + userId)
+        .patch("api/denyEneeStatusByServices/" + userId)
         .then(response => {
           this.getRequests();
           this.currentUser = null;

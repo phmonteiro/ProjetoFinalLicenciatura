@@ -5,7 +5,7 @@
         <b-col></b-col>
         <b-col>
           <div class="loader">
-            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50"/>
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
           </div>
         </b-col>
         <b-col></b-col>
@@ -22,16 +22,16 @@
                 <b-col md="4" sm="12">
                   <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
                   <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                    <font-awesome-icon icon="eye"/>
+                    <font-awesome-icon icon="eye" />
                   </div>
                   <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                    <font-awesome-icon icon="eye-slash"/>
+                    <font-awesome-icon icon="eye-slash" />
                   </div>
                 </b-col>
                 <b-col md="4" sm="12">
                   <b-button size="sm" v-on:click.prevent="setMeeting(row.item)">
                     Agendar
-                    <font-awesome-icon icon="handshake"/>
+                    <font-awesome-icon icon="handshake" />
                   </b-button>
                 </b-col>
               </b-row>
@@ -45,22 +45,22 @@
                   </b-col>
                 </b-row>
 
-            <b-row class="mb-2">
-              <b-col class="text">
-                <b>Local:</b>
-                {{row.item.place}}
-              </b-col>
-            </b-row>
-            <b-row class="mb-2">
-              <b-col class="text">
-                <b>Comentario:</b>
-                {{row.item.comment}}
-              </b-col>
-            </b-row>
-            <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
-          </b-card>
-        </template>
-      </b-table>
+                <b-row class="mb-2">
+                  <b-col class="text">
+                    <b>Local:</b>
+                    {{row.item.place}}
+                  </b-col>
+                </b-row>
+                <b-row class="mb-2">
+                  <b-col class="text">
+                    <b>Comentario:</b>
+                    {{row.item.comment}}
+                  </b-col>
+                </b-row>
+                <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
+              </b-card>
+            </template>
+          </b-table>
         </b-col>
       </b-row>
       <nav aria-label="Page navigation" v-if="meetings">
@@ -73,12 +73,12 @@
             >Anterior</a>
           </li>
 
-              <li class="page-item disabled">
-                <a class="page-link text-dark" href="#">
-                  Página {{ pagination.current_page }} de
-                  {{ pagination.last_page }}
-                </a>
-              </li>
+          <li class="page-item disabled">
+            <a class="page-link text-dark" href="#">
+              Página {{ pagination.current_page }} de
+              {{ pagination.last_page }}
+            </a>
+          </li>
 
           <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
             <a
@@ -173,7 +173,7 @@ export default {
     saveMeeting(data) {
       console.log(data);
       axios
-        .post("api/setEneeMeeting/" + this.currentMeeting.id, data)
+        .put("api/setEneeMeeting/" + this.currentMeeting.id, data)
         .then(response => {
           this.getMeetingsEnee();
           this.currentMeeting = null;

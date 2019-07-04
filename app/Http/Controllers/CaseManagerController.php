@@ -43,6 +43,15 @@ class CaseManagerController extends Controller
         $plan->diagnostic = $dados['diagnostic'];
         $plan->save();
 
+        $student = Student::findOrFail($dados['studentId']);
+
+        $history = new History();
+        $history->studentEmail = $student->email;
+        $history->description = "O gestor de caso criou o plano de inclusão individual e o plano de diagnóstico.";
+        $history->date = Carbon::now();
+        $history->save();
+
+
         return response()->json(new EneeDiagnosticResource($plan), 201);
     }
 
@@ -66,6 +75,14 @@ class CaseManagerController extends Controller
         $plan->plan = $dados['plan'];
         $plan->diagnostic = $dados['diagnostic'];
         $plan->save();
+
+        $student = Student::findOrFail($plan->studentEmail);
+
+        $history = new History();
+        $history->studentEmail = $student->email;
+        $history->description = "O gestor de caso atualizou o plano de inclusão individual e o plano de diagnóstico.";
+        $history->date = Carbon::now();
+        $history->save();
 
         return response()->json(new EneeDiagnosticResource($plan), 201);
     }

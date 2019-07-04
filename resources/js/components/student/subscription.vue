@@ -54,13 +54,13 @@
                   <div class="col">
                     <label for="birth-date">{{$t('data_nascimento')}}</label>
                     <input
-                      v-validate="{ required: true, date_format:'dd/MM/yyyy' }"
+                      v-validate="{ required: true, date_format:'yyyy-MM-dd' }"
                       :class="{'input': true, 'is-danger': errors.has('birth-date') }"
                       class="form-control"
                       value
                       id="birth-date"
                       name="birth-date"
-                      placeholder="dd/mm/yyyy"
+                      placeholder="yyyy-mm-dd"
                       v-model="student.birthDate"
                     />
                     <i v-show="errors.has('birth-date')" class="fa fa-warning"></i>
