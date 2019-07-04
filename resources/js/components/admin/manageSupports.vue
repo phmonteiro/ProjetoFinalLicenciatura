@@ -55,47 +55,45 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      loading: true,
-      rows: "",
-      currentPage: 1,
-      perPage: 5,
-      loading: true,
-      supports: null,
-      fields: [
-        {
-          key: "text",
-          label: "Apoio",
-          sortable: true
-        },
+    export default {
+        data() {
+            return {
+                loading: true,
+                rows: '',
+                currentPage: 1,
+                perPage: 5,
+                supports: null,
+                fields: [{
+                        key: "text",
+                        label: "Apoio",
+                        sortable: true
+                    },
 
-        {
-          key: "actions",
-          label: "Opcoes"
-        }
-      ],
-      currentSupport: null,
-      newSupport: {
-        text: ""
-      }
-    };
-  },
-  methods: {
-    getSupports() {
-      axios
-        .get("api/getSupports")
-        .then(response => {
-          this.supports = response.data;
-          this.rows = this.supports.length;
-          this.loading = false;
-        })
-        .catch(error => {
-          console.log(error);
-          this.loading = false;
-        });
-    },
+                    {
+                        key: "actions",
+                        label: "Opcoes"
+                    }
+                ],
+                currentSupport: null,
+                newSupport: {
+                    text : ''
+                }
+            };
+        },
+        methods: {
+            
+            getSupports() {
+                axios
+                    .get("api/getSupports")
+                    .then(response => {
+                        this.supports = response.data;
+                        this.loading = false;
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
 
     editSupport(row) {
       this.currentSupport = Object.assign({}, row);

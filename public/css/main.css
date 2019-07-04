@@ -132,10 +132,10 @@ html body {
   padding: 8px;
 }
 
-.access-ctrls-wrapper .m-access-ctrls-btn {
-  margin-top: 94px !important;
+.access-ctrls-wrapper {
   padding: 10px !important;
-  margin-right: 20px;
+  position: absolute;
+  top: 95px!important;
 }
 
 .m-access-ctrls-btn__content {
@@ -144,8 +144,9 @@ html body {
 }
 
 @media only screen and (max-width: 991px) {
-  .access-ctrls-wrapper .m-access-ctrls-btn {
-    margin-top: 175px !important;
+  .access-ctrls-wrapper {
+    top: 0px !important;
+    right: 60px!important;
 
   }
 }

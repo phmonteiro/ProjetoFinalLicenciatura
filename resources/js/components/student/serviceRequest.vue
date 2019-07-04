@@ -73,6 +73,9 @@
                         );
                     });
             },
+
+
+
             getAllSupports() {
                 axios
                     .get("api/getSupports")
@@ -83,6 +86,10 @@
                         console.log(error);
                     });
             }
+
+
+
+            
         },
         computed: {
             user: function () {

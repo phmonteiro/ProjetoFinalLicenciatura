@@ -31,6 +31,7 @@ export default {
       pagination: {},
       services: null,
       loading: true,
+
       fieldsServices: [
         {
           key: "text",
@@ -38,6 +39,8 @@ export default {
           sortable: true
         }
       ]
+
+      
     };
   },
   methods: {

@@ -43,7 +43,7 @@
 <script>
 
     export default {
-        props: ["user", "studentCMs"],
+        props: ["user"],
         data: function () {
             return {
                 data: {
