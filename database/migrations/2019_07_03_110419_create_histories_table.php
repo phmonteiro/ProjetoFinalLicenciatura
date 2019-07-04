@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHistoriesTable extends Migration {
+class CreateHistoriesTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,8 +13,7 @@ class CreateHistoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('histories', function(Blueprint $table)
-		{
+		Schema::create('histories', function (Blueprint $table) {
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('studentEmail');
 			$table->string('description');
@@ -32,5 +32,4 @@ class CreateHistoriesTable extends Migration {
 	{
 		Schema::drop('histories');
 	}
-
 }
