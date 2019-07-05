@@ -10,6 +10,8 @@ use App\Http\Resources\SupportResource;
 use Carbon\Carbon;
 use App\Teacher;
 use App\Http\Resources\TeacherResource;
+use App\Coordinator;
+use App\Http\Resources\CoordinatorResource;
 
 class AdminController extends Controller
 {
@@ -132,5 +134,29 @@ class AdminController extends Controller
             }
         }
         return response()->json(new TeacherResource($teachers), 201);
+    }
+
+    public function addCoordinator(Request $request)
+    {
+        $dados = $request->validate([
+            'email' => 'required|email',
+            'course' => 'required|string',
+            'departmentNumber' => 'required|digits:4',
+            'school' => 'required|string'
+        ]);
+
+        $user = \Adldap\Laravel\Facades\Adldap::search()->find($dados['email']);
+        if ($user) {
+            $coordinator = new Coordinator();
+            $coordinator->email = $dados['email'];
+            $coordinator->course = $dados['course'];
+            $coordinator->departmentNumber = $dados['departmentNumber'];
+            $coordinator->school = $dados['school'];
+            $coordinator->save();
+
+            return response()->json(new CoordinatorResource($coordinator), 201);
+        }
+
+        return response()->json(['message' => 'Email do coordenador de curso não existe. Por favor introduza uma email válido (email@ipleiria.pt).'], 401);
     }
 }

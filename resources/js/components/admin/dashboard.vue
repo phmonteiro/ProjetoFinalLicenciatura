@@ -10,6 +10,11 @@
             <router-link class="nav-link" :to="{name: 'editUsers'}">Editar Utilizadores</router-link>
 
             <router-link class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
+
+            <router-link
+              class="nav-link"
+              :to="{name: 'addCoordinator'}"
+            >Adicionar Coordenador de curso</router-link>
           </div>
         </section>
         <b-col cols="12">

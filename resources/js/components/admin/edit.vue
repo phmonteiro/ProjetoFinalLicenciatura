@@ -28,7 +28,6 @@
       <label for="inputType">Tipo de utilizador:</label>
       <select class="form-control" v-model="user.type" id="type" name="type">
         <option value="Administrator">Administrador</option>
-        <option value="Professor">Professor</option>
         <option value="Services">Serviços</option>
         <option value="Estudante">Estudante</option>
         <option value="Director">Diretor</option>

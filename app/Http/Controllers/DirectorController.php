@@ -20,6 +20,7 @@ use App\ServiceRequest;
 use App\History;
 use Illuminate\Support\Facades\DB;
 
+
 class DirectorController extends Controller
 {
     public function addStudentSupport($id)

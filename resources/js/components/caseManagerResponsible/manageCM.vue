@@ -22,11 +22,7 @@
       <h2>Lista de utilizadores</h2>
       <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
         <template slot="actions" slot-scope="row">
-          <button
-            class="btn btn-secondary"
-            v-on:click.prevent="editUser(row.item)"
-            v-if="row.item.number != user.number"
-          >Gerir</button>
+          <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir</button>
         </template>
       </b-table>
       <nav aria-label="Page navigation" v-if="users">

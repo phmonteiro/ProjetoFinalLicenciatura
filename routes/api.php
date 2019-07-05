@@ -30,6 +30,7 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('editSupport/{value}', 'SupportController@supportUpdate')->name('editSupport');
     Route::delete('deleteSupport/{value}', 'SupportController@supportDelete')->name('deleteSupport');
     Route::post('createSupport', 'SupportController@supportCreate')->name('createSupport');
+    Route::post('addCoordinator', 'AdminController@addCoordinator')->name('addCoordinator');
 
     //student
     Route::get('getEnee', 'StudentController@index');
@@ -86,7 +87,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('setCM/{id}', 'CaseManagerResponsibleController@setCM');
     Route::get('getStudents', 'CaseManagerResponsibleController@getStudents');
     Route::get('getStudentCMs/{email}', 'CaseManagerResponsibleController@getStudentCMs');
-    Route::delete('removeCM/{email}', 'CaseManagerResponsibleController@removeCM');
+    Route::delete('removeCM/{id}', 'CaseManagerResponsibleController@removeCM');
 
     //Case Manager
     Route::get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');

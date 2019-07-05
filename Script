@@ -1,169 +1,64 @@
-DROP TABLE IF EXISTS `users`;
-
-CREATE TABLE `users`
-(
-  `id` bigint
-(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar
-(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar
-(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number` int
-(11) DEFAULT NULL,
-  `phoneNumber` int
-(11) DEFAULT NULL,
-  `residence` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `zipCode` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `area` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `birthDate` date DEFAULT NULL,
-  `photo` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `course` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `curricularYear` int
-(11) DEFAULT NULL,
-  `enruledYear` int
-(11) DEFAULT NULL,
-  `school` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `identificationDocument` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `identificationNumber` int
-(11) DEFAULT NULL,
-  `nif` bigint
-(20) DEFAULT NULL,
-  `niss` bigint
-(20) DEFAULT NULL,
-  `sns` bigint
-(20) DEFAULT NULL,
-  `enee` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `educationalSupport` text COLLATE utf8mb4_unicode_ci,
-  `eneeExpirationDate` date DEFAULT NULL,
-  `firstLogin` tinyint
-(1) DEFAULT NULL,
-  `responsibleName` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `responsiblePhone` int
-(11) DEFAULT NULL,
-  `responsibleEmail` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `responsibleKin` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emergencyName` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `functionalAnalysis` text COLLATE utf8mb4_unicode_ci,
-  `emergencyPhone` int
-(11) DEFAULT NULL,
-  `emergencyEmail` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emergencyKin` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar
-(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `coordinatorApproval` tinyint
-(1) DEFAULT NULL,
-  `servicesApproval` varchar
-(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `secondEmail` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `departmentNumber` int
-(10) DEFAULT NULL,
-  `gender` varchar
-(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dateEneeApproved` date DEFAULT NULL,
-  `dateEneeRequested` date DEFAULT NULL,
-  `password` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `typeApplication` varchar
-(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY
-(`id`),
-  UNIQUE KEY `users_email_unique`
-(`email`),
-  UNIQUE KEY `users_number_unique`
-(`number`),
-  UNIQUE KEY `users_phonenumber_unique`
-(`phoneNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-
-INSERT INTO `users` (`
-name`,`email
-`, `type`, `course`, `school`,  `departmentNumber`)
-VALUES
-('Eugénio Pereira Lucas', 'coord.ap.estg@ipleiria.pt', 'Coordinator','Administração Pública','ESTG','9002');
-UNLOCK TABLES;
+Insert into coordinators(departmentNumber, email,name, school, course)
+Values(9001, 'coord.ap.estg@ipleiria.pt','Eugénio Pereira Lucas','ESTG','Administração Pública'),
+(9690, 'coord.bm.estg@ipleiria.pt','Rui Miguel Barreiros Ruben','ESTG','Biomecânica'),
+(9999, 'NA','Ricardo Filipe Gonçalves Martinho','ESTG','Ciências da Informação em Saúde'),
+(9627, 'coord.cf.estg@ipleiria.pt','Alexandra Cristina Pinheiro Carvalho','ESTG','Contabilidade e Finanças'),
+(9871, 'coord.cf.estg@ipleiria.pt','Alexandra Cristina Pinheiro Carvalho','ESTG','Contabilidade e Finanças'),
+(9741, 'coord.eau.estg@ipleiria.pt','Luís Manuel Ventura Serrano','ESTG','Engenharia Automóvel'),
+(9089, 'coord.ec.estg@ipleiria.pt','Ricardo José Leal Duarte','ESTG','Engenharia Civil'),
+(9881, 'coord.ec.estg@ipleiria.pt','Ricardo José Leal Duarte','ESTG','Engenharia Civil'),
+(9648, 'coord.eena.estg@ipleiria.pt','Judite Santos Vieira','ESTG','Engenharia da Energia e do Ambiente'),
+(9104, 'coord.egi.estg@ipleiria.pt','António Mário Henriques Pereira','ESTG','Engenharia e Gestão Industrial'),
+(9112, 'coord.eec.estg@ipleiria.pt','Mónica Jorge Carvalho de Figueiredo','ESTG','Engenharia Eletrotécnica e de Computadores'),
+(9998, 'coord.eec.estg@ipleiria.pt','Mónica Jorge Carvalho de Figueiredo','ESTG','Engenharia Eletrotécnica e de Computadores'),
+(9119, 'coord.ei.estg@ipleiria.pt','José Carlos Bregieiro Ribeiro','ESTG','Engenharia Informática'),
+(9885, 'coord.ei.estg@ipleiria.pt','José Carlos Bregieiro Ribeiro','ESTG','Engenharia Informática'),
+(9123, 'coord.em.estg@ipleiria.pt','Luís Manuel de Jesus Coelho','ESTG','Engenharia Mecânica'),
+(9886, 'coord.em.estg@ipleiria.pt','Luís Manuel de Jesus Coelho','ESTG','Engenharia Mecânica'),
+(9147, 'coord.ge.estg@ipleiria.pt','Maria João da Silva Jorge','ESTG','Gestão'),
+(9991, 'coord.ge.estg@ipleiria.pt','Maria João da Silva Jorge','ESTG','Gestão'),
+(2097, 'coord.jdm.estg@ipleiria.pt','Gustavo Miguel Jorge Reis','ESTG','Jogos Digitais e Multimédia'),
+(9205, 'coord.mk.estg@ipleiria.pt','Jacinta Raquel Miguel Moreira','ESTG','Marketing'),
+(9242, 'coord.so.estg@ipleiria.pt','Susana Catarina Simões de Almeida','ESTG','Solicitadoria'),
+(8015, 'coord.so.estg@ipleiria.pt','Susana Catarina Simões de Almeida','ESTG','Solicitadoria'),
+(2047, 'coord.map.estg@ipleiria.pt','Eugénio Pereira Lucas','ESTG','Administração Pública'),
+(2259, 'coord.mcif.estg@ipleiria.pt','Mário João Gonçalves Antunes','ESTG','Cibersegurança e Informática Forense'),
+(2159, 'coord.mcif.estg@ipleiria.pt','Mário João Gonçalves Antunes','ESTG','Cibersegurança e Informática Forense'),
+(6848, 'coord.mcg.estg@ipleiria.pt','Inês Margarida Cadima Lisboa','ESTG','Controlo de Gestão'),
+(2011, 'coord.meau.estg@ipleiria.pt','Hélder Manuel Ferreira dos Santos','ESTG','Engenharia Automóvel'),
+(2023, 'coord.mec-cc.estg@ipleiria.pt','Hugo Filipe Pinheiro Rodrigues','ESTG','Engenharia Civil – Construções Civis'),
+(2089, 'coord.mecdp.estg@ipleiria.pt','Fábio Jorge Pereira Simões','ESTG','Engenharia da Concepção e Desenvolvimento de Produto'),
+(2056, 'coord.meena.estg@ipleiria.pt','Maria Lizete Lopes Heleno','ESTG','Engenharia da Energia e do Ambiente'),
+(6358, 'coord.mee.estg@ipleiria.pt','Hugo Filipe Costelha de Castro','ESTG','Engenharia Eletrotécnica'),
+(2030, 'coord.mei-cm.estg@ipleiria.pt','Carlos Fernando Almeida Grilo','ESTG','Engenharia Informática – Computação Móvel'),
+(2059, 'coord.mem-pi.estg@ipleiria.pt','Mário António Simões Correia','ESTG','Engenharia Mecânica – Produção Industrial'),
+(2109, 'coord.mefdd.estg@ipleiria.pt','Joel Oliveira Correia Vasco','ESTG','Engenharia para Fabricação Digital Direta'),
+(2004, 'coord.mfe.estg@ipleiria.pt','Magali Pedro Costa','ESTG','Finanças Empresariais'),
+(9295, 'coord.mge.estg@ipleiria.pt','Lígia Catarina Marques Febra','ESTG','Gestão'),
+(2094, 'coord.mgsim.estg@ipleiria.pt','Rui Pedro Charters Lopes Rijo','ESTG','Gestão de Sistemas de Informação Médica'),
+(2037, 'coord.mmr.estg@ipleiria.pt','Alcina Teresa Gaspar Ferreira','ESTG','Marketing Relacional'),
+(2095, 'coord.mni.estg@ipleiria.pt','João Neves de Carvalho Santos','ESTG','Negócios Internacionais'),
+(2075, 'coord.mse.estg@ipleiria.pt','Ana Isabel Lambelho Costa','ESTG','Solicitadoria de Empresa'),
+(4506, 'coord.ag.tesp.estg@ipleiria.pt','Cristina Isabel Branco de Sá','ESTG','Apoio à Gestão'),
+(4507, 'coord.armi.tesp.estg@ipleiria.pt','Paulo Jorge da Cruz Ventura','ESTG','Automação, Robótica e Manutenção Industrial'),
+(4707, 'coord.armi.tesp.estg@ipleiria.pt','Paulo Jorge da Cruz Ventura','ESTG','Automação, Robótica e Manutenção Industrial'),
+(4508, 'coord.cor.tesp.estg@ipleiria.pt','Fernando Ferreira da Cruz','ESTG','Condução de Obra e Reabilitação'),
+(4509, 'coord.dwm.tesp.estg@ipleiria.pt','Maria Micaela Gonçalves Pinto Dinis Esteves','ESTG','Desenvolvimento Web e Multimédia'),
+(4510, 'coord.ert.tesp.estg@ipleiria.pt','Nuno Miguel Ferreira Miranda','ESTG','Eletrónica e Redes de Telecomunicações'),
+(4511, 'coord.eree.tesp.estg@ipleiria.pt','Romeu Manuel Vieira Vitorino','ESTG','Energias Renováveis e Eficiência Energética'),
+(4512, 'coord.fa.tesp.estg@ipleiria.pt','Henrique Amorim de Almeida','ESTG','Fabricação Automática'),
+(4534, 'coord.gq.tesp.estg@ipleiria.pt','Milena Maria Nogueira Vieira','ESTG','Gestão da Qualidade'),
+(4713, 'coord.gni.tesp.estg@ipleiria.pt','Márcio Continentino Lopes','ESTG','Gestão dos Negócios Internacionais'),
+(4514, 'coord.gea.tesp.estg@ipleiria.pt','Kirill Ispolnov','ESTG','Gestão Energética e Ambiental'),
+(4535, 'coord.ptp.tesp.estg@ipleiria.pt','João Manuel Matias','ESTG','Processos de Transformação de Plásticos'),
+(4515, 'coord.psi.tesp.estg@ipleiria.pt','Sílvio Priem Mendes','ESTG','Programação de Sistemas de Informação'),
+(4716, 'coord.pm.tesp.estg@ipleiria.pt','João Manuel Matias','ESTG','Projeto de Moldes'),
+(4517, 'coord.rsi.tesp.estg@ipleiria.pt','Rui Vasco Guerra Baptista Monteiro','ESTG','Redes e Sistemas Informáticos'),
+(4718, 'coord.sj.tesp.estg@ipleiria.pt','Manuel Ângelo Gomes Abrunhosa Marques de Almeida','ESTG','Serviços Jurídicos'),
+(4519, 'coord.se.tesp.estg@ipleiria.pt','Natália dos Santos Gameiro Gonçalves','ESTG','Sistemas Eletromecânicos'),
+(4520, 'coord.ta.tesp.estg@ipleiria.pt','Sérgio Pereira dos Santos','ESTG','Tecnologia Automóvel'),
+(4720, 'coord.ta.tesp.estg@ipleiria.pt','Sérgio Pereira dos Santos','ESTG','Tecnologia Automóvel'),
+(4521, 'coord.vnc.tesp.estg@ipleiria.pt','Ana Sofia Patrício Pinto Lopes','ESTG','Venda e Negociação Comercial'),
+(4538, 'coord.veh.tesp.estg@ipleiria.pt','Carlos Daniel Henriques Ferreira','ESTG','Veículos Elétricos e Híbridos');
 
 
-
-
-----------------------------------------------------------------------------------------------------------------------
-
-
-Diretora da ESECS	Sandrina Diniz Fernandes Milhano
-Diretor da ESTG	Carlos Alexandre Bento Capela
-Diretor da ESAD.CR	João Pedro Faustino dos Santos
-Diretor da ESTM	Paulo Jorge Santos Almeida
-Diretora da ESSLei	Maria Clarisse Carvalho Martins Louro
-
-Biomecânica	Rui Miguel Barreiros Ruben	coord.bm.estg@ipleiria.pt	
-Ciências da Informação em Saúde Ricardo Filipe Gonçalves Martinho	 	 
-Contabilidade e Finanças	Alexandra Cristina Pinheiro Carvalho	coord.cf.estg@ipleiria.pt
-Engenharia Automóvel	Luís Manuel Ventura Serrano	coord.eau.estg@ipleiria.pt
-Engenharia Civil	Ricardo José Leal Duarte	coord.ec.estg@ipleiria.pt
-Engenharia da Energia e do Ambiente	Judite Santos Vieira	coord.eena.estg@ipleiria.pt
-Engenharia e Gestão Industrial	António Mário Henriques Pereira	coord.egi.estg@ipleiria.pt	
-Engenharia Eletrotécnica e de Computadores	Mónica Jorge Carvalho de Figueiredo	coord.eec.estg@ipleiria.pt	
-Engenharia Informática	José Carlos Bregieiro Ribeiro	coord.ei.estg@ipleiria.pt	
-Engenharia Mecânica	Luís Manuel de Jesus Coelho	coord.em.estg@ipleiria.pt	
-Gestão	Maria João da Silva Jorge	coord.ge.estg@ipleiria.pt
-Informática para a Saúde	Ricardo Filipe Gonçalves Martinho	coord.is.estg@ipleiria.pt
-Jogos Digitais e Multimédia	Gustavo Miguel Jorge Reis	coord.jdm.estg@ipleiria.pt
-Marketing	Jacinta Raquel Miguel Moreira	coord.mk.estg@ipleiria.pt	
-Solicitadoria	Susana Catarina Simões de Almeida	coord.so.estg@ipleiria.pt
-Administração Pública	Eugénio Pereira Lucas	coord.map.estg@ipleiria.pt	
-Cibersegurança e Informática Forense	Mário João Gonçalves Antunes	coord.mcif.estg@ipleiria.pt	
-Controlo de Gestão	Inês Margarida Cadima Lisboa	coord.mcg.estg@ipleiria.pt	
-Engenharia Automóvel	Hélder Manuel Ferreira dos Santos	coord.meau.estg@ipleiria.pt	ComissÃ£o CientÃ­fico-PedagÃ³gica do curso
-Engenharia Civil – Construções Civis	Hugo Filipe Pinheiro Rodrigues	coord.mec-cc.estg@ipleiria.pt	
-Engenharia da Concepção e Desenvolvimento de Produto	Fábio Jorge Pereira Simões	coord.mecdp.estg@ipleiria.pt	
-Engenharia da Energia e do Ambiente	Maria Lizete Lopes Heleno	coord.meena.estg@ipleiria.pt	
-Engenharia Eletrotécnica	Hugo Filipe Costelha de Castro	coord.mee.estg@ipleiria.pt	
-Engenharia Informática – Computação Móvel	Carlos Fernando Almeida Grilo	coord.mei-cm.estg@ipleiria.pt	
-Engenharia Mecânica – Produção Industrial	Mário António Simões Correia	coord.mem-pi.estg@ipleiria.pt	
-Engenharia para Fabricação Digital Direta	Joel Oliveira Correia Vasco 	coord.mefdd.estg@ipleiria.pt	
-Finanças Empresariais	Magali Pedro Costa	coord.mfe.estg@ipleiria.pt	
-Gestão	Lígia Catarina Marques Febra	coord.mge.estg@ipleiria.pt	
-Gestão de Sistemas de Informação Médica	Rui Pedro Charters Lopes Rijo	coord.mgsim.estg@ipleiria.pt
-Marketing Relacional	Alcina Teresa Gaspar Ferreira	coord.mmr.estg@ipleiria.pt	
-Negócios Internacionais	João Neves de Carvalho Santos	coord.mni.estg@ipleiria.pt	
-Solicitadoria de Empresa	Ana Isabel Lambelho Costa	coord.mse.estg@ipleiria.pt
-Apoio à Gestão	Cristina Isabel Branco de Sá	coord.ag.tesp.estg@ipleiria.pt	
-Automação, Robótica e Manutenção Industrial	Paulo Jorge da Cruz Ventura	coord.armi.tesp.estg@ipleiria.pt	
-Condução de Obra e Reabilitação	Fernando Ferreira da Cruz	coord.cor.tesp.estg@ipleiria.pt	
-Desenvolvimento Web e Multimédia	Maria Micaela Gonçalves Pinto Dinis Esteves	coord.dwm.tesp.estg@ipleiria.pt	
-Eletrónica e Redes de Telecomunicações	Nuno Miguel Ferreira Miranda	coord.ert.tesp.estg@ipleiria.pt	
-Energias Renováveis e Eficiência Energética	Romeu Manuel Vieira Vitorino	coord.eree.tesp.estg@ipleiria.pt	
-Fabricação Automática	Henrique Amorim de Almeida	coord.fa.tesp.estg@ipleiria.pt	
-Gestão da Qualidade	Milena Maria Nogueira Vieira	coord.gq.tesp.estg@ipleiria.pt	
-Gestão dos Negócios Internacionais	Márcio Continentino Lopes	coord.gni.tesp.estg@ipleiria.pt	
-Gestão Energética e Ambiental	Kirill Ispolnov	coord.gea.tesp.estg@ipleiria.pt	
-Processos de Transformação de Plásticos	João Manuel Matias	coord.ptp.tesp.estg@ipleiria.pt	 
-Programação de Sistemas de Informação	Sílvio Priem Mendes	coord.psi.tesp.estg@ipleiria.pt	
-Projeto de Moldes	João Manuel Matias	coord.pm.tesp.estg@ipleiria.pt	§ 1
-Redes e Sistemas Informáticos	Rui Vasco Guerra Baptista Monteiro	coord.rsi.tesp.estg@ipleiria.pt	
-Serviços Jurídicos	Manuel Ângelo Gomes Abrunhosa Marques de Almeida	coord.sj.tesp.estg@ipleiria.pt	
-Sistemas Eletromecânicos	Natália dos Santos Gameiro Gonçalves	coord.se.tesp.estg@ipleiria.pt	
-Tecnologia Automóvel	Sérgio Pereira dos Santos	coord.ta.tesp.estg@ipleiria.pt	
-Venda e Negociação Comercial	Ana Sofia Patrício Pinto Lopes	coord.vnc.tesp.estg@ipleiria.pt	
-Veículos Elétricos e Híbridos	Carlos Daniel Henriques Ferreira	coord.veh.tesp.estg@ipleiria.pt	

@@ -8,7 +8,9 @@ use App\Student_Supports;
 use App\Http\Resources\SupportResource;
 use App\User;
 use App\Tutor;
+use App\History;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Carbon;
 
 class SupportController extends Controller
 {
@@ -94,7 +96,6 @@ class SupportController extends Controller
         $history->description = "O diretor aprovou o pedido de ENEE";
         $history->date = Carbon::now();
         $history->save();
-
         //Email $dados['teachers] tem os professores que têm de ser notificados, coordenador do curso, para estudantes, serviços académicos, professor tutor
 
 

@@ -27,7 +27,7 @@
     <div class="form-group">
       <label for="inputNee">Necessidades educativas especiais</label>
       <div v-for="aux in nee">
-        <l>{{aux.name}}</l>
+        <li>{{aux.name}}</li>
       </div>
     </div>
 
@@ -122,23 +122,31 @@
       />
     </div>
 
-    <div class="form-group">
-      <button
-        type="button"
-        class="btn btn-info"
-        data-toggle="modal"
-        data-target="#myModal"
-      >Continuar</button>
-      <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
-    </div>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#exampleModalLong"
+    >Continuar</button>
+    <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
 
     <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
+    <div
+      class="modal fade"
+      id="exampleModalLong"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLongTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Definir professores notificados do estatuto</h4>
+            <h5
+              class="modal-title"
+              id="exampleModalLongTitle"
+            >Definir professores notificados do estatuto</h5>
           </div>
           <div class="modal-body">
             <div>
@@ -155,6 +163,11 @@
                   </label>
                 </div>
               </div>
+              <button
+                type="button"
+                class="btn btn-danger"
+                v-on:click.prevent="cancel()"
+              >Limpar seleção</button>
             </div>
           </div>
           <div class="modal-footer">
@@ -166,7 +179,12 @@
               name="ok"
               v-on:click.prevent="save()"
             >Aprovar</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              v-on:click.prevent="cancel()"
+              data-dismiss="modal"
+            >Cancelar</button>
           </div>
         </div>
       </div>
@@ -273,6 +291,9 @@ export default {
       };
       this.$emit("save-user", data);
     },
+    cancel: function() {
+      this.aux = [];
+    },
     getAllSupports() {
       axios
         .get("api/getSupports")
@@ -308,3 +329,8 @@ export default {
   }
 };
 </script>
+<style>
+body.modal-open {
+  overflow: visible;
+}
+</style>

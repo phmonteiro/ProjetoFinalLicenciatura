@@ -1,56 +1,66 @@
 <template>
   <div>
-    <div class="container" v-if="supports">
-      <h4>Adicionar novo apoio</h4>
+    <b-container>
+      <b-row>
+        <b-col></b-col>
+        <b-col>
+          <div class="loader">
+            <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
+          </div>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
+    <edit-support
+      :support="currentSupport"
+      @save-support="saveSupport()"
+      @cancel-edit="cancelEdit()"
+    ></edit-support>
 
-      <edit-support
-        :support="currentSupport"
-        @save-support="saveSupport()"
-        @cancel-edit="cancelEdit()"
-      ></edit-support>
-      <div class="loader">
-        <ClipLoader sizeUnit="px" v-if="loading" :size="50" />
-      </div>
-      <div class="container">
-        <h2>Lista de apoios</h2>
-        <b-table
-          striped
-          hover
-          v-if="supports!=null"
-          :items="supports"
-          :fields="fields"
-          :per-page="perPage"
-          :current-page="currentPage"
-        >
-          <template slot="actions" slot-scope="row">
-            <button
-              class="btn btn-secondary"
-              v-on:click.prevent="editSupport(row.item)"
-              v-if="row.item.number != user.number"
-            >Editar</button>
-            <button
-              class="btn btn-danger"
-              v-on:click.prevent="deleteSupport(row.item)"
-              v-if="row.item.number != user.number"
-            >Apagar</button>
-          </template>
-        </b-table>
+    <b-container>
+      <b-row>
+        <b-col>
+          <h2>Lista de apoios</h2>
+          <b-table
+            striped
+            hover
+            v-if="supports!=null"
+            :items="supports"
+            :fields="fields"
+            :per-page="perPage"
+            :current-page="currentPage"
+          >
+            <template slot="actions" slot-scope="row">
+              <button
+                class="btn btn-secondary"
+                v-on:click.prevent="editSupport(row.item)"
+                v-if="row.item.number != user.number"
+              >Editar</button>
+              <button
+                class="btn btn-danger"
+                v-on:click.prevent="deleteSupport(row.item)"
+                v-if="row.item.number != user.number"
+              >Apagar</button>
+            </template>
+          </b-table>
 
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          aria-controls="my-table"
-        ></b-pagination>
-      </div>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            v-if="supports"
+          ></b-pagination>
 
-      <b-input-group prepend="Novo Apoio" class="mt-3">
-        <b-form-input v-model="newSupport.text"></b-form-input>
-        <b-input-group-append>
-          <b-button variant="outline-success" v-on:click.prevent="createSupport()">Criar</b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </div>
+          <b-input-group v-if="supports" prepend="Novo Apoio" class="mt-3">
+            <b-form-input v-model="newSupport.text"></b-form-input>
+            <b-input-group-append>
+              <b-button variant="outline-success" v-on:click.prevent="createSupport()">Criar</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -87,6 +97,7 @@ export default {
         .get("api/getSupports")
         .then(response => {
           this.supports = response.data;
+          this.rows = this.supports.length;
           this.loading = false;
         })
         .catch(error => {

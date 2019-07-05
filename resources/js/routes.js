@@ -108,6 +108,14 @@ const routes = [{
       middlewareAuth: true,
     },
   },
+  {
+    path: '/admin/addCoordinator',
+    name: 'addCoordinator',
+    component: require('./components/admin/addCoordinator.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
   ],
 },
 {
@@ -139,8 +147,8 @@ const routes = [{
     meta: {
       middlewareAuth: true,
     },
-  }
-  
+  },
+
   ],
 },
 {

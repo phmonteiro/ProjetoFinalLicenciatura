@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="loader">
-      <ClipLoader sizeUnit="px" v-if="loading" :size="50" />
+      <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
     </div>
     <div class="container" v-if="users">
       <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
@@ -21,6 +21,7 @@
             <p v-if="row.item.type=='SAS'">Serviços de Ação Social</p>
             <p v-if="row.item.type=='DST'">Direção de Serviços Técnicos</p>
             <p v-if="row.item.type=='UED'">Unidade de Ensino à Distância</p>
+            <p v-if="row.item.type=='SA'">Serviços Académicos</p>
           </template>
           <template slot="actions" slot-scope="row">
             <button

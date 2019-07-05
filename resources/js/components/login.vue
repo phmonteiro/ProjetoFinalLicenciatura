@@ -127,7 +127,12 @@ export default {
           this.$store.commit("setUser", response.data.user);
           this.$store.commit("setToken", response.headers.authorization);
           this.loading = false;
-          //Vem do role da base de dados da universidade
+          console.log(response.data.user.type);
+
+          if (response.data.user.type == "CaseManagerResponsible") {
+            this.$router.push("/caseManagerResponsible");
+            return;
+          }
           if (
             response.data.user.type == "Estudante" &&
             (response.data.user.enee == null ||
@@ -166,10 +171,6 @@ export default {
           }
           if (response.data.type == "Coordinator") {
             this.$router.push("/coordinator");
-            return;
-          }
-          if (response.data.type == "CaseManagerResponsible") {
-            this.$router.push("/caseManagerResponsible");
             return;
           }
           if (response.data.type == "CaseManager") {

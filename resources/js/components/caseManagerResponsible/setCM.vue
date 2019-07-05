@@ -36,7 +36,7 @@
                 <li>Nome: {{cm.caseManagerName}}, Email: {{cm.caseManagerEmail}}</li>
               </b-col>
               <b-col>
-                <b-button variant="btn btn-danger" v-on:click.prevent="removeCM()">remover</b-button>
+                <b-button variant="btn btn-danger" v-on:click.prevent="removeCM(cm)">remover</b-button>
               </b-col>
             </b-row>
           </b-container>
@@ -97,7 +97,7 @@ export default {
           });
         })
         .catch(error => {
-          console.log(error);
+          this.loading = false;
           this.$toasted.error(
             "Erro ao atribuir gestor caso. Por favor tente novamente.",
             {
@@ -108,9 +108,10 @@ export default {
           );
         });
     },
-    removeCM() {
+    removeCM(cm) {
+      console.log(cm);
       axios
-        .delete("api/removeCM/" + this.user.email)
+        .delete("api/removeCM/" + cm.id)
         .then(response => {
           this.$emit("refreshCMs");
           this.$toasted.success("Gestor de caso removido.", {
