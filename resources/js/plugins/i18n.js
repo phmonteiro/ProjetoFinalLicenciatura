@@ -99,6 +99,7 @@ const messages = {
     submeter: 'Submeter',
     ficheiro: 'Escolha os ficheiros',
     adicionar: 'Adicionar',
+    a_carregar: 'A carregar'
   },
   'en': {
     nome_utilizador: 'Username',
@@ -194,7 +195,7 @@ const messages = {
     ficheiro: 'Choose files',
     adicionar_aluno: 'Add student with ENEE status',
     adicionar: 'Add',
-
+    a_carregar: 'Loading'
 
   },
 };

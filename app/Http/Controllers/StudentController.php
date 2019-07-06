@@ -207,7 +207,7 @@ class StudentController extends Controller
         }
 
         $user->phoneNumber = $dados['phoneNumber'];
-        $user->birthDate = $dados['birthDate'];
+        $user->birthDate = (new Carbon($dados['birthDate']))->format('Y-m-d');
         $user->residence = $dados['residence'];
         $user->zipCode = $dados['zipCode'];
         $user->area = $dados['area'];

@@ -107,7 +107,7 @@ export default {
       cartaoCidadao: false,
       language: "",
       loading: false,
-      label: "Loading"
+      label: this.$t('a_carregar')
     };
   },
   methods: {

@@ -168,12 +168,13 @@ class CaseManagerController extends Controller
             'decision' => 'required',
             'information' => 'required'
         ]);
+        
         $contact = new Contact();
         $contact->studentEmail = $dados['email'];
         if ($dados['interactionDate'] == null) {
             $contact->date = Carbon::now();
         } else {
-            $contact->date = $dados['interactionDate'];
+            $contact->date =$dados['interactionDate'];
         }
         $contact->service = $dados['service'];
         $contact->decision = $dados['decision'];
@@ -196,9 +197,8 @@ class CaseManagerController extends Controller
                 $interactionFile->save();
             }
         }
-        $student = User::where('email', $dados['email']);
         $history = new History();
-        $history->studentEmail = $student->email;
+        $history->studentEmail = $dados['email'];
         $history->description = "Gestor de caso reuniu com o estudante";
         $history->date = Carbon::now();
         $history->save();
