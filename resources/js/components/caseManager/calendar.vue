@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style>
-    .demo-app .modal-backdrop.show {
+  .modal-backdrop.show {
         opacity: 0;
         display: none;
     }

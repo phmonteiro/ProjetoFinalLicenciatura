@@ -40,7 +40,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('setService', 'StudentController@setService');
     Route::get('getContacts', 'StudentController@getContacts');
     Route::get('getServices', 'StudentController@getServices');
-    Route::get('getMyMeetings', 'StudentController@myMeetingsStudent');
+    Route::get('getStudentMeetings', 'StudentController@myMeetingsStudent');
     Route::post('subscription', 'StudentController@subscription');
     Route::get('residence/{residence}/{area}', 'StudentController@getResidence');
     Route::get('getUser/{id}', 'StudentController@show');
@@ -49,6 +49,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('editProfile', 'StudentController@edit');
     Route::get('getNee/{id}', 'StudentController@getNee');
     Route::get('getTeachersStudent/{id}', 'StudentController@getTeacherStudent');
+    Route::get('getStudentTutor/{id}', 'StudentController@getStudentTutor');
 
     //services
     Route::post('setContact/{id}', 'ServiceController@contact');

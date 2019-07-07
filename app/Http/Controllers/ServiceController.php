@@ -230,8 +230,9 @@ class ServiceController extends Controller
         $user->servicesApproval = 'approved';
         $user->save();
 
-        $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->get();
+        $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->first();
         $service->approval  = 'Aprovado';
+        $service->save();
         $history = new History();
         $history->studentEmail = $user->email;
         $history->description = "O " . Auth::user()->type . ' deu o parecer de aprovado para o estudante';
@@ -264,7 +265,7 @@ class ServiceController extends Controller
 
     public function getServicesRequests()
     {
-        $services = ServiceRequest::where('name', Auth::user()->type)->get();
+        $services = ServiceRequest::where('name', Auth::user()->type)->whereNull('approval')->get();
         $users = array();
         for ($i = 0; $i < sizeOf($services); $i++) {
             $aux = $services[$i]->studentEmail;

@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary" type="submit" v-on:click.prevent="addCoordinator()">Adicionar</button>
+      <button class="btn btn-primary mt-3" type="submit" v-on:click.prevent="addCoordinator()">Adicionar</button>
     </div>
   </b-container>
 </template>

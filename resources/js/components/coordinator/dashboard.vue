@@ -13,7 +13,7 @@
         <b-col cols="12">
           <div class="container pt-3 content">
             <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
-            <h3>Sou Coordenador</h3>
+            <!-- <h3>Sou Coordenador</h3> -->
           </div>
           <router-view></router-view>
         </b-col>

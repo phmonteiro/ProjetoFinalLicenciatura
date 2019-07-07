@@ -38,16 +38,26 @@
     <div class="form-group">
       <b-row>
         <b-col>
-          <label for="information">Data</label>
+          <label for="information">Data / hora</label>
           <br />
-          <date-picker v-model="data.date" valuetype="format" lang="pt-br"></date-picker>
+          <!-- <date-picker v-model="data.date" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker> -->
+          <!-- <div v-for="type in types" :key="type"> -->
+            <b-row>
+              <b-col><b-form-input id="`type-date`" type="date" v-model="data.date"></b-form-input></b-col>
+              <b-col><b-form-input id="`type-time`" type="time" v-model="data.time"></b-form-input></b-col>
+            </b-row>
+            
+            
+          
+            
+          <!-- </div> -->
         </b-col>
-        <b-col>
+        <!-- <b-col>
           <label for="information">Hora</label>
           <div v-for="type in types" :key="type">
             <b-form-input :id="`type-${type}`" :type="type" v-model="data.time"></b-form-input>
           </div>
-        </b-col>
+        </b-col> -->
       </b-row>
     </div>
 
@@ -72,7 +82,7 @@ export default {
         date: null
       },
       files: [],
-      types: [`time`]
+      types: ['date',`time`]
     };
   },
   methods: {

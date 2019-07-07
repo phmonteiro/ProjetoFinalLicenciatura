@@ -27,8 +27,8 @@
         />
       </div>
 
+      <h4>Gestor(es) de caso</h4>
       <div v-if="studentCMs">
-        <h4>Gestor(es) de caso</h4>
         <div v-for="(cm, index) in studentCMs" :key="index">
           <b-container>
             <b-row>

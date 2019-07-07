@@ -110,7 +110,7 @@ export default {
       this.$emit("cancel-edit");
     },
     save: function() {
-      this.$emit("approve", data);
+      this.$emit("approve", this.user.id);
     }
   },
 

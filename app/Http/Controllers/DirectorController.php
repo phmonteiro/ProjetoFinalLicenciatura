@@ -108,15 +108,31 @@ class DirectorController extends Controller
 
 
         if ($dados['tutor'] != null) {
-            $tutor = new Tutor();
-            $tutor->studentEmail = $user->email;
-            $tutor->tutorEmail = $dados['tutor'];
+            $currentTutor = Tutor::where('studentEmail', $dados['email'])->firstOrFail();
+            if($currentTutor!=null){
+                $currentTutor->tutorEmail = $dados['tutor'];
+                $currentTutor->save();
 
-            $history = new History();
-            $history->studentEmail = $user->email;
-            $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
-            $history->date = Carbon::now();
-            $history->save();
+                $history = new History();
+                $history->studentEmail = $user->email;
+                $history->description = "O diretor alterou para o tutor " . $currentTutor->tutorEmail;
+                $history->date = Carbon::now();
+                $history->save();
+            }
+            else {
+                $tutor = new Tutor();
+                $tutor->studentEmail = $user->email;
+                $tutor->tutorEmail = $dados['tutor'];
+                $tutor->save();
+
+                $history = new History();
+                $history->studentEmail = $user->email;
+                $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
+                $history->date = Carbon::now();
+                $history->save();
+            }
+
+            
         }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();

@@ -120,7 +120,7 @@ export default {
       currentUser: null,
       supportsForStudent: null,
       nee: null,
-      teachers: null
+      teachers: null,
     };
   },
   methods: {
@@ -152,6 +152,7 @@ export default {
     editUser(row) {
       this.currentUser = Object.assign({}, row);
       this.getStudentSupports();
+      
       let user = row.id;
       axios
         .get("api/getNee/" + row.id)
@@ -230,7 +231,8 @@ export default {
             theme: "bubble"
           });
         });
-    }
+    },
+    
   },
   created() {
     this.getEnee();
