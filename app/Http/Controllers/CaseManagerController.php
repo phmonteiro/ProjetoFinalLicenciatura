@@ -43,7 +43,7 @@ class CaseManagerController extends Controller
         $plan->diagnostic = $dados['diagnostic'];
         $plan->save();
 
-        $student = Student::findOrFail($dados['studentId']);
+        $student = User::findOrFail($dados['studentId']);
 
         $history = new History();
         $history->studentEmail = $student->email;
@@ -76,7 +76,7 @@ class CaseManagerController extends Controller
         $plan->diagnostic = $dados['diagnostic'];
         $plan->save();
 
-        $student = Student::findOrFail($plan->studentEmail);
+        $student = User::findOrFail($plan->studentId);
 
         $history = new History();
         $history->studentEmail = $student->email;
@@ -95,11 +95,12 @@ class CaseManagerController extends Controller
     public function setEneeMeeting($id, Request $request)
     {
         $meeting = Meeting::findOrFail($id);
+        //dd($request);
 
         $dados = $request->validate([
             'info' => 'required|string',
             'place' => 'required|string',
-            'date' => 'required|date_format:Y-m-d',
+            'date' => 'required',
             'time' => 'required|date_format:H:i',
         ]);
 
@@ -168,12 +169,13 @@ class CaseManagerController extends Controller
             'decision' => 'required',
             'information' => 'required'
         ]);
+        
         $contact = new Contact();
         $contact->studentEmail = $dados['email'];
         if ($dados['interactionDate'] == null) {
             $contact->date = Carbon::now();
         } else {
-            $contact->date = $dados['interactionDate'];
+            $contact->date =$dados['interactionDate'];
         }
         $contact->service = $dados['service'];
         $contact->decision = $dados['decision'];
@@ -196,9 +198,8 @@ class CaseManagerController extends Controller
                 $interactionFile->save();
             }
         }
-        $student = User::where('email', $dados['email']);
         $history = new History();
-        $history->studentEmail = $student->email;
+        $history->studentEmail = $dados['email'];
         $history->description = "Gestor de caso reuniu com o estudante";
         $history->date = Carbon::now();
         $history->save();

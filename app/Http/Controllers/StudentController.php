@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\ZipCodeResource;
 use App\Meeting;
+use App\Tutor;
 use App\Contact;
 use App\ZipCode;
 use App\Supports;
@@ -207,7 +208,7 @@ class StudentController extends Controller
         }
 
         $user->phoneNumber = $dados['phoneNumber'];
-        $user->birthDate = $dados['birthDate'];
+        $user->birthDate = (new Carbon($dados['birthDate']))->format('Y-m-d');
         $user->residence = $dados['residence'];
         $user->zipCode = $dados['zipCode'];
         $user->area = $dados['area'];
@@ -344,6 +345,7 @@ class StudentController extends Controller
 
         $service = new Service();
         $service->email = $user->email;
+        $service->name = $user->name;
         $service->support = $dados['requestedSupport'];
         $service->reason = $dados['reason'];
 
@@ -355,6 +357,11 @@ class StudentController extends Controller
 
         $service->save();
         return response()->json(new ServiceResource($service), 201);
+    }
+    public function getStudentTutor($id)
+    {
+        $tutorEmail = Tutor::where('studentEmail', $id)->first('tutorEmail');
+        return response()->json($tutorEmail, 200);
     }
 
     public function getTeacherStudent($id)

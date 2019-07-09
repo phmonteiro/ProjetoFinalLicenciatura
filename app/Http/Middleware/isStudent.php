@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Illuminate\Support\Facades\Response;
 class isStudent
 {
     /**
@@ -15,7 +15,7 @@ class isStudent
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->type == 'Estudante') {
+        if ($request->user() && $request->user()->type == 'Estudante' && $request->user()->enee == 'approved') {
             return $next($request);
         }
         return Response::json([

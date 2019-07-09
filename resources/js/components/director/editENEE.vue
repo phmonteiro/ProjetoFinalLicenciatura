@@ -28,9 +28,15 @@
     <b-form-group label="Apoios ao estudante">
       <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
     </b-form-group>
+    
+    <div class="form-group" v-if="studentTutor!=null">
+      <label for="inputTutor">Professor Tutor</label>
+      <li>{{studentTutor}}</li>
+    </div>
+
 
     <div class="form-group">
-      <label for="inputTutor">Professor Tutor</label>
+      <label for="inputTutor">Alterar/Atribuir Professor Tutor</label>
       <input
         type="email"
         class="form-control"
@@ -49,7 +55,7 @@
 </template>
 <script>
 export default {
-  props: ["user", "studentSupports"],
+  props: ["user", "studentSupports", "studentTutor"],
   data: function() {
     return {
       data: {
@@ -105,7 +111,8 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+    
   },
   created() {
     this.getAllSupports();

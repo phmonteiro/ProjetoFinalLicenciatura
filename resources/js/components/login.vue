@@ -107,7 +107,7 @@ export default {
       cartaoCidadao: false,
       language: "",
       loading: false,
-      label: "Loading"
+      label: this.$t('a_carregar')
     };
   },
   methods: {
@@ -169,11 +169,11 @@ export default {
             this.$router.push("/director");
             return;
           }
-          if (response.data.type == "Coordinator") {
+          if (response.data.user.type == "Coordinator") {
             this.$router.push("/coordinator");
             return;
           }
-          if (response.data.type == "CaseManager") {
+          if (response.data.user.type == "CaseManager") {
             this.$router.push("/caseManager");
             return;
           }

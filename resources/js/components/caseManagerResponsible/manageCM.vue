@@ -19,7 +19,7 @@
       @cancel-edit="cancelEdit()"
     ></set-cm>
     <div class="container">
-      <h2>Lista de utilizadores</h2>
+      <h2>Lista de estudantes</h2>
       <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
         <template slot="actions" slot-scope="row">
           <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir</button>
@@ -31,7 +31,7 @@
             <a
               class="page-link"
               href="#"
-              @click.prevent="getUsers(pagination.prev_page_url)"
+              @click.prevent="getStudent(pagination.prev_page_url)"
             >Anterior</a>
           </li>
 
@@ -46,7 +46,7 @@
             <a
               class="page-link"
               href="#"
-              @click.prevent="getUsers(pagination.next_page_url)"
+              @click.prevent="getStudent(pagination.next_page_url)"
             >Próximo</a>
           </li>
         </ul>

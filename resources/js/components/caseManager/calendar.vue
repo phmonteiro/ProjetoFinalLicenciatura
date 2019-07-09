@@ -223,18 +223,18 @@ export default {
 </script>
 
 <style>
-.modal-backdrop.show {
-  opacity: 0;
-  display: none;
-}
+  .modal-backdrop.show {
+        opacity: 0;
+        display: none;
+    }
 
 .demo-app span.fc-title {
   font-size: 10px;
   color: white;
 }
 
-.demo-app-calendar {
-  margin: 0 auto;
-  max-width: 60%;
-}
+    .demo-app-calendar {
+        margin: 0 auto;
+        max-width: 60%;
+    }
 </style>

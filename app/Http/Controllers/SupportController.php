@@ -55,6 +55,7 @@ class SupportController extends Controller
             $tutor = new Tutor();
             $tutor->studentEmail = $user->email;
             $tutor->tutorEmail = $dados['tutor'];
+            $tutor->save();
 
             $history = new History();
             $history->studentEmail = $user->email;

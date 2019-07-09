@@ -3,8 +3,8 @@
     <b-container fluid>
       <b-row>
         <b-col>
-          <h2>Bem vindo à plataforma 100%IN</h2>
-          <a class="btn btn-secondary" v-on:click.prevent="subscribe()" href>Pedir estatuto</a>
+          <h2>{{$t('bem_vindo')}}</h2>
+          <a class="btn btn-secondary" v-on:click.prevent="subscribe()" href>{{$t('pedir_estatuto')}}</a>
         </b-col>
       </b-row>
     </b-container>

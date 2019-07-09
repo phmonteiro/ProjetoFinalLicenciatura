@@ -640,6 +640,8 @@ export default {
       }
     },
     sendForm() {
+      console.log(this.student.birthDate);
+      
       const formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
         formData.append("photo" + i, this.files[i]);

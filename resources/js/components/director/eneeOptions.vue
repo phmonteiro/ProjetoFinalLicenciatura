@@ -235,7 +235,7 @@ export default {
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "Medical  report" + user.name + ".zip");
+          link.setAttribute("download", "Medical  report" + this.user.name + ".zip");
           document.body.appendChild(link);
           link.click();
           this.$toasted.success(
@@ -248,6 +248,8 @@ export default {
           );
         })
         .catch(error => {
+          console.log(error.message);
+          
           this.$toasted.error(
             "Error ao fazer download do relatório médico do estudante. Por favor tente novamente.",
             {

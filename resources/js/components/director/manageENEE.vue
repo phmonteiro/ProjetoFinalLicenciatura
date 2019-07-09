@@ -5,6 +5,7 @@
       :studentSupports="supportsForStudent"
       @refresh="getEnee"
       @save-user="saveUser"
+      :studentTutor="studentTutor"
       @cancel-edit="cancelEdit()"
     ></eneeEdit>
     <b-container>
@@ -104,7 +105,8 @@ export default {
         }
       ],
       currentUser: null,
-      supportsForStudent: null
+      supportsForStudent: null,
+      studentTutor: null
     };
   },
   methods: {
@@ -138,6 +140,18 @@ export default {
       console.log(row);
 
       this.getStudentSupports();
+      this.getStudentTutor();
+    },
+    getStudentTutor() {
+      axios
+        .get("api/getStudentTutor/" + this.currentUser.email)
+        .then(response => {
+          this.studentTutor = response.data.tutorEmail;
+          
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     cancelEdit: function() {
       this.currentUser = null;

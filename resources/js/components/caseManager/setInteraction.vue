@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
       <label for="decision">Data da interação:</label>
-      <date-picker v-model="data.interactionDate" valuetype="format" lang="pt-br"></date-picker>
+      <date-picker v-model="data.interactionDate" valueType="format" lang="pt-br"></date-picker>
       <code>Caso nao especificado, a data de hoje será assumida.</code>
     </div>
 
@@ -65,7 +65,7 @@
 
     <div class="form-group">
       <label for="nextInteraction">Proxima interação:</label>
-      <date-picker v-model="data.nextInteraction" valuetype="format" lang="pt-br"></date-picker>
+      <date-picker v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
     </div>
 
     <div class="form-group p-2">
@@ -80,6 +80,7 @@
   </div>
 </template>
 <script>
+import loginVue from '../login.vue';
 export default {
   props: ["user", "studentCMs"],
   data: function() {
@@ -90,14 +91,14 @@ export default {
         nextInteraction: "",
         service: "",
         decision: "",
-        information: ""
+        information: "",
       },
 
       meeting: {
         info: null,
         date: null
       },
-      files: []
+      files: [],
     };
   },
   methods: {
@@ -105,7 +106,10 @@ export default {
       this.$emit("cancel-edit");
     },
     save: function() {
+      console.log(this.data.nextInteraction);
+      
       this.$emit("save-interaction", this.data, this.files);
+      
       //this.data = Object.assign({}, {});
     },
     handleFiles() {
