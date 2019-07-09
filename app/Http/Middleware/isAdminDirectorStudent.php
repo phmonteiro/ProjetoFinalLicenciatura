@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Response;
-class isDirector
+
+class isAdminDirectorStudent
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class isDirector
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->type == 'Director') {
+        if ($request->user() && ( $request->user()->type == 'Administrator' || $request->user()->type == 'Director' || $request->user()->type == 'Estudante') {
             return $next($request);
         }
         return Response::json([

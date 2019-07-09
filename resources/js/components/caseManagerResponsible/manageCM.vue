@@ -31,7 +31,7 @@
             <a
               class="page-link"
               href="#"
-              @click.prevent="getUsers(pagination.prev_page_url)"
+              @click.prevent="getStudent(pagination.prev_page_url)"
             >Anterior</a>
           </li>
 
@@ -46,7 +46,7 @@
             <a
               class="page-link"
               href="#"
-              @click.prevent="getUsers(pagination.next_page_url)"
+              @click.prevent="getStudent(pagination.next_page_url)"
             >Próximo</a>
           </li>
         </ul>

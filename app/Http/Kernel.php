@@ -63,6 +63,14 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
+        'isAdmin' => \App\Http\Middleware\isAdmin::Class,
+        'isAcademicServices' => \App\Http\Middleware\isAdmin::Class,
+        'isCaseManager' => \App\Http\Middleware\isAdmin::Class,
+        'isCaseManagerResponsible' => \App\Http\Middleware\isAdmin::Class,
+        'isCoordinator' => \App\Http\Middleware\isAdmin::Class,
+        'isDirector' => \App\Http\Middleware\isAdmin::Class,
+        'isService' => \App\Http\Middleware\isAdmin::Class,
+        'isStudentNoStatus' => \App\Http\Middleware\isAdmin::Class,
 
     ];
 

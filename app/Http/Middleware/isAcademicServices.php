@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Response;
-class isDirector
+class isAcademicServices
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class isDirector
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->type == 'Director') {
+        if ($request->user() && $request->user()->type == 'SA') {
             return $next($request);
         }
         return Response::json([
