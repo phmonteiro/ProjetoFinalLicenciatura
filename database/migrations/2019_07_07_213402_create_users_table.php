@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration
-{
+class CreateUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,7 +12,8 @@ class CreateUsersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('users', function (Blueprint $table) {
+		Schema::create('users', function(Blueprint $table)
+		{
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('name');
 			$table->string('email')->unique();
@@ -70,4 +70,5 @@ class CreateUsersTable extends Migration
 	{
 		Schema::drop('users');
 	}
+
 }

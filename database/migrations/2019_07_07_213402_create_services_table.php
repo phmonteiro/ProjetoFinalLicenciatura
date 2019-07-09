@@ -15,7 +15,7 @@ class CreateServicesTable extends Migration {
 		Schema::create('services', function(Blueprint $table)
 		{
 			$table->bigInteger('id', true)->unsigned();
-			$table->string('email');
+			$table->string('email')->index('email');
 			$table->string('name');
 			$table->string('reason')->nullable();
 			$table->date('rejectedDate')->nullable();

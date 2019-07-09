@@ -17,7 +17,7 @@ class CreateSubjectsTable extends Migration {
 			$table->increments('id');
 			$table->string('nome')->default('');
 			$table->integer('hours')->default(0);
-			$table->string('studentEmail');
+			$table->string('studentEmail')->index('studentEmail');
 			$table->string('semester', 2)->default('');
 			$table->string('subjectCode', 20)->default('');
 			$table->integer('yearLective');

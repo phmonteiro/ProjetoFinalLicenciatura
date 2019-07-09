@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSchedulesTable extends Migration {
+class CreateServiceRequestsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateSchedulesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('schedules', function(Blueprint $table)
+		Schema::create('service_requests', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('email')->default('');
-			$table->date('startDate');
-			$table->string('title')->default('');
+			$table->string('name')->default('');
+			$table->string('studentEmail')->default('')->index('studentEmail');
+			$table->string('approval')->nullable();
 		});
 	}
 
@@ -29,7 +29,7 @@ class CreateSchedulesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('schedules');
+		Schema::drop('service_requests');
 	}
 
 }

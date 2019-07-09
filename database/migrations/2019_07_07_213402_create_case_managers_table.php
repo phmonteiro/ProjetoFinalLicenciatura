@@ -15,10 +15,11 @@ class CreateCaseManagersTable extends Migration {
 		Schema::create('case_managers', function(Blueprint $table)
 		{
 			$table->bigInteger('id', true)->unsigned();
-			$table->string('studentEmail')->unique('case_managers_studentemail_unique');
+			$table->string('studentEmail');
 			$table->string('studentName');
-			$table->string('caseManagerEmail')->unique('case_managers_casemanageremail_unique');
+			$table->string('caseManagerEmail')->index('caseManagerEmail');
 			$table->string('caseManagerName');
+			$table->unique(['studentEmail','caseManagerEmail'], 'uq_studentEmail_caseManagerEmail');
 		});
 	}
 

@@ -15,7 +15,7 @@ class CreateMedicalFilesTable extends Migration {
 		Schema::create('medical_files', function(Blueprint $table)
 		{
 			$table->bigInteger('id', true)->unsigned();
-			$table->string('email');
+			$table->string('email')->index('email');
 			$table->string('fileName');
 		});
 	}

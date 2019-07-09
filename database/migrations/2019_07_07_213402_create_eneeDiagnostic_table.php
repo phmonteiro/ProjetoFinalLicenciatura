@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateServiceRequestsTable extends Migration {
+class CreateEneeDiagnosticTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateServiceRequestsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('service_requests', function(Blueprint $table)
+		Schema::create('eneeDiagnostic', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name')->default('');
-			$table->string('studentEmail')->default('');
-			$table->string('approval')->nullable();
+			$table->bigInteger('studentId')->nullable();
+			$table->text('plan', 65535)->nullable();
+			$table->text('diagnostic', 65535)->nullable();
 		});
 	}
 
@@ -29,7 +29,7 @@ class CreateServiceRequestsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('service_requests');
+		Schema::drop('eneeDiagnostic');
 	}
 
 }

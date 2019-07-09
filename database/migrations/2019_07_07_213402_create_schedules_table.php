@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateContactsFilesTable extends Migration {
+class CreateSchedulesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateContactsFilesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('contacts_files', function(Blueprint $table)
+		Schema::create('schedules', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->bigInteger('contact_id')->unsigned();
-			$table->string('filename')->nullable();
+			$table->string('email')->default('')->index('email');
+			$table->date('startDate');
+			$table->string('title')->default('');
 		});
 	}
 
@@ -28,7 +29,7 @@ class CreateContactsFilesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('contacts_files');
+		Schema::drop('schedules');
 	}
 
 }

@@ -18,6 +18,7 @@ class CreateNeesTable extends Migration {
 			$table->string('studentEmail');
 			$table->string('name');
 			$table->string('otherName')->nullable();
+			$table->unique(['studentEmail','name'], 'studentEmail_name');
 		});
 	}
 

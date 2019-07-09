@@ -82,13 +82,13 @@ class DirectorController extends Controller
             $serviceRequest->name = $request->name[$i];
             $serviceRequest->studentEmail = $user->email;
             $serviceRequest->save();
-        }
 
-        $history = new History();
-        $history->studentEmail = $user->email;
-        $history->description = "O diretor pediu o parecer do " . $user->serviceNameApproval;
-        $history->date = Carbon::now();
-        $history->save();
+            $history = new History();
+            $history->studentEmail = $user->email;
+            $history->description = "O diretor pediu o parecer do " . $request->name[$i];
+            $history->date = Carbon::now();
+            $history->save();
+        }
 
         $user->save();
         return response()->json($user, 200);

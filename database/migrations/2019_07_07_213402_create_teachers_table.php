@@ -15,7 +15,7 @@ class CreateTeachersTable extends Migration {
 		Schema::create('teachers', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('email')->default('');
+			$table->string('email')->index('email');
 			$table->string('subject')->default('');
 			$table->integer('subjectCode');
 			$table->string('name')->default('');

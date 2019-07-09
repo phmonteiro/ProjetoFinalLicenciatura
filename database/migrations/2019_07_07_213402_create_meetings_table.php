@@ -17,11 +17,13 @@ class CreateMeetingsTable extends Migration {
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('service');
 			$table->string('name');
-			$table->integer('studentId');
-			$table->string('email');
+			$table->bigInteger('studentId')->unsigned()->index('studentId');
+			$table->string('email')->index('email');
 			$table->string('comment');
 			$table->string('info')->nullable();
 			$table->date('date')->nullable();
+			$table->time('time')->nullable();
+			$table->string('place')->nullable();
 		});
 	}
 
