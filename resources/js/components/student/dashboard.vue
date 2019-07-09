@@ -1,5 +1,5 @@
 <template>
-  <div v-if="student!=null">
+  <div v-if="student!=null && user.type == 'Estudante'">
     <div v-if="(student.enee!='awaiting' && student.enee!='reproved')">
       <b-container>
         <b-row>

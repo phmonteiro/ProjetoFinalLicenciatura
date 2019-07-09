@@ -64,14 +64,18 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::Class,
-        'isAcademicServices' => \App\Http\Middleware\isAdmin::Class,
-        'isCaseManager' => \App\Http\Middleware\isAdmin::Class,
-        'isCaseManagerResponsible' => \App\Http\Middleware\isAdmin::Class,
-        'isCoordinator' => \App\Http\Middleware\isAdmin::Class,
-        'isDirector' => \App\Http\Middleware\isAdmin::Class,
-        'isService' => \App\Http\Middleware\isAdmin::Class,
-        'isStudentNoStatus' => \App\Http\Middleware\isAdmin::Class,
+        'isAcademicServices' => \App\Http\Middleware\isAcademicServices::Class,
+        'isCaseManager' => \App\Http\Middleware\isCaseManager::Class,
+        'isCaseManagerResponsible' => \App\Http\Middleware\isCaseManagerResponsible::Class,
+        'isCoordinator' => \App\Http\Middleware\isCoordinator::Class,
+        'isDirector' => \App\Http\Middleware\isDirector::Class,
+        'isService' => \App\Http\Middleware\isService::Class,
+        'isStudentNoStatus' => \App\Http\Middleware\isStudentNoStatus::Class,
+        'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
+        'isDirectorServices' => \App\Http\Middleware\isDirectorServices::Class,
         'isAdminDirectorStudent' => \App\Http\Middleware\isAdminDirectorStudent::Class,
+        'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
+        
 
     ];
 

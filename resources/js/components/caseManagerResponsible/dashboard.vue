@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user.type=='CaseManagerResponsible'">
     <b-container>
       <b-row>
         <section id="sidebar-menu">

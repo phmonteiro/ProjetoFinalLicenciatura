@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container v-if="user.type=='Administrator'">
     <div class="container pt-2 pb-3">
       <h3>Adicionar coordenador de curso</h3>
       <div class="row">
@@ -38,7 +38,11 @@
         </div>
       </div>
 
-      <button class="btn btn-primary mt-3" type="submit" v-on:click.prevent="addCoordinator()">Adicionar</button>
+      <button
+        class="btn btn-primary mt-3"
+        type="submit"
+        v-on:click.prevent="addCoordinator()"
+      >Adicionar</button>
     </div>
   </b-container>
 </template>

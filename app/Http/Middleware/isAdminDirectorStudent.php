@@ -15,7 +15,7 @@ class isAdminDirectorStudent
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && ( $request->user()->type == 'Administrator' || $request->user()->type == 'Director' || $request->user()->type == 'Estudante') {
+        if ($request->user() && ( $request->user()->type == 'Administrator' || $request->user()->type == 'Director' || $request->user()->type == 'Estudante')) {
             return $next($request);
         }
         return Response::json([
