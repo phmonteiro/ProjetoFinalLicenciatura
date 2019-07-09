@@ -43,7 +43,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isStudent')->get('getStudentMeetings', 'StudentController@myMeetingsStudent');
     Route::middleware('isStudentNoStatus')->post('subscription', 'StudentController@subscription');
     Route::middleware('isAsStudentNoStatus')->get('residence/{residence}/{area}', 'StudentController@getResidence');
-    Route::middleware('isServices')->get('getUser/{id}', 'StudentController@show');
+    Route::middleware('isService')->get('getUser/{id}', 'StudentController@show');
     Route::middleware('isStudent')->get('supportHours', 'StudentController@supportHours');
     Route::middleware('isStudent')->post('setSupportHours', 'StudentController@setSupportHours');
     Route::middleware('isStudent')->put('editProfile', 'StudentController@edit');
@@ -52,16 +52,16 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isDirector')->get('getStudentTutor/{id}', 'StudentController@getStudentTutor');
 
     //services
-    Route::middleware('isServices')->post('setContact/{id}', 'ServiceController@contact');
-    Route::middleware('isServices')->get('getMeetings', 'ServiceController@meetings');
-    Route::middleware('isServices')->post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
-    Route::middleware('isServices')->get('getHistory/{id}', 'ServiceController@getHistory');
-    Route::middleware('isServices')->patch('changeNextContact/{id}', 'ServiceController@editContact');
-    Route::middleware('isServices')->get('downloadHistory/{id}', 'ServiceController@downloadPDF');
-    Route::middleware('isServices')->get('getServicesRequests', 'ServiceController@getServicesRequests');
-    Route::middleware('isServices')->patch('approveEneeStatusByServices/{id}', 'ServiceController@approve');
-    Route::middleware('isServices')->patch('denyEneeStatusByServices/{id}', 'ServiceController@deny');
-    Route::middleware('isServices')->get('getEnees', 'ServiceController@index');
+    Route::middleware('isService')->post('setContact/{id}', 'ServiceController@contact');
+    Route::middleware('isService')->get('getMeetings', 'ServiceController@meetings');
+    Route::middleware('isService')->post('finalizeMeeting/{id}', 'ServiceController@finalizeMeeting');
+    Route::middleware('isService')->get('getHistory/{id}', 'ServiceController@getHistory');
+    Route::middleware('isService')->patch('changeNextContact/{id}', 'ServiceController@editContact');
+    Route::middleware('isService')->get('downloadHistory/{id}', 'ServiceController@downloadPDF');
+    Route::middleware('isService')->get('getServicesRequests', 'ServiceController@getServicesRequests');
+    Route::middleware('isService')->patch('approveEneeStatusByServices/{id}', 'ServiceController@approve');
+    Route::middleware('isService')->patch('denyEneeStatusByServices/{id}', 'ServiceController@deny');
+    Route::middleware('isService')->get('getEnees', 'ServiceController@index');
     Route::middleware('isDirector')->get('getServicesEvaluation/{id}', 'ServiceController@getServicesEvaluation');
     Route::middleware('isAcademicServices')->post('eneeAdd', 'ServiceController@create');
 
