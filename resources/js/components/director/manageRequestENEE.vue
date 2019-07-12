@@ -8,7 +8,7 @@
       :nee="nee"
       @refresh="getEnee"
       @save-user="saveUser"
-      @cancel-edit="cancelEdit()"
+      @cancel-edit="cancelEdit"
     ></eneeOptions>
     <b-container>
       <b-row>
@@ -175,6 +175,8 @@ export default {
         .catch(error => {});
     },
     cancelEdit: function() {
+      console.log("CHEGOU AUI");
+      
       this.currentUser = null;
     },
     reprovedSubscription(row) {
