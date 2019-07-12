@@ -246,6 +246,7 @@ class ServiceController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        //EmailController::sendEmail('O ' . $service->name . 'deu o parece de aprovado ao pedido do aluno ' . $user->name . '. Obrigado', 'email do diretor', 'Aprovação do pedido do aluno ' . $user->name, 'Aprovação do pedido do aluno ' . $user->name);
 
 
         return response()->json(200);
@@ -266,6 +267,9 @@ class ServiceController extends Controller
         $history->description = "O " . Auth::user()->type . ' deu o parecer de reprovado para o estudante';
         $history->date = Carbon::now();
         $history->save();
+
+        //EmailController::sendEmail('O ' . $service->name . 'deu o parece de rejeitado ao pedido do aluno ' . $user->name . '. Obrigado', 'email do diretor', 'Reijeição do pedido do aluno ' . $user->name, 'Reijeição do pedido do aluno ' . $user->name);
+
 
         return response()->json(200);
     }

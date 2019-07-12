@@ -92,11 +92,7 @@ class DirectorController extends Controller
             $history->description = "O diretor pediu o parecer do " . $request->name[$i];
             $history->date = Carbon::now();
             $history->save();
-
-            //falta email
         }
-
-
         $user->save();
         return response()->json($user, 200);
     }
@@ -125,7 +121,7 @@ class DirectorController extends Controller
                 $history->date = Carbon::now();
                 $history->save();
 
-                //email para estudante e cc tutor
+                EmailController::sendEmailWithCC('O diretor alterou o seu professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
             } else {
                 $tutor = new Tutor();
                 $tutor->studentEmail = $user->email;
@@ -138,7 +134,7 @@ class DirectorController extends Controller
                 $history->date = Carbon::now();
                 $history->save();
 
-                //email para estudante e cc tutor
+                EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
             }
         }
 
@@ -171,11 +167,9 @@ class DirectorController extends Controller
         }
         $history = new History();
         $history->studentEmail = $user->email;
-        $history->description = "O diretor aprovou o estatuto.";
+        $history->description = "O diretor alterou o estatuto.";
         $history->date = Carbon::now();
         $history->save();
-
-        //email para estudante aprovou
 
         return response()->json(new UserResource($user), 200);
     }
