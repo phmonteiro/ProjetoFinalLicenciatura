@@ -43,6 +43,18 @@
       />
     </div>
 
+    <div class="form-group" v-if="user.educationalSupport!=null">
+      <label for="inputAnalysis">Apoios Prévios</label>
+      <input
+        type="text"
+        class="form-control"
+        v-model="user.educationalSupport"
+        name="functionalAnalysis"
+        id="functionalAnalysis"
+        disabled
+      />
+    </div>
+
     <div class="form-group">
       <button
         class="btn btn-secondary"
@@ -166,7 +178,7 @@
               <button
                 type="button"
                 class="btn btn-danger"
-                v-on:click.prevent="cancel()"
+                v-on:click.prevent="cancelAux()"
               >Limpar seleção</button>
             </div>
           </div>
@@ -293,7 +305,7 @@ export default {
       };
       this.$emit("save-user", data);
     },
-    cancel: function() {
+    cancelAux: function() {
       this.aux = [];
     },
     getAllSupports() {

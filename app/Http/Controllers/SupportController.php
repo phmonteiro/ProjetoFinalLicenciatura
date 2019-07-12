@@ -48,6 +48,7 @@ class SupportController extends Controller
             ]);
             $user->eneeExpirationDate = $dado['date'];
         }
+        $user->dateEneeApproved = Carbon::now();
 
         $user->save();
 
@@ -91,6 +92,7 @@ class SupportController extends Controller
                 Student_Supports::where('email', $dados['email'])->where('support_value', $support)->delete();
             }
         }
+        
 
         $history = new History();
         $history->studentEmail = $user->email;

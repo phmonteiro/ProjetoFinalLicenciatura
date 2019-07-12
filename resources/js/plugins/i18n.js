@@ -116,7 +116,7 @@ const messages = {
     acompanhamento: 'Custom support',
     mensagem_estudante: 'Your request for the status of student with special educational needs is in the state of:',
     reprovado: 'Denied',
-    aguardar_aprovação: 'Waiting evaluation',
+    aguardar_aprovação: 'Awaiting evaluation',
     serviço: 'Service',
     data: 'Date',
     proximo_contacto: 'Next contact',
