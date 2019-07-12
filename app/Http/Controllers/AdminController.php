@@ -154,6 +154,8 @@ class AdminController extends Controller
             $coordinator->school = $dados['school'];
             $coordinator->save();
 
+            EmailController::sendEmail('Foi adicionado como coordenador de curso na plataforma 100%In. Obrigado', $coordinator->email, 'Adicionado como coordenador de curso', 'Adicionado como coordenador de curso');
+
             return response()->json(new CoordinatorResource($coordinator), 201);
         }
 

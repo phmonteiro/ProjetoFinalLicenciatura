@@ -163,6 +163,13 @@ class ServiceController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        //Estudante a dizer que pedido foi enviado com sucesso
+        //Diretor e coordenador de curso recebem email a dizer que têm um novo pedido de estatuto na plataforma
+
+        EmailController::sendEmail('O processo para o estatuto de estudante com necessidades educativas especias foi começado. Obrigado', $user->email, 'Processo de atribuição a estatuto de ENEE', 'Processo de atribuição a estatuto de ENEE     ');
+        //EmailController::sendEmailWithCC('Tem uma nova candidatura ao pedido de estatuto de estudante com necessidades educativas especiais, para tratar na sua área pessoal. Obrigado', 'email do diretor', 'Novo pedido de ENEE', 'Novo pedido de ENEE', ' email do coordenador');
+
+
         return response()->json(new UserResource($user), 201);
     }
 

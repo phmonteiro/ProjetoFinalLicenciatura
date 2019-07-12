@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::Class,
+        'isStudent' => \App\Http\Middleware\isStudent::Class,
         'isAcademicServices' => \App\Http\Middleware\isAcademicServices::Class,
         'isCaseManager' => \App\Http\Middleware\isCaseManager::Class,
         'isCaseManagerResponsible' => \App\Http\Middleware\isCaseManagerResponsible::Class,
@@ -75,7 +76,7 @@ class Kernel extends HttpKernel
         'isDirectorServices' => \App\Http\Middleware\isDirectorServices::Class,
         'isAdminDirectorStudent' => \App\Http\Middleware\isAdminDirectorStudent::Class,
         'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
-        
+
 
     ];
 

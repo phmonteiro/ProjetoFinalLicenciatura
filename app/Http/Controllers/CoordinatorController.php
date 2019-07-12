@@ -27,6 +27,8 @@ class CoordinatorController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        //EmailController::sendEmail('O coordenador de curso do estudante ' . $user->name . ' deu um parecer positivo em relação ao ENEE. Obrigado', 'email do diretor', 'Parecer do coordenador de curso', 'Parecer do coordenador de curso');
+
         return response()->json(200);
     }
 
@@ -41,6 +43,9 @@ class CoordinatorController extends Controller
         $history->description = "Coordenador de curso reprovou a candidatura do ENEE";
         $history->date = Carbon::now();
         $history->save();
+
+        //EmailController::sendEmail('O coordenador de curso do estudante ' . $user->name . ' deu um parecer negativo em relação ao ENEE. Obrigado', 'email do diretor', 'Parecer do coordenador de curso', 'Parecer do coordenador de curso');
+
 
         return response()->json(200);
     }

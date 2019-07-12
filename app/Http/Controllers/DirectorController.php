@@ -41,6 +41,8 @@ class DirectorController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        //EmailController::sendEmail('O diretor atribuiu-lhe um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio', 'Atribuição de novo apoio');
+
         return response()->json($studentSupport, 200);
     }
 
@@ -56,6 +58,8 @@ class DirectorController extends Controller
         $history->description = "O diretor rejeitou o pedido do apoio " . $apoio->text . " ao estudante.";
         $history->date = Carbon::now();
         $history->save();
+
+        //EmailController::sendEmail('O diretor rejeitou o seu pedido de um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio rejeitada', 'Atribuição de novo apoio rejeitada');
 
         return response()->json($service, 200);
     }
@@ -88,7 +92,10 @@ class DirectorController extends Controller
             $history->description = "O diretor pediu o parecer do " . $request->name[$i];
             $history->date = Carbon::now();
             $history->save();
+
+            //falta email
         }
+
 
         $user->save();
         return response()->json($user, 200);
@@ -106,10 +113,9 @@ class DirectorController extends Controller
         $user->enee = "approved";
         $user->dateEneeApproved = Carbon::now();
 
-
         if ($dados['tutor'] != null) {
             $currentTutor = Tutor::where('studentEmail', $dados['email'])->firstOrFail();
-            if($currentTutor!=null){
+            if ($currentTutor != null) {
                 $currentTutor->tutorEmail = $dados['tutor'];
                 $currentTutor->save();
 
@@ -118,8 +124,9 @@ class DirectorController extends Controller
                 $history->description = "O diretor alterou para o tutor " . $currentTutor->tutorEmail;
                 $history->date = Carbon::now();
                 $history->save();
-            }
-            else {
+
+                //email para estudante e cc tutor
+            } else {
                 $tutor = new Tutor();
                 $tutor->studentEmail = $user->email;
                 $tutor->tutorEmail = $dados['tutor'];
@@ -130,9 +137,9 @@ class DirectorController extends Controller
                 $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
                 $history->date = Carbon::now();
                 $history->save();
-            }
 
-            
+                //email para estudante e cc tutor
+            }
         }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
@@ -167,6 +174,8 @@ class DirectorController extends Controller
         $history->description = "O diretor aprovou o estatuto.";
         $history->date = Carbon::now();
         $history->save();
+
+        //email para estudante aprovou
 
         return response()->json(new UserResource($user), 200);
     }

@@ -32,6 +32,7 @@ use App\Http\Resources\NeeResource;
 use App\Http\Resources\SupportResource;
 use App\Teacher;
 use Illuminate\Support\Facades\DB;
+use App\CaseManager;
 
 class StudentController extends Controller
 {
@@ -292,6 +293,12 @@ class StudentController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        //Estudante a dizer que pedido foi enviado com sucesso
+        //Diretor e coordenador de curso recebem email a dizer que têm um novo pedido de estatuto na plataforma
+
+        EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi enviado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
+        //EmailController::sendEmailWithCC('Tem uma nova candidatura ao pedido de estatuto de estudante com necessidades educativas especiais, para tratar na sua área pessoal. Obrigado', 'email do diretor', 'Novo pedido de ENEE', 'Novo pedido de ENEE', ' email do coordenador');
+
         return response()->json(new UserResource($user), 201);
     }
 
@@ -301,7 +308,6 @@ class StudentController extends Controller
         $residence = ZipCode::where('art_desig', $residence)->where('dsc_pos', $area)->first();
         return response()->json(new ZipCodeResource($residence), 201);
     }
-
 
 
     public function myMeetingsStudent()
@@ -332,6 +338,12 @@ class StudentController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        $caseManagers = CaseManager::where('studentEmail', $user->email)->get();
+
+        for ($i = 0; $i < sizeof($caseManagers); $i++) {
+            EmailController::sendEmail('O aluno ' . $user->name . ' pediu para agendar uma reunião. Obrigado', $caseManagers[$i]->email, 'Pedido de reunião', 'Pedido de reunião');
+        }
+
         return response()->json(new MeetingResource($meeting), 201);
     }
 
@@ -356,6 +368,13 @@ class StudentController extends Controller
         $history->save();
 
         $service->save();
+
+        $caseManagers = CaseManager::where('studentEmail', $user->email)->get();
+
+        for ($i = 0; $i < sizeof($caseManagers); $i++) {
+            //EmailController::sendEmailWithCC('O aluno ' . $user->name . ' pediu um novo apoio. Obrigado', 'email do diretor', 'Pedido de novo apoio', 'Pedido de novo apoio', $caseManagers[$i]->email);
+        }
+
         return response()->json(new ServiceResource($service), 201);
     }
     public function getStudentTutor($id)
@@ -415,8 +434,6 @@ class StudentController extends Controller
                 array_push($subjects, $subject);
             }
 
-
-
             return response()->json(new SubjectResource($subjects), 201);
         }
     }
@@ -445,6 +462,19 @@ class StudentController extends Controller
             $history->description = "O estudante pediu " . $subject->hours . " horas de acompanhamento para a unidade curricular de " . $subject->nome . "";
             $history->date = Carbon::now();
             $history->save();
+
+            $teacher = Teacher::where('subjectCode', $subject->subjectCode)->get();
+            $tutor = Tutor::where('studentEmail', $user->email)->get();
+            $caseManager = CaseManager::where('studentEmail', $user->email)->first();
+
+            for ($i = 0; $i < sizeof($teacher); $i++) {
+                if ($tutor) {
+                    EmailController::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $tutor->tutorEmail);
+                } else {
+                    EmailController::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $caseManager->caseManagerEmail);
+                }
+            }
+
             return response()->json(new SubjectResource($subject), 200);
         } else {
             return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);

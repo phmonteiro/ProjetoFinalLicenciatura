@@ -40,6 +40,9 @@ class CaseManagerResponsibleController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
+        EmailController::sendEmail('Foi removido o gestor de caso' . $user->name . '. Obrigado', $student->email, 'Gestor de caso removido', 'Gestor de caso removido');
+
+
         return response()->json($user, 200);
     }
 
@@ -67,6 +70,8 @@ class CaseManagerResponsibleController extends Controller
         $history->save();
 
         $caseManager->save();
+
+        EmailController::sendEmail('Foi adicionado o gestor de caso' .  $caseManager->caseManagerName . '. Obrigado', $caseManager->studentEmail, 'Gestor de caso adicionado', 'Gestor de caso adicionado');
 
         return response()->json(new CaseManagerResponsibleResource($caseManager), 200);
     }
