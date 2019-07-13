@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user.type=='Administrator'">
+  <div v-if="user.type=='Administrador'">
     <b-container>
       <b-row>
         <section id="sidebar-menu">

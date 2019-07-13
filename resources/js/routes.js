@@ -295,7 +295,7 @@ router.beforeEach((to, from, next) => {
     next('/student');
     return;
   }
-  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Administrator') {
+  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Administrador') {
     next('/admin');
     return;
   }
