@@ -116,7 +116,7 @@ class CaseManagerController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
-        EmailController::sendEmail('Foi marcada uma reunião em' . $meeting->date . ' ás ' . $meeting->time . '. Obrigado', $meeting->email, 'Marcação de reunião', 'Marcação de reunião');
+        //EmailController::sendEmail('Foi marcada uma reunião em' . $meeting->date . ' ás ' . $meeting->time . '. Obrigado', $meeting->email, 'Marcação de reunião', 'Marcação de reunião');
 
 
         return response()->json(new MeetingResource($meeting), 201);
@@ -256,7 +256,7 @@ class CaseManagerController extends Controller
         $event->startDate = $dados['startDate'];
         $event->save();
 
-        EmailController::sendEmail('Foi adicionado um evento ao seu calendário em' . $event->startDate . '. Obrigado', Auth::user()->email, 'Evento adicionado ao calendário', 'Evento adicionado ao calendário');
+        //EmailController::sendEmail('Foi adicionado um evento ao seu calendário em' . $event->startDate . '. Obrigado', Auth::user()->email, 'Evento adicionado ao calendário', 'Evento adicionado ao calendário');
 
         return response()->json($event, 201);
     }

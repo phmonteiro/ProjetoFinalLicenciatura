@@ -296,7 +296,7 @@ class StudentController extends Controller
         //Estudante a dizer que pedido foi enviado com sucesso
         //Diretor e coordenador de curso recebem email a dizer que têm um novo pedido de estatuto na plataforma
 
-        EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi enviado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
+        //EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi enviado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
         //EmailController::sendEmailWithCC('Tem uma nova candidatura ao pedido de estatuto de estudante com necessidades educativas especiais, para tratar na sua área pessoal. Obrigado', 'email do diretor', 'Novo pedido de ENEE', 'Novo pedido de ENEE', ' email do coordenador');
 
         return response()->json(new UserResource($user), 201);
@@ -341,7 +341,7 @@ class StudentController extends Controller
         $caseManagers = CaseManager::where('studentEmail', $user->email)->get();
 
         for ($i = 0; $i < sizeof($caseManagers); $i++) {
-            EmailController::sendEmail('O aluno ' . $user->name . ' pediu para agendar uma reunião. Obrigado', $caseManagers[$i]->email, 'Pedido de reunião', 'Pedido de reunião');
+            //EmailController::sendEmail('O aluno ' . $user->name . ' pediu para agendar uma reunião. Obrigado', $caseManagers[$i]->email, 'Pedido de reunião', 'Pedido de reunião');
         }
 
         return response()->json(new MeetingResource($meeting), 201);
@@ -469,9 +469,9 @@ class StudentController extends Controller
 
             for ($i = 0; $i < sizeof($teacher); $i++) {
                 if ($tutor) {
-                    EmailController::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $tutor->tutorEmail);
+                    //troller::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $tutor->tutorEmail);
                 } else {
-                    EmailController::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $caseManager->caseManagerEmail);
+                    //EmailController::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $caseManager->caseManagerEmail);
                 }
             }
 

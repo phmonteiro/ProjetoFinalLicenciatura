@@ -121,7 +121,7 @@ class DirectorController extends Controller
                 $history->date = Carbon::now();
                 $history->save();
 
-                EmailController::sendEmailWithCC('O diretor alterou o seu professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
+                //EmailController::sendEmailWithCC('O diretor alterou o seu professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
             } else {
                 $tutor = new Tutor();
                 $tutor->studentEmail = $user->email;
@@ -134,7 +134,7 @@ class DirectorController extends Controller
                 $history->date = Carbon::now();
                 $history->save();
 
-                EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
+                //EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
             }
         }
 

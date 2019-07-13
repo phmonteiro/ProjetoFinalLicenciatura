@@ -64,7 +64,7 @@ class SupportController extends Controller
             $history->date = Carbon::now();
             $history->save();
 
-            EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $tutor->studentEmail);
+            //EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $tutor->studentEmail);
         }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
@@ -103,11 +103,11 @@ class SupportController extends Controller
         $history->save();
 
         //Email para o aluno
-        EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi aprovado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
+        //EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi aprovado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
 
         //Email para os professores 
         for ($i = 0; $i < sizeof($dados['teachers']); $i++) {
-            EmailController::sendEmail('O seu estudante ' . $user->name . ' obteve o estatuto de estudante com necessidades educativas especias. Obrigado', $dados['teachers'][$i], 'Aluno com estatuto de ENEE', 'Aluno com estatuto de ENEE');
+            //EmailController::sendEmail('O seu estudante ' . $user->name . ' obteve o estatuto de estudante com necessidades educativas especias. Obrigado', $dados['teachers'][$i], 'Aluno com estatuto de ENEE', 'Aluno com estatuto de ENEE');
         }
 
         //Email para o coordenador de curso
@@ -129,7 +129,7 @@ class SupportController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
-        EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi recusado. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
+        //EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi recusado. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
 
 
         return response()->json(new UserResource($user), 200);
