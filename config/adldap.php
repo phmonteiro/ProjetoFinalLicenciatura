@@ -156,7 +156,7 @@ return [
                 | This option allows you to set a different account suffix for your
                 | configured administrator account upon binding.
                 |
-                | If left empty, your `account_suffix` option will be used. 
+                | If left empty, your `account_suffix` option will be used.
                 |
                      */
 
