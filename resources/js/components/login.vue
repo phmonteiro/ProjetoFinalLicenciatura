@@ -121,6 +121,7 @@ export default {
       });
     },
     login() {
+        console.log(this.user)
       axios
         .post("api/login", this.user)
         .then(response => {

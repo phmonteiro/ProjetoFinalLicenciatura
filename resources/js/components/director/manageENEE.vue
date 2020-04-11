@@ -21,7 +21,7 @@
     </b-container>
     <div class="container">
       <h2>Lista de ENEE</h2>
-      <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
+      <b-table striped hover v-if="enee" :items="enee" :fields="fields">
         <template slot="enee" slot-scope="row">
           <p v-if="row.item.enee=='awaiting'">Aguardando</p>
           <p v-if="row.item.enee=='denied'">Reprovado</p>
@@ -147,7 +147,7 @@ export default {
         .get("api/getStudentTutor/" + this.currentUser.email)
         .then(response => {
           this.studentTutor = response.data.tutorEmail;
-          
+
         })
         .catch(error => {
           console.log(error);

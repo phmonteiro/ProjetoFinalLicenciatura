@@ -4,25 +4,26 @@
       <b-row>
         <b-col class="top100">
           <h2>{{ $t('pedir_agendamento_reunião') }}</h2>
-          <div class="form-group">
-            <b-form-select
-              v-model="meeting.service"
-              v-validate="'required'"
-              name="service"
-              class="mb-3"
-              aria-label="Escolher serviço"
-            >
-              <template slot="first">
-                <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
-              </template>
-              <option value="Gestor-Caso">{{ $t('gestor_caso') }}</option>
-            </b-form-select>
-            <i v-show="errors.has('service')" class="fa fa-warning"></i>
-            <span
-              v-show="errors.has('service')"
-              class="help is-danger"
-            >{{ errors.first('service') }}</span>
-          </div>
+            <br><br>
+<!--          <div class="form-group">-->
+<!--            <b-form-select-->
+<!--              v-model="meeting.service"-->
+<!--              v-validate="'required'"-->
+<!--              name="service"-->
+<!--              class="mb-3"-->
+<!--              aria-label="Escolher serviço"-->
+<!--            >-->
+<!--              <template slot="first">-->
+<!--                <option :value="null" disabled>&#45;&#45; {{ $t('selecionar_serviço') }} &#45;&#45;</option>-->
+<!--              </template>-->
+<!--              <option value="Gestor-Caso">{{ $t('gestor_caso') }}</option>-->
+<!--            </b-form-select>-->
+<!--            <i v-show="errors.has('service')" class="fa fa-warning"></i>-->
+<!--            <span-->
+<!--              v-show="errors.has('service')"-->
+<!--              class="help is-danger"-->
+<!--            >{{ errors.first('service') }}</span>-->
+<!--          </div>-->
           <div class="form-group">
             <span for="comment">{{ $t('comentário') }}</span>
             <textarea
@@ -52,7 +53,7 @@ export default {
   data() {
     return {
       meeting: {
-        service: null,
+        service: "Gestor-Caso",
         comment: null
       }
     };

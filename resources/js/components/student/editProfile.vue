@@ -10,6 +10,7 @@
               <div class="col">
                 <label for="student-name">{{ $t('nome') }}</label>
                 <input
+                    v-validate="'regex:[a-zA-Z][a-zA-Z ]+'"
                   type="text"
                   class="form-control"
                   id="student-name"
@@ -61,7 +62,7 @@
               <div class="col">
                 <label for="responsibleName">{{$t('nome')}}</label>
                 <input
-                  v-validate="'required'"
+                  v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
                   type="text"
                   class="form-control"
                   id="responsibleName"
@@ -226,10 +227,10 @@ export default {
         .then(response => {
           this.user = response.data;
           console.log(this.user);
-          
+
         })
         .catch(error => {
-          
+
           console.log(error);
         });
     },

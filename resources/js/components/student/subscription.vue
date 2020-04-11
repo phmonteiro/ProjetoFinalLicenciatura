@@ -17,7 +17,7 @@
                       name="student-number"
                       id="student-number"
                       min="1"
-                      max="999999999"
+                      max="9999999"
                       v-model="student.number"
                       disabled
                     />
@@ -39,17 +39,17 @@
                       v-validate="{ required: true, digits:9 }"
                       :class="{'input': true, 'is-danger': errors.has('phone-number') }"
                       class="form-control"
-                      name="phone-number"
+                      name="Phone Number"
                       id="phone-number"
                       min="1"
                       max="999999999"
                       v-model="student.phoneNumber"
                     />
-                    <i v-show="errors.has('phone-number')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Phone Number')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('phone-number')"
+                      v-show="errors.has('Phone Number')"
                       class="help is-danger"
-                    >{{ errors.first('phone-number') }}</span>
+                    >{{ errors.first('Phone Number') }}</span>
                   </div>
                   <div class="col">
                     <label for="birth-date">{{$t('data_nascimento')}}</label>
@@ -59,15 +59,15 @@
                       class="form-control"
                       value
                       id="birth-date"
-                      name="birth-date"
+                      name="Birth Date"
                       placeholder="yyyy-mm-dd"
                       v-model="student.birthDate"
                     />
-                    <i v-show="errors.has('birth-date')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Birth Date')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('birth-date')"
+                      v-show="errors.has('Birth Date')"
                       class="help is-danger"
-                    >{{ errors.first('birth-date') }}</span>
+                    >{{ errors.first('Birth Date') }}</span>
                   </div>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                     <input
                       class="form-control"
                       type="email"
-                      name="email"
+                      name="Email"
                       placeholder="email@mail.com"
                       id="email"
                       v-model="student.email"
@@ -91,7 +91,7 @@
                     <select
                       v-validate="'required' "
                       class="custom-select"
-                      name="gender"
+                      name="Gender"
                       id="gender"
                       single
                       v-model="student.gender"
@@ -100,11 +100,11 @@
                       <option value="feminino">{{$t('feminino')}}</option>
                       <option value="outro">{{$t('outro')}}</option>
                     </select>
-                    <i v-show="errors.has('gender')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Gender')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('gender')"
+                      v-show="errors.has('Gender')"
                       class="help is-danger"
-                    >{{ errors.first('gender') }}</span>
+                    >{{ errors.first('Gender') }}</span>
                   </div>
                 </div>
               </div>
@@ -128,15 +128,15 @@
                       class="form-control"
                       pattern="\d\d\d\d[-]\d\d\d"
                       id="zipCode"
-                      name="zipCode"
+                      name="Zip Code"
                       placeholder="1234-567"
                       v-model="student.zipCode"
                     />
-                    <i v-show="errors.has('zipCode')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Zip Code')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('zipCode')"
+                      v-show="errors.has('Zip Code')"
                       class="help is-danger"
-                    >{{ errors.first('zipCode') }}</span>
+                    >{{ errors.first('Zip Code') }}</span>
                   </div>
                   <div class="col">
                     <label for="area">{{$t('localidade')}}</label>
@@ -145,14 +145,14 @@
                       type="text"
                       class="form-control"
                       id="area"
-                      name="area"
+                      name="Area"
                       v-model="student.area"
                     />
-                    <i v-show="errors.has('area')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Area')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('area')"
+                      v-show="errors.has('Area')"
                       class="help is-danger"
-                    >{{ errors.first('area') }}</span>
+                    >{{ errors.first('Area') }}</span>
                   </div>
                 </div>
               </div>
@@ -164,7 +164,7 @@
                     <select
                       v-validate="'required'"
                       class="custom-select"
-                      name="identification"
+                      name="Identification Number"
                       id="identification"
                       single
                       v-model="student.identificationDocument"
@@ -173,26 +173,26 @@
                       <option value="ccond">{{$t('carta_conducao')}}</option>
                       <option value="passp">{{$t('passaporte')}}</option>
                     </select>
-                    <i v-show="errors.has('identification')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Identification Number')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('identification')"
+                      v-show="errors.has('Identification Number')"
                       class="help is-danger"
-                    >{{ errors.first('identification') }}</span>
+                    >{{ errors.first('Identification Number') }}</span>
                   </div>
                   <div class="col">
                     <label for="number">Nº</label>
                     <input
-                      v-validate="'required'"
+                      v-validate="{required:true}"
                       class="form-control"
-                      name="number"
+                      name="Student Number"
                       id="number"
                       v-model="student.identificationNumber"
                     />
-                    <i v-show="errors.has('number')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Student Number')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('number')"
+                      v-show="errors.has('Student Number')"
                       class="help is-danger"
-                    >{{ errors.first('number') }}</span>
+                    >{{ errors.first('Student Number') }}</span>
                   </div>
                 </div>
               </div>
@@ -255,17 +255,19 @@
                   <div class="col">
                     <label for="year">{{$t('ano_curricular')}}</label>
                     <input
-                      v-validate="'required'"
+                      v-validate="{required:true,digits:4,min_value:2000}"
+
                       class="form-control"
-                      name="curricular-year"
+                      name="Curricular Year"
                       id="year"
+                      min="2000"
                       v-model="student.curricularYear"
                     />
-                    <i v-show="errors.has('curricular-year')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Curricular Year')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('curricular-year')"
+                      v-show="errors.has('Curricular Year')"
                       class="help is-danger"
-                    >{{ errors.first('curricular-year') }}</span>
+                    >{{ errors.first('Curricular Year') }}</span>
                   </div>
                   <div class="col">
                     <label for="enruledYear">{{$t('ano_matricula')}}</label>
@@ -273,14 +275,14 @@
                       v-validate="{required:true,digits:4}"
                       class="form-control"
                       id="enruledYear"
-                      name="enruledYear"
+                      name="Enrollment Year"
                       v-model="student.enruledYear"
                     />
-                    <i v-show="errors.has('enruledYear')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Enrollment Year')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('enruledYear')"
+                      v-show="errors.has('Enrollment Year')"
                       class="help is-danger"
-                    >{{ errors.first('enruledYear') }}</span>
+                    >{{ errors.first('Enrollment Year') }}</span>
                   </div>
                 </div>
               </div>
@@ -293,51 +295,51 @@
                   <div class="col">
                     <label for="responsibleName">{{$t('nome')}}</label>
                     <input
-                      v-validate="'required'"
+                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
                       type="text"
                       class="form-control"
                       id="responsibleName"
-                      name="responsibleName"
+                      name="Responsible Name"
                       v-model="student.responsibleName"
                     />
-                    <i v-show="errors.has('responsibleName')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Responsible Name')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsibleName')"
+                      v-show="errors.has('Responsible Name')"
                       class="help is-danger"
-                    >{{ errors.first('responsibleName') }}</span>
+                    >{{ errors.first('Responsible Name') }}</span>
                   </div>
                   <div class="col">
                     <label for="responsiblePhone">{{$t('contacto_telefónico')}}</label>
                     <input
                       v-validate="{ required: true, digits:9 }"
                       class="form-control"
-                      name="responsiblePhone"
+                      name="Responsible Phone"
                       id="responsiblePhone"
                       min="1"
-                      max="9999999999"
+                      max="999999999"
                       v-model="student.responsiblePhone"
                     />
-                    <i v-show="errors.has('responsiblePhone')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Responsible Phone')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsiblePhone')"
+                      v-show="errors.has('Responsible Phone')"
                       class="help is-danger"
-                    >{{ errors.first('responsiblePhone') }}</span>
+                    >{{ errors.first('Responsible Phone') }}</span>
                   </div>
                   <div class="col">
                     <label for="responsibleKin">{{$t('parentesco')}}</label>
                     <input
-                      v-validate="'required'"
+                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
                       type="text"
                       class="form-control"
                       id="responsibleKin"
-                      name="responsibleKin"
+                      name="Kinship"
                       v-model="student.responsibleKin"
                     />
-                    <i v-show="errors.has('responsibleKin')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Kinship')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsibleKin')"
+                      v-show="errors.has('Kinship')"
                       class="help is-danger"
-                    >{{ errors.first('responsibleKin') }}</span>
+                    >{{ errors.first('Kinship') }}</span>
                   </div>
                   <div class="col">
                     <label for="responsibleEmail">{{$t('email')}}</label>
@@ -346,14 +348,14 @@
                       type="email"
                       class="form-control"
                       id="responsibleEmail"
-                      name="responsibleEmail"
+                      name="Responsible Email"
                       v-model="student.responsibleEmail"
                     />
-                    <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Responsible Email')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsibleEmail')"
+                      v-show="errors.has('Responsible Email')"
                       class="help is-danger"
-                    >{{ errors.first('responsibleEmail') }}</span>
+                    >{{ errors.first('Responsible Email') }}</span>
                   </div>
                 </div>
               </div>
@@ -364,49 +366,49 @@
                   <div class="col">
                     <label for="emergencyName">{{$t('nome')}}</label>
                     <input
-                      v-validate="'required'"
+                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
                       type="text"
                       class="form-control"
                       id="emergencyName"
-                      name="emergencyName"
+                      name="Emergency Name"
                       v-model="student.emergencyName"
                     />
-                    <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Emergency Name')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsibleEmail')"
+                      v-show="errors.has('Emergency Name')"
                       class="help is-danger"
-                    >{{ errors.first('responsibleEmail') }}</span>
+                    >{{ errors.first('Emergency Name') }}</span>
                   </div>
                   <div class="col">
                     <label for="emergencyPhone">{{$t('contacto_telefónico')}}</label>
                     <input
                       v-validate="{ required: true, digits:9 }"
                       class="form-control"
-                      name="emergencyPhone"
+                      name="Emergency Phone"
                       id="emergencyPhone"
                       v-model="student.emergencyPhone"
                     />
-                    <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Emergency Phone')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsibleEmail')"
+                      v-show="errors.has('Emergency Phone')"
                       class="help is-danger"
-                    >{{ errors.first('responsibleEmail') }}</span>
+                    >{{ errors.first('Emergency Phone') }}</span>
                   </div>
                   <div class="col">
                     <label for="emergencyKin">{{$t('parentesco')}}</label>
                     <input
-                      v-validate="'required'"
+                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
                       type="text"
                       class="form-control"
                       id="emergencyKin"
-                      name="emergencyKin"
+                      name="Kinship"
                       v-model="student.emergencyKin"
                     />
-                    <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Kinship')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('responsibleEmail')"
+                      v-show="errors.has('Kinship')"
                       class="help is-danger"
-                    >{{ errors.first('responsibleEmail') }}</span>
+                    >{{ errors.first('Kinship') }}</span>
                   </div>
                   <div class="col">
                     <label for="emergencyEmail">{{$t('email')}}</label>
@@ -415,14 +417,14 @@
                       type="email"
                       class="form-control"
                       id="emergencyEmail"
-                      name="emergencyEmail"
+                      name="Emergency Email"
                       v-model="student.emergencyEmail"
                     />
-                    <i v-show="errors.has('emergencyEmail')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('Emergency Email')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('emergencyEmail')"
+                      v-show="errors.has('Emergency Email')"
                       class="help is-danger"
-                    >{{ errors.first('emergencyEmail') }}</span>
+                    >{{ errors.first('Emergency Email') }}</span>
                   </div>
                 </div>
               </div>
@@ -641,7 +643,7 @@ export default {
     },
     sendForm() {
       console.log(this.student.birthDate);
-      
+
       const formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
         formData.append("photo" + i, this.files[i]);

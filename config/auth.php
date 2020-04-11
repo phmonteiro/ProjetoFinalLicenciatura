@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver'   => 'session',
-            'provider' => 'adldap', // Switched to 'adldap'
+            'provider' => 'users', // Switched to 'adldap'
         ],
 
         'api' => [
