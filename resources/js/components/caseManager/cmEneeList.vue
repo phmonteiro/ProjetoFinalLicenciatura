@@ -11,29 +11,25 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <manage-plan :user="currentUser2" :plan="currentPlan" @cancel-edit2="cancelEdit2()"></manage-plan>
-
-    <set-inter :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="cancelEdit()"></set-inter>
-
     <div class="container">
       <h2>Lista de Enee</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template slot="actions" slot-scope="row">
           <b-row class="text-center">
             <b-col sm="12" class="m-1">
-              <b-button size="sm" v-on:click.prevent="setInteraction(row.item)">
+              <b-button size="sm" @click.prevent="newInteraction(row.item)">
                 Interação
                 <font-awesome-icon icon="handshake" />
               </b-button>
             </b-col>
             <b-col sm="12" class="m-1">
-              <b-button size="sm" v-on:click.prevent="seeInteractions(row.item)">
+              <b-button size="sm" @click.prevent="seeInteractions(row.item)">
                 Ver Interações
                 <font-awesome-icon icon="handshake" />
               </b-button>
             </b-col>
             <b-col sm="12" class="m-1">
-              <b-button size="sm" v-on:click.prevent="managePlan(row.item)">
+              <b-button size="sm" @click.prevent="managePlan(row.item)">
                 Plano
                 <font-awesome-icon icon="book" />
               </b-button>
@@ -138,6 +134,26 @@
           </b-card>
         </template>
       </b-table>
+
+<!--        ###################################-->
+            <b-button size="sm" @click.prevent="newInteraction(enee[0])">
+                Nova Interação
+                <font-awesome-icon icon="handshake" />
+            </b-button>
+            <b-button size="sm" @click.prevent="seeInteractions(enee[0])">
+                Ver Interações
+                <font-awesome-icon icon="handshake" />
+            </b-button>
+            <b-button size="sm" @click.prevent="managePlan(enee[0])">
+                Plano
+                <font-awesome-icon icon="book" />
+            </b-button>
+            <b-button size="sm" @click.prevent="increaseSupportHours(enee[0])">
+                Gerir horas de apoio
+                <font-awesome-icon icon="book" />
+            </b-button>
+<!--        ##########################################-->
+
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -165,9 +181,18 @@
         </ul>
       </nav>
     </div>
-
+      <br>
+      <manage-plan v-if="showPlan" :user="currentUser" :plan="currentPlan" @cancel-edit2="cancelEdit2()"></manage-plan>
+      <set-inter v-if="showNewInteraction" :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="cancelEdit()"></set-inter>
+      <increase-hours
+        v-if="showIncreaseHours"
+        :student="currentUser"
+        @cancel-increase="cancelIncrease"
+        @save-increase="saveIncrease"
+    ></increase-hours>
     <interactionsDetails
-      :user="userInteractions"
+       v-if="showDetails"
+      :user="currentUser"
       :interactions="interactions"
       @cancel-edit="cancelInteractions()"
     ></interactionsDetails>
@@ -205,17 +230,48 @@ export default {
         },
         {
           key: "actions",
-          label: "Ações"
+          label: "Ações",
         }
       ],
+
       currentUser: null,
-      currentUser2: null,
-      userInteractions: null,
       interactions: null,
-      currentPlan: null
+      currentPlan: null,
+      showIncreaseHours:false,
+      showNewInteraction:false,
+      showPlan:false,
+      showDetails:false,
+      newTotalHours:null,
     };
   },
   methods: {
+    cancelIncrease(){
+      this.showIncreaseHours=false;
+      this.currentUser=null;
+    },
+    saveIncrease(newTotalHours){
+        axios.put("api/setSupportHours/"+this.currentUser.id,{"newTotalHours":newTotalHours})
+            .then(response=>{
+                this.showIncreaseHours=false;
+                this.enee[0].supportHours=newTotalHours;
+                this.currentUser=null;
+                this.$toasted.success("Guardado com sucesso.", {
+                    duration: 4000,
+                    position: "top-center",
+                    theme: "bubble"
+                });
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+    },
+    increaseSupportHours(row){
+        this.currentUser = Object.assign({}, row);
+        this.showIncreaseHours=true;
+        this.showPlan=false;
+        this.showDetails=false;
+        this.showNewInteraction=false;
+      },
     getCmEnee() {
       axios
         .get("api/getCmEnee/" + this.user.id)
@@ -237,14 +293,18 @@ export default {
       this.pagination = pagination;
     },
     seeInteractions(row) {
-      this.userInteractions = Object.assign({}, row);
-      this.getEneeInteractions(this.userInteractions);
+      this.currentUser = Object.assign({}, row);
+        this.showIncreaseHours=false;
+        this.showPlan=false;
+        this.showDetails=true;
+        this.showNewInteraction=false;
+      this.getEneeInteractions(this.currentUser);
     },
     getEneeInteractions(user) {
       axios
         .get("api/getEneeInteractions/" + user.email)
         .then(response => {
-          this.interactions = response.data.data;
+            this.interactions = response.data.data;
         })
         .catch(error => {
           console.log(error);
@@ -260,24 +320,41 @@ export default {
           console.log(error);
         });
     },
-    setInteraction(row) {
-      this.currentUser = Object.assign({}, row);
+    newInteraction(row) {
+        this.currentUser = Object.assign({}, row);
+        this.showIncreaseHours=false;
+        this.showPlan=false;
+        this.showDetails=false;
+        this.showNewInteraction=true;
     },
     managePlan(row) {
-      this.currentUser2 = Object.assign({}, row);
+      this.currentUser = Object.assign({}, row);
+        this.showIncreaseHours=false;
+        this.showPlan=true;
+        this.showDetails=false;
+        this.showNewInteraction=false;
       this.getPlan(row.id);
     },
     cancelEdit: function() {
       this.currentUser = null;
     },
     cancelEdit2: function() {
-      this.currentUser2 = null;
+      this.currentUser = null;
     },
     cancelInteractions: function() {
-      this.userInteractions = null;
+      this.currentUser = null;
     },
     saveInteraction(data, files) {
       console.log(data);
+
+      //add - for missing values, for better reading
+      if(data.software==null){
+          data.software = '-';
+      }
+
+      if(data.place==null){
+          data.place = '-';
+      }
 
       const formData = new FormData();
       for (var i = 0; i < files.length; i++) {
@@ -291,6 +368,9 @@ export default {
       formData.append("information", data.information);
       formData.append("interactionDate", data.interactionDate);
       formData.append("nextInteraction", data.nextInteraction);
+      formData.append("contactMedium", data.contactMedium);
+      formData.append("software", data.software);
+      formData.append("place", data.place);
       formData.append("service", data.service);
       formData.append("numberFiles", files.length);
 
@@ -304,8 +384,8 @@ export default {
             position: "top-center",
             theme: "bubble"
           });
-          if (this.userInteractions != null) {
-            this.getEneeInteractions(this.userInteractions);
+          if (this.currentUser != null) {
+            this.getEneeInteractions(this.currentUser);
           }
         })
         .catch(error => {

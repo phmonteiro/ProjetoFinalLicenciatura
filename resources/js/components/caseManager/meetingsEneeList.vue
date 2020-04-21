@@ -11,7 +11,6 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <set-meeting :user="currentMeeting" @save-meeting="saveMeeting" @cancel-edit="cancelEdit()"></set-meeting>
     <b-container>
       <b-row>
         <b-col>
@@ -63,6 +62,15 @@
           </b-table>
         </b-col>
       </b-row>
+
+<!--        ALTERAÇOES-->
+        <b-button size="sm" v-on:click.prevent="setMeeting(meetings[0])">
+            Agendar
+            <font-awesome-icon icon="handshake" />
+        </b-button>
+        <b-button size="sm" @click="meetings[0].toggleDetails">Esconder</b-button>
+<!--        FIM-->
+
       <nav aria-label="Page navigation" v-if="meetings">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -90,6 +98,8 @@
         </ul>
       </nav>
     </b-container>
+      <set-meeting :user="currentMeeting" @save-meeting="saveMeeting" @cancel-edit="cancelEdit()"></set-meeting>
+
   </div>
 </template>
 

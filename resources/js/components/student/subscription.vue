@@ -611,7 +611,7 @@ export default {
         educationalSupport: null,
         niss: null,
         nif: null,
-        sns: null
+        sns: null,
       },
       index: 0
     };

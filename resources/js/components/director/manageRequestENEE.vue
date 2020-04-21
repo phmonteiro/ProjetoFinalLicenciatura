@@ -48,6 +48,11 @@
           </b-row>
         </template>
       </b-table>
+        <button
+            class="btn btn-info m-1"
+            v-on:click.prevent="editUser(enee[0])"
+            v-if="enee[0]!='approved'"
+        >Avaliar</button>
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -152,7 +157,7 @@ export default {
     editUser(row) {
       this.currentUser = Object.assign({}, row);
       this.getStudentSupports();
-      
+
       let user = row.id;
       axios
         .get("api/getNee/" + row.id)
@@ -165,6 +170,7 @@ export default {
         });
     },
     getTeachersStudent(user) {
+        console.log("api/getTeachersStudent/"+user)
       axios
         .get("api/getTeachersStudent/" + user)
         .then(response => {
@@ -176,7 +182,7 @@ export default {
     },
     cancelEdit: function() {
       console.log("CHEGOU AUI");
-      
+
       this.currentUser = null;
     },
     reprovedSubscription(row) {
@@ -234,7 +240,7 @@ export default {
           });
         });
     },
-    
+
   },
   created() {
     this.getEnee();

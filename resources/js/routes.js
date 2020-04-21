@@ -99,6 +99,14 @@ const routes = [{
     meta: {
       middlewareAuth: true,
     },
+  }, // DEFINE SUPPORT HOURS
+  {
+    path: '/admin/defineSupportHours',
+    name: 'definirHorasApoio',
+    component: require('./components/admin/definirHorasApoio.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
   },
   {
     path: '/admin/editUsers',

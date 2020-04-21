@@ -31,6 +31,7 @@ export default {
       this.$emit("cancel-support");
     },
     save: function() {
+        console.log(this.support.nome)
       this.$emit("save-support");
     }
   }

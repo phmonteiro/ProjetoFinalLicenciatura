@@ -16,22 +16,33 @@
         <b-col class="top100">
           <div v-if="supports">
             <h2>{{ $t('acompanhamento_individualizado') }}</h2>
-            <h3>{{ $t('quantidade_horas_utilizadas') }} {{this.totalHours}}/40 {{ $t('ano') }}</h3>
-            <b-table striped hover :items="supports" :fields="fields">
+            <h3>{{ $t('quantidade_horas_utilizadas') }}: {{this.totalHours}}</h3>
+            <h3>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h3>
+              <b-table striped hover :items="supports" :fields="fields">
               <template slot="actions" slot-scope="row">
-                <button
+                <b-button
                   type="submit"
                   class="btn btn-secondary"
                   data-dismiss="modal"
                   v-on:click.prevent="editSupportHours(row.item)"
-                >{{ $t('editar_quantidade_horas_utilizadas') }}</button>
+                >{{ $t('editar_quantidade_horas_utilizadas') }}</b-button>
               </template>
             </b-table>
           </div>
         </b-col>
       </b-row>
     </b-container>
-    <edit-support-hours
+
+<!--      #######-->
+      <b-button
+          type="submit"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          v-on:click.prevent="editSupportHours(supports[0])"
+      >{{ $t('editar_quantidade_horas_utilizadas') }}</b-button>
+<!--    ########-->
+
+      <edit-support-hours
       :support="currentSupport"
       @save-support="setSupportHours"
       @cancel-support="cancelSupport()"
@@ -47,6 +58,8 @@ export default {
       loading: true,
       currentSupport: null,
       totalHours: 0,
+      supportHoursLimit:null,
+      user:null,
       fields: [
         {
           key: "nome",
@@ -71,14 +84,24 @@ export default {
     };
   },
   methods: {
+    getTotalHours(){
+      axios
+          .get("api/getTotalSupportHours/"+this.user.id)
+          .then(response => {
+              this.supportHoursLimit = response.data})
+            .catch(error => {
+                console.log(error)
+            })
+    },
     getHours() {
       axios
         .get("api/supportHours")
         .then(response => {
+
           this.totalHours = 0;
-          console.log(response.data);
           this.supports = response.data;
           this.loading = false;
+
           this.supports.forEach(element => {
             this.totalHours += element.hours;
           });
@@ -91,6 +114,18 @@ export default {
       console.log(row);
       this.currentSupport = Object.assign({}, row);
     },
+    getAuth() {
+          axios
+              .get("api/getAuthUser")
+              .then(response => {
+                  this.user = response.data;
+                  this.getTotalHours();
+              })
+              .catch(error => {
+
+                  console.log(error);
+              });
+      },
     setSupportHours() {
       axios
         .post("api/setSupportHours", this.currentSupport)
@@ -121,6 +156,7 @@ export default {
     }
   },
   created() {
+    this.getAuth();
     this.getHours();
   }
 };

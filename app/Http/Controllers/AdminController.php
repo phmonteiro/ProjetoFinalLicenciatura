@@ -12,6 +12,8 @@ use App\Teacher;
 use App\Http\Resources\TeacherResource;
 use App\Coordinator;
 use App\Http\Resources\CoordinatorResource;
+use Storage;
+use File;
 
 class AdminController extends Controller
 {
@@ -161,4 +163,28 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Email do coordenador de curso não existe. Por favor introduza uma email válido (email@ipleiria.pt).'], 401);
     }
+
+   public function setHoursLimit(Request $request){
+        $limite = $request->newLimitHours;
+
+        \Debugbar::info($request);
+
+        Storage::put("limite_horas.txt",$limite);
+
+        return response()->json(200);
+   }
+
+   public function getHoursLimit(Request $request){
+    $fileName="limite_horas.txt";
+
+    if(Storage::exists($fileName)){
+
+        $content = Storage::get($fileName);
+
+        return response()->json($content,200);
+    }else{
+        return response()->json(['message'=>"Ficheiro não encontrado!"],500);
+    }
+
+   }
 }

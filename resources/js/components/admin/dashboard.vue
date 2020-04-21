@@ -11,6 +11,8 @@
 
             <router-link class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
 
+            <router-link class="nav-link" :to="{name: 'definirHorasApoio'}">Definir Horas de Apoio</router-link>
+
             <router-link
               class="nav-link"
               :to="{name: 'addCoordinator'}"

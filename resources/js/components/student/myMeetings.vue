@@ -16,7 +16,7 @@
         <b-col class="top100">
           <div v-if="meetings">
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
-            <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
+            <b-table id="meetingsTable" striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
               <template slot="actions" slot-scope="row">
                 <b-row class="text-center">
                   <b-col md="4" sm="12">
@@ -28,7 +28,7 @@
                     <div v-if="row.detailsShowing" style="margin-left: -8px;">
                       <font-awesome-icon icon="eye" />
                     </div>
-                    <div v-if="!row.detailsShowing" style="margin-left: -8px;">
+   h                 <div v-if="!row.detailsShowing" style="margin-left: -8px;">
                       <font-awesome-icon icon="eye-slash" />
                     </div>
                   </b-col>
