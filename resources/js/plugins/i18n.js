@@ -63,7 +63,7 @@ const messages = {
     hora: 'Hora',
     horas_acompanhamento: 'Horas de acompanhamento',
     identificação_estudante: 'Identificação do estudante',
-    identificação_responsável: 'Identificação responsável',
+    identificação_responsável: 'Identificação do Responsável pelo ENEE',
     informação: 'Informação',
     indique_local_interação: 'Indique o local da interação',
     local: 'Local',
@@ -114,9 +114,11 @@ const messages = {
     selecione_meio_contacto: 'Selecione o meio de contacto',
     biblioteca: 'Biblioteca',
     direção: 'Direção',
-    escola: 'Escola'
+    escola: 'Escola',
+    numero_identificação: 'Número de Identificação'
   },
   'en': {
+    numero_identificação: 'Identification Number',
     escola: 'School Services',
     direção: 'Direction',
     biblioteca: 'Library',
@@ -179,7 +181,7 @@ const messages = {
     hora: 'Time',
     horas_acompanhamento: 'Custom support hours',
     identificação_estudante: 'Student identification',
-    identificação_responsável: 'Responsible Identification',
+    identificação_responsável: 'Identification of ENEE Carer',
     informação: 'Information',
     indique_local_interação: 'Designate the interaction local',
     local: 'Local',
