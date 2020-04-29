@@ -69,11 +69,19 @@ class CaseManagerController extends Controller
             return response()->json(new UserResource($user), 200);
     }
 
-    public function myMeetings()
+    public function myMeetings(Request $request)
     {
         $user = Auth::user();
         $students = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->paginate(10);
+
+       \Debugbar::info($request->requested);
+
+    if($request->requested==0){
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNotNull('date')->paginate(10);
+}else if($request->requested==1){
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNull('date')->paginate(10);
+}
+
         return response()->json($meetings, 200);
     }
 
@@ -267,13 +275,15 @@ class CaseManagerController extends Controller
     {
         $dados = $request->validate([
             'title' => 'required|string',
-            'startDate' => 'required|date',
+            'startDate' => 'required',
+            'hours' => 'required'
         ]);
 
         $event = new Schedule();
         $event->email = Auth::user()->email;
         $event->title = $dados['title'];
         $event->startDate = $dados['startDate'];
+        $event->hours = $dados['hours'];
         $event->save();
 
         //EmailController::sendEmail('Foi adicionado um evento ao seu calendário em' . $event->startDate . '. Obrigado', Auth::user()->email, 'Evento adicionado ao calendário', 'Evento adicionado ao calendário');

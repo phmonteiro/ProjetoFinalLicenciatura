@@ -1,29 +1,32 @@
 <template>
   <form @submit.prevent="validateBeforeSubmit">
-    <b-container>
+      <div class="loader">
+          <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
+      </div>
+    <b-container v-if="!loading">
       <b-row>
         <b-col class="top100">
           <h2>{{ $t('pedir_agendamento_reunião') }}</h2>
             <br><br>
-<!--          <div class="form-group">-->
-<!--            <b-form-select-->
-<!--              v-model="meeting.service"-->
-<!--              v-validate="'required'"-->
-<!--              name="service"-->
-<!--              class="mb-3"-->
-<!--              aria-label="Escolher serviço"-->
-<!--            >-->
-<!--              <template slot="first">-->
-<!--                <option :value="null" disabled>&#45;&#45; {{ $t('selecionar_serviço') }} &#45;&#45;</option>-->
-<!--              </template>-->
-<!--              <option value="Gestor-Caso">{{ $t('gestor_caso') }}</option>-->
-<!--            </b-form-select>-->
-<!--            <i v-show="errors.has('service')" class="fa fa-warning"></i>-->
-<!--            <span-->
-<!--              v-show="errors.has('service')"-->
-<!--              class="help is-danger"-->
-<!--            >{{ errors.first('service') }}</span>-->
-<!--          </div>-->
+          <div class="form-group">
+            <b-form-select
+              v-model="meeting.service"
+              v-validate="'required'"
+              name="service"
+              class="mb-3"
+              aria-label="Escolher serviço"
+            >
+              <template slot="first">
+                <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
+              </template>
+              <option v-for="service in serviceOptions.name">{{ service }}</option>
+            </b-form-select>
+            <i v-show="errors.has('service')" class="fa fa-warning"></i>
+            <span
+              v-show="errors.has('service')"
+              class="help is-danger"
+            >{{ errors.first('service') }}</span>
+          </div>
           <div class="form-group">
             <span for="comment">{{ $t('comentário') }}</span>
             <textarea
@@ -53,9 +56,15 @@ export default {
   data() {
     return {
       meeting: {
-        service: "Gestor-Caso",
-        comment: null
-      }
+        service: null,
+        comment: null,
+      },
+        serviceOptions:{
+          name:[],
+          email:[]
+        },
+        teachers:[],
+        loading:true,
     };
   },
   methods: {
@@ -67,6 +76,31 @@ export default {
         }
       });
     },
+    getTeachersStudent() {
+          axios
+              .get("api/getTeachersStudent/" + this.user.id)
+              .then(response => {
+                  console.log(response.data);
+
+                  this.teachers = response.data;
+
+                  this.loading =  false;
+
+                  this.serviceOptions.name.push("Gestor-Caso");
+                  this.serviceOptions.email.push("Gestor-Caso");
+
+                  this.teachers.forEach(teacher=>{
+                      let nomeParts = teacher.name.split(" ");
+                      let nome = nomeParts[0]+" "+nomeParts[nomeParts.length-1];
+
+                      this.serviceOptions.name.push(nome + " - " + teacher.subject);
+                      this.serviceOptions.email.push(teacher.email);
+                  })
+              })
+              .catch(error => {console.log(error)});
+
+          console.log(this.teachers)
+      },
     setMeeting() {
       axios
         .post("api/setMeeting", this.meeting)
@@ -91,7 +125,10 @@ export default {
         });
     }
   },
-  computed: {
+  created() {
+      this.getTeachersStudent();
+  },
+    computed: {
     user: function() {
       return this.$store.state.user;
     }

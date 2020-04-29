@@ -178,7 +178,7 @@ export default {
 
           this.teachers = response.data;
         })
-        .catch(error => {});
+        .catch(error => {console.log(error)});
     },
     cancelEdit: function() {
       console.log("CHEGOU AUI");

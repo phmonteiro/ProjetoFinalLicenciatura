@@ -35,7 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isAdmin')->post('addCoordinator', 'AdminController@addCoordinator')->name('addCoordinator');
 
     //student
-    Route::middleware('isStudent')->get('getTotalSupportHours/{id}', 'StudentController@getTotalSupportHours');
+    Route::middleware('isStudentOrCaseManager')->get('getTotalSupportHours/{id}', 'StudentController@getTotalSupportHours');
     Route::middleware('isDirector')->get('getEnee', 'StudentController@index');
     Route::middleware('isDirector')->get('getApprovedEnee', 'StudentController@enee');
     Route::middleware('isStudent')->get('getContacts', 'StudentController@getContacts');
@@ -47,11 +47,11 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isStudentNoStatus')->post('subscription', 'StudentController@subscription');
     Route::middleware('isAsStudentNoStatus')->get('residence/{residence}/{area}', 'StudentController@getResidence');
     Route::middleware('isService')->get('getUser/{id}', 'StudentController@show');
-    Route::middleware('isStudent')->get('supportHours', 'StudentController@supportHours');
-    Route::middleware('isStudent')->post('setSupportHours', 'StudentController@setSupportHours');
+    Route::middleware('isStudentOrCaseManager')->get('supportHours/{id}', 'StudentController@supportHours');
+    Route::middleware('isStudentOrCaseManager')->post('setSupportHours', 'StudentController@setSupportHours');
     Route::middleware('isStudent')->put('editProfile', 'StudentController@edit');
     Route::middleware('isDirectorServices')->get('getNee/{id}', 'StudentController@getNee');
-    Route::middleware('isDirector')->get('getTeachersStudent/{id}', 'StudentController@getTeacherStudent');
+    Route::middleware('isStudentOrDirector')->get('getTeachersStudent/{id}', 'StudentController@getTeacherStudent');
     Route::middleware('isDirector')->get('getStudentTutor/{id}', 'StudentController@getStudentTutor');
 
     //services

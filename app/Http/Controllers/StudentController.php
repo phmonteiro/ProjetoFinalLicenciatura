@@ -419,10 +419,12 @@ class StudentController extends Controller
         return response()->json($teacher, 200);
     }
 
-    public function supportHours()
+    public function supportHours($id)
     {
+        $student = User::findOrFail($id);
+
         Debugbar::info("Suport HOURS FUNCTION");
-        if (!Subject::where('studentEmail', Auth::user()->email)->exists()) {
+        if (!Subject::where('studentEmail', $student->email)->exists()) {
 
             $client = new \GuzzleHttp\Client();
             $aux = str_split(Carbon::now()->year, 2);
@@ -435,7 +437,7 @@ class StudentController extends Controller
                 $yearLective = $aux[0] . "" . (int) $aux[1] - 1 . ""  . $aux[1];
             }
 
-            $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . Auth::user()->departmentNumber . '&estado=1&naluno=' . Auth::user()->number . '');
+            $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . $student->departmentNumber . '&estado=1&naluno=' . $student->number . '');
             $aux = $response->getBody()->getContents();
             $response = explode(';', $aux);
             $subjects = array();
@@ -454,7 +456,7 @@ class StudentController extends Controller
             echo($subjects);
             return response()->json(new SubjectResource($subjects), 201);
         }else{
-            $subjects=Subject::where('studentEmail',Auth::user()->email)->get();
+            $subjects=Subject::where('studentEmail',$student->email)->get();
              Debugbar::info($subjects);
 
             return response()->json(new SubjectResource($subjects), 201);

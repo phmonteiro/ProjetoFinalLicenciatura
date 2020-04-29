@@ -95,7 +95,7 @@ export default {
     },
     getHours() {
       axios
-        .get("api/supportHours")
+        .get("api/supportHours/"+this.user.id)
         .then(response => {
 
           this.totalHours = 0;
@@ -120,6 +120,8 @@ export default {
               .then(response => {
                   this.user = response.data;
                   this.getTotalHours();
+                  this.getHours();
+
               })
               .catch(error => {
 
@@ -157,7 +159,6 @@ export default {
   },
   created() {
     this.getAuth();
-    this.getHours();
   }
 };
 </script>

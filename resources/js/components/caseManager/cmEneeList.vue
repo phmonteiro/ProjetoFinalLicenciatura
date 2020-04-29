@@ -152,6 +152,11 @@
                 Gerir horas de apoio
                 <font-awesome-icon icon="book" />
             </b-button>
+
+            <b-button   size="sm" @click.prevent="showSupportHours(enee[0])" >
+                 Consultar Horas de Apoio
+                 <font-awesome-icon icon="book" />
+            </b-button>
 <!--        ##########################################-->
 
       <nav aria-label="Page navigation" v-if="enee">
@@ -182,6 +187,11 @@
       </nav>
     </div>
       <br>
+      <show-hours
+          :student="enee"
+          v-if="showStudentHours"
+          @cancel-show-hours="cancelShowHours()">
+      </show-hours>
       <manage-plan v-if="showPlan" :user="currentUser" :plan="currentPlan" @cancel-edit2="cancelEdit2()"></manage-plan>
       <set-inter v-if="showNewInteraction" :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="cancelEdit()"></set-inter>
       <increase-hours
@@ -196,6 +206,7 @@
       :interactions="interactions"
       @cancel-edit="cancelInteractions()"
     ></interactionsDetails>
+
   </div>
 </template>
 
@@ -233,7 +244,7 @@ export default {
           label: "Ações",
         }
       ],
-
+      student:null,
       currentUser: null,
       interactions: null,
       currentPlan: null,
@@ -242,9 +253,21 @@ export default {
       showPlan:false,
       showDetails:false,
       newTotalHours:null,
+      showStudentHours:false
     };
   },
   methods: {
+    cancelShowHours(){
+        this.showStudentHours = false;
+        },
+    showSupportHours(enee){
+        this.showIncreaseHours=false;
+        this.showPlan=false;
+        this.showDetails=false;
+        this.showNewInteraction=false;
+        this.showStudentHours = true;
+        this.student=enee;
+    },
     cancelIncrease(){
       this.showIncreaseHours=false;
       this.currentUser=null;
@@ -271,7 +294,9 @@ export default {
         this.showPlan=false;
         this.showDetails=false;
         this.showNewInteraction=false;
-      },
+        this.showStudentHours = false;
+
+    },
     getCmEnee() {
       axios
         .get("api/getCmEnee/" + this.user.id)
@@ -297,6 +322,7 @@ export default {
         this.showIncreaseHours=false;
         this.showPlan=false;
         this.showDetails=true;
+        this.showStudentHours = false;
         this.showNewInteraction=false;
       this.getEneeInteractions(this.currentUser);
     },
@@ -326,6 +352,7 @@ export default {
         this.showPlan=false;
         this.showDetails=false;
         this.showNewInteraction=true;
+        this.showStudentHours = false;
     },
     managePlan(row) {
       this.currentUser = Object.assign({}, row);
@@ -333,16 +360,20 @@ export default {
         this.showPlan=true;
         this.showDetails=false;
         this.showNewInteraction=false;
-      this.getPlan(row.id);
+        this.showStudentHours = false;
+        this.getPlan(row.id);
     },
     cancelEdit: function() {
-      this.currentUser = null;
+        this.showNewInteraction=false;
+        this.currentUser = null;
     },
     cancelEdit2: function() {
-      this.currentUser = null;
+        this.showPlan=false;
+        this.currentUser = null;
     },
     cancelInteractions: function() {
-      this.currentUser = null;
+        this.showDetails=false;
+        this.currentUser = null;
     },
     saveInteraction(data, files) {
       console.log(data);
