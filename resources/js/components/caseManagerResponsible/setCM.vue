@@ -86,6 +86,20 @@ export default {
     },
     setCM() {
       this.data.studentName = this.user.name;
+
+      if(!this.data.cmEmail.includes("ipleiria.pt") || this.data.cmEmail.includes("my.ipleiria.pt")){
+          this.$toasted.error(
+              "Insira um email inválido.",
+              {
+                  duration: 4000,
+                  position: "top-center",
+                  theme: "bubble"
+              });
+
+          this.loading=false;
+          this.data.cmEmail="";
+      }else{
+
       axios
         .post("api/setCM/" + this.user.id, this.data)
         .then(response => {
@@ -107,6 +121,7 @@ export default {
             }
           );
         });
+      }
     },
     removeCM(cm) {
       console.log(cm);
