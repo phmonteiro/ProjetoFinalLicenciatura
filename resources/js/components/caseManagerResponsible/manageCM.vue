@@ -25,7 +25,8 @@
           <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir</button>
         </template>
       </b-table>
-      <nav aria-label="Page navigation" v-if="users">
+        <button class="btn btn-secondary" v-on:click.prevent="editUser(users[0])">Gerir</button>
+        <nav aria-label="Page navigation" v-if="users">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
             <a

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3" v-if="user && user.type=='Administrator'">
+  <div class="container mt-3">
     <div class="form-group">
       <label for="inputName">Nome</label>
       <input

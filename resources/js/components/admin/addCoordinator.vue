@@ -1,5 +1,6 @@
 <template>
-  <b-container v-if="user.type=='Administrator'">
+    <div>
+  <b-container v-if="user.type=='Administrador'">
     <div class="container pt-2 pb-3">
       <h3>Adicionar coordenador de curso</h3>
       <div class="row">
@@ -28,8 +29,8 @@
           <label for="departmentNumber">Número do departamento</label>
           <input
             type="number"
-            min:0000
-            max:9999
+            min="0000"
+            max="9999"
             class="form-control"
             name="departmentNumber"
             id="departmentNumber"
@@ -45,6 +46,7 @@
       >Adicionar</button>
     </div>
   </b-container>
+    </div>
 </template>
 
 <script>
@@ -55,7 +57,7 @@ export default {
         email: null,
         course: null,
         departmentNumber: null,
-        school: null
+        school: null,
       }
     };
   },
@@ -83,7 +85,12 @@ export default {
           });
         });
     }
-  }
+  },
+    computed: {
+        user: function() {
+            return this.$store.state.user;
+        }
+    }
 };
 </script>
 

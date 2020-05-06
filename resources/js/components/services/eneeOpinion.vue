@@ -8,7 +8,8 @@
     ></eneeServiceEvaluation>
     <div class="container">
       <h2>Lista de aprovação Enee</h2>
-      <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">
+        <br>
+      <b-table striped hover v-if="requests.supportsForStudent" :items="requests" :fields="fields">
         <template slot="actions" slot-scope="row">
           <button
             class="btn btn-info"
@@ -22,6 +23,7 @@
           >Rejeitar</button>
         </template>
       </b-table>
+      <h4 v-else>Não existem pedidos de parecer pendentes.</h4>
     </div>
   </div>
 </template>

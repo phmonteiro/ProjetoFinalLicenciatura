@@ -11,11 +11,26 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <set-meeting :user="currentMeeting" @save-meeting="saveMeeting" @cancel-edit="cancelEdit()"></set-meeting>
+    <b-container>
+          <div class="row">
+              <div class="col-sm-6 text-center" >
+                  <b-button v-on:click="showRequestedMeetings()" style="height:50px;width:400px" class="btn-xl" >
+                      Pedidos de Reunião
+                  </b-button>
+              </div>
+              <div class="col-sm-6 text-center">
+                  <b-button v-on:click="showScheduledMeetings()" style="height:50px;width:400px" class="btn-xl" >
+                      Reuniões Agendadas
+                  </b-button>
+              </div>
+          </div>
+    </b-container>
+      <br>
     <b-container>
       <b-row>
         <b-col>
-          <h2>Pedidos reuniao</h2>
+          <h2 v-if="showRequested">Pedidos Reunião</h2>
+          <h2 v-if="showScheduled">Reuniões Agendadas</h2>
           <b-table striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
             <template slot="actions" slot-scope="row">
               <b-row class="text-center">
@@ -29,7 +44,7 @@
                   </div>
                 </b-col>
                 <b-col md="4" sm="12">
-                  <b-button size="sm" v-on:click.prevent="setMeeting(row.item)">
+                  <b-button v-if="showRequested" size="sm" v-on:click.prevent="setMeeting(row.item)">
                     Agendar
                     <font-awesome-icon icon="handshake" />
                   </b-button>
@@ -61,8 +76,18 @@
               </b-card>
             </template>
           </b-table>
+            <h5 v-if="!meetings.length">Não existem reuniões para mostrar.</h5>
         </b-col>
       </b-row>
+
+<!--        ALTERAÇOES-->
+        <b-button v-if="showRequested" size="sm" v-on:click.prevent="setMeeting(meetings[0])">
+            Agendar
+            <font-awesome-icon icon="handshake" />
+        </b-button>
+        <b-button size="sm">Esconder</b-button>
+<!--        FIM-->
+
       <nav aria-label="Page navigation" v-if="meetings">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -90,6 +115,9 @@
         </ul>
       </nav>
     </b-container>
+
+      <set-meeting :meetingRequest="currentMeeting" @save-meeting="saveMeeting" @cancel-edit="cancelEdit()"></set-meeting>
+
   </div>
 </template>
 
@@ -100,6 +128,8 @@ export default {
       yourTimeValue: {},
       pagination: {},
       loading: true,
+      requestedMeetings:[],
+      scheduledMeetings:[],
       meetings: null,
       fields: [
         {
@@ -134,19 +164,45 @@ export default {
       ],
       currentMeeting: null,
       userInteractions: null,
-      interactions: null
+      interactions: null,
+      showRequested:true,
+      showScheduled:null,
     };
   },
   methods: {
+    showRequestedMeetings(){
+
+        this.showRequested=true;
+        this.showScheduled=false;
+        this.getMeetingsEnee();
+
+      },
+     showScheduledMeetings(){
+
+         this.showRequested=false;
+         this.showScheduled=true;
+         this.getMeetingsEnee();
+     },
     getMeetingsEnee(page_url) {
+        let varRequested;
+        if(this.showRequested){
+            varRequested=1;
+        }else{
+            varRequested=0;
+        }
+
       let pg = this;
-      page_url = page_url || "api/getMyMeetings?page=1";
+      page_url = page_url || "api/getMyMeetings?page=1&requested="+varRequested;
       axios
         .get(page_url)
         .then(response => {
-          this.meetings = response.data.data;
-          this.loading = false;
-          pg.makePagination(response.data);
+
+            this.meetings = response.data.data;
+
+            this.loading = false;
+
+            pg.makePagination(response.data);
+
         })
         .catch(error => {
           console.log(error);
@@ -162,6 +218,7 @@ export default {
       this.pagination = pagination;
     },
     setMeeting(row) {
+      this.meet=row;
       this.currentMeeting = Object.assign({}, row);
     },
     cancelEdit: function() {
@@ -171,11 +228,15 @@ export default {
       this.userInteractions = null;
     },
     saveMeeting(data) {
-      console.log(data);
+
       axios
         .put("api/setEneeMeeting/" + this.currentMeeting.id, data)
         .then(response => {
           this.getMeetingsEnee();
+
+          // this.scheduledMeetings.push(this.currentMeeting);
+          // this.requestedMeetings.splice(this.requestedMeetings.indexOf(this.currentMeeting),1);
+
           this.currentMeeting = null;
           this.$toasted.success("Guardado com sucesso.", {
             duration: 4000,

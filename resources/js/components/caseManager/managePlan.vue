@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-3" v-if="user">
+  <div class="container mt-3">
     <div class="form-group">
-      <h4>Estudante:</h4>
+      <h4>Gerir Plano</h4>
       <label for="inputName">Nome</label>
       <input
         type="text"

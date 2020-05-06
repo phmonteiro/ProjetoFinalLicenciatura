@@ -1,8 +1,8 @@
 <template>
-  <div class="container mt-3" v-if="user">
+  <div class="container mt-3">
     <div class="form-group">
-      <h4>Estudante:</h4>
-      <label for="inputName">Nome</label>
+      <h4>Criar nova interação</h4>
+      <label for="inputName">{{this.$t('nome')}}</label>
       <input
         type="text"
         class="form-control"
@@ -25,27 +25,58 @@
       >
     </div>
     <div class="form-group">
-      <label for="decision">Data da interação:</label>
-      <date-picker v-model="data.interactionDate" valueType="format" lang="pt-br"></date-picker>
-      <code>Caso nao especificado, a data de hoje será assumida.</code>
+        <div>
+            <label for="decision">{{this.$t('data_interação')}}:</label>
+            <date-picker v-validate="'date_format:yyyy-mm-dd'" type="date" ref="interactionDate" name="interactionDate" id="interactionDate" v-model="data.interactionDate" valueType="format" lang="pt-br"></date-picker>
+            <code>Caso nao especificado, a data de hoje será assumida.</code>
+            <br><br>
+            <label for="decision">{{this.$t('data_interação')}} ({{this.$t('opcional')}}): </label>
+            <input type="time" v-model="data.interactionTime" valueType="format" lang="pt-br">
+        </div>
+
     </div>
+
 
     <div class="form-group">
       <label for="decision">Servico:</label>
       <b-form-select v-model="data.service" class="mb-3">
         <template slot="first">
-          <option :value="null" disabled>-- Selecione o serviço --</option>
+          <option :value="null" disabled>-- {{this.$t('selecionar_serviço')}} --</option>
         </template>
 
         <option value="SAPE">SAPE</option>
         <option value="SAS">SAS</option>
-        <option value="Escola">Escola</option>
-        <option value="Biblioteca">Biblioteca</option>
-        <option value="Direção">Direção</option>
-        <option value="Professor-Tutor">Professor-Tutor</option>
-        <option value="Gestor-Caso">Gestor-Caso</option>
+        <option value="Escola">{{this.$t('escola')}}</option>
+        <option value="Biblioteca">{{this.$t('biblioteca')}}</option>
+        <option value="Direção">{{this.$t('direção')}}</option>
+<!--        <option value="Professor-Tutor">Professor-Tutor</option>-->
+        <option value="Gestor-Caso">{{this.$t('gestor_caso')}}</option>
       </b-form-select>
     </div>
+
+      <div class="form-group">
+          <label>Meio de Contacto:</label>
+          <b-form-select name="contactMedium" id="contactMedium" v-validate="'required'" v-model="data.contactMedium" class="mb-3">
+              <template slot="first">
+                  <option :value="null" disabled>-- {{this.$t('selecione_meio_contacto')}} --</option>
+              </template>
+
+              <option value="conferencia">Video Conferência</option>
+              <option value="presencial">Presencial</option>
+              <option value="telefone">Telefone</option>
+          </b-form-select>
+            <code v-if="data.contactMedium==null">{{this.$t('falta_meio_contacto')}}</code>
+      </div>
+
+      <div class="form-group" v-if="data.contactMedium==='conferencia'">
+          <label for="local">Software:</label>       <code>{{this.$t('indique_software_interação')}}.</code>
+          <input class="form-control" v-model="data.software" type="text" id="software" name="software">
+      </div>
+
+     <div class="form-group" v-if="data.contactMedium==='presencial'">
+         <label for="local">Local:</label>       <code>{{this.$t('indique_local_interação')}}.</code>
+         <input class="form-control" v-model="data.place" type="text" id="local" name="local">
+     </div>
 
     <div class="form-group">
       <label for="decision">Medida</label>
@@ -53,7 +84,7 @@
     </div>
 
     <div class="form-group">
-      <label for="information">Informação</label>
+      <label for="information">{{this.$t('informação')}}</label>
       <textarea
         class="form-control"
         id="information"
@@ -65,11 +96,12 @@
 
     <div class="form-group">
       <label for="nextInteraction">Proxima interação:</label>
-      <date-picker v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
+      <date-picker type="date" v-validate="'date_format:yyyy-mm-dd|after:interactionDate'" name="nextInteraction" id="nextInteraction" v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
+        <code v-if="data.errorData">A data introduzida tem que ser maior que a data da primeira interação.</code>
     </div>
 
     <div class="form-group p-2">
-      <label for="neeType">Anexos Opcionais</label>
+      <label for="files">Anexos Opcionais</label>
       <div class="field p-1">
         <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple>
       </div>
@@ -92,6 +124,11 @@ export default {
         service: "",
         decision: "",
         information: "",
+        place:null,
+        contactMedium:null,
+        software:null,
+        interactionTime:null,
+        errorData:null,
       },
 
       meeting: {
@@ -105,11 +142,32 @@ export default {
     cancel() {
       this.$emit("cancel-edit");
     },
+      validateDate(){
+
+        if(this.data.nextInteraction>this.data.interactionDate){
+            return true;
+        }else{
+            return false;
+        }
+     },
     save: function() {
-      console.log(this.data.nextInteraction);
-      
-      this.$emit("save-interaction", this.data, this.files);
-      
+      if(this.validateDate()) {
+          this.data.errorData=false;
+          console.log(this.data.nextInteraction);
+
+          if(this.contactMedium==="presencial"){
+              this.software=null;
+          }else if(this.contactMedium==="conferencia"){
+              this.place=null;
+          }else{
+              this.software=null;
+              this.place=null;
+          }
+
+          this.$emit("save-interaction", this.data, this.files);
+      }else{
+          this.data.errorData = true;
+      }
       //this.data = Object.assign({}, {});
     },
     handleFiles() {

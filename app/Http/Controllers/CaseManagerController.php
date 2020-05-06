@@ -55,11 +55,33 @@ class CaseManagerController extends Controller
         return response()->json(new EneeDiagnosticResource($plan), 201);
     }
 
-    public function myMeetings()
+    public function setSupportHours(Request $request, $id){
+            $user = User::findOrFail($id);
+            $user->supportHours=$request->newTotalHours;
+            $user->save();
+
+            $history = new History();
+            $history->studentEmail = $user->email;
+            $history->description = "O case manager alterou o limite de horas de suporte do enee para ".$request->newTotalHours.".";
+            $history->date = Carbon::now();
+            $history->save();
+
+            return response()->json(new UserResource($user), 200);
+    }
+
+    public function myMeetings(Request $request)
     {
         $user = Auth::user();
         $students = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->paginate(10);
+
+       \Debugbar::info($request->requested);
+
+    if($request->requested==0){
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNotNull('date')->paginate(10);
+}else if($request->requested==1){
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNull('date')->paginate(10);
+}
+
         return response()->json($meetings, 200);
     }
 
@@ -170,7 +192,10 @@ class CaseManagerController extends Controller
             'nextInteraction' => 'required|date',
             'service' => 'required',
             'decision' => 'required',
-            'information' => 'required'
+            'information' => 'required',
+            'contactMedium' => 'required',
+            'software' => '',
+            'place' => ''
         ]);
 
         $contact = new Contact();
@@ -184,6 +209,9 @@ class CaseManagerController extends Controller
         $contact->decision = $dados['decision'];
         $contact->information = $dados['information'];
         $contact->nextContact = $dados['nextInteraction'];
+        $contact->contactMedium = $dados['contactMedium'];
+        $contact->software = $dados['software'];
+        $contact->place = $dados['place'];
         $contact->save();
 
         if ($request->numberFiles != null && $request->numberFiles > 0) {
@@ -247,13 +275,15 @@ class CaseManagerController extends Controller
     {
         $dados = $request->validate([
             'title' => 'required|string',
-            'startDate' => 'required|date',
+            'startDate' => 'required',
+            'hours' => 'required'
         ]);
 
         $event = new Schedule();
         $event->email = Auth::user()->email;
         $event->title = $dados['title'];
         $event->startDate = $dados['startDate'];
+        $event->hours = $dados['hours'];
         $event->save();
 
         //EmailController::sendEmail('Foi adicionado um evento ao seu calendário em' . $event->startDate . '. Obrigado', Auth::user()->email, 'Evento adicionado ao calendário', 'Evento adicionado ao calendário');
@@ -265,8 +295,9 @@ class CaseManagerController extends Controller
     {
         $user = Auth::user();
         $students = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('date', '!=', 'NULL')->where('service', 'Gestor-Caso')->get();
+        $meetings = DB::table('meetings')->whereIn('email', $students)->whereNotNull('date')->where('service', 'Gestor-Caso')->get();
         $schedule = Schedule::where('email', $user->email)->get();
+
 
         return response()->json([$meetings, $schedule], 200);
     }

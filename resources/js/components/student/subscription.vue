@@ -180,19 +180,19 @@
                     >{{ errors.first('Identification Number') }}</span>
                   </div>
                   <div class="col">
-                    <label for="number">Nº</label>
+                    <label for="number">{{$t('numero_identificação')}}</label>
                     <input
                       v-validate="{required:true}"
                       class="form-control"
-                      name="Student Number"
+                      name="ID Number"
                       id="number"
                       v-model="student.identificationNumber"
                     />
-                    <i v-show="errors.has('Student Number')" class="fa fa-warning"></i>
+                    <i v-show="errors.has('ID Number')" class="fa fa-warning"></i>
                     <span
-                      v-show="errors.has('Student Number')"
+                      v-show="errors.has('ID Number')"
                       class="help is-danger"
-                    >{{ errors.first('Student Number') }}</span>
+                    >{{ errors.first('ID Number') }}</span>
                   </div>
                 </div>
               </div>
@@ -611,7 +611,7 @@ export default {
         educationalSupport: null,
         niss: null,
         nif: null,
-        sns: null
+        sns: null,
       },
       index: 0
     };
