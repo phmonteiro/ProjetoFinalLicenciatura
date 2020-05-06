@@ -116,8 +116,6 @@
       </nav>
     </b-container>
 
-
-
       <set-meeting :meetingRequest="currentMeeting" @save-meeting="saveMeeting" @cancel-edit="cancelEdit()"></set-meeting>
 
   </div>

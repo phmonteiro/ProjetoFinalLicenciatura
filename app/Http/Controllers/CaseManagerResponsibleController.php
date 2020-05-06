@@ -9,6 +9,8 @@ use App\User;
 use App\Http\Resources\UserResource;
 use Carbon\Carbon;
 use App\History;
+use Barryvdh\Debugbar\Facade as Debugbar;
+
 
 class CaseManagerResponsibleController extends Controller
 {
@@ -26,6 +28,25 @@ class CaseManagerResponsibleController extends Controller
     public function getStudentCMs($email)
     {
         return CaseManagerResponsibleResource::collection(CaseManager::Where('studentEmail', $email)->paginate(10));
+    }
+
+    public function setCmSubstitute(Request $request){
+
+        $caseManager = CaseManager::where('studentEmail',$request->emailStudent)->first();
+
+        $caseManager->emailCaseManagerSubstituto = $request->emailCmSubstitute;
+
+        $caseManager->save();
+
+        $history = new History();
+        $history->studentEmail = $request->emailStudent;
+        $history->description = 'Foi definido o Gestor de Caso ' .$caseManager->caseManagerName.' como substituto para o aluno '.$caseManager->studentName;
+        $history->date = Carbon::now();
+        $history->save();
+
+        //mandar email a avisar
+
+        return response()->json(200);
     }
 
     public function removeCM($id)

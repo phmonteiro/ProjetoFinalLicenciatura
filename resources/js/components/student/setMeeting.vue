@@ -99,13 +99,13 @@ export default {
               })
               .catch(error => {console.log(error)});
 
-          console.log(this.teachers)
       },
     setMeeting() {
       axios
         .post("api/setMeeting", this.meeting)
         .then(response => {
-          console.log("meeting requested!");
+          this.meeting.service=null;
+          this.meeting.comment=null;
           this.$toasted.success("Pedido de reunião realizado sucesso.", {
             duration: 4000,
             position: "top-center",

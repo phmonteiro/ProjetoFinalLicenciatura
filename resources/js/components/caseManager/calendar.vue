@@ -229,27 +229,9 @@
 
                     this.eventDate = data;
 
-                    // let offset = new Date(this.eventDate).getTimezoneOffset();
                     let dateSplit = this.eventDate.split("T");
-                    // let hourSplit = dateSplit[1].split(".")
                     this.eventDate = dateSplit[0];
                 }
-
-                    // if (arg.event.extendedProps.hours == null) {
-                    //
-                    //     let hours = hourSplit[0]
-                    //
-                    //
-                    //     if (offset === -60) {
-                    //         let hoursParts = hours.split(":");
-                    //
-                    //         hours = (Number(hoursParts[0]) + 1) + ":" + hoursParts[1];
-                    //     }
-                    //
-                    //     this.eventHours = hours;
-                    //
-                    // }
-
 
                 if(this.currentEvent!=null)
                     this.$modal.show('hello-world',{currentEvent: this.currentEvent});
