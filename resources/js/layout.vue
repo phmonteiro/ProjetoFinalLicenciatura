@@ -2,12 +2,12 @@
   <div>
     <div class="languages">
       <div v-if="language=='pt'">
-        <a href="#" v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
+        <a href="#" v-on:click.prevent="changeLanguage()" >
           <img :src="'/imagens/iconfinder_Portugal.png'" alt="Bandeira Portuguesa" tabindex="-1" />
         </a>
       </div>
       <div v-else>
-        <a href="#" v-on:click.prevent="changeLanguage()" onClick="window.location.reload();">
+        <a href="#" v-on:click.prevent="changeLanguage()" >
           <img :src="'/imagens/iconfinder_UnitedKingdom.png'" alt="Bandeira Inglesa" tabindex="-1" />
         </a>
       </div>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
-export default {
+    import { localize } from 'vee-validate';
+
+    export default {
   data() {
     return {
       language: ""
@@ -28,12 +30,15 @@ export default {
     changeLanguage() {
       if (this.$i18n.locale == "pt") {
         this.$i18n.locale = "en";
+        localize("en");
         //this.$store.languagePref = "PT";
         this.$store.commit("setLang", "en");
         this.language = "pt";
       } else {
         this.$i18n.locale = "pt";
-        //this.$store.languagePref = "EN";
+        localize("pt");
+
+          //this.$store.languagePref = "EN";
         this.$store.commit("setLang", "pt");
         this.language = "en";
       }

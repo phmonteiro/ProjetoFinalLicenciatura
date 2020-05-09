@@ -1,26 +1,31 @@
 <template>
   <div class="container" v-if="user">
-    <form @submit.prevent="validateBeforeSubmit">
+      <ValidationObserver v-slot="{ handleSubmit }">
+    <form @submit.prevent="handleSubmit(editProfile)">
       <h2>{{ $t('editar_perfil') }}</h2>
       <div class="row"></div>
       <div class="col-md-12 pt-4">
         <div class="form-group">
           <div class="container-full-width">
+
             <div class="row">
               <div class="col">
                 <label for="student-name">{{ $t('nome') }}</label>
-                <input
-                    v-validate="'regex:[a-zA-Z][a-zA-Z ]+'"
-                  type="text"
-                  class="form-control"
-                  id="student-name"
-                  placeholder="Nome Estudante"
-                  name="student-name"
-                  v-model="user.name"
-                  disabled
-                />
+                  <ValidationProvider name="nome" id="valNome" rules="required|alpha_spaces" v-slot="{ errors }">
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="student-name"
+                          placeholder="Nome Estudante"
+                          name="student-name"
+                          v-model="user.name"
+                          disabled
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
             </div>
+
             <div class="row">
               <div class="col">
                 <label for="email">{{ $t('email_principal') }}</label>
@@ -37,20 +42,18 @@
             <div class="row">
               <div class="col">
                 <label for="secondEmail">{{ $t('email_secundário') }}</label>
-                <input
-                  aria-label="Segundo Email"
-                  v-validate="{ email:true }"
-                  class="form-control"
-                  type="secondEmail"
-                  name="secondEmail"
-                  id="secondEmail"
-                  v-model="user.secondEmail"
-                />
-                <i v-show="errors.has('email')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('email')"
-                  class="help is-danger"
-                >{{ errors.first('email') }}</span>
+
+                  <ValidationProvider name="email" rules="email" v-slot="{ errors }">
+                      <input
+                          aria-label="Segundo Email"
+                          class="form-control"
+                          type="text"
+                          name="secondEmail"
+                          id="secondEmail"
+                          v-model="user.secondEmail"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
             </div>
           </div>
@@ -61,137 +64,112 @@
             <div class="row">
               <div class="col">
                 <label for="responsibleName">{{$t('nome')}}</label>
-                <input
-                  v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
-                  type="text"
-                  class="form-control"
-                  id="responsibleName"
-                  name="responsibleName"
-                  v-model="user.responsibleName"
-                />
-                <i v-show="errors.has('responsibleName')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('responsibleName')"
-                  class="help is-danger"
-                >{{ errors.first('responsibleName') }}</span>
+                  <ValidationProvider name="responsibleName" rules="required|alpha" v-slot="{ errors }">
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="responsibleName"
+                          name="responsibleName"
+                          v-model="user.responsibleName"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
               <div class="col">
                 <label for="responsiblePhone">{{$t('contacto_telefónico')}}</label>
-                <input
-                  v-validate="{ required: true, digits:9 }"
-                  class="form-control"
-                  name="responsiblePhone"
-                  id="responsiblePhone"
-                  min="1"
-                  max="9999999999"
-                  v-model="user.responsiblePhone"
-                />
-                <i v-show="errors.has('responsiblePhone')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('responsiblePhone')"
-                  class="help is-danger"
-                >{{ errors.first('responsiblePhone') }}</span>
+                  <ValidationProvider name="responsiblePhone" rules="required|digits:9" v-slot="{ errors }">
+                      <input
+                          class="form-control"
+                          name="responsiblePhone"
+                          id="responsiblePhone"
+                          min="1"
+                          max="9999999999"
+                          v-model="user.responsiblePhone"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
               <div class="col">
                 <label for="responsibleKin">{{$t('parentesco')}}</label>
-                <input
-                  v-validate="'required'"
-                  type="text"
-                  class="form-control"
-                  id="responsibleKin"
-                  name="responsibleKin"
-                  v-model="user.responsibleKin"
-                />
-                <i v-show="errors.has('responsibleKin')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('responsibleKin')"
-                  class="help is-danger"
-                >{{ errors.first('responsibleKin') }}</span>
+                  <ValidationProvider name="responsibleKin" rules="required" v-slot="{ errors }">
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="responsibleKin"
+                          name="responsibleKin"
+                          v-model="user.responsibleKin"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
               <div class="col">
                 <label for="responsibleEmail">{{$t('email')}}</label>
-                <input
-                  v-validate="{ required: true, email:true }"
-                  type="email"
-                  class="form-control"
-                  id="responsibleEmail"
-                  name="responsibleEmail"
-                  v-model="user.responsibleEmail"
-                />
-                <i v-show="errors.has('responsibleEmail')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('responsibleEmail')"
-                  class="help is-danger"
-                >{{ errors.first('responsibleEmail') }}</span>
+                  <ValidationProvider name="responsibleEmail" rules="required|email" v-slot="{ errors }">
+                      <input
+                          type="email"
+                          class="form-control"
+                          id="responsibleEmail"
+                          name="responsibleEmail"
+                          v-model="user.responsibleEmail"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
             </div>
           </div>
-
           <h3>{{$t('contacto_emergencia')}}</h3>
           <div class="container-full-width">
             <div class="row">
               <div class="col">
                 <label for="emergencyName">{{$t('nome')}}</label>
-                <input
-                  v-validate="'required'"
-                  type="text"
-                  class="form-control"
-                  id="emergencyName"
-                  name="emergencyName"
-                  v-model="user.emergencyName"
-                />
-                <i v-show="errors.has('emergencyName')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('emergencyName')"
-                  class="help is-danger"
-                >{{ errors.first('emergencyName') }}</span>
+                  <ValidationProvider name="emergencyName" rules="required" v-slot="{ errors }">
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="emergencyName"
+                          name="emergencyName"
+                          v-model="user.emergencyName"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
               <div class="col">
                 <label for="emergencyPhone">{{$t('contacto_telefónico')}}</label>
-                <input
-                  v-validate="{ required: true, digits:9 }"
-                  class="form-control"
-                  name="emergencyPhone"
-                  id="emergencyPhone"
-                  v-model="user.emergencyPhone"
-                />
-                <i v-show="errors.has('emergencyPhone')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('emergencyPhone')"
-                  class="help is-danger"
-                >{{ errors.first('emergencyPhone') }}</span>
+                  <ValidationProvider name="emergencyPhone" rules="required|digits:9" v-slot="{ errors }">
+                      <input
+                          class="form-control"
+                          name="emergencyPhone"
+                          id="emergencyPhone"
+                          v-model="user.emergencyPhone"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
               <div class="col">
                 <label for="emergencyKin">{{$t('parentesco')}}</label>
-                <input
-                  v-validate="'required'"
-                  type="text"
-                  class="form-control"
-                  id="emergencyKin"
-                  name="emergencyKin"
-                  v-model="user.emergencyKin"
-                />
-                <i v-show="errors.has('emergencyKin')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('emergencyKin')"
-                  class="help is-danger"
-                >{{ errors.first('emergencyKin') }}</span>
+                  <ValidationProvider name="emergencyKin" rules="required" v-slot="{ errors }">
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="emergencyKin"
+                          name="emergencyKin"
+                          v-model="user.emergencyKin"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
               <div class="col">
                 <label for="emergencyEmail">{{$t('email')}}</label>
-                <input
-                  v-validate="{ required: true, email:true }"
-                  type="email"
-                  class="form-control"
-                  id="emergencyEmail"
-                  name="emergencyEmail"
-                  v-model="user.emergencyEmail"
-                />
-                <i v-show="errors.has('emergencyEmail')" class="fa fa-warning"></i>
-                <span
-                  v-show="errors.has('emergencyEmail')"
-                  class="help is-danger"
-                >{{ errors.first('emergencyEmail') }}</span>
+                  <ValidationProvider name="emergencyEmail" rules="required|email" v-slot="{ errors }">
+                      <input
+                          type="email"
+                          class="form-control"
+                          id="emergencyEmail"
+                          name="emergencyEmail"
+                          v-model="user.emergencyEmail"
+                      />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
               </div>
             </div>
           </div>
@@ -201,6 +179,7 @@
       </div>
       <button type="submit" class="btn btn-primary">{{ $t('confirmar') }}</button>
     </form>
+      </ValidationObserver>
   </div>
 </template>
 
@@ -213,14 +192,6 @@ export default {
     };
   },
   methods: {
-    validateBeforeSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.editProfile();
-          return;
-        }
-      });
-    },
     getAuth() {
       axios
         .get("api/getAuthUser")

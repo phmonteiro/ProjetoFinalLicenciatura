@@ -1,7 +1,8 @@
 <template>
   <div class="container pt-2 pb-3" v-if="user != null">
     <div v-if="user.enee!='awaiting' && user.enee!='approved'">
-      <form @submit.prevent="validateBeforeSubmit">
+        <ValidationObserver v-slot="{ handleSubmit }">
+      <form @submit.prevent="handleSubmit(sendForm)">
         <h2>{{$t('formulario')}}</h2>
         <div class="row">
           <div class="col-md-12 pt-4">
@@ -33,41 +34,33 @@
                       disabled
                     />
                   </div>
+
                   <div class="col">
                     <label for="phone-number">{{$t('contacto_telefónico')}}</label>
-                    <input
-                      v-validate="{ required: true, digits:9 }"
-                      :class="{'input': true, 'is-danger': errors.has('phone-number') }"
-                      class="form-control"
-                      name="Phone Number"
-                      id="phone-number"
-                      min="1"
-                      max="999999999"
-                      v-model="student.phoneNumber"
-                    />
-                    <i v-show="errors.has('Phone Number')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Phone Number')"
-                      class="help is-danger"
-                    >{{ errors.first('Phone Number') }}</span>
+                      <ValidationProvider name="phone" rules="required|digits:9" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="Phone Number"
+                              id="phone-number"
+                              v-model="student.phoneNumber"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="birth-date">{{$t('data_nascimento')}}</label>
-                    <input
-                      v-validate="{ required: true, date_format:'yyyy-MM-dd' }"
-                      :class="{'input': true, 'is-danger': errors.has('birth-date') }"
-                      class="form-control"
-                      value
-                      id="birth-date"
-                      name="Birth Date"
-                      placeholder="yyyy-mm-dd"
-                      v-model="student.birthDate"
-                    />
-                    <i v-show="errors.has('Birth Date')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Birth Date')"
-                      class="help is-danger"
-                    >{{ errors.first('Birth Date') }}</span>
+                      <ValidationProvider name="birthDate" rules="required" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              value
+                              id="birth-date"
+                              name="Birth Date"
+                              placeholder="yyyy-mm-dd"
+                              v-model="student.birthDate"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -86,25 +79,23 @@
                       disabled
                     />
                   </div>
+
                   <div class="col-4">
                     <label for="gender">{{$t('género')}}</label>
-                    <select
-                      v-validate="'required' "
-                      class="custom-select"
-                      name="Gender"
-                      id="gender"
-                      single
-                      v-model="student.gender"
-                    >
-                      <option selected value="masculino">{{$t('masculino')}}</option>
-                      <option value="feminino">{{$t('feminino')}}</option>
-                      <option value="outro">{{$t('outro')}}</option>
-                    </select>
-                    <i v-show="errors.has('Gender')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Gender')"
-                      class="help is-danger"
-                    >{{ errors.first('Gender') }}</span>
+                      <ValidationProvider name="gender" rules="required" v-slot="{ errors }">
+                          <select
+                              class="custom-select"
+                              name="Gender"
+                              id="gender"
+                              single
+                              v-model="student.gender"
+                          >
+                              <option selected value="masculino">{{$t('masculino')}}</option>
+                              <option value="feminino">{{$t('feminino')}}</option>
+                              <option value="outro">{{$t('outro')}}</option>
+                          </select>
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -113,46 +104,45 @@
                 <div class="row">
                   <div class="col-6">
                     <label for="residence">{{$t('residencia')}}</label>
-                    <vue-google-autocomplete
-                      class="form-control"
-                      id="residence"
-                      name="residence"
-                      v-on:placechanged="getAddressData"
-                      country="pt"
-                    ></vue-google-autocomplete>
+                      <ValidationProvider name="residence" rules="required" v-slot="{ errors }">
+                          <vue-google-autocomplete
+                              class="form-control"
+                              id="residence"
+                              name="residence"
+                              v-on:placechanged="getAddressData"
+                              country="pt"
+                          ></vue-google-autocomplete>
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="zipCode">{{$t('codigo_postal')}}</label>
-                    <input
-                      v-validate="'required'"
-                      class="form-control"
-                      pattern="\d\d\d\d[-]\d\d\d"
-                      id="zipCode"
-                      name="Zip Code"
-                      placeholder="1234-567"
-                      v-model="student.zipCode"
-                    />
-                    <i v-show="errors.has('Zip Code')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Zip Code')"
-                      class="help is-danger"
-                    >{{ errors.first('Zip Code') }}</span>
+                      <ValidationProvider name="zipCode" rules="required" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              pattern="\d\d\d\d[-]\d\d\d"
+                              id="zipCode"
+                              name="Zip Code"
+                              placeholder="1234-567"
+                              v-model="student.zipCode"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="area">{{$t('localidade')}}</label>
-                    <input
-                      v-validate="'required'"
-                      type="text"
-                      class="form-control"
-                      id="area"
-                      name="Area"
-                      v-model="student.area"
-                    />
-                    <i v-show="errors.has('Area')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Area')"
-                      class="help is-danger"
-                    >{{ errors.first('Area') }}</span>
+                      <ValidationProvider name="area" rules="required" v-slot="{ errors }">
+                          <input
+                              type="text"
+                              class="form-control"
+                              id="area"
+                              name="Area"
+                              v-model="student.area"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -161,38 +151,33 @@
                 <div class="row">
                   <div class="col">
                     <label for="identification">{{$t('doc_identificação')}}</label>
-                    <select
-                      v-validate="'required'"
-                      class="custom-select"
-                      name="Identification Number"
-                      id="identification"
-                      single
-                      v-model="student.identificationDocument"
-                    >
-                      <option selected value="cc">{{$t('cartao_cidadao')}}</option>
-                      <option value="ccond">{{$t('carta_conducao')}}</option>
-                      <option value="passp">{{$t('passaporte')}}</option>
-                    </select>
-                    <i v-show="errors.has('Identification Number')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Identification Number')"
-                      class="help is-danger"
-                    >{{ errors.first('Identification Number') }}</span>
+                      <ValidationProvider name="identification" rules="required" v-slot="{ errors }">
+                          <select
+                              class="custom-select"
+                              name="Identification Number"
+                              id="identification"
+                              single
+                              v-model="student.identificationDocument"
+                          >
+                              <option selected value="cc">{{$t('cartao_cidadao')}}</option>
+                              <option value="ccond">{{$t('carta_conducao')}}</option>
+                              <option value="passp">{{$t('passaporte')}}</option>
+                          </select>
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                   <div class="col">
                     <label for="number">{{$t('numero_identificação')}}</label>
-                    <input
-                      v-validate="{required:true}"
-                      class="form-control"
-                      name="ID Number"
-                      id="number"
-                      v-model="student.identificationNumber"
-                    />
-                    <i v-show="errors.has('ID Number')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('ID Number')"
-                      class="help is-danger"
-                    >{{ errors.first('ID Number') }}</span>
+
+                      <ValidationProvider name="identificationNumber" rules="required|alpha_num" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="ID Number"
+                              id="number"
+                              v-model="student.identificationNumber"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -201,49 +186,42 @@
                 <div class="row">
                   <div class="col">
                     <label for="NISS">NISS</label>
-                    <input
-                      v-validate="{required:true,digits:11}"
-                      class="form-control"
-                      name="NISS"
-                      id="NISS"
-                      v-model="student.niss"
-                    />
-                    <i v-show="errors.has('NISS')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('NISS')"
-                      class="help is-danger"
-                    >{{ errors.first('NISS') }}</span>
+                      <ValidationProvider name="niss" rules="required|digits:11|numeric" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="NISS"
+                              id="NISS"
+                              v-model="student.niss"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="NIF">NIF</label>
-                    <input
-                      aria-label="NIF"
-                      v-validate="{required:true,digits:9}"
-                      class="form-control"
-                      name="NIF"
-                      id="NIF"
-                      v-model="student.nif"
-                    />
-                    <i v-show="errors.has('NIF')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('NIF')"
-                      class="help is-danger"
-                    >{{ errors.first('NIF') }}</span>
+                      <ValidationProvider name="nif" rules="required|digits:9|numeric" v-slot="{ errors }">
+                          <input
+                              aria-label="NIF"
+                              class="form-control"
+                              name="NIF"
+                              id="NIF"
+                              v-model="student.nif"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="SNS">SNS</label>
-                    <input
-                      v-validate="{required:true,digits:9}"
-                      class="form-control"
-                      name="SNS"
-                      id="SNS"
-                      v-model="student.sns"
-                    />
-                    <i v-show="errors.has('SNS')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('SNS')"
-                      class="help is-danger"
-                    >{{ errors.first('SNS') }}</span>
+                      <ValidationProvider name="sns" rules="required|digits:9|numeric" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="SNS"
+                              id="SNS"
+                              v-model="student.sns"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -254,35 +232,28 @@
                 <div class="row">
                   <div class="col">
                     <label for="year">{{$t('ano_curricular')}}</label>
-                    <input
-                      v-validate="{required:true,digits:4,min_value:2000}"
-
-                      class="form-control"
-                      name="Curricular Year"
-                      id="year"
-                      min="2000"
-                      v-model="student.curricularYear"
-                    />
-                    <i v-show="errors.has('Curricular Year')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Curricular Year')"
-                      class="help is-danger"
-                    >{{ errors.first('Curricular Year') }}</span>
+                      <ValidationProvider name="curricularYear" rules="required|digits:4|min:2000|numeric" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="Curricular Year"
+                              id="year"
+                              v-model="student.curricularYear"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
-                    <label for="enruledYear">{{$t('ano_matricula')}}</label>
-                    <input
-                      v-validate="{required:true,digits:4}"
-                      class="form-control"
-                      id="enruledYear"
-                      name="Enrollment Year"
-                      v-model="student.enruledYear"
-                    />
-                    <i v-show="errors.has('Enrollment Year')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Enrollment Year')"
-                      class="help is-danger"
-                    >{{ errors.first('Enrollment Year') }}</span>
+                    <label for="enrolledYear">{{$t('ano_matricula')}}</label>
+                      <ValidationProvider name="enrolledYear" rules="required|digits:4|numeric" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              id="enrolledYear"
+                              name="Enrollment Year"
+                              v-model="student.enruledYear"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -294,137 +265,120 @@
                 <div class="row">
                   <div class="col">
                     <label for="responsibleName">{{$t('nome')}}</label>
-                    <input
-                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
-                      type="text"
-                      class="form-control"
-                      id="responsibleName"
-                      name="Responsible Name"
-                      v-model="student.responsibleName"
-                    />
-                    <i v-show="errors.has('Responsible Name')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Responsible Name')"
-                      class="help is-danger"
-                    >{{ errors.first('Responsible Name') }}</span>
+                      <ValidationProvider name="responsibleName" rules="required|alpha_spaces" v-slot="{ errors }">
+                          <input
+                              type="text"
+                              class="form-control"
+                              id="responsibleName"
+                              name="Responsible Name"
+                              v-model="student.responsibleName"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="responsiblePhone">{{$t('contacto_telefónico')}}</label>
-                    <input
-                      v-validate="{ required: true, digits:9 }"
-                      class="form-control"
-                      name="Responsible Phone"
-                      id="responsiblePhone"
-                      min="1"
-                      max="999999999"
-                      v-model="student.responsiblePhone"
-                    />
-                    <i v-show="errors.has('Responsible Phone')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Responsible Phone')"
-                      class="help is-danger"
-                    >{{ errors.first('Responsible Phone') }}</span>
+                      <ValidationProvider name="responsiblePhone" rules="required|digits:9|numeric" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="Responsible Phone"
+                              id="responsiblePhone"
+                              min="1"
+                              max="999999999"
+                              v-model="student.responsiblePhone"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="responsibleKin">{{$t('parentesco')}}</label>
-                    <input
-                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
-                      type="text"
-                      class="form-control"
-                      id="responsibleKin"
-                      name="Kinship"
-                      v-model="student.responsibleKin"
-                    />
-                    <i v-show="errors.has('Kinship')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Kinship')"
-                      class="help is-danger"
-                    >{{ errors.first('Kinship') }}</span>
+                      <ValidationProvider name="responsibleKin" rules="required|alpha_spaces" v-slot="{ errors }">
+                          <input
+                              type="text"
+                              class="form-control"
+                              id="responsibleKin"
+                              name="Kinship"
+                              v-model="student.responsibleKin"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="responsibleEmail">{{$t('email')}}</label>
-                    <input
-                      v-validate="{ required: true, email:true }"
-                      type="email"
-                      class="form-control"
-                      id="responsibleEmail"
-                      name="Responsible Email"
-                      v-model="student.responsibleEmail"
-                    />
-                    <i v-show="errors.has('Responsible Email')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Responsible Email')"
-                      class="help is-danger"
-                    >{{ errors.first('Responsible Email') }}</span>
+                      <ValidationProvider name="responsibleEmail" rules="required|email" v-slot="{ errors }">
+                          <input
+                              type="email"
+                              class="form-control"
+                              id="responsibleEmail"
+                              name="Responsible Email"
+                              v-model="student.responsibleEmail"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
 
               <h3>{{$t('contacto_emergencia')}}</h3>
+
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
                     <label for="emergencyName">{{$t('nome')}}</label>
-                    <input
-                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
-                      type="text"
-                      class="form-control"
-                      id="emergencyName"
-                      name="Emergency Name"
-                      v-model="student.emergencyName"
-                    />
-                    <i v-show="errors.has('Emergency Name')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Emergency Name')"
-                      class="help is-danger"
-                    >{{ errors.first('Emergency Name') }}</span>
+                      <ValidationProvider name="emergencyName" rules="required|alpha_spaces" v-slot="{ errors }">
+                          <input
+                              type="text"
+                              class="form-control"
+                              id="emergencyName"
+                              name="Emergency Name"
+                              v-model="student.emergencyName"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="emergencyPhone">{{$t('contacto_telefónico')}}</label>
-                    <input
-                      v-validate="{ required: true, digits:9 }"
-                      class="form-control"
-                      name="Emergency Phone"
-                      id="emergencyPhone"
-                      v-model="student.emergencyPhone"
-                    />
-                    <i v-show="errors.has('Emergency Phone')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Emergency Phone')"
-                      class="help is-danger"
-                    >{{ errors.first('Emergency Phone') }}</span>
+                      <ValidationProvider name="emergencyPhone" rules="required|digits:9|numeric" v-slot="{ errors }">
+                          <input
+                              class="form-control"
+                              name="Emergency Phone"
+                              id="emergencyPhone"
+                              v-model="student.emergencyPhone"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="emergencyKin">{{$t('parentesco')}}</label>
-                    <input
-                      v-validate="'required|regex:[a-zA-Z][a-zA-Z ]+'"
-                      type="text"
-                      class="form-control"
-                      id="emergencyKin"
-                      name="Kinship"
-                      v-model="student.emergencyKin"
-                    />
-                    <i v-show="errors.has('Kinship')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Kinship')"
-                      class="help is-danger"
-                    >{{ errors.first('Kinship') }}</span>
+                      <ValidationProvider name="emergencyKin" rules="required|alpha_spaces" v-slot="{ errors }">
+                          <input
+                              type="text"
+                              class="form-control"
+                              id="emergencyKin"
+                              name="Kinship"
+                              v-model="student.emergencyKin"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
+
                   <div class="col">
                     <label for="emergencyEmail">{{$t('email')}}</label>
-                    <input
-                      v-validate="{ required: true, email:true }"
-                      type="email"
-                      class="form-control"
-                      id="emergencyEmail"
-                      name="Emergency Email"
-                      v-model="student.emergencyEmail"
-                    />
-                    <i v-show="errors.has('Emergency Email')" class="fa fa-warning"></i>
-                    <span
-                      v-show="errors.has('Emergency Email')"
-                      class="help is-danger"
-                    >{{ errors.first('Emergency Email') }}</span>
+                      <ValidationProvider name="emergencyEmail" rules="required|email" v-slot="{ errors }">
+                          <input
+                              type="email"
+                              class="form-control"
+                              id="emergencyEmail"
+                              name="Emergency Email"
+                              v-model="student.emergencyEmail"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
                 </div>
               </div>
@@ -565,6 +519,7 @@
           </div>
         </div>
       </form>
+    </ValidationObserver>
     </div>
   </div>
 </template>
@@ -622,14 +577,7 @@ export default {
     }
   },
   methods: {
-    validateBeforeSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.sendForm();
-          return;
-        }
-      });
-    },
+
     getAddressData(addressData, placeResultData, id) {
       this.student.residence = addressData.route;
       this.student.area = addressData.locality;

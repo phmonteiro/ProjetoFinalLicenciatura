@@ -3,7 +3,12 @@
     <b-container>
       <h2>{{ $t('disciplina') }} {{support.nome}}</h2>
       <label for="hours">{{ $t('quantidade_horas') }}</label>
-      <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">
+
+        <ValidationProvider rules="required|numeric" v-slot="{ errors }">
+            <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
+
       <button
         type="submit"
         class="btn btn-secondary"
@@ -31,7 +36,7 @@ export default {
       this.$emit("cancel-support");
     },
     save: function() {
-        console.log(this.support.nome)
+        console.log(this.support.nome);
       this.$emit("save-support");
     }
   }

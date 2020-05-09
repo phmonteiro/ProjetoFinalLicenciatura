@@ -1,6 +1,7 @@
 <template>
   <div>
-    <form @submit.prevent="validateBeforeSubmit">
+      <ValidationObserver v-slot="{ handleSubmit }">
+      <form @submit.prevent="handleSubmit(setService)">
       <b-container class="top100">
         <b-row>
           <b-col>
@@ -8,40 +9,39 @@
             <div class="form-group">
               <div v-if="options!=null">
                 <b-form-group label="Apoios ao estudante">
-                  <b-form-radio-group
-                    v-model="service.requestedSupport"
-                    :options="options"
-                    switches
-                  ></b-form-radio-group>
+                    <ValidationProvider name="support" rules="required" v-slot="{ errors }">
+                        <b-form-radio-group
+                            v-model="service.requestedSupport"
+                            :options="options"
+                            switches
+                        ></b-form-radio-group>
+                        <code>{{ errors[0] }}</code>
+                    </ValidationProvider>
+
                 </b-form-group>
               </div>
-              <i v-show="errors.has('service')" class="fa fa-warning"></i>
-              <span
-                v-show="errors.has('service')"
-                class="help is-danger"
-              >{{ errors.first('service') }}</span>
+
             </div>
             <div class="form-group">
-              <label for="comment">{{ $t('motivo') }}</label>
+              <label for="reason">{{ $t('motivo') }}</label>
+
+                <ValidationProvider name="motivo" rules="required" v-slot="{ errors }">
               <textarea
-                v-validate="'required'"
-                class="form-control"
-                id="reason"
-                v-model="service.reason"
-                name="reason"
-                rows="3"
+                  class="form-control"
+                  id="reason"
+                  v-model="service.reason"
+                  name="reason"
+                  rows="3"
               ></textarea>
-              <i v-show="errors.has('reason')" class="fa fa-warning"></i>
-              <span
-                v-show="errors.has('reason')"
-                class="help is-danger"
-              >{{ errors.first('reason') }}</span>
+                    <code>{{ errors[0] }}</code>
+                </ValidationProvider>
             </div>
             <button type="submit" class="btn btn-primary">{{ $t('pedir_serviço') }}</button>
           </b-col>
         </b-row>
       </b-container>
     </form>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -57,14 +57,6 @@ export default {
     };
   },
   methods: {
-    validateBeforeSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.setService();
-          return;
-        }
-      });
-    },
     setService() {
       axios
         .post("api/setService/", this.service)
