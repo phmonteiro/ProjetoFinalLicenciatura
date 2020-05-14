@@ -196,6 +196,22 @@ const routes = [{
       middlewareAuth: true,
     },
   },
+  {
+    path: '/caseManagerResponsible/listCMs',
+    name: 'listCMs',
+    component: require('./components/caseManagerResponsible/listCMs.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
+    path: '/caseManagerResponsible/addCM',
+    name: 'addCM',
+    component: require('./components/caseManagerResponsible/addCM.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
   ],
 },
 {
@@ -261,10 +277,19 @@ const routes = [{
         middlewareAuth: true,
       },
     },
+
     {
       path: '/caseManager/meetingsEneeList',
       name: 'meetingsEneeList',
       component: require('./components/caseManager/meetingsEneeList.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
+    {
+      path: '/caseManager/substitution',
+      name: 'substitution',
+      component: require('./components/caseManager/substitution.vue').default,
       meta: {
         middlewareAuth: true,
       },

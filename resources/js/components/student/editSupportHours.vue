@@ -4,17 +4,19 @@
       <h2>{{ $t('disciplina') }} {{support.nome}}</h2>
       <label for="hours">{{ $t('quantidade_horas') }}</label>
 
+        <ValidationObserver v-slot="{handleSubmit}">
         <ValidationProvider rules="required|numeric" v-slot="{ errors }">
             <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">
-            <code>{{ errors[0] }}</code>
+            <code>{{ errors[0] }}</code><br>
         </ValidationProvider>
 
       <button
         type="submit"
         class="btn btn-secondary"
         data-dismiss="modal"
-        v-on:click.prevent="save"
+        v-on:click.prevent="handleSubmit(save)"
       >{{ $t('gravar') }}</button>
+        </ValidationObserver>
       <button
         type="submit"
         class="btn btn-secondary"

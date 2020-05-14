@@ -67,7 +67,7 @@ Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 // eslint-disable-next-line camelcase
-import {required, email, regex, alpha, digits, numeric, alpha_spaces, max, min} from 'vee-validate/dist/rules';
+import {required, email, regex, alpha, digits, numeric, alpha_spaces, max, min, alpha_num} from 'vee-validate/dist/rules';
 import {localize} from 'vee-validate';
 import en from 'vee-validate/dist/locale/en.json';
 import pt from 'vee-validate/dist/locale/pt_PT.json';
@@ -92,23 +92,23 @@ localize({
       emergencyPhone: 'Emergency Contact Phone',
       emergencyKin: 'Emergency Contact Kingship',
       emergencyEmail: 'Emergency Contact Email',
-        support: 'Support',
-        motivo: 'Reason',
-        service: 'Service',
-        comment: 'Comment',
-        phone: 'Phone Number',
-        gender: 'Gender',
-        birthDate: 'Birth Date',
-        zipCode: 'Zip Code',
-        residence: 'Residence',
-        area: 'Area',
-        identification: 'Identification',
-        identificationNumber: 'Identification Number',
-        niss: 'Social Security Number',
-        nif: 'Taxpayer Identification Number',
-        sns: 'National Health System Number',
-        curricularYear: 'Curricular Year',
-        enrolledYear: 'Enrolled Year'
+      support: 'Support',
+      motivo: 'Reason',
+      service: 'Service',
+      comment: 'Comment',
+      phone: 'Phone Number',
+      gender: 'Gender',
+      birthDate: 'Birth Date',
+      zipCode: 'Zip Code',
+      residence: 'Residence',
+      area: 'Area',
+      identification: 'Identification',
+      identificationNumber: 'Identification Number',
+      niss: 'Social Security Number',
+      nif: 'Taxpayer Identification Number',
+      sns: 'National Health System Number',
+      curricularYear: 'Curricular Year',
+      enrolledYear: 'Enrolled Year',
 
 
     },
@@ -125,23 +125,23 @@ localize({
       emergencyPhone: 'Número do Contacto de Emergência',
       emergencyKin: 'Grau de parentesco do Contacto de Emergência',
       emergencyEmail: 'Email do Contacto de Emergência',
-        support: 'Apoio',
-        motivo: 'Motivo',
-        comment: 'Comentário',
-        service: 'Serviço',
-        phone: 'Número de Telefone',
-        gender: 'Género',
-        birthDate: 'Data de Nascimento',
-        zipCode: 'Código Postal',
-        residence: 'Residência',
-        area: 'Localidade',
-        identification: 'Identificação',
-        identificationNumber: 'Número de Identificação',
-        niss: 'Número de Identificação da Segurança Social',
-        nif: 'Número de Identificação Fiscal',
-        sns: 'Número do Sistema Nacional de Saúde',
-        curricularYear: 'Ano Curricular',
-        enrolledYear: 'Ano de Ingresso'
+      support: 'Apoio',
+      motivo: 'Motivo',
+      comment: 'Comentário',
+      service: 'Serviço',
+      phone: 'Número de Telefone',
+      gender: 'Género',
+      birthDate: 'Data de Nascimento',
+      zipCode: 'Código Postal',
+      residence: 'Residência',
+      area: 'Localidade',
+      identification: 'Identificação',
+      identificationNumber: 'Número de Identificação',
+      niss: 'Número de Identificação da Segurança Social',
+      nif: 'Número de Identificação Fiscal',
+      sns: 'Número do Sistema Nacional de Saúde',
+      curricularYear: 'Ano Curricular',
+      enrolledYear: 'Ano de Ingresso',
 
     },
   },
@@ -156,6 +156,7 @@ extend('numeric', numeric);
 extend('alpha_spaces', alpha_spaces);
 extend('max', max);
 extend('min', min);
+extend('alpha_num', alpha_num);
 
 const app = new Vue({
   el: '#app',

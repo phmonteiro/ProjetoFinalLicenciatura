@@ -10,14 +10,6 @@
         </b-col>
         <b-col></b-col>
       </b-row>
-    </b-container>
-    <set-cm
-      :user="currentUser"
-      :studentCMs="studentCMs"
-      @save-user="saveUser()"
-      @refreshCMs="getStudentCMs(currentUser)"
-      @cancel-edit="cancelEdit()"
-    ></set-cm>
     <div class="container">
       <h2>Lista de estudantes</h2>
       <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
@@ -53,6 +45,14 @@
         </ul>
       </nav>
     </div>
+    </b-container>
+      <set-cm
+          :user="currentUser"
+          :studentCMs="studentCMs"
+          @save-user="saveUser()"
+          @refreshCMs="getStudentCMs(currentUser)"
+          @cancel-edit="cancelEdit()"
+      ></set-cm>
   </div>
 </template>
 
@@ -123,7 +123,6 @@ export default {
         .get("api/getStudentCMs/" + user.email)
         .then(response => {
           this.studentCMs = Object.assign({}, response.data.data);
-          console.log(response.data.data, "estes dados");
         })
         .catch(error => {
           console.log("Erro", error);

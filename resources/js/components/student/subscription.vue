@@ -104,7 +104,7 @@
                 <div class="row">
                   <div class="col-6">
                     <label for="residence">{{$t('residencia')}}</label>
-                      <ValidationProvider name="residence" rules="required" v-slot="{ errors }">
+<!--                      <ValidationProvider name="residence" rules="required" v-slot="{ errors }">-->
                           <vue-google-autocomplete
                               class="form-control"
                               id="residence"
@@ -112,8 +112,8 @@
                               v-on:placechanged="getAddressData"
                               country="pt"
                           ></vue-google-autocomplete>
-                          <code>{{ errors[0] }}</code>
-                      </ValidationProvider>
+<!--                          <code>{{ errors[0] }}</code>-->
+<!--                      </ValidationProvider>-->
                   </div>
 
                   <div class="col">
@@ -232,8 +232,9 @@
                 <div class="row">
                   <div class="col">
                     <label for="year">{{$t('ano_curricular')}}</label>
-                      <ValidationProvider name="curricularYear" rules="required|digits:4|min:2000|numeric" v-slot="{ errors }">
+                      <ValidationProvider name="curricularYear" rules="required|digits:4|numeric" v-slot="{ errors }">
                           <input
+                              min="2000"
                               class="form-control"
                               name="Curricular Year"
                               id="year"
