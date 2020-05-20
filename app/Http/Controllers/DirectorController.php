@@ -161,7 +161,7 @@ class DirectorController extends Controller
 
         if (sizeof($existingSupports) != 0) {
             $newSupports = array_diff($existingSupports, $dados['supports']);
-            foreach ($newSupports as &$support) {
+            foreach ($newSupports as &$support) { //Duvida no &$
                 Student_Supports::where('email', $dados['email'])->where('support_value', $support)->delete();
             }
         }
@@ -185,7 +185,8 @@ class DirectorController extends Controller
         }
         $seed = rand();
         $zipper = new Zipper();
-        $zipper->make('medicalReport/' . $seed . '.zip')->add($array)->close();
+        $zipper->make('medicalReport/' . $seed . '.zip')->add($array);
+        $zipper->close();
         return response()->download(public_path('medicalReport/' . $seed . '.zip'));
     }
 }

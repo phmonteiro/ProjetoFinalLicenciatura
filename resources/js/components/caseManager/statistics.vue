@@ -1,12 +1,16 @@
 <template>
   <b-container>
-    <select class="custom-select" name="identification" single v-model="stats">
-      <option selected value="curso">Estatísticas por curso</option>
+      <h4 for="selectBox">Selecione a estatística que quer visualizar:</h4><br>
+    <select id="selectBox" class="custom-select" name="selectBox" single v-model="stats">
+      <option value="curso" >Estatísticas por curso</option>
       <option value="nee">Estatísticas por necessidade educativa especial</option>
       <option value="escola">Estísticas por escola</option>
       <option value="sexo">Estatísticas por sexo</option>
     </select>
-    <b-button variant="outline-success" v-on:click.prevent="getData()">Mostrar estatísticas</b-button>
+      <br><br>
+      <div>
+    <b-button  variant="outline-success" v-on:click.prevent="getData()">Mostrar estatísticas</b-button>
+      </div>
     <div class="small">
       <line-chart v-if="data" :chart-data="data"></line-chart>
     </div>
@@ -23,7 +27,7 @@ export default {
   data() {
     return {
       data: null,
-      stats: null
+      stats: "curso"
     };
   },
   methods: {

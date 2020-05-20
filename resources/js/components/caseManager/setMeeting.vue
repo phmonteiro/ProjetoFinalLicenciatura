@@ -1,12 +1,12 @@
 <template>
-  <div class="container mt-3" v-if="user">
+  <div class="container mt-3" v-if="meetingRequest">
     <div class="form-group">
-      <h4>Estudante:</h4>
+      <h4>Agendar nova reunião:</h4>
       <label for="inputName">Nome</label>
       <input
         type="text"
         class="form-control"
-        v-model="user.name"
+        v-model="meetingRequest.name"
         name="name"
         id="inputName"
         disabled
@@ -18,56 +18,73 @@
       <input
         type="text"
         class="form-control"
-        v-model="user.email"
+        v-model="meetingRequest.email"
         name="email"
         id="inputEmail"
         disabled
       />
     </div>
 
+      <div class="form-group">
+          <label for="comment">Descrição do Pedido</label>
+          <input
+              type="text"
+              class="form-control"
+              v-model="meetingRequest.comment"
+              name="comment"
+              id="comment"
+              disabled
+          />
+      </div>
+
+
+
     <div class="form-group">
-      <label for="decision">Informacao</label>
+      <label for="decision">Informação</label>
       <input class="form-control" id="decision" v-model="data.info" name="decision" rows="3" />
     </div>
 
     <div class="form-group">
-      <label for="place">Local:</label>
+      <label for="place">Local</label>
       <input class="form-control" id="place" v-model="data.place" name="place" rows="3" />
     </div>
 
     <div class="form-group">
-      <b-row>
-        <b-col>
-          <label for="information">Data / hora</label>
-          <br />
           <!-- <date-picker v-model="data.date" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker> -->
           <!-- <div v-for="type in types" :key="type"> -->
-            <b-row>
-              <b-col><b-form-input id="`type-date`" type="date" v-model="data.date"></b-form-input></b-col>
-              <b-col><b-form-input id="`type-time`" type="time" v-model="data.time"></b-form-input></b-col>
-            </b-row>
-            
-            
-          
-            
+
+          <label for="meetingDate">Data</label>
+          <b-form-input class="col-md-2" name="meetingDate" id="meetingDate" type="date" v-model="data.date"></b-form-input>
           <!-- </div> -->
-        </b-col>
+        <br>
+          <!-- <date-picker v-model="data.date" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker> -->
+              <!-- <div v-for="type in types" :key="type"> -->
+            <label for="meetingTime">Hora</label><br>
+        <vue-timepicker :minute-interval="5" format="HH:mm" v-model="data.time" id="meetingTime" name="meetingTime">
+        </vue-timepicker>
+              <!-- </div> -->
         <!-- <b-col>
           <label for="information">Hora</label>
           <div v-for="type in types" :key="type">
             <b-form-input :id="`type-${type}`" :type="type" v-model="data.time"></b-form-input>
           </div>
         </b-col> -->
-      </b-row>
+
     </div>
 
-    <b-button variant="outline-success" v-on:click.prevent="save()">Guardar</b-button>
+    <b-button variant="outline-success" v-on:click.prevent="save()">Gravar</b-button>
     <b-button variant="outline-info" v-on:click.prevent="cancel()">Cancelar</b-button>
+      <br><br><br><br><br><br><br>
   </div>
 </template>
 <script>
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker';
+
 export default {
-  props: ["user"],
+    components: {
+        VueTimepicker
+    },
+  props: ["meetingRequest"],
   data: function() {
     return {
       data: {

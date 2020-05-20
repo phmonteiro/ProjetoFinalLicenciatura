@@ -1,14 +1,9 @@
 <template>
   <div>
-    <eneeServiceEvaluation
-      :user="currentUser"
-      :nee="nee"
-      @approve="approve"
-      @cancel-edit="cancelEdit()"
-    ></eneeServiceEvaluation>
     <div class="container">
       <h2>Lista de aprovação Enee</h2>
-      <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">
+        <br>
+      <b-table striped hover v-if="requests" :items="requests" :fields="fields">
         <template slot="actions" slot-scope="row">
           <button
             class="btn btn-info"
@@ -22,7 +17,21 @@
           >Rejeitar</button>
         </template>
       </b-table>
+        <h4 v-else>Não existem pedidos de parecer pendentes.</h4>
+
+<!--        $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4-->
+        <button
+            class="btn btn-info"
+            v-on:click.prevent="editUser(requests[0])"
+        >Avaliar</button>
+<!--        $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5-->
     </div>
+      <eneeServiceEvaluation
+          :user="currentUser"
+          :nee="nee"
+          @approve="approve"
+          @cancel-edit="cancelEdit()"
+      ></eneeServiceEvaluation>
   </div>
 </template>
 
@@ -60,7 +69,7 @@ export default {
         }
       ],
       currentUser: null,
-      supportsForStudent: null,
+      // supportsForStudent: null,
       nee: null
     };
   },

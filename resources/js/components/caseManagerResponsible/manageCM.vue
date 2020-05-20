@@ -10,14 +10,6 @@
         </b-col>
         <b-col></b-col>
       </b-row>
-    </b-container>
-    <set-cm
-      :user="currentUser"
-      :studentCMs="studentCMs"
-      @save-user="saveUser()"
-      @refreshCMs="getStudentCMs(currentUser)"
-      @cancel-edit="cancelEdit()"
-    ></set-cm>
     <div class="container">
       <h2>Lista de estudantes</h2>
       <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
@@ -25,7 +17,8 @@
           <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir</button>
         </template>
       </b-table>
-      <nav aria-label="Page navigation" v-if="users">
+        <button class="btn btn-secondary" v-on:click.prevent="editUser(users[0])">Gerir</button>
+        <nav aria-label="Page navigation" v-if="users">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
             <a
@@ -52,6 +45,14 @@
         </ul>
       </nav>
     </div>
+    </b-container>
+      <set-cm
+          :user="currentUser"
+          :studentCMs="studentCMs"
+          @save-user="saveUser()"
+          @refreshCMs="getStudentCMs(currentUser)"
+          @cancel-edit="cancelEdit()"
+      ></set-cm>
   </div>
 </template>
 
@@ -122,7 +123,6 @@ export default {
         .get("api/getStudentCMs/" + user.email)
         .then(response => {
           this.studentCMs = Object.assign({}, response.data.data);
-          console.log(response.data.data, "estes dados");
         })
         .catch(error => {
           console.log("Erro", error);

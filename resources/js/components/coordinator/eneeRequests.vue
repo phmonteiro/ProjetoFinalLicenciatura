@@ -150,6 +150,7 @@
           </b-card>
         </template>
       </b-table>
+
       <nav aria-label="Page navigation" v-if="requests">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

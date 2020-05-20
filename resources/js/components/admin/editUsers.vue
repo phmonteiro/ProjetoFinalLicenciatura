@@ -4,7 +4,6 @@
       <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
     </div>
     <div class="container" v-if="users">
-      <edit-user :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
       <div class="container">
         <h2>Lista de utilizadores</h2>
         <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
@@ -31,6 +30,13 @@
             >Editar utilizador</button>
           </template>
         </b-table>
+<!--          ##############################################3-->
+          <button
+              class="btn btn-secondary"
+              v-on:click.prevent="editUser(users[1])"
+          >Editar utilizador</button>
+<!--          ################################################3-->
+
         <nav aria-label="Page navigation" v-if="users">
           <ul class="pagination">
             <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -58,6 +64,7 @@
           </ul>
         </nav>
       </div>
+        <edit-user :user="currentUser" v-if="showEditUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
     </div>
   </div>
 </template>
@@ -66,6 +73,7 @@
 export default {
   data() {
     return {
+      showEditUser:null,
       pagination: {},
       loading: true,
       users: null,
@@ -124,10 +132,11 @@ export default {
       this.pagination = pagination;
     },
     editUser(row) {
-      console.log(row);
-      this.currentUser = Object.assign({}, row);
+        this.showEditUser=true;
+        this.currentUser = Object.assign({}, row);
     },
     cancelEdit: function() {
+      this.showEditUser=false;
       this.currentUser = null;
     },
     saveUser() {
@@ -135,6 +144,7 @@ export default {
         .patch("api/editUser/" + this.currentUser.id, this.currentUser)
         .then(response => {
           this.getUsers();
+          this.showEditUser=false;
           this.currentUser = null;
           this.$toasted.success("Utilizador editado com sucesso.", {
             duration: 4000,

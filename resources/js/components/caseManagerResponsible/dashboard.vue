@@ -7,9 +7,14 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link class="nav-link" :to="{name: 'cmList'}">Gestores Caso</router-link>
+            <router-link class="nav-link" :to="{name: 'cmList'}">Lista de ENEEs</router-link>
 
-            <router-link class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
+            <router-link class="nav-link" :to="{name: 'manageCM'}">Atribuir Gestores Caso</router-link>
+
+             <router-link class="nav-link" :to="{name: 'listCMs'}">Lista de Gestores Caso</router-link>
+
+            <router-link class="nav-link" :to="{name: 'addCM'}">Adicionar Gestor Caso</router-link>
+            <router-link class="nav-link" :to="{name: 'subHistory'}">Histórico de Substituições</router-link>
           </div>
         </section>
         <b-col cols="12" class="ml-120">

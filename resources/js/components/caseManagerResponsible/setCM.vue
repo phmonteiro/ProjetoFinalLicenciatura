@@ -27,8 +27,8 @@
         />
       </div>
 
-      <h4>Gestor(es) de caso</h4>
-      <div v-if="studentCMs">
+      <h4>Gestor(es) de caso</h4><br>
+      <div v-if="Object.keys(studentCMs).length !== 0 ">
         <div v-for="(cm, index) in studentCMs" :key="index">
           <b-container>
             <b-row>
@@ -42,13 +42,22 @@
           </b-container>
         </div>
       </div>
+      <h5 v-if="Object.keys(studentCMs).length === 0 ">Não existe nenhum Gestor Caso atribuido.</h5><br>
+        <br>
+        <h4>Adicionar Gestor de caso</h4> <br>
 
-      <b-input-group prepend="Email do novo gestor caso" class="mt-3 p-3">
-        <b-form-input v-model="data.cmEmail"></b-form-input>
-        <b-input-group-append>
-          <b-button variant="outline-success" v-on:click.prevent="save()">Atribuir</b-button>
-        </b-input-group-append>
-      </b-input-group>
+        <select :disabled="Object.keys(studentCMs).length !== 0 || Object.keys(caseManagers).length === 0 " v-model="cm">
+            <option value="">Escolha um Gestor Caso</option>
+            <option v-for="cm in caseManagers" :value="cm">{{cm.name}}</option>
+        </select>
+
+        <b-button :disabled="Object.keys(studentCMs).length !== 0 || Object.keys(caseManagers).length === 0" variant="outline-success" v-on:click.prevent="save()">Atribuir</b-button>
+        <b-button  v-on:click.prevent="cancel()">Cancelar</b-button>
+        <br>
+
+        <code v-if="Object.keys(studentCMs).length !== 0 ">ENEE já tem um Gestor de Caso atribuido</code>
+        <code v-if="Object.keys(caseManagers).length === 0 ">Não existem Gestor Caso na aplicação. Contacte o administrador.</code>
+
     </div>
   </div>
 </template>
@@ -65,12 +74,15 @@ export default {
     return {
       data: {
         cmEmail: "",
+        cmName: "",
         studentName: ""
       },
       meeting: {
         info: null,
         date: null
       },
+      caseManagers:[],
+      cm:"",
       loading: false,
       label: "Definindo gestor de caso"
     };
@@ -82,10 +94,12 @@ export default {
     save: function() {
       this.loading = true;
       this.setCM();
-      this.$emit("save-user");
     },
     setCM() {
       this.data.studentName = this.user.name;
+      this.data.cmEmail= this.cm.email;
+      this.data.cmName= this.cm.name;
+
       axios
         .post("api/setCM/" + this.user.id, this.data)
         .then(response => {
@@ -95,6 +109,8 @@ export default {
             position: "top-center",
             theme: "bubble"
           });
+
+            this.$emit("save-user");
         })
         .catch(error => {
           this.loading = false;
@@ -131,8 +147,21 @@ export default {
             }
           );
         });
-    }
+    },
+      getCMs(){
+          axios.get('api/getAllCMs')
+          .then(response=>{
+              this.caseManagers=response.data;
+          })
+          .catch(error=>{
+              console.log(error);
+          });
+      }
   },
-  mounted() {}
+    created() {
+      this.getCMs();
+    },
+    mounted() {}
+
 };
 </script>

@@ -33,6 +33,7 @@ use App\Http\Resources\SupportResource;
 use App\Teacher;
 use Illuminate\Support\Facades\DB;
 use App\CaseManager;
+use Barryvdh\Debugbar\Facade as Debugbar;
 
 class StudentController extends Controller
 {
@@ -100,6 +101,7 @@ class StudentController extends Controller
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
             'emergencyKin' => 'required|string',
+            'phoneNumber' => 'required|integer|regex:/[0-9]{9}/'
         ]);
 
         $user->secondEmail = $dados['secondEmail'];
@@ -111,6 +113,7 @@ class StudentController extends Controller
         $user->emergencyPhone = $dados['emergencyPhone'];
         $user->emergencyEmail = $dados['emergencyEmail'];
         $user->emergencyKin = $dados['emergencyKin'];
+        $user->phoneNumber = $dados['phoneNumber'];
 
         $history = new History();
         $history->studentEmail = $user->email;
@@ -194,7 +197,7 @@ class StudentController extends Controller
             'sns' => 'required|size:9',
             'educationalSupport' => '',
             'neeTypeDisease' => 'required_if:neeTypeAnotherDisease,true|string',
-            'functionalAnalysis' => ''
+            'functionalAnalysis' => '',
         ]);
 
         for ($i = 0; $i < $request->numberPhotos; $i++) {
@@ -234,6 +237,16 @@ class StudentController extends Controller
         $user->enee = 'awaiting';
         $user->dateEneeRequested = Carbon::now();
         $user->typeApplication = "Normal";
+
+        $fileName="limite_horas.txt";
+
+        if(Storage::exists($fileName)){
+            $content = Storage::get($fileName);
+            $user->supportHours = (int) $content;
+        }else{
+             $user->supportHours = null;
+
+        }
 
         if ($request->neeTypeSight  == "true") {
             $nee = new Nee();
@@ -301,6 +314,7 @@ class StudentController extends Controller
 
         return response()->json(new UserResource($user), 201);
     }
+
 
 
     public function getResidence($residence, $area)
@@ -407,21 +421,29 @@ class StudentController extends Controller
         return response()->json($teacher, 200);
     }
 
-    public function supportHours()
+    public function supportHours($id)
     {
-        if (!Subject::where('studentEmail', Auth::user()->email)->exists()) {
+        $student = User::findOrFail($id);
+
+        Debugbar::info("Suport HOURS FUNCTION");
+        if (!Subject::where('studentEmail', $student->email)->exists()) {
+
             $client = new \GuzzleHttp\Client();
             $aux = str_split(Carbon::now()->year, 2);
+
             if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
+
                 $yearLective = Carbon::now()->year . "" . (int) $aux[1] + 1;
             } else {
+
                 $yearLective = $aux[0] . "" . (int) $aux[1] - 1 . ""  . $aux[1];
             }
 
-            $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . Auth::user()->departmentNumber . '&estado=1&naluno=' . Auth::user()->number . '');
+            $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . $student->departmentNumber . '&estado=1&naluno=' . $student->number . '');
             $aux = $response->getBody()->getContents();
             $response = explode(';', $aux);
             $subjects = array();
+            Debugbar::info($response);
             for ($i = 5; $i < sizeof($response); $i += 8) {
                 $subject = new Subject();
                 $subject->studentEmail = Auth::user()->email;
@@ -433,6 +455,11 @@ class StudentController extends Controller
                 $subject->save();
                 array_push($subjects, $subject);
             }
+            echo($subjects);
+            return response()->json(new SubjectResource($subjects), 201);
+        }else{
+            $subjects=Subject::where('studentEmail',$student->email)->get();
+             Debugbar::info($subjects);
 
             return response()->json(new SubjectResource($subjects), 201);
         }
@@ -443,6 +470,7 @@ class StudentController extends Controller
         $user = Auth::user();
         $subject = Subject::where('studentEmail', $user->email)->pluck('hours');
         $subjectName = Subject::where('studentEmail', $user->email)->pluck('nome');
+
         if ($request->hours > 40) {
             return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
         }
@@ -454,6 +482,7 @@ class StudentController extends Controller
             }
         }
         if ($aux + $request->hours <= 40) {
+        Debugbar::info($request->nome);
             $subject = Subject::Where('studentEmail', $user->email)->where('nome', $request->nome)->first();
             $subject->hours = $request->hours;
             $subject->save();
@@ -464,11 +493,11 @@ class StudentController extends Controller
             $history->save();
 
             $teacher = Teacher::where('subjectCode', $subject->subjectCode)->get();
-            $tutor = Tutor::where('studentEmail', $user->email)->get();
+           // $tutor = Tutor::where('studentEmail', $user->email)->get();
             $caseManager = CaseManager::where('studentEmail', $user->email)->first();
 
             for ($i = 0; $i < sizeof($teacher); $i++) {
-                if ($tutor) {
+                if (true) {
                     //troller::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $tutor->tutorEmail);
                 } else {
                     //EmailController::sendEmailWithCC('O estudante ' . $user->name . ' pediu para ter um acompanhamento individualizado de ' . $subject->hours . ' na UC de ' . $subject->nome . '. Obrigado', $teacher[$i]->email, 'Pedido de acompanhamento individualizado', 'Pedido acompanhamento individualizado', $caseManager->caseManagerEmail);
@@ -492,4 +521,11 @@ class StudentController extends Controller
         $nees = Nee::where('studentEmail', $user->email)->get();
         return response()->json(new NeeResource($nees), 200);
     }
+
+    public function getTotalSupportHours($id){
+        $user = User::findOrFail($id);
+
+        return response()->json($user->supportHours, 200);
+    }
+
 }

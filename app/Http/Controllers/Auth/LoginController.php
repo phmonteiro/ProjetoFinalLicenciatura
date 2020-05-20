@@ -45,23 +45,24 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+//     dd($request);
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            if ($user->firstLogin == 1) {
+//             if ($user->firstLogin == 1) {
                 $token = $user->createToken(rand())->accessToken;
                 return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
-            } else {
-                $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
-                $user->type = $users->title[0];
-                $user->course = $users->description[0];
-                $user->school = $users->company[0];
-                $user->number = $users->mailnickname[0];
-                $user->departmentNumber = $users->departmentnumber[0];
-                $user->firstLogin = 1;
-                $user->save();
-                $token = $user->createToken(rand())->accessToken;
-                return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
-            }
+//             } else {
+//                 $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
+//                 $user->type = $users->title[0];
+//                 $user->course = $users->description[0];
+//                 $user->school = $users->company[0];
+//                 $user->number = $users->mailnickname[0];
+//                 $user->departmentNumber = $users->departmentnumber[0];
+//                 $user->firstLogin = 1;
+//                 $user->save();
+//                 $token = $user->createToken(rand())->accessToken;
+//                 return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
+//             }
         } else {
             auth()->logout();
             return response()->json(['message' => 'Credenciais inválidas. Por favor tente novamente.'], 401);

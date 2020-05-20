@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-3" v-if="user">
+    <div>
+  <div class="container mt-3">
     <div class="form-group">
       <label for="inputName">Nome</label>
       <input
@@ -24,28 +25,28 @@
       />
     </div>
 
-    <b-container v-for="(inter, index) in interactions" :key="index">
+    <b-container v-for="inter in interactions" :key="inter.id">
       <b-row>
         <b-col>
-          <b>Data:</b>
+          <b>{{$t('data')}}:</b>
           {{inter.date}}
         </b-col>
         <b-col>
-          <b>Servico:</b>
+          <b>{{$t('serviço')}}:</b>
           {{inter.service}}
         </b-col>
         <b-col>
-          <b>Proximo Contacto:</b>
+          <b>{{$t('proximo_contacto')}}:</b>
           {{inter.nextContact}}
         </b-col>
       </b-row>
       <b-row>
         <b-col>
-          <b>Decisao:</b>
+          <b>{{$t('decisão')}}:</b>
           {{inter.decision}}
         </b-col>
         <b-col>
-          <b>Informacao:</b>
+          <b>{{$t('decisão')}}:</b>
           {{inter.information}}
         </b-col>
       </b-row>
@@ -63,6 +64,7 @@
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Fechar</button>
     </div>
   </div>
+    </div>
 </template>
 <script>
 export default {
@@ -79,8 +81,7 @@ export default {
         url: "api/contact/download/" + id,
         method: "GET",
         responseType: "blob"
-      })
-        .then(response => {
+      }).then(response => {
           console.log(response);
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");

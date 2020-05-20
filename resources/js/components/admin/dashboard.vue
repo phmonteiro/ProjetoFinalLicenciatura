@@ -7,9 +7,11 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link class="nav-link" :to="{name: 'editUsers'}">Editar Utilizadores</router-link>
+            <router-link class="nav-link" :to="{name: 'editUsers'}">Editar Tipo de Utilizadores</router-link>
 
             <router-link class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
+
+            <router-link class="nav-link" :to="{name: 'definirHorasApoio'}">Definir Horas de Apoio</router-link>
 
             <router-link
               class="nav-link"
@@ -20,7 +22,6 @@
         <b-col cols="12">
           <div class="container pt-3">
             <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
-            <!-- <h3>Sou Admin</h3> -->
           </div>
           <router-view></router-view>
         </b-col>

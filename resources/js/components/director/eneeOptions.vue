@@ -122,17 +122,17 @@
       <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
     </b-form-group>
 
-    <div class="form-group">
-      <label for="inputTutor">Professor Tutor</label>
-      <input
-        type="email"
-        class="form-control"
-        v-model="data.tutor"
-        name="tutor"
-        id="tutor"
-        placeholder="professor.tutor@my.ipleiria.pt"
-      />
-    </div>
+<!--    <div class="form-group">-->
+<!--      <label for="inputTutor">Professor Tutor</label>-->
+<!--      <input-->
+<!--        type="email"-->
+<!--        class="form-control"-->
+<!--        v-model="data.tutor"-->
+<!--        name="tutor"-->
+<!--        id="tutor"-->
+<!--        placeholder="professor.tutor@my.ipleiria.pt"-->
+<!--      />-->
+<!--    </div>-->
 
     <!-- Button trigger modal -->
     <button
@@ -213,7 +213,7 @@ export default {
       data: {
         selected: null,
         options: null,
-        tutor: "",
+        // tutor: "",
         date: ""
       },
       services: {
@@ -261,7 +261,7 @@ export default {
         })
         .catch(error => {
           console.log(error.message);
-          
+
           this.$toasted.error(
             "Error ao fazer download do relatório médico do estudante. Por favor tente novamente.",
             {
@@ -299,7 +299,7 @@ export default {
         teachers: this.aux,
         email: this.user.email,
         supports: this.studentSupports,
-        tutor: this.data.tutor,
+        // tutor: this.data.tutor,
         date: this.data.date,
         duration: this.form.duration
       };

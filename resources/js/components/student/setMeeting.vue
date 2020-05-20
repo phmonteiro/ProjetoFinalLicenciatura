@@ -1,50 +1,55 @@
 <template>
-  <form @submit.prevent="validateBeforeSubmit">
-    <b-container>
+    <ValidationObserver v-slot="{ handleSubmit }">
+    <form @submit.prevent="handleSubmit(setMeeting)">
+      <div class="loader">
+          <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
+      </div>
+    <b-container v-if="!loading">
       <b-row>
         <b-col class="top100">
           <h2>{{ $t('pedir_agendamento_reunião') }}</h2>
+            <br><br>
           <div class="form-group">
-            <b-form-select
-              v-model="meeting.service"
-              v-validate="'required'"
-              name="service"
-              class="mb-3"
-              aria-label="Escolher serviço"
-            >
-              <template slot="first">
-                <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
-              </template>
-              <option value="Gestor-Caso">{{ $t('gestor_caso') }}</option>
-            </b-form-select>
-            <i v-show="errors.has('service')" class="fa fa-warning"></i>
-            <span
-              v-show="errors.has('service')"
-              class="help is-danger"
-            >{{ errors.first('service') }}</span>
+
+              <ValidationProvider name="service" rules="required" v-slot="{ errors }">
+                  <b-form-select
+                      v-model="meeting.service"
+                      v-validate="'required'"
+                      name="service"
+                      class="mb-3"
+                      aria-label="Escolher serviço"
+                  >
+                      <template slot="first">
+                          <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
+                      </template>
+                      <option v-for="service in serviceOptions.name">{{ service }}</option>
+                  </b-form-select>
+                  <code>{{ errors[0] }}</code>
+              </ValidationProvider>
+
           </div>
           <div class="form-group">
             <span for="comment">{{ $t('comentário') }}</span>
+
+              <ValidationProvider name="comment" rules="required" v-slot="{ errors }">
             <textarea
-              aria-label="Texto para escrever o comentário"
-              v-validate="'required'"
-              class="form-control"
-              id="decision"
-              v-model="meeting.comment"
-              name="comment"
-              rows="3"
+                aria-label="Texto para escrever o comentário"
+                v-validate="'required'"
+                class="form-control"
+                id="decision"
+                v-model="meeting.comment"
+                name="comment"
+                rows="3"
             ></textarea>
-            <i v-show="errors.has('comment')" class="fa fa-warning"></i>
-            <span
-              v-show="errors.has('comment')"
-              class="help is-danger"
-            >{{ errors.first('comment') }}</span>
+                  <code>{{ errors[0] }}</code>
+              </ValidationProvider>
           </div>
           <button type="submit" class="btn btn-primary">{{ $t('pedir_reunião') }}</button>
         </b-col>
       </b-row>
     </b-container>
   </form>
+    </ValidationObserver>
 </template>
 
 <script>
@@ -53,24 +58,48 @@ export default {
     return {
       meeting: {
         service: null,
-        comment: null
-      }
+        comment: null,
+      },
+        serviceOptions:{
+          name:[],
+          email:[]
+        },
+        teachers:[],
+        loading:true,
     };
   },
   methods: {
-    validateBeforeSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.setMeeting();
-          return;
-        }
-      });
-    },
+
+    getTeachersStudent() {
+          axios
+              .get("api/getTeachersStudent/" + this.user.id)
+              .then(response => {
+                  console.log(response.data);
+
+                  this.teachers = response.data;
+
+                  this.loading =  false;
+
+                  this.serviceOptions.name.push("Gestor-Caso");
+                  this.serviceOptions.email.push("Gestor-Caso");
+
+                  this.teachers.forEach(teacher=>{
+                      let nomeParts = teacher.name.split(" ");
+                      let nome = nomeParts[0]+" "+nomeParts[nomeParts.length-1];
+
+                      this.serviceOptions.name.push(nome + " - " + teacher.subject);
+                      this.serviceOptions.email.push(teacher.email);
+                  })
+              })
+              .catch(error => {console.log(error)});
+
+      },
     setMeeting() {
       axios
         .post("api/setMeeting", this.meeting)
         .then(response => {
-          console.log("meeting requested!");
+          this.meeting.service=null;
+          this.meeting.comment=null;
           this.$toasted.success("Pedido de reunião realizado sucesso.", {
             duration: 4000,
             position: "top-center",
@@ -90,7 +119,10 @@ export default {
         });
     }
   },
-  computed: {
+  created() {
+      this.getTeachersStudent();
+  },
+    computed: {
     user: function() {
       return this.$store.state.user;
     }
