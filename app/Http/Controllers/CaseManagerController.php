@@ -321,4 +321,5 @@ class CaseManagerController extends Controller
         return response()->json($caseManagerResponsible->email, 200);
     }
 
+
 }

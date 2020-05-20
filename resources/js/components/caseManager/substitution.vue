@@ -1,7 +1,9 @@
 <template>
         <div v-if="onSubstitution" class="text-center">
             <h3>Gestor Caso substituto: {{onSubstitution}}</h3><br>
-            <b-button @click="cancelSubstitution" class="btn btn-danger justify-center">Cancelar Subscrição</b-button>
+
+            <h3>Contacte o Responsável pelos Gestores Caso se pretender cancelar a substituição</h3>
+            <h5>Email: {{emailCaseManagerResponsible}}</h5>
         </div>
         <div v-else>
             <h4>Para requisitar uma substituição contacte o Responsável dos Gestores de caso.</h4><br>
@@ -20,20 +22,6 @@
         }
       },
       methods:{
-        cancelSubstitution(){
-            axios.put('/api/cancelSubstitution',{"emailMainCaseManager":this.user.email})
-                .then(response=>{
-                    this.$toasted.success("Pedido efetuado com sucesso.", {
-                        duration: 4000,
-                        position: "top-center",
-                        theme: "bubble"
-                    });
-                    this.onSubstitution=null;
-                })
-                .catch(error=>{
-                    console.log(error);
-                })
-        },
         getEmailCaseManagerResponsible(){
             axios.get('api/getEmailCaseManagerResponsible')
                 .then(response=>{

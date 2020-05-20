@@ -161,7 +161,7 @@ class DirectorController extends Controller
 
         if (sizeof($existingSupports) != 0) {
             $newSupports = array_diff($existingSupports, $dados['supports']);
-            foreach ($newSupports as &$support) {
+            foreach ($newSupports as &$support) { //Duvida no &$
                 Student_Supports::where('email', $dados['email'])->where('support_value', $support)->delete();
             }
         }

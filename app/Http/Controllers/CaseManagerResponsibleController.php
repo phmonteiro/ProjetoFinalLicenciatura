@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\CaseManagerResponsibleResource;
 use App\CaseManager;
+use App\Substitution;
 use App\User;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\SubstitutionResource;
 use Carbon\Carbon;
 use App\History;
 use Barryvdh\Debugbar\Facade as Debugbar;
@@ -46,12 +48,33 @@ class CaseManagerResponsibleController extends Controller
 
         $cms = CaseManager::where('caseManagerEmail',$request->emailCurrentCaseManager)->get();
 
+
+
         foreach ($cms as $cm)
         {
             $cm->caseManagerEmail= $cmSubstituto->email;
             $cm->caseManagerName= $cmSubstituto->name;
-            $cm->emailMainCaseManager = $request->emailCurrentCaseManager;
+
+            $substitution = new Substitution();
+            $substitution->emailMainCM = $request->emailCurrentCaseManager;
+            $substitution->nameMainCM = $request->nameCurrentCaseManager;
+            $substitution->emailSubstituteCM = $request->emailSubstituteCaseManager;
+            $substitution->nameSubstituteCM = $request->nameSubstituteCaseManager;
+            $substitution->emailStudent = $cm->studentEmail;
+            $substitution->nameStudent = $cm->studentName;
+            $substitution->type = $request->substitutionType;
+
+            if($substitution->type==="temporary"){
+                    $substitution->startDate = $request->startDate;
+                    $substitution->endDate = $request->endDate;
+                    $cm->emailMainCaseManager = $request->emailCurrentCaseManager;
+
+            }else{
+                $cm->emailMainCaseManager = null;
+            }
+            $substitution->save();
             $cm->save();
+
 
              $history = new History();
              $history->studentEmail = $cm->studentEmail;
@@ -170,4 +193,22 @@ class CaseManagerResponsibleController extends Controller
 
         return response()->json(new CaseManagerResponsibleResource($caseManager), 200);
     }
+
+        public function getActiveSubstitutions(){
+
+            $cms = CaseManager::whereNotNull('emailMainCaseManager')->select('caseManagerEmail','caseManagerName','emailMainCaseManager')->distinct()->get();
+
+            foreach ($cms as $cm) {
+                $user = User::where('email',$cm->emailMainCaseManager)->first();
+
+                $cm['mainCaseManagerName'] = $user->name;
+            }
+
+            return response()->json($cms,200);
+        }
+
+        public function substitutionsHistory(){
+
+                    return SubstitutionResource::collection(Substitution::Orderby('startDate')->paginate(10));
+        }
 }

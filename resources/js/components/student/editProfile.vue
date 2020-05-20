@@ -57,6 +57,22 @@
               </div>
             </div>
           </div>
+            <div class="row">
+            <div class="col">
+                <label for="phoneNumber">{{$t('contacto_telefónico')}}</label>
+                <ValidationProvider name="phoneNumber" rules="required|digits:9" v-slot="{ errors }">
+                    <input
+                        class="form-control"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        min="1"
+                        max="9999999999"
+                        v-model="user.phoneNumber"
+                    />
+                    <code>{{ errors[0] }}</code>
+                </ValidationProvider>
+            </div>
+            </div>
           <div class="dropdown-divider"></div>
 
           <h3>{{$t('identificação_responsável')}}</h3>

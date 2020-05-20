@@ -212,6 +212,14 @@ const routes = [{
       middlewareAuth: true,
     },
   },
+  {
+    path: '/caseManagerResponsible/subHistory',
+    name: 'subHistory',
+    component: require('./components/caseManagerResponsible/subHistory.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
   ],
 },
 {

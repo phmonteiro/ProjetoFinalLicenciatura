@@ -101,6 +101,7 @@ class StudentController extends Controller
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
             'emergencyKin' => 'required|string',
+            'phoneNumber' => 'required|integer|regex:/[0-9]{9}/'
         ]);
 
         $user->secondEmail = $dados['secondEmail'];
@@ -112,6 +113,7 @@ class StudentController extends Controller
         $user->emergencyPhone = $dados['emergencyPhone'];
         $user->emergencyEmail = $dados['emergencyEmail'];
         $user->emergencyKin = $dados['emergencyKin'];
+        $user->phoneNumber = $dados['phoneNumber'];
 
         $history = new History();
         $history->studentEmail = $user->email;

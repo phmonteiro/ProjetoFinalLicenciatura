@@ -86,7 +86,9 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCoordinator')->patch('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
-    Route::middleware('isCaseManagerOrCaseManagerResponsible')->put('cancelSubstitution', 'CaseManagerResponsibleController@cancelSubstitution');
+    Route::middleware('isCaseManagerResponsible')->get('substitutionsHistory', 'CaseManagerResponsibleController@substitutionsHistory');
+    Route::middleware('isCaseManagerResponsible')->get('getActiveSubstitutions', 'CaseManagerResponsibleController@getActiveSubstitutions');
+    Route::middleware('isCaseManagerResponsible')->put('cancelSubstitution', 'CaseManagerResponsibleController@cancelSubstitution');
     Route::middleware('isCaseManagerResponsible')->get('getAllCMs', 'CaseManagerResponsibleController@getAllCMs');
     Route::middleware('isCaseManagerResponsible')->post('addCM', 'CaseManagerResponsibleController@addCM');
     Route::middleware('isCaseManagerResponsible')->post('setCmSubstitute', 'CaseManagerResponsibleController@setCmSubstitute');
