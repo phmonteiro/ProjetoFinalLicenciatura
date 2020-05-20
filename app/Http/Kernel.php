@@ -78,7 +78,8 @@ class Kernel extends HttpKernel
         'isAdminDirectorStudent' => \App\Http\Middleware\isAdminDirectorStudent::Class,
         'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
         'isStudentOrDirector' => \App\Http\Middleware\isStudentOrDirector::Class,
-        'isStudentOrCaseManager' => \App\Http\Middleware\isStudentOrCaseManager::Class
+        'isStudentOrCaseManager' => \App\Http\Middleware\isStudentOrCaseManager::Class,
+        'isCaseManagerOrCaseManagerResponsible'=> \App\Http\Middleware\isCaseManagerOrCaseManagerResponsible::Class
 
     ];
 

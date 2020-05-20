@@ -32,7 +32,7 @@
         <div class="col-lg-6">
           <form
             class="justify-content-center"
-            @submit.prevent="validateBeforeSubmit"
+            @submit.prevent="login"
             v-if="!cartaoCidadao"
             autocomplete="on"
           >
@@ -40,23 +40,21 @@
               <div class="col">
                 <div class="form-group">
                   <span aria-label="Label Emal" class="numero">{{ $t('nome_utilizador') }}</span>
-                  <input
-                    aria-label="Email"
-                    v-validate="{ required: true, email:true }"
-                    id="email"
-                    v-model="user.email"
-                    type="text"
-                    class="form-control"
-                    name="email"
-                    placeholder="email@my.ipleiria.pt"
-                    required
-                    autofocus
-                  />
-                  <i v-show="errors.has('email')" class="fa fa-warning"></i>
-                  <span
-                    v-show="errors.has('email')"
-                    class="help is-danger"
-                  >{{ errors.first('email') }}</span>
+
+                    <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
+                        <input
+                            aria-label="Email"
+                            id="email"
+                            v-model="user.email"
+                            type="text"
+                            class="form-control"
+                            name="email"
+                            placeholder="email@my.ipleiria.pt"
+                            required
+                            autofocus
+                        />
+                        <span>{{ errors[0] }}</span>
+                    </ValidationProvider>
                 </div>
               </div>
             </div>
@@ -65,21 +63,19 @@
               <div class="col">
                 <div class="form-group">
                   <span aria-label="Label Password" class="senha">{{ $t('palavra_pass') }}</span>
-                  <input
-                    aria-label="Password"
-                    v-validate="'required'"
-                    id="password"
-                    v-model="user.password"
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    required
-                  />
-                  <i v-show="errors.has('password')" class="fa fa-warning"></i>
-                  <span
-                    v-show="errors.has('password')"
-                    class="help is-danger"
-                  >{{ errors.first('password') }}</span>
+
+                    <ValidationProvider name="password" rules="required" v-slot="{ errors }">
+                        <input
+                            aria-label="Password"
+                            id="password"
+                            v-model="user.password"
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            required
+                        />
+                        <span>{{ errors[0] }}</span>
+                    </ValidationProvider>
                 </div>
               </div>
             </div>
@@ -111,15 +107,6 @@ export default {
     };
   },
   methods: {
-    validateBeforeSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.loading = true;
-          this.login();
-          return;
-        }
-      });
-    },
     login() {
         console.log(this.user)
       axios

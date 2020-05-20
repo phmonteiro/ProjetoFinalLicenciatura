@@ -1,5 +1,6 @@
 <template>
-  <form @submit.prevent="validateBeforeSubmit">
+    <ValidationObserver v-slot="{ handleSubmit }">
+    <form @submit.prevent="handleSubmit(setMeeting)">
       <div class="loader">
           <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
       </div>
@@ -9,46 +10,46 @@
           <h2>{{ $t('pedir_agendamento_reunião') }}</h2>
             <br><br>
           <div class="form-group">
-            <b-form-select
-              v-model="meeting.service"
-              v-validate="'required'"
-              name="service"
-              class="mb-3"
-              aria-label="Escolher serviço"
-            >
-              <template slot="first">
-                <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
-              </template>
-              <option v-for="service in serviceOptions.name">{{ service }}</option>
-            </b-form-select>
-            <i v-show="errors.has('service')" class="fa fa-warning"></i>
-            <span
-              v-show="errors.has('service')"
-              class="help is-danger"
-            >{{ errors.first('service') }}</span>
+
+              <ValidationProvider name="service" rules="required" v-slot="{ errors }">
+                  <b-form-select
+                      v-model="meeting.service"
+                      v-validate="'required'"
+                      name="service"
+                      class="mb-3"
+                      aria-label="Escolher serviço"
+                  >
+                      <template slot="first">
+                          <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
+                      </template>
+                      <option v-for="service in serviceOptions.name">{{ service }}</option>
+                  </b-form-select>
+                  <code>{{ errors[0] }}</code>
+              </ValidationProvider>
+
           </div>
           <div class="form-group">
             <span for="comment">{{ $t('comentário') }}</span>
+
+              <ValidationProvider name="comment" rules="required" v-slot="{ errors }">
             <textarea
-              aria-label="Texto para escrever o comentário"
-              v-validate="'required'"
-              class="form-control"
-              id="decision"
-              v-model="meeting.comment"
-              name="comment"
-              rows="3"
+                aria-label="Texto para escrever o comentário"
+                v-validate="'required'"
+                class="form-control"
+                id="decision"
+                v-model="meeting.comment"
+                name="comment"
+                rows="3"
             ></textarea>
-            <i v-show="errors.has('comment')" class="fa fa-warning"></i>
-            <span
-              v-show="errors.has('comment')"
-              class="help is-danger"
-            >{{ errors.first('comment') }}</span>
+                  <code>{{ errors[0] }}</code>
+              </ValidationProvider>
           </div>
           <button type="submit" class="btn btn-primary">{{ $t('pedir_reunião') }}</button>
         </b-col>
       </b-row>
     </b-container>
   </form>
+    </ValidationObserver>
 </template>
 
 <script>
@@ -68,14 +69,7 @@ export default {
     };
   },
   methods: {
-    validateBeforeSubmit() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.setMeeting();
-          return;
-        }
-      });
-    },
+
     getTeachersStudent() {
           axios
               .get("api/getTeachersStudent/" + this.user.id)

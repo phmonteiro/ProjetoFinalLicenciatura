@@ -291,6 +291,19 @@ class CaseManagerController extends Controller
         return response()->json($event, 201);
     }
 
+    public function checkSubstitution(Request $request){
+        $user = Auth::user();
+
+        $cms = CaseManager::where('emailMainCaseManager',$user->email)->first();
+
+
+        if($cms===null){
+            return response()->json("false",200);
+        }else{
+            return response()->json($cms->caseManagerName,200);
+        }
+    }
+
     public function getEvent()
     {
         $user = Auth::user();
@@ -301,4 +314,12 @@ class CaseManagerController extends Controller
 
         return response()->json([$meetings, $schedule], 200);
     }
+
+    public function getEmailCaseManagerResponsible(){
+        $caseManagerResponsible = User::where('type','CaseManagerResponsible')->first();
+
+        return response()->json($caseManagerResponsible->email, 200);
+    }
+
+
 }

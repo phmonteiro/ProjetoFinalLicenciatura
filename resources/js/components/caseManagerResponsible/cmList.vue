@@ -11,7 +11,7 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>
+<!--    <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>-->
     <div class="container">
       <h2>Lista de Gestores de caso</h2>
       <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
@@ -46,23 +46,23 @@
           </li>
         </ul>
       </nav>
-        <div v-if="caseManagers">
-        <b-button v-if="!caseManagers[0].emailCaseManagerSubstituto" @click="showCbSubstitutes(caseManagers[0])">Adicionar Substituto</b-button>
-        </div>
+<!--        <div v-if="caseManagers">-->
+<!--        <b-button v-if="!caseManagers[0].emailCaseManagerSubstituto" @click="showCbSubstitutes(caseManagers[0])">Adicionar Substituto</b-button>-->
+<!--        </div>-->
     </div>
       <br>
-      <div v-if="showSubstitutes">
-          <h4>Selecionar Gestor Caso substituto</h4>
-          <br>
-          <select name="cbSubstituto" id="cbSubstituto" v-model="emailSubstitute">
-              <option value="default" disabled>Por favor selecione um</option>
-              <option  v-for="cm in cmSubstitutes" :value="cm.caseManagerEmail">{{cm.caseManagerName}}</option>
-          </select>
-          <br>
-          <br>
-          <b-button @click="addSubstituto(caseManagers[0])">Guardar</b-button>
-          <b-button @click="cancelAddSubstitute()">Cancelar</b-button>
-      </div>
+<!--      <div v-if="showSubstitutes">-->
+<!--          <h4>Selecionar Gestor Caso substituto</h4>-->
+<!--          <br>-->
+<!--          <select name="cbSubstituto" id="cbSubstituto" v-model="substitute">-->
+<!--              <option value="default" disabled>Por favor selecione um</option>-->
+<!--              <option  v-for="cm in cmSubstitutes" :value="cm">{{cm.email}}</option>-->
+<!--          </select>-->
+<!--          <br>-->
+<!--          <br>-->
+<!--          <b-button @click="addSubstituto(caseManagers[0])">Guardar</b-button>-->
+<!--          <b-button @click="cancelAddSubstitute()">Cancelar</b-button>-->
+<!--      </div>-->
   </div>
 </template>
 
@@ -72,7 +72,7 @@ export default {
     return {
       cmSubstitutes:[],
       emailEnee:null,
-      emailSubstitute:"default",
+      substitute:"default",
       pagination: {},
       loading: true,
       showSubstitutes:false,
@@ -80,7 +80,7 @@ export default {
       fields: [
         {
           key: "studentName",
-          label: "Nome Estudande",
+          label: "Nome Estudante",
           sortable: true
         },
         {
@@ -99,8 +99,8 @@ export default {
           sortable: true
         },
         {
-            key:"emailCaseManagerSubstituto",
-            label:"Gestor Caso Substituto",
+            key:"emailMainCaseManager",
+            label:"Gestor Caso Principal",
             sortable:true
         }
       ],
@@ -108,38 +108,53 @@ export default {
     };
   },
   methods: {
+      // getAllCaseManagers(){
+      //     axios.get("api/getAllCMs")
+      //     .then(response=>{
+      //         this.cmSubstitutes=response.data;
+      //     })
+      //     .catch(error=>{
+      //         console.log(error);
+      //     })
+      // },
       cancelAddSubstitute(){
             this.showSubstitutes=false;
       },
-      showCbSubstitutes(caseManager){
-          this.cmSubstitutes=[];
-            this.emailEnee=caseManager.studentEmail;
-            this.showSubstitutes = true;
-            this.caseManagers.forEach(cm =>{
-                if(caseManager.caseManagerName !== cm.caseManagerName){
-                    this.cmSubstitutes.push(cm);
-                }
-            })
-      },
-      addSubstituto(){
-          if(this.emailSubstitute!=null && this.emailEnee!=="default"){
-              axios
-                  .post("api/setCmSubstitute",{"emailCmSubstitute":this.emailSubstitute,
-                                                "emailStudent": this.emailEnee}
-                                                )
-                  .then(response=>{
-                      this.showSubstitutes= false;
-                      this.$toasted.success("Substituição realizada com sucesso.", {
-                          duration: 4000,
-                          position: "top-center",
-                          theme: "bubble"
-                      });
-
-                  }).catch(error=>{
-                  console.log(error);
-              })
-          }
-      },
+      // showCbSubstitutes(caseManager){
+      //     this.emailEnee=caseManager.studentEmail;
+      //     this.showSubstitutes = true;
+      //
+      //     let allCaseManagers = this.cmSubstitutes;
+      //
+      //     this.cmSubstitutes=[];
+      //     allCaseManagers.forEach(cm =>{
+      //           if(caseManager.caseManagerName !== cm.name){
+      //               this.cmSubstitutes.push(cm);
+      //           }
+      //       })
+      // },
+      // addSubstituto(row){
+      //     if(this.substitute.email!=null && this.emailEnee!=="default"){
+      //         axios
+      //             .post("api/setCmSubstitute",{"emailCmSubstitute":this.substitute.email,
+      //                                           "emailStudent": this.emailEnee}
+      //                                           )
+      //             .then(response=>{
+      //                 row.emailMainCaseManager=row.caseManagerEmail;
+      //                 row.caseManagerEmail=this.substitute.email;
+      //                 row.caseManagerName=this.substitute.name;
+      //
+      //                 this.showSubstitutes= false;
+      //                 this.$toasted.success("Substituição realizada com sucesso.", {
+      //                     duration: 4000,
+      //                     position: "top-center",
+      //                     theme: "bubble"
+      //                 });
+      //             }).catch(error=>{
+      //             console.log(error);
+      //         })
+      //     }
+      // },
     getcaseManagers(page_url) {
       let pg = this;
       page_url = page_url || "api/getCaseManagers?page=1";
@@ -168,6 +183,7 @@ export default {
   },
   created() {
     this.getcaseManagers();
+    // this.getAllCaseManagers();
   },
   computed: {
     user: function() {

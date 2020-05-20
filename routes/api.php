@@ -86,6 +86,11 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCoordinator')->patch('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
+    Route::middleware('isCaseManagerResponsible')->get('substitutionsHistory', 'CaseManagerResponsibleController@substitutionsHistory');
+    Route::middleware('isCaseManagerResponsible')->get('getActiveSubstitutions', 'CaseManagerResponsibleController@getActiveSubstitutions');
+    Route::middleware('isCaseManagerResponsible')->put('cancelSubstitution', 'CaseManagerResponsibleController@cancelSubstitution');
+    Route::middleware('isCaseManagerResponsible')->get('getAllCMs', 'CaseManagerResponsibleController@getAllCMs');
+    Route::middleware('isCaseManagerResponsible')->post('addCM', 'CaseManagerResponsibleController@addCM');
     Route::middleware('isCaseManagerResponsible')->post('setCmSubstitute', 'CaseManagerResponsibleController@setCmSubstitute');
     Route::middleware('isCaseManagerResponsible')->get('getCaseManagers', 'CaseManagerResponsibleController@index');
     Route::middleware('isCaseManagerResponsible')->post('setCM/{id}', 'CaseManagerResponsibleController@setCM');
@@ -94,6 +99,8 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManagerResponsible')->delete('removeCM/{id}', 'CaseManagerResponsibleController@removeCM');
 
     //Case Manager
+    Route::middleware('isCaseManager')->get('checkSubstitution', 'CaseManagerController@checkSubstitution');
+    Route::middleware('isCaseManager')->get('getEmailCaseManagerResponsible', 'CaseManagerController@getEmailCaseManagerResponsible');
     Route::middleware('isCaseManager')->put('setSupportHours/{id}', 'CaseManagerController@setSupportHours');
     Route::middleware('isCaseManager')->get('getCmEnee/{id}', 'CaseManagerController@getCmEnee');
     Route::middleware('isCaseManager')->get('getEneeInteractions/{email}', 'CaseManagerController@getEneeInteractions');

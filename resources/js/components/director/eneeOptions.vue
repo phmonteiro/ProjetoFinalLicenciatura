@@ -303,7 +303,6 @@ export default {
         date: this.data.date,
         duration: this.form.duration
       };
-      console.log("ASDASDASDASDASDSADAASASDASDASDASDSADASA");
       this.$emit("save-user", data);
     },
     cancelAux: function() {

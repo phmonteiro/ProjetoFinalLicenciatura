@@ -81,7 +81,7 @@ const messages = {
     opcional: 'Opcional',
     outras_doenças: 'Outras doenças',
     outro: 'Outro',
-    palavra_pass: 'Palavra Pass',
+    palavra_pass: 'Palavra Passe',
     parentesco: 'Parentesco',
     passaporte: 'Passaporte',
     pedido_apoio: 'Pedido apoio',
