@@ -33,7 +33,6 @@ class SupportController extends Controller
             'teachers' => 'required',
             'email' => 'required|email',
             'supports' => '',
-            'tutor' => '',
             'duration' => 'required|string',
             'date' => ''
 
@@ -51,21 +50,6 @@ class SupportController extends Controller
         $user->dateEneeApproved = Carbon::now();
 
         $user->save();
-
-        if ($dados['tutor'] != null) {
-            $tutor = new Tutor();
-            $tutor->studentEmail = $user->email;
-            $tutor->tutorEmail = $dados['tutor'];
-            $tutor->save();
-
-            $history = new History();
-            $history->studentEmail = $user->email;
-            $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
-            $history->date = Carbon::now();
-            $history->save();
-
-            //EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $tutor->studentEmail);
-        }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
 

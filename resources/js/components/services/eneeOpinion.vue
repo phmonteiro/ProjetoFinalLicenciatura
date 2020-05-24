@@ -17,7 +17,7 @@
           >Rejeitar</button>
         </template>
       </b-table>
-        <h4 v-else>Não existem pedidos de parecer pendentes.</h4>
+      <h4 v-else>Não existem pedidos de parecer pendentes.</h4>
 
     </div>
       <eneeServiceEvaluation
@@ -87,7 +87,7 @@ export default {
           console.log(response.data);
           this.requests = response.data;
 
-          if(this.requests===[]){
+          if(this.requests==[]){
               this.requests=null;
           }
         })
