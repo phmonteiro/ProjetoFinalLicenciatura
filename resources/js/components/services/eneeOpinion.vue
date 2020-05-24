@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <h2>Lista de aprovação Enee</h2>
+      <h2>Lista de aprovação ENEE</h2>
         <br>
       <b-table striped hover v-if="requests" :items="requests" :fields="fields">
         <template v-slot:cell(actions)="row">
@@ -86,6 +86,10 @@ export default {
           this.loading = false;
           console.log(response.data);
           this.requests = response.data;
+
+          if(this.requests===[]){
+              this.requests=null;
+          }
         })
         .catch(error => {
           console.log(error);

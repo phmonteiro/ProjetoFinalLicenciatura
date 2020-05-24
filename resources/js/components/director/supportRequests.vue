@@ -45,6 +45,7 @@
           </b-card>
         </template>
       </b-table>
+        <h4 v-else>De momento não existe nenhum pedido de apoio</h4>
       <nav aria-label="Page navigation" v-if="supportRequests">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

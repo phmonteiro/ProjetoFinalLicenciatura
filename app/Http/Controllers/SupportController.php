@@ -105,7 +105,7 @@ class SupportController extends Controller
         //Email para o aluno
         //EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi aprovado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
 
-        //Email para os professores 
+        //Email para os professores
         for ($i = 0; $i < sizeof($dados['teachers']); $i++) {
             //EmailController::sendEmail('O seu estudante ' . $user->name . ' obteve o estatuto de estudante com necessidades educativas especias. Obrigado', $dados['teachers'][$i], 'Aluno com estatuto de ENEE', 'Aluno com estatuto de ENEE');
         }
@@ -120,7 +120,7 @@ class SupportController extends Controller
     public function reproveSubscription(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->enee = "reproved";
+        $user->enee = "denied";
         $user->save();
 
         $history = new History();

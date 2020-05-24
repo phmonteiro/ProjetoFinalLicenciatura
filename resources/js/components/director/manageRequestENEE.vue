@@ -35,7 +35,7 @@
               <button
                 class="btn btn-info m-1"
                 v-on:click.prevent="editUser(row.item)"
-                v-if="row.item.enee!=='approved'"
+                v-if="row.item.enee!=='denied'"
               >Avaliar</button>
             </b-col>
             <b-col sm="12">
@@ -48,6 +48,7 @@
           </b-row>
         </template>
       </b-table>
+        <h4 v-else>Não existem pedidos de candidatura ao estatuto ENEE</h4>
 
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">

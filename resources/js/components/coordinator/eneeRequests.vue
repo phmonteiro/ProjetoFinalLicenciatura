@@ -130,6 +130,7 @@
           </b-card>
         </template>
       </b-table>
+        <h4 v-else>Não existem pedidos para estatuto ENEE</h4>
 
       <nav aria-label="Page navigation" v-if="requests">
         <ul class="pagination">

@@ -35,6 +35,7 @@
           </b-row>
         </template>
       </b-table>
+        <h4 v-else>Não existem ENEEs registados na plataforma</h4>
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

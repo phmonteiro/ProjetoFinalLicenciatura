@@ -13,7 +13,7 @@
     </b-container>
     <div class="container" v-if="users">
       <h2>Lista de enees</h2>
-      <b-table striped hover :items="users" :fields="fields">
+      <b-table v-if="users" striped hover :items="users" :fields="fields">
         <template v-slot:cell(actions)="row">
           <button
             type="button"
@@ -109,7 +109,8 @@
           </div>
         </template>
       </b-table>
-      <nav aria-label="Page navigation">
+        <h4 v-else>Não existem ENEEs registados na plataforma</h4>
+      <nav v-if="users" aria-label="Page navigation">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
             <a
