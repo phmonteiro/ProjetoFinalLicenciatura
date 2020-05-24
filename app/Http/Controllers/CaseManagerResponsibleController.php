@@ -40,21 +40,12 @@ class CaseManagerResponsibleController extends Controller
 
     public function setCmSubstitute(Request $request){
 
-//         $cmSubstituto = User::where('email',$request->emailSubstituteCaseManager)->first();
-
-        if($cmSubstituto === null){
-            return response()->json("Não existe nenhum Case Manager com o mail ".$request->emailCmSubstitute , 404);
-        }
-
         $cms = CaseManager::where('caseManagerEmail',$request->emailCurrentCaseManager)->get();
 
 
 
         foreach ($cms as $cm)
         {
-//             $cm->caseManagerEmail= $cmSubstituto->email;
-//             $cm->caseManagerName= $cmSubstituto->name;
-
             $substitution = new Substitution();
             $substitution->emailMainCM = $request->emailCurrentCaseManager;
             $substitution->nameMainCM = $request->nameCurrentCaseManager;
@@ -67,21 +58,10 @@ class CaseManagerResponsibleController extends Controller
             if($substitution->type==="temporary"){
                     $substitution->startDate = $request->startDate;
                     $substitution->endDate = $request->endDate;
-//                     $cm->emailMainCaseManager = $request->emailCurrentCaseManager;
 
-            }else{
-//                 $cm->emailMainCaseManager = null;
             }
+
             $substitution->save();
-//             $cm->save();
-
-
-//              $history = new History();
-//              $history->studentEmail = $cm->studentEmail;
-//              $history->description = 'Foi definido o Gestor de Caso ' .$cm->caseManagerName.' como substituto para o aluno '.$cm->studentName;
-//              $history->date = Carbon::now();
-//              $history->save();
-
         }
 
         //mandar email a avisar

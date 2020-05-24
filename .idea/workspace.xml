@@ -3,24 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/manageSupports.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/manageSupports.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +100,7 @@
       <workItem from="1590072074440" duration="743000" />
       <workItem from="1590143692588" duration="8976000" />
       <workItem from="1590175760570" duration="11473000" />
-      <workItem from="1590319668206" duration="387000" />
+      <workItem from="1590319668206" duration="2033000" />
     </task>
     <servers />
   </component>
