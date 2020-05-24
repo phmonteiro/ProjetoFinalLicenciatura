@@ -4,7 +4,7 @@
       <h2>Lista de aprovação Enee</h2>
         <br>
       <b-table striped hover v-if="requests" :items="requests" :fields="fields">
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <button
             class="btn btn-info"
             v-on:click.prevent="editUser(row.item)"
@@ -19,12 +19,6 @@
       </b-table>
         <h4 v-else>Não existem pedidos de parecer pendentes.</h4>
 
-<!--        $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4-->
-        <button
-            class="btn btn-info"
-            v-on:click.prevent="editUser(requests[0])"
-        >Avaliar</button>
-<!--        $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5-->
     </div>
       <eneeServiceEvaluation
           :user="currentUser"

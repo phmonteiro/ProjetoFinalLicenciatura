@@ -30,7 +30,7 @@
             :per-page="perPage"
             :current-page="currentPage"
           >
-            <template slot="actions" slot-scope="row">
+            <template v-slot:cell(actions)="row">
               <button
                 class="btn btn-secondary"
                 v-on:click.prevent="editSupport(row.item)"

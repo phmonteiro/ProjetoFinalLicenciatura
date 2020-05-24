@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/manageSupports.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/manageSupports.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ZrEiz16ggzxnMtqrP4U17gNlmA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="" />
+      <created>1585588943810</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585588943810</updated>
+      <workItem from="1585588947221" duration="877000" />
+      <workItem from="1585591598721" duration="249000" />
+      <workItem from="1585592047438" duration="562000" />
+      <workItem from="1585841227200" duration="4201000" />
+      <workItem from="1585850115921" duration="762000" />
+      <workItem from="1585998650822" duration="1582000" />
+      <workItem from="1586001614889" duration="3532000" />
+      <workItem from="1586033110574" duration="23000" />
+      <workItem from="1586105224680" duration="11624000" />
+      <workItem from="1586178763160" duration="6052000" />
+      <workItem from="1586195349940" duration="184000" />
+      <workItem from="1586607955470" duration="2475000" />
+      <workItem from="1586789251481" duration="2673000" />
+      <workItem from="1586860029346" duration="6996000" />
+      <workItem from="1586868637608" duration="665000" />
+      <workItem from="1586949917474" duration="12317000" />
+      <workItem from="1586969639515" duration="612000" />
+      <workItem from="1587030542345" duration="9705000" />
+      <workItem from="1587131358020" duration="11328000" />
+      <workItem from="1587156426890" duration="12147000" />
+      <workItem from="1587315466681" duration="19567000" />
+      <workItem from="1587338708774" duration="85000" />
+      <workItem from="1587387828004" duration="7611000" />
+      <workItem from="1587724496591" duration="14323000" />
+      <workItem from="1587747148953" duration="13160000" />
+      <workItem from="1587917816941" duration="2844000" />
+      <workItem from="1587920708810" duration="121000" />
+      <workItem from="1587920855892" duration="56000" />
+      <workItem from="1587920934783" duration="811000" />
+      <workItem from="1587921841946" duration="172000" />
+      <workItem from="1587922050834" duration="16503000" />
+      <workItem from="1587987505158" duration="10958000" />
+      <workItem from="1588003354895" duration="1263000" />
+      <workItem from="1588170495695" duration="7264000" />
+      <workItem from="1588672261958" duration="10399000" />
+      <workItem from="1588772134016" duration="5742000" />
+      <workItem from="1589035962555" duration="17583000" />
+      <workItem from="1589206866602" duration="4386000" />
+      <workItem from="1589279203363" duration="9519000" />
+      <workItem from="1589383340941" duration="10014000" />
+      <workItem from="1589405645637" duration="7997000" />
+      <workItem from="1589550308266" duration="4201000" />
+      <workItem from="1589884340837" duration="8100000" />
+      <workItem from="1589999593998" duration="8349000" />
+      <workItem from="1590012258997" duration="928000" />
+      <workItem from="1590072074440" duration="743000" />
+      <workItem from="1590143692588" duration="8976000" />
+      <workItem from="1590175760570" duration="11473000" />
+      <workItem from="1590319668206" duration="387000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="555" y="215" width="800" height="684" key="#ESLint" timestamp="1590145688592">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="555" y="215" width="800" height="684" key="#ESLint/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590145688592" />
+    <state x="541" y="345" width="828" height="423" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590001241551">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="541" y="345" width="828" height="423" key="#com.intellij.fileTypes.FileTypeChooser/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590001241551" />
+    <state x="525" y="130" width="860" height="854" key="CommitChangelistDialog2" timestamp="1587320132268">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="525" y="130" width="860" height="854" key="CommitChangelistDialog2/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1587320132268" />
+    <state x="743" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1589408609123">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="743" y="311" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1589408609123" />
+    <state x="403" y="258" width="1022" height="737" key="SettingsEditor" timestamp="1587921745616">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="403" y="258" width="1022" height="737" key="SettingsEditor/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1587921745616" />
+    <state x="366" y="190" width="1366" height="768" key="dock-window-1" timestamp="1587043529797">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="366" y="190" width="1366" height="768" key="dock-window-1/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1587043529797" />
+    <state x="608" y="162" width="807" height="783" key="find.popup" timestamp="1590011012823">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="608" y="162" width="807" height="783" key="find.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590011012823" />
+    <state x="624" y="252" key="run.anything.popup" timestamp="1590186517315">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="624" y="252" key="run.anything.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186517315" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1590186512459">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1589210468764" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186512459" />
+  </component>
+</project>

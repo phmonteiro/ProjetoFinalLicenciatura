@@ -1,48 +1,50 @@
 <template>
 <div>
 <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
-    <template slot="actions" slot-scope="row">
-                <button class="btn btn-success" v-on:click.prevent="substituir(row.item)">Substituir</button>
+    <template v-slot:cell(actions)="row">
+        <button class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
     </template>
 </b-table>
-    <button class="btn btn-success" v-on:click.prevent="toggleSubstituir(caseManagers[1])">Substituir</button>
+
 
     <div v-if="showSubstitutes">
         <h4>Selecionar Gestor Caso substituto</h4>
         <br>
-
+        <select v-model="substitute">
+            <option value="default" disabled>Selecionar Gestor de Caso</option>
+            <option  v-for="cm in substitutes" :value="cm">{{cm.email}}</option>
+        </select>
+        <br>
+        <br>
         <div>
         <input type="radio" id="temporary" value="temporary" v-model="substitutionType">
-        <label for="one">Temporary</label>
+        <label for="one">Substituição Temporária</label>
         <br>
         <input type="radio" id="permanent" value="permanent" v-model="substitutionType">
-        <label for="two">Permanent</label>
+        <label for="two">Substituição Permanente</label>
         <br>
             <div v-if="substitutionType==='temporary'">
         <span>Introduza a data de início e fim</span>
              <date-picker v-model="substitutionDates" range=true valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
             </div>
+            <div v-if="substitutionType==='permanent'">
+                <span>Introduza a data de início</span>
+                <date-picker v-model="substitutionDates" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
+            </div>
         </div>
-        <br>
-        <select v-model="substitute">
-            <option value="default" disabled>Por favor selecione um</option>
-            <option  v-for="cm in substitutes" :value="cm">{{cm.email}}</option>
-        </select>
-        <br>
         <br>
         <b-button @click="save()">Guardar</b-button>
         <b-button @click="cancelAddSubstitute()">Cancelar</b-button>
     </div>
+    <br>
 
     <h3>Substituições ativas</h3>
     <b-table striped hover v-if="activeSubstitutions!=null" :items="activeSubstitutions" :fields="fieldsActiveSubstitutes">
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
             <button class="btn btn-danger" v-on:click.prevent="cancelarSubstituicao(row.item)">Cancelar Substituição</button>
         </template>
     </b-table>
     <h4 v-else>Não existem substituições em curso</h4>
-    <button class="btn btn-danger" v-on:click.prevent="cancelarSubstituicao(activeSubstitutions[0])">Cancelar Substituição</button>
-
 </div>
 </template>
 
@@ -119,6 +121,7 @@
                   })
           },
           toggleSubstituir(row){
+              this.substitutes=[];
               this.currentCaseManager= row;
               this.caseManagers.forEach(cm=>{
                   if(cm.email !== row.email){
@@ -128,18 +131,24 @@
               this.showSubstitutes=true;
           },
           save(){
-              if(this.substitutionDates==null){
-                  this.substitutionDates[0]=this.substitutionType;
-                  this.substitutionDates[1]=this.substitutionType;
-              }else{
+              var startDate;
+              var endDate;
+
+              if(this.substitutionType==="permanent"){
+                  endDate="";
+                  this.substitutionDates.setHours(this.substitutionDates.getHours()+1);
+                  let partsStartDate = this.substitutionDates.toISOString().split('T');
+                  startDate = partsStartDate[0];
+
+              }else if(this.substitutionType==="temporary"){
                   this.substitutionDates[0].setHours(this.substitutionDates[0].getHours()+1);
                   this.substitutionDates[1].setHours(this.substitutionDates[1].getHours()+1);
 
 
                   let partsStartDate = this.substitutionDates[0].toISOString().split('T');
-                  var startDate = partsStartDate[0];
+                  startDate = partsStartDate[0];
                   let partsEndDate = this.substitutionDates[1].toISOString().split('T');
-                  var endDate = partsEndDate[0];
+                  endDate = partsEndDate[0];
 
                   console.log(startDate);
                   console.log(endDate);

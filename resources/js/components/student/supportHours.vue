@@ -19,7 +19,7 @@
             <h3>{{ $t('quantidade_horas_utilizadas') }}: {{this.totalHours}}</h3>
             <h3>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h3>
               <b-table striped hover :items="supports" :fields="fields">
-              <template slot="actions" slot-scope="row">
+              <template v-slot:cell(actions)="row">
                 <b-button
                   type="submit"
                   class="btn btn-secondary"
@@ -32,15 +32,6 @@
         </b-col>
       </b-row>
     </b-container>
-
-<!--      #######-->
-      <b-button
-          type="submit"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-          v-on:click.prevent="editSupportHours(supports[0])"
-      >{{ $t('editar_quantidade_horas_utilizadas') }}</b-button>
-<!--    ########-->
 
       <edit-support-hours
       :support="currentSupport"

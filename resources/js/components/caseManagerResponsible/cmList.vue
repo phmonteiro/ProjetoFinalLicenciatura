@@ -13,12 +13,9 @@
     </b-container>
 <!--    <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>-->
     <div class="container">
-      <h2>Lista de Gestores de caso</h2>
+      <h2>Lista de ENEEs por Gestores de Caso</h2>
       <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
-        <!-- <template slot="actions" slot-scope="row">
-                    <button class="btn btn-success" v-on:click.prevent="editUser(row.item)"
-                        v-if="row.item.number != user.number">Aprovar</button>
-        </template>-->
+
       </b-table>
       <nav aria-label="Page navigation" v-if="caseManagers">
         <ul class="pagination">
@@ -46,23 +43,8 @@
           </li>
         </ul>
       </nav>
-<!--        <div v-if="caseManagers">-->
-<!--        <b-button v-if="!caseManagers[0].emailCaseManagerSubstituto" @click="showCbSubstitutes(caseManagers[0])">Adicionar Substituto</b-button>-->
-<!--        </div>-->
     </div>
       <br>
-<!--      <div v-if="showSubstitutes">-->
-<!--          <h4>Selecionar Gestor Caso substituto</h4>-->
-<!--          <br>-->
-<!--          <select name="cbSubstituto" id="cbSubstituto" v-model="substitute">-->
-<!--              <option value="default" disabled>Por favor selecione um</option>-->
-<!--              <option  v-for="cm in cmSubstitutes" :value="cm">{{cm.email}}</option>-->
-<!--          </select>-->
-<!--          <br>-->
-<!--          <br>-->
-<!--          <b-button @click="addSubstituto(caseManagers[0])">Guardar</b-button>-->
-<!--          <b-button @click="cancelAddSubstitute()">Cancelar</b-button>-->
-<!--      </div>-->
   </div>
 </template>
 
@@ -108,53 +90,9 @@ export default {
     };
   },
   methods: {
-      // getAllCaseManagers(){
-      //     axios.get("api/getAllCMs")
-      //     .then(response=>{
-      //         this.cmSubstitutes=response.data;
-      //     })
-      //     .catch(error=>{
-      //         console.log(error);
-      //     })
-      // },
       cancelAddSubstitute(){
             this.showSubstitutes=false;
       },
-      // showCbSubstitutes(caseManager){
-      //     this.emailEnee=caseManager.studentEmail;
-      //     this.showSubstitutes = true;
-      //
-      //     let allCaseManagers = this.cmSubstitutes;
-      //
-      //     this.cmSubstitutes=[];
-      //     allCaseManagers.forEach(cm =>{
-      //           if(caseManager.caseManagerName !== cm.name){
-      //               this.cmSubstitutes.push(cm);
-      //           }
-      //       })
-      // },
-      // addSubstituto(row){
-      //     if(this.substitute.email!=null && this.emailEnee!=="default"){
-      //         axios
-      //             .post("api/setCmSubstitute",{"emailCmSubstitute":this.substitute.email,
-      //                                           "emailStudent": this.emailEnee}
-      //                                           )
-      //             .then(response=>{
-      //                 row.emailMainCaseManager=row.caseManagerEmail;
-      //                 row.caseManagerEmail=this.substitute.email;
-      //                 row.caseManagerName=this.substitute.name;
-      //
-      //                 this.showSubstitutes= false;
-      //                 this.$toasted.success("Substituição realizada com sucesso.", {
-      //                     duration: 4000,
-      //                     position: "top-center",
-      //                     theme: "bubble"
-      //                 });
-      //             }).catch(error=>{
-      //             console.log(error);
-      //         })
-      //     }
-      // },
     getcaseManagers(page_url) {
       let pg = this;
       page_url = page_url || "api/getCaseManagers?page=1";
@@ -183,7 +121,6 @@ export default {
   },
   created() {
     this.getcaseManagers();
-    // this.getAllCaseManagers();
   },
   computed: {
     user: function() {
