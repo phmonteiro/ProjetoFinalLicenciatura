@@ -14,7 +14,7 @@
     <div class="container">
       <h2>Lista de pedidos a apoios</h2>
       <b-table striped hover v-if="supportRequests!=null" :items="supportRequests" :fields="fields">
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <b-row class="text-center">
             <b-col md="4" sm="12">
               <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>

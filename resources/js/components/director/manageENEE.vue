@@ -23,11 +23,11 @@
       <h2>Lista de ENEE</h2>
       <b-table striped hover v-if="enee" :items="enee" :fields="fields">
         <template v-slot:cell(enee)="{ value }">
-          <p v-if="value=='awaiting'">Aguardando</p>
-          <p v-if="value=='denied'">Reprovado</p>
-          <p v-if="value=='approved'">Aprovado</p>
+          <p v-if="value==='awaiting'">Aguardando</p>
+          <p v-if="value==='denied'">Reprovado</p>
+          <p v-if="value==='approved'">Aprovado</p>
         </template>
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <b-row class="text-center">
             <b-col md="12" sm="12">
               <button class="btn btn-info" v-on:click.prevent="editUser(row.item)">Editar estatuto</button>

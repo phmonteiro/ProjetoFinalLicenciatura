@@ -17,7 +17,7 @@
           <div v-if="meetings">
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
             <b-table id="meetingsTable" striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
-              <template slot="actions" slot-scope="row">
+              <template v-slot:cell(actions)="row">
                 <b-row class="text-center">
                   <b-col md="4" sm="12">
                     <b-form-checkbox

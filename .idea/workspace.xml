@@ -2,21 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Resources/SubstitutionResource.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Substitution.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/subHistory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/substitution.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/substitution.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/manageSupports.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/manageSupports.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/dashboard.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeServiceEvaluation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeServiceEvaluation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +49,11 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -105,7 +112,12 @@
       <workItem from="1589405645637" duration="7997000" />
       <workItem from="1589550308266" duration="4201000" />
       <workItem from="1589884340837" duration="8100000" />
-      <workItem from="1589999593998" duration="8061000" />
+      <workItem from="1589999593998" duration="8349000" />
+      <workItem from="1590012258997" duration="928000" />
+      <workItem from="1590072074440" duration="743000" />
+      <workItem from="1590143692588" duration="8976000" />
+      <workItem from="1590175760570" duration="11473000" />
+      <workItem from="1590319668206" duration="387000" />
     </task>
     <servers />
   </component>
@@ -113,6 +125,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="555" y="215" width="800" height="684" key="#ESLint" timestamp="1590145688592">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="555" y="215" width="800" height="684" key="#ESLint/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590145688592" />
     <state x="541" y="345" width="828" height="423" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590001241551">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -137,14 +153,14 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="608" y="162" width="807" height="783" key="find.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590011012823" />
-    <state x="624" y="252" key="run.anything.popup" timestamp="1587937742027">
+    <state x="624" y="252" key="run.anything.popup" timestamp="1590186517315">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="624" y="252" key="run.anything.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1587937742027" />
-    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1589885001799">
+    <state x="624" y="252" key="run.anything.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186517315" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1590186512459">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1589210468764" />
-    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1589885001799" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186512459" />
   </component>
 </project>

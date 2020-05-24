@@ -40,7 +40,7 @@ class CaseManagerResponsibleController extends Controller
 
     public function setCmSubstitute(Request $request){
 
-        $cmSubstituto = User::where('email',$request->emailSubstituteCaseManager)->first();
+//         $cmSubstituto = User::where('email',$request->emailSubstituteCaseManager)->first();
 
         if($cmSubstituto === null){
             return response()->json("Não existe nenhum Case Manager com o mail ".$request->emailCmSubstitute , 404);
@@ -52,8 +52,8 @@ class CaseManagerResponsibleController extends Controller
 
         foreach ($cms as $cm)
         {
-            $cm->caseManagerEmail= $cmSubstituto->email;
-            $cm->caseManagerName= $cmSubstituto->name;
+//             $cm->caseManagerEmail= $cmSubstituto->email;
+//             $cm->caseManagerName= $cmSubstituto->name;
 
             $substitution = new Substitution();
             $substitution->emailMainCM = $request->emailCurrentCaseManager;
@@ -67,20 +67,20 @@ class CaseManagerResponsibleController extends Controller
             if($substitution->type==="temporary"){
                     $substitution->startDate = $request->startDate;
                     $substitution->endDate = $request->endDate;
-                    $cm->emailMainCaseManager = $request->emailCurrentCaseManager;
+//                     $cm->emailMainCaseManager = $request->emailCurrentCaseManager;
 
             }else{
-                $cm->emailMainCaseManager = null;
+//                 $cm->emailMainCaseManager = null;
             }
             $substitution->save();
-            $cm->save();
+//             $cm->save();
 
 
-             $history = new History();
-             $history->studentEmail = $cm->studentEmail;
-             $history->description = 'Foi definido o Gestor de Caso ' .$cm->caseManagerName.' como substituto para o aluno '.$cm->studentName;
-             $history->date = Carbon::now();
-             $history->save();
+//              $history = new History();
+//              $history->studentEmail = $cm->studentEmail;
+//              $history->description = 'Foi definido o Gestor de Caso ' .$cm->caseManagerName.' como substituto para o aluno '.$cm->studentName;
+//              $history->date = Carbon::now();
+//              $history->save();
 
         }
 

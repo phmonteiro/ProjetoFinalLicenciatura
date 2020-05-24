@@ -7,22 +7,22 @@
       <div class="container">
         <h2>Lista de utilizadores</h2>
         <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
-          <template slot="type" slot-scope="row">
-            <p v-if="row.item.type=='Services'">Serviços</p>
-            <p v-if="row.item.type=='CaseManagerResponsible'">Responsável Gestor de Caso</p>
-            <p v-if="row.item.type=='CaseManager'">Gestor de Caso</p>
-            <p v-if="row.item.type=='Coordinator'">Coordenador de Curso</p>
-            <p v-if="row.item.type=='Director'">Diretor</p>
-            <p v-if="row.item.type=='Estudante'">Estudante</p>
-            <p v-if="row.item.type=='Administrador'">Administrador</p>
-            <p v-if="row.item.type=='SAPE'">Serviços de Apoio ao Estudante</p>
-            <p v-if="row.item.type=='CRIDE'">Centro de Recursos para a Inclusão Digital</p>
-            <p v-if="row.item.type=='SAS'">Serviços de Ação Social</p>
-            <p v-if="row.item.type=='DST'">Direção de Serviços Técnicos</p>
-            <p v-if="row.item.type=='UED'">Unidade de Ensino à Distância</p>
-            <p v-if="row.item.type=='SA'">Serviços Académicos</p>
+          <template v-slot:cell(type)="row">
+            <p v-if="row.item.type==='Services'">Serviços</p>
+            <p v-if="row.item.type==='CaseManagerResponsible'">Responsável Gestor de Caso</p>
+            <p v-if="row.item.type==='CaseManager'">Gestor de Caso</p>
+            <p v-if="row.item.type==='Coordinator'">Coordenador de Curso</p>
+            <p v-if="row.item.type==='Director'">Diretor</p>
+            <p v-if="row.item.type==='Estudante'">Estudante</p>
+            <p v-if="row.item.type==='Administrador'">Administrador</p>
+            <p v-if="row.item.type==='SAPE'">Serviços de Apoio ao Estudante</p>
+            <p v-if="row.item.type==='CRIDE'">Centro de Recursos para a Inclusão Digital</p>
+            <p v-if="row.item.type==='SAS'">Serviços de Ação Social</p>
+            <p v-if="row.item.type==='DST'">Direção de Serviços Técnicos</p>
+            <p v-if="row.item.type==='UED'">Unidade de Ensino à Distância</p>
+            <p v-if="row.item.type==='SA'">Serviços Académicos</p>
           </template>
-          <template slot="actions" slot-scope="row">
+          <template v-slot:cell(actions)="row">
             <button
               class="btn btn-secondary"
               v-on:click.prevent="editUser(row.item)"
@@ -30,12 +30,6 @@
             >Editar utilizador</button>
           </template>
         </b-table>
-<!--          ##############################################3-->
-          <button
-              class="btn btn-secondary"
-              v-on:click.prevent="editUser(users[1])"
-          >Editar utilizador</button>
-<!--          ################################################3-->
 
         <nav aria-label="Page navigation" v-if="users">
           <ul class="pagination">

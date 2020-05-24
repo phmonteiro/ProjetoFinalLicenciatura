@@ -14,33 +14,16 @@
     <div class="container">
       <h2>Lista de Enee</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <b-row class="text-center">
-            <b-col sm="12" class="m-1">
-              <b-button size="sm" @click.prevent="newInteraction(row.item)">
-                Interação
-                <font-awesome-icon icon="handshake" />
-              </b-button>
-            </b-col>
-            <b-col sm="12" class="m-1">
-              <b-button size="sm" @click.prevent="seeInteractions(row.item)">
-                Ver Interações
-                <font-awesome-icon icon="handshake" />
-              </b-button>
-            </b-col>
-            <b-col sm="12" class="m-1">
-              <b-button size="sm" @click.prevent="managePlan(row.item)">
-                Plano
-                <font-awesome-icon icon="book" />
-              </b-button>
-            </b-col>
-            <b-col sm="12" class="m-1">
-              <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
-              <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye" />
+              <b-col sm="12" class="m-1">
+              <div v-if="row.detailsShowing">
+                  <b-button  @click="row.toggleDetails">Fechar                   <font-awesome-icon icon="eye-slash" />
+                  </b-button>
               </div>
-              <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye-slash" />
+              <div v-if="!row.detailsShowing">
+                  <b-button  @click="row.toggleDetails">Opções                   <font-awesome-icon icon="eye" />
+                  </b-button>
               </div>
             </b-col>
           </b-row>
@@ -54,11 +37,17 @@
               </b-col>
               <b-col>
                 <b-row class="mb-2">
-                  <b-col sm="4" class="text">
+                  <b-col sm="5" class="text">
                     <b>Ano curricular:</b>
                     {{row.item.curricularYear}}
                   </b-col>
                 </b-row>
+              </b-col>
+              <b-col sm="3" class="text text-center">
+                  <b-button size="sm" @click.prevent="newInteraction(row.item)">
+                      Interação
+                      <font-awesome-icon icon="handshake" />
+                  </b-button>
               </b-col>
             </b-row>
 
@@ -68,13 +57,19 @@
                 {{row.item.school}}
               </b-col>
               <b-col>
-                <b-row class="mb-2">
-                  <b-col sm="4" class="text">
+                <b-row class="mb-9">
+                  <b-col sm="9" class="text">
                     <b>Entrou na escola em:</b>
                     {{row.item.enruledYear}}
                   </b-col>
                 </b-row>
               </b-col>
+                <b-col sm="3" class="text text-center">
+                    <b-button size="sm" @click.prevent="seeInteractions(row.item)">
+                        Ver Interações
+                        <font-awesome-icon icon="handshake" />
+                    </b-button>
+                </b-col>
             </b-row>
 
             <b-row class="mb-2">
@@ -83,13 +78,19 @@
                 {{row.item.course}}
               </b-col>
               <b-col>
-                <b-row class="mb-2">
-                  <b-col sm="4" class="text">
+                <b-row class="mb-9">
+                  <b-col sm="9" class="text">
                     <b>Incapacidade:</b>
                     {{row.item.functionalAnalysis}}
                   </b-col>
                 </b-row>
               </b-col>
+                <b-col sm="3" class="m-1 text-center">
+                    <b-button size="sm" @click.prevent="managePlan(row.item)">
+                        Plano
+                        <font-awesome-icon icon="book" />
+                    </b-button>
+                </b-col>
             </b-row>
 
             <b-row class="mb-2">
@@ -101,12 +102,18 @@
               </b-col>
               <b-col>
                 <b-row class="mb-2">
-                  <b-col sm="4" class="text">
+                  <b-col sm="5" class="text">
                     <b>1ª matricula:</b>
                     {{row.item.enruledYear}}
                   </b-col>
                 </b-row>
               </b-col>
+                <b-col sm="3" class="m-1 text-center">
+                    <b-button size="sm" @click.prevent="increaseSupportHours(row.item)">
+                        Gerir horas de apoio
+                        <font-awesome-icon icon="book" />
+                    </b-button>
+                </b-col>
             </b-row>
 
             <b-row class="mb-2">
@@ -117,48 +124,36 @@
                 <span v-if="row.item.enee == null">Nao pedido</span>
               </b-col>
               <b-col>
-                <b-row class="mb-2">
-                  <b-col sm="4" class="text">
+                <b-row class="mb-9">
+                  <b-col sm="9" class="text">
                     <b>Estatuto pedido a:</b>
                     {{row.item.dateEneeRequested}}
                   </b-col>
                 </b-row>
               </b-col>
+                <b-col sm="3" class="m-1 text-center">
+                    <b-button   size="sm" @click.prevent="showSupportHours(row.item)" >
+                        Consultar Horas de Apoio
+                        <font-awesome-icon icon="book" />
+                    </b-button>
+                </b-col>
             </b-row>
             <b-row class="mb-2">
               <b-col sm="4" class="text">
                 <b>Estatuto aprovado a: {{row.item.dateEneeApproval}}</b>
               </b-col>
             </b-row>
-            <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
+              <b-row class="mb-2">
+                  <b-col sm="4" class="text">
+
+                  </b-col>
+                  <b-col sm="4" class="text text-center">
+                      <b-button size="sm" @click="row.toggleDetails">Esconder</b-button>
+                  </b-col>
+              </b-row>
           </b-card>
         </template>
       </b-table>
-
-<!--        ###################################-->
-            <b-button size="sm" @click.prevent="newInteraction(enee[0])">
-                Nova Interação
-                <font-awesome-icon icon="handshake" />
-            </b-button>
-            <b-button size="sm" @click.prevent="seeInteractions(enee[0])">
-                Ver Interações
-                <font-awesome-icon icon="handshake" />
-            </b-button>
-            <b-button size="sm" @click.prevent="managePlan(enee[0])">
-                Plano
-                <font-awesome-icon icon="book" />
-            </b-button>
-            <b-button size="sm" @click.prevent="increaseSupportHours(enee[0])">
-                Gerir horas de apoio
-                <font-awesome-icon icon="book" />
-            </b-button>
-
-            <b-button   size="sm" @click.prevent="showSupportHours(enee[0])" >
-                 Consultar Horas de Apoio
-                 <font-awesome-icon icon="book" />
-            </b-button>
-<!--        ##########################################-->
-
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

@@ -24,18 +24,18 @@
     <b-container>
       <h2>Lista de candidatos a ENEE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
-        <template slot="enee" slot-scope="row">
-          <p v-if="row.item.enee=='awaiting'">Aguardando</p>
-          <p v-if="row.item.enee=='denied'">Reprovado</p>
-          <p v-if="row.item.enee=='approved'">Aprovado</p>
+        <template v-slot:cell(enee)="{ value }">
+          <p v-if="value==='awaiting'">Aguardando</p>
+          <p v-if="value==='denied'">Reprovado</p>
+          <p v-if="value==='approved'">Aprovado</p>
         </template>
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <b-row class="text-center">
             <b-col sm="12">
               <button
                 class="btn btn-info m-1"
                 v-on:click.prevent="editUser(row.item)"
-                v-if="row.item.enee!='approved'"
+                v-if="row.item.enee!=='approved'"
               >Avaliar</button>
             </b-col>
             <b-col sm="12">
@@ -48,11 +48,7 @@
           </b-row>
         </template>
       </b-table>
-        <button
-            class="btn btn-info m-1"
-            v-on:click.prevent="editUser(enee[0])"
-            v-if="enee[0]!='approved'"
-        >Avaliar</button>
+
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

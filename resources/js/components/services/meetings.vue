@@ -14,7 +14,7 @@
     <div class="container" v-if="this.meetings">
       <h2>Pedidos Reuniao</h2>
       <b-table striped hover :items="meetings" :fields="fields">
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <button
             type="button"
             class="btn btn-secondary"

@@ -14,7 +14,7 @@
     <div class="container" v-if="users">
       <h2>Lista de enees</h2>
       <b-table striped hover :items="users" :fields="fields">
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <button
             type="button"
             class="btn btn-secondary"

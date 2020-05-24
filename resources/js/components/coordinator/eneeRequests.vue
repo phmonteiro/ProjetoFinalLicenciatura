@@ -14,27 +14,7 @@
     <div class="container">
       <h2>Lista de pedidos</h2>
       <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">
-        <!-- <template slot="actions" slot-scope="row">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-          >
-            <font-awesome-icon icon="eye"/>
-          </button>
-          <button
-            class="btn btn-success"
-            v-on:click.prevent="approve(row.item.id)"
-            v-if="row.item.number != user.number"
-          >Aprovar</button>
-          <button
-            class="btn btn-danger"
-            v-on:click.prevent="deny(row.item.id)"
-            v-if="row.item.number != user.number"
-          >Rejeitar</button>
-        </template>-->
-        <template slot="actions" slot-scope="row">
+        <template v-slot:cell(actions)="row">
           <b-row class="text-center">
             <b-col md="4" sm="12">
               <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
@@ -111,9 +91,9 @@
             <b-row class="mb-2">
               <b-col sm="4" class="text">
                 <b>Sexo:</b>
-                <span v-if="row.item.gender == 'masculino'">Masculino</span>
-                <span v-if="row.item.gender == 'feminino'">Feminino</span>
-                <span v-if="row.item.gender == 'outro'">Outro</span>
+                <span v-if="row.item.gender === 'masculino'">Masculino</span>
+                <span v-if="row.item.gender === 'feminino'">Feminino</span>
+                <span v-if="row.item.gender === 'outro'">Outro</span>
               </b-col>
               <b-col>
                 <b-row class="mb-2">
@@ -128,8 +108,8 @@
             <b-row class="mb-2">
               <b-col sm="4" class="text">
                 <b>Estatuto:</b>
-                <span v-if="row.item.enee == 'approved'">Aprovado</span>
-                <span v-if="row.item.enee == 'awaiting'">A espera</span>
+                <span v-if="row.item.enee === 'approved'">Aprovado</span>
+                <span v-if="row.item.enee === 'awaiting'">A espera</span>
                 <span v-if="row.item.enee == null">Nao pedido</span>
               </b-col>
               <b-col>
