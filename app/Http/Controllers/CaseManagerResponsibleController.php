@@ -133,6 +133,7 @@ class CaseManagerResponsibleController extends Controller
 
         $user = new User();
 
+        $user->email = $users->mail[0];
         $user->name = $users->displayname[0];
         $user->type = 'CaseManager';
         $user->course = $users->description[0];
