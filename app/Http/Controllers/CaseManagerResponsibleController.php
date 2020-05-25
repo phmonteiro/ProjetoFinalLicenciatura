@@ -12,6 +12,8 @@ use App\Http\Resources\SubstitutionResource;
 use Carbon\Carbon;
 use App\History;
 use Barryvdh\Debugbar\Facade as Debugbar;
+use Auth;
+
 
 
 class CaseManagerResponsibleController extends Controller
@@ -142,10 +144,9 @@ class CaseManagerResponsibleController extends Controller
         $user->departmentNumber = $users->departmentnumber[0];
         $user->firstLogin = 1;
         $user->save();
-        $token = $user->createToken(rand())->accessToken;
 
 
-        return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
+        return response()->json(200);
     }
 
         public function cancelSubstitution(Request $request){
