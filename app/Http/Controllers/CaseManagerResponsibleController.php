@@ -145,7 +145,6 @@ class CaseManagerResponsibleController extends Controller
         $user->firstLogin = 1;
         $user->save();
 
-
         return response()->json(200);
     }
 
