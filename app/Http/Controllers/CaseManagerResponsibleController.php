@@ -115,12 +115,7 @@ class CaseManagerResponsibleController extends Controller
 
     public function addCM(Request $request){
 
-        \Debugbar::info($request->cmEmail);
-
         $user = User::where('email',$request->cmEmail)->first();
-
-        \Debugbar::info($user);
-
 
         if($user !== null){
             if($user->type==='CaseManager'){
@@ -131,6 +126,10 @@ class CaseManagerResponsibleController extends Controller
         }
 
         $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
+
+        \Debugbar::info($users);
+
+        $user = null;
 
         $user = new User();
 
