@@ -132,6 +132,8 @@ class CaseManagerResponsibleController extends Controller
 
         $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
 
+        $user = new User();
+
         $user->type = 'CaseManager';
         $user->course = $users->description[0];
         $user->school = $users->company[0];
