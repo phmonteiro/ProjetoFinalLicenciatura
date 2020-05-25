@@ -425,7 +425,6 @@ class StudentController extends Controller
     {
         $student = User::findOrFail($id);
 
-        Debugbar::info("Suport HOURS FUNCTION");
         if (!Subject::where('studentEmail', $student->email)->exists()) {
 
             $client = new \GuzzleHttp\Client();
@@ -459,7 +458,6 @@ class StudentController extends Controller
             return response()->json(new SubjectResource($subjects), 201);
         }else{
             $subjects=Subject::where('studentEmail',$student->email)->get();
-             Debugbar::info($subjects);
 
             return response()->json(new SubjectResource($subjects), 201);
         }

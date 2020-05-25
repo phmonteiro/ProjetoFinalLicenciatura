@@ -10,31 +10,41 @@
     <div v-if="showSubstitutes">
         <h4>Selecionar Gestor Caso substituto</h4>
         <br>
-        <select v-model="substitute">
-            <option value="default" disabled>Selecionar Gestor de Caso</option>
-            <option  v-for="cm in substitutes" :value="cm">{{cm.email}}</option>
-        </select>
+        <ValidationObserver v-slot="{ handleSubmit }">
+        <ValidationProvider name="substitute" rules="isDefault" v-slot="{ errors }">
+            <select v-model="substitute">
+                <option value="default" disabled>Selecionar Gestor de Caso</option>
+                <option  v-for="cm in substitutes" :value="cm">{{cm.email}}</option>
+            </select><br>
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
         <br>
         <br>
         <div>
-        <input type="radio" id="temporary" value="temporary" v-model="substitutionType">
-        <label for="one">Substituição Temporária</label>
-        <br>
-        <input type="radio" id="permanent" value="permanent" v-model="substitutionType">
-        <label for="two">Substituição Permanente</label>
+
+        <ValidationProvider name="subType" rules="required" v-slot="{ errors }">
+            <input type="radio" id="temporary" value="temporary" v-model="substitutionType">
+            <label for="one">Substituição Temporária</label>
+            <br>
+            <input type="radio" id="permanent" value="permanent" v-model="substitutionType">
+            <label for="two">Substituição Permanente</label><br>
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
         <br>
             <div v-if="substitutionType==='temporary'">
         <span>Introduza a data de início e fim</span>
-             <date-picker v-model="substitutionDates" range=true valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
+             <date-picker required v-model="substitutionDates" range=true valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
             </div>
             <div v-if="substitutionType==='permanent'">
                 <span>Introduza a data de início</span>
-                <date-picker v-model="substitutionDates" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
+                <date-picker required v-model="substitutionDates" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
             </div>
         </div>
         <br>
-        <b-button @click="save()">Guardar</b-button>
+        <b-button @click="handleSubmit(save)">Guardar</b-button>
         <b-button @click="cancelAddSubstitute()">Cancelar</b-button>
+        </ValidationObserver>
+
     </div>
     <br>
 
@@ -149,9 +159,6 @@
                   startDate = partsStartDate[0];
                   let partsEndDate = this.substitutionDates[1].toISOString().split('T');
                   endDate = partsEndDate[0];
-
-                  console.log(startDate);
-                  console.log(endDate);
               }
 
               if(this.substitute.email!=null && this.emailEnee!=="default"){
@@ -168,6 +175,9 @@
                           }
                       )
                       .then(response=>{
+                          this.substitute = "default";
+                          this.substitutionType = null;
+                          this.substitutionDates = null;
 
                           this.showSubstitutes= false;
                           this.$toasted.success("Substituição realizada com sucesso.", {

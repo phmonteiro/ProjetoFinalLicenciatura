@@ -52,6 +52,10 @@ class activeSubstitutions extends Command
 
          foreach($cms as $cm){
 
+                if($cm->caseManagerEmail === $sub->emailSubstituteCM){
+                    continue;
+                }
+
                $cm->caseManagerEmail= $sub->emailSubstituteCM;
                $cm->caseManagerName= $sub->nameSubstituteCM;
 

@@ -109,8 +109,10 @@ localize({
       sns: 'National Health System Number',
       curricularYear: 'Curricular Year',
       enrolledYear: 'Enrolled Year',
-
-
+      studentNumber: 'Student Number',
+      studentName: 'Student Name',
+      substitute: 'Case Manager Substitute',
+      subType: 'Type of Substitution',
     },
   },
   pt: {
@@ -142,7 +144,10 @@ localize({
       sns: 'Número do Sistema Nacional de Saúde',
       curricularYear: 'Ano Curricular',
       enrolledYear: 'Ano de Ingresso',
-
+      studentNumber: 'Número de Estudante',
+      studentName: 'Nome do Estudante',
+      substitute: 'Gestor de Caso Substituto',
+      subType: 'Tipo de Substituição',
     },
   },
 });
@@ -157,6 +162,14 @@ extend('alpha_spaces', alpha_spaces);
 extend('max', max);
 extend('min', min);
 extend('alpha_num', alpha_num);
+
+extend('isDefault', {
+  message: 'Tem de selecionar um Gestor de Caso',
+  validate: (value) => {
+    return value !== 'default' && value !== '';
+  },
+});
+
 
 const app = new Vue({
   el: '#app',

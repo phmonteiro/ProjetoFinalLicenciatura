@@ -7,7 +7,6 @@ use App\User;
 use App\CaseManager;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\CaseManagerResponsibleResource;
-use App\Tutor;
 use App\Service;
 use App\Supports;
 use App\Student_Supports;
@@ -102,40 +101,13 @@ class DirectorController extends Controller
         $dados = $request->validate([
             'email' => 'required|email',
             'supports' => '',
-            'tutor' => '',
         ]);
 
         $user = User::Where('email', $dados['email'])->first();
         $user->enee = "approved";
+        $user->type = "Estudante";
         $user->dateEneeApproved = Carbon::now();
 
-        if ($dados['tutor'] != null) {
-            $currentTutor = Tutor::where('studentEmail', $dados['email'])->firstOrFail();
-            if ($currentTutor != null) {
-                $currentTutor->tutorEmail = $dados['tutor'];
-                $currentTutor->save();
-
-                $history = new History();
-                $history->studentEmail = $user->email;
-                $history->description = "O diretor alterou para o tutor " . $currentTutor->tutorEmail;
-                $history->date = Carbon::now();
-                $history->save();
-
-                //EmailController::sendEmailWithCC('O diretor alterou o seu professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
-            } else {
-                $tutor = new Tutor();
-                $tutor->studentEmail = $user->email;
-                $tutor->tutorEmail = $dados['tutor'];
-                $tutor->save();
-
-                $history = new History();
-                $history->studentEmail = $user->email;
-                $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
-                $history->date = Carbon::now();
-                $history->save();
-
-                //EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
-            }
         }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();

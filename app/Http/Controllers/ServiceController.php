@@ -101,6 +101,7 @@ class ServiceController extends Controller
         $user->educationalSupport = $dados['educationalSupport'];
         $user->functionalAnalysis = $dados['functionalAnalysis'];
         $user->enee = 'approved';
+        $user->type = 'Estudante';
         $user->typeApplication = 'DGES';
 
         $user->save();
@@ -384,7 +385,7 @@ class ServiceController extends Controller
         // Create ZipArchive Obj
         $zip = new ZipArchive;
         if ($zip->open($public_dir . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
-            // Add Multiple file   
+            // Add Multiple file
             foreach ($files as $file) {
                 $zip->addFile(base_path('storage/app/public/medicalReport/' . $file->fileName), $file->fileName);
             }

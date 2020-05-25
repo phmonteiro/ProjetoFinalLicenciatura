@@ -42,7 +42,33 @@ class CaseManagerResponsibleController extends Controller
 
         $cms = CaseManager::where('caseManagerEmail',$request->emailCurrentCaseManager)->get();
 
+    // se o inicio da substituição for hoje, substitui de imediato
+        if($request->startDate == Carbon::today()){
+         foreach($cms as $cm){
 
+               $cm->caseManagerEmail = $request->emailSubstituteCaseManager;
+               $cm->caseManagerName = $request->nameSubstituteCaseManager;
+
+               $history = new History();
+
+               if($request->substitutionType==="temporary"){
+                    $cm->emailMainCaseManager = $request->emailCurrentCaseManager;
+                    $history->description = 'Foi definido o Gestor de Caso ' .$cm->caseManagerName.' como substituto temporário para o aluno '.$cm->studentName;
+               }else{
+                    $cm->emailMainCaseManager = null;
+                    $history->description = 'Foi definido o Gestor de Caso ' .$cm->caseManagerName.' como substituto permanente para o aluno '.$cm->studentName;
+               }
+
+               $history->studentEmail = $cm->studentEmail;
+               $history->date = Carbon::now();
+               $history->save();
+               $cm->save();
+
+                error_log("Foi efetuada uma substituição!");
+
+             }
+
+        }
 
         foreach ($cms as $cm)
         {
@@ -104,20 +130,19 @@ class CaseManagerResponsibleController extends Controller
             }
         }
 
-//         $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
+        $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
 
-//         $user->type = 'CaseManager';
-//         $user->course = $users->description[0];
-//         $user->school = $users->company[0];
-//         $user->number = $users->mailnickname[0];
-//         $user->departmentNumber = $users->departmentnumber[0];
-//         $user->firstLogin = 1;
-//         $user->save();
-//         $token = $user->createToken(rand())->accessToken;
+        $user->type = 'CaseManager';
+        $user->course = $users->description[0];
+        $user->school = $users->company[0];
+        $user->number = $users->mailnickname[0];
+        $user->departmentNumber = $users->departmentnumber[0];
+        $user->firstLogin = 1;
+        $user->save();
+        $token = $user->createToken(rand())->accessToken;
 
 
-//         return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
-        return response()->json(200);
+        return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
     }
 
         public function cancelSubstitution(Request $request){

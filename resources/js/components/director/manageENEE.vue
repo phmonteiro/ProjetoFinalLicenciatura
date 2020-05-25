@@ -1,13 +1,5 @@
 <template>
   <div>
-    <eneeEdit
-      :user="currentUser"
-      :studentSupports="supportsForStudent"
-      @refresh="getEnee"
-      @save-user="saveUser"
-      :studentTutor="studentTutor"
-      @cancel-edit="cancelEdit()"
-    ></eneeEdit>
     <b-container>
       <b-row>
         <b-col></b-col>
@@ -59,6 +51,14 @@
         </ul>
       </nav>
     </div>
+      <eneeEdit
+          :user="currentUser"
+          :studentSupports="supportsForStudent"
+          @refresh="getEnee"
+          @save-user="saveUser"
+          :studentTutor="studentTutor"
+          @cancel-edit="cancelEdit()"
+      ></eneeEdit>
   </div>
 </template>
 
