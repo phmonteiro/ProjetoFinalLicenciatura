@@ -2,7 +2,7 @@
 <div>
 <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
     <template v-slot:cell(actions)="row">
-        <button v-if="!emailMainCMActiveSubstitution.contains(row.item.email)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
+        <button v-if="!emailMainCMActiveSubstitution.includes(row.item.email)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
     </template>
 </b-table>
 
