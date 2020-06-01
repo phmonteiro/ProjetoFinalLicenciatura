@@ -21,7 +21,7 @@
             <div class="col">
               <div class="titulo justify-content-center">
                 <h1>100%IN</h1>
-                <h2>2018.2019</h2>
+                <h2>2019.2020</h2>
               </div>
             </div>
           </div>
