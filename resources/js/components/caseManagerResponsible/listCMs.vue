@@ -2,7 +2,7 @@
 <div>
 <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
     <template v-slot:cell(actions)="row">
-        <button class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
+        <button v-if="checkActiveSubstitutions(row.item)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
     </template>
 </b-table>
 
@@ -118,6 +118,15 @@
         }
       },
       methods:{
+          checkActiveSubstitutions(row){
+              this.activeSubstitutions.forEach(cm =>{
+                  if(row.email===cm.emailMainCaseManager){
+                      return false; //substituição em curso
+                  }
+              });
+
+              return true; //não ha substituição
+          },
           cancelAddSubstitute(){
               this.showSubstitutes=false;
           },
