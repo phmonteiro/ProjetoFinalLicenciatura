@@ -108,7 +108,7 @@ class DirectorController extends Controller
         $user->type = "Estudante";
         $user->dateEneeApproved = Carbon::now();
 
-        }
+        
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
 
