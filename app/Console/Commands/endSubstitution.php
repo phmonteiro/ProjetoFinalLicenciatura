@@ -43,7 +43,7 @@ class endSubstitution extends Command
      */
     public function handle()
     {
-         $subs = Substitution::where('endDate','=',Carbon::today())->get();
+         $subs = Substitution::where('endDate','=',Carbon::today())->where('active','=','1')->get();
         error_log(Carbon::today());
 
         if(!$subs->isEmpty()){
@@ -63,6 +63,8 @@ class endSubstitution extends Command
                      $history->save();
 
                      error_log("Foi terminada uma substituição!");
+                     $sub->active = 0;
+                     $sub->save();
                 }
             }
 

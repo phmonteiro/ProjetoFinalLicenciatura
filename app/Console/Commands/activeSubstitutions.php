@@ -44,7 +44,7 @@ class activeSubstitutions extends Command
      */
     public function handle()
     {
-         $subs = Substitution::where('startDate','=',Carbon::today())->get();
+         $subs = Substitution::where('startDate','=',Carbon::today())->where('active','=','0')->get();
 
         if(!$subs->isEmpty()){
          foreach($subs as $sub){
@@ -75,6 +75,9 @@ class activeSubstitutions extends Command
                $cm->save();
 
                 error_log("Foi efetuada uma substituição!");
+
+                $sub->active = 1;
+                $sub->save();
 
              }
             }
