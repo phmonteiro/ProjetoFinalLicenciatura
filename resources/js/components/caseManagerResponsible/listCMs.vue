@@ -119,6 +119,10 @@
       },
       methods:{
           checkActiveSubstitutions(row){
+              if(this.activeSubstitutions==null){
+                  return true;
+              }
+
               this.activeSubstitutions.forEach(cm =>{
                   if(row.email===cm.emailMainCaseManager){
                       return false; //substituição em curso
