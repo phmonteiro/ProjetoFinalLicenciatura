@@ -72,7 +72,7 @@
           <b>Rejeitado</b>
         </p>
         <p v-if="user.coordinatorApproval==null">
-          <b>Ainda sem parecer</b>
+          <b>Pedido de parecer enviado automaticamente. A aguardar resposta.</b>
         </p>
       </div>
 
@@ -88,7 +88,7 @@
           </div>
         </div>
         <p v-if="user.servicesApproval==null || user.servicesApproval=='requested'">
-          <b>Ainda sem parecer</b>
+          <b>Opcional - Pode solicitar parecer através do seguinte formulário.</b>
         </p>
         <div v-if="user.servicesApproval==null">
           <b-form-group>
