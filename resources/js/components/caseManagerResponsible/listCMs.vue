@@ -2,7 +2,7 @@
 <div>
 <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
     <template v-slot:cell(actions)="row">
-        <button v-if="checkActiveSubstitutions(row.item)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
+        <button v-if="!emailMainCMActiveSubstitution.contains(row.item.email)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
     </template>
 </b-table>
 
@@ -63,6 +63,7 @@
     name: 'listCMs',
       data(){
         return{
+            emailMainCMActiveSubstitution:[],
             substitutionDates:null,
             substitutionType:null,
             activeSubstitutions:null,
@@ -118,19 +119,6 @@
         }
       },
       methods:{
-          checkActiveSubstitutions(row){
-              if(this.activeSubstitutions==null){
-                  return true;
-              }
-
-              this.activeSubstitutions.forEach(cm =>{
-                  if(row.email===cm.emailMainCaseManager){
-                      return false; //substituição em curso
-                  }
-              });
-
-              return true; //não ha substituição
-          },
           cancelAddSubstitute(){
               this.showSubstitutes=false;
           },
@@ -208,6 +196,12 @@
                 .then(response=>{
 
                     this.activeSubstitutions= response.data.length===0 ? null : response.data;
+
+                    if(this.activeSubstitutions!=null){
+                        this.activeSubstitutions.forEach(cm=>{
+                            this.emailMainCMActiveSubstitution.push(cm.emailMainCaseManager);
+                        })
+                    }
 
                 }).catch(error=>{
                     console.log(error);
