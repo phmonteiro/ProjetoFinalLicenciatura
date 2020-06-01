@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('substitutions:active')->dailyAt('00:01');
-        $schedule->command('substitutions:end')->dailyAt('00:02');
+        $schedule->command('substitutions:active')->cron("* * * * *");
+        $schedule->command('substitutions:end')->cron("* * * * *");
 
     }
 
