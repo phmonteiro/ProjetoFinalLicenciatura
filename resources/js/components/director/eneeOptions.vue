@@ -72,7 +72,7 @@
           <b>Rejeitado</b>
         </p>
         <p v-if="user.coordinatorApproval==null">
-          <b>Pedido de parecer enviado automaticamente - A aguardar resposta.</b>
+          <b>Pedido de parecer enviado automaticamente - a aguardar resposta</b>
         </p>
       </div>
 
