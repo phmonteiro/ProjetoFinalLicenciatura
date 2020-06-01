@@ -3,9 +3,12 @@
         <b-row>
             <b-col>
                 <div v-if="supports">
-                    <h2>{{ $t('acompanhamento_individualizado') }}</h2>
-                    <h5>{{ $t('quantidade_horas_utilizadas') }}: {{this.totalHours}}</h5>
-                    <h5>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h5>
+                    <h2>Acompanhamento Individualizado</h2>
+                    <br>
+                    <h5>Total de número de horas de apoio:  {{this.supportHoursLimit}} horas</h5>
+                    <h5>Número de horas usadas:  {{this.totalHours}} horas</h5>
+                    <h5>Horas Disponíveis:  {{Number(this.supportHoursLimit)-Number(this.totalHours)}} horas</h5>
+                    <br>
                     <b-table striped hover :items="supports" :fields="fields">
                         <template slot="actions" slot-scope="row">
                             <b-button
@@ -38,17 +41,17 @@
             fields: [
                 {
                     key: "nome",
-                    label: this.$t("nome"),
+                    label: "Nome",
                     sortable: true
                 },
                 {
                     key: "semester",
-                    label: this.$t("semestre"),
+                    label: "Semestre",
                     sortable: true
                 },
                 {
                     key: "hours",
-                    label: this.$t("horas_acompanhamento"),
+                    label: "Horas de Acompanhamento",
                     sortable: true
                 }
             ]

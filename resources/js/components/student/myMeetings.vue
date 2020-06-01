@@ -16,20 +16,18 @@
         <b-col class="top100">
           <div v-if="meetings">
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
+              <br>
             <b-table id="meetingsTable" striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
               <template v-slot:cell(actions)="row">
                 <b-row class="text-center">
                   <b-col md="4" sm="12">
-                    <b-form-checkbox
-                      aria-label="Mostrar detalhes"
-                      v-model="row.detailsShowing"
-                      @change="row.toggleDetails"
-                    ></b-form-checkbox>
                     <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                      <font-awesome-icon icon="eye" />
+                        <b-button aria-label="Mostrar detalhes" @click="row.toggleDetails">                       {{$t('fechar')}} <font-awesome-icon icon="eye-slash" />
+                        </b-button>
                     </div>
-   h                 <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                      <font-awesome-icon icon="eye-slash" />
+                    <div v-if="!row.detailsShowing" style="margin-left: -8px;">
+                        <b-button aria-label="Mostrar detalhes" @click="row.toggleDetails">                       {{$t('detalhes')}} <font-awesome-icon icon="eye" />
+                        </b-button>
                     </div>
                   </b-col>
                 </b-row>

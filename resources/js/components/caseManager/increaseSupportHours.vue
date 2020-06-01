@@ -2,10 +2,11 @@
     <div>
         <b-container>
             <h3>Limite de horas de apoio atual: {{student.supportHours}}</h3>
+            <br>
             <label for="newTotal">Novo limite de horas de apoio:</label>
             <input type="number" v-model="newTotalHours" id="newTotal" >
             <code v-if="showError">O valor de horas tem que ser superior ao valor atual</code>
-            <br>
+            <br><br>
             <button
                 type="submit"
                 class="btn btn-secondary"

@@ -469,18 +469,19 @@ class StudentController extends Controller
         $subject = Subject::where('studentEmail', $user->email)->pluck('hours');
         $subjectName = Subject::where('studentEmail', $user->email)->pluck('nome');
 
-        if ($request->hours > 40) {
+        $horasApoioUsadas = 0;
+        for ($i = 0; $i < sizeof($subject); $i++) {
+            if (strcmp($subjectName[$i], $request->nome) != 0) {
+                $horasApoioUsadas += $subject[$i];
+            }
+        }
+
+        if ($request->hours > ($user->supportHours-$horasApoioUsadas)) {
             return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
         }
 
-        $aux = 0;
-        for ($i = 0; $i < sizeof($subject); $i++) {
-            if (strcmp($subjectName[$i], $request->nome) != 0) {
-                $aux += $subject[$i];
-            }
-        }
-        if ($aux + $request->hours <= 40) {
-        Debugbar::info($request->nome);
+
+        if ($horasApoioUsadas + $request->hours <= $user->supportHours) {
             $subject = Subject::Where('studentEmail', $user->email)->where('nome', $request->nome)->first();
             $subject->hours = $request->hours;
             $subject->save();
@@ -491,7 +492,6 @@ class StudentController extends Controller
             $history->save();
 
             $teacher = Teacher::where('subjectCode', $subject->subjectCode)->get();
-           // $tutor = Tutor::where('studentEmail', $user->email)->get();
             $caseManager = CaseManager::where('studentEmail', $user->email)->first();
 
             for ($i = 0; $i < sizeof($teacher); $i++) {

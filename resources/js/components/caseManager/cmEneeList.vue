@@ -404,7 +404,8 @@ export default {
         .post("api/setInteraction/", formData)
         .then(response => {
           this.getCmEnee();
-          this.currentUser = null;
+            this.showNewInteraction=false;
+            this.currentUser = null;
           this.$toasted.success("Guardado com sucesso.", {
             duration: 4000,
             position: "top-center",

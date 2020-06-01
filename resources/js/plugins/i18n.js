@@ -115,7 +115,11 @@ const messages = {
     biblioteca: 'Biblioteca',
     direção: 'Direção',
     escola: 'Escola',
-    numero_identificação: 'Número de Identificação'
+    numero_identificação: 'Número de Identificação',
+    detalhes: 'Detalhes',
+    fechar: 'Fechar',
+    quantidade_horas_disponiveis: 'Quantidade de horas disponíveis',
+    quantidade_horas_por_uc: 'Horas de apoio por UC',
   },
   'en': {
     numero_identificação: 'Identification Number',
@@ -160,6 +164,7 @@ const messages = {
     data_nascimento: 'Birth date',
     de: 'of',
     decisão: 'Decision',
+    detalhes: 'Details',
     descrição_apoio: 'Description of previously used supports',
     disciplina: 'Subject',
     dislexia: 'Dyslexia/Disortography/Dysgraphia',
@@ -173,6 +178,7 @@ const messages = {
     esconder: 'Hide',
     falta_meio_contacto: 'Please fill the contact medium.',
     feminino: 'Female',
+    fechar: 'Close',
     ficheiro: 'Choose files',
     formulario: 'Application form for the ENEE statute',
     gestor_caso: 'Case manager',
@@ -228,6 +234,8 @@ const messages = {
     tipos_nee: 'Types of special educational needs',
     visão: 'Vision',
     opcional: 'Optional',
+    quantidade_horas_disponiveis: 'Available support hours',
+    quantidade_horas_por_uc: 'Available hours by each subject',
   },
 };
 

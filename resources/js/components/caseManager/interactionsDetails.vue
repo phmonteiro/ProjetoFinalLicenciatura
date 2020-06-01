@@ -28,27 +28,28 @@
     <b-container v-for="inter in interactions" :key="inter.id">
       <b-row>
         <b-col>
-          <b>{{$t('data')}}:</b>
+          <b>Data:</b>
           {{inter.date}}
         </b-col>
         <b-col>
-          <b>{{$t('serviço')}}:</b>
+          <b>Serviço:</b>
           {{inter.service}}
         </b-col>
         <b-col>
-          <b>{{$t('proximo_contacto')}}:</b>
+          <b>Próximo Contacto:</b>
           {{inter.nextContact}}
         </b-col>
       </b-row>
       <b-row>
         <b-col>
-          <b>{{$t('decisão')}}:</b>
+          <b>Decisão:</b>
           {{inter.decision}}
         </b-col>
         <b-col>
-          <b>{{$t('decisão')}}:</b>
+          <b>Informação:</b>
           {{inter.information}}
         </b-col>
+          <b-col></b-col>
       </b-row>
 
       <div class="form-group" v-if="inter.hasFiles">

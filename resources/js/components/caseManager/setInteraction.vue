@@ -1,8 +1,9 @@
 <template>
   <div class="container mt-3">
-    <div class="form-group">
+      <ValidationObserver v-slot="{ handleSubmit }">
+      <div class="form-group">
       <h4>Criar nova interação</h4>
-      <label for="inputName">{{this.$t('nome')}}</label>
+        <label for="inputName">Nome</label>
       <input
         type="text"
         class="form-control"
@@ -26,78 +27,106 @@
     </div>
     <div class="form-group">
         <div>
-            <label for="decision">{{this.$t('data_interação')}}:</label>
-            <date-picker v-validate="'date_format:yyyy-mm-dd'" type="date" ref="interactionDate" name="interactionDate" id="interactionDate" v-model="data.interactionDate" valueType="format" lang="pt-br"></date-picker>
-            <code>Caso nao especificado, a data de hoje será assumida.</code>
+            <label for="decision">Data da interação:</label>
+            <ValidationProvider name="date" rules="required" v-slot="{ errors }">
+                <date-picker type="date" ref="interactionDate" name="interactionDate" id="interactionDate" v-model="data.interactionDate" valueType="format" lang="pt-br"></date-picker>
+                <br>
+                <code>{{ errors[0] }}</code>
+            </ValidationProvider>
+
             <br><br>
-            <label for="decision">{{this.$t('data_interação')}} ({{this.$t('opcional')}}): </label>
-            <input type="time" v-model="data.interactionTime" valueType="format" lang="pt-br">
+
+            <label>Hora: </label>
+            <ValidationProvider name="time" rules="required" v-slot="{ errors }">
+                <vue-timepicker :minute-interval="5" name="time" format="HH:mm" v-model="data.interactionTime"></vue-timepicker>
+                <br>
+                <code>{{ errors[0] }}</code>
+            </ValidationProvider>
+
         </div>
 
     </div>
 
 
     <div class="form-group">
-      <label for="decision">Servico:</label>
-      <b-form-select v-model="data.service" class="mb-3">
-        <template slot="first">
-          <option :value="null" disabled>-- {{this.$t('selecionar_serviço')}} --</option>
-        </template>
-
-        <option value="SAPE">SAPE</option>
-        <option value="SAS">SAS</option>
-        <option value="Escola">{{this.$t('escola')}}</option>
-        <option value="Biblioteca">{{this.$t('biblioteca')}}</option>
-        <option value="Direção">{{this.$t('direção')}}</option>
-<!--        <option value="Professor-Tutor">Professor-Tutor</option>-->
-        <option value="Gestor-Caso">{{this.$t('gestor_caso')}}</option>
-      </b-form-select>
+      <label for="decision">Serviço:</label>
+        <ValidationProvider name="service" rules="required" v-slot="{ errors }">
+            <b-form-select v-model="data.service" class="mb-3">
+                <option :value="null" disabled>-- Selecionar o serviço pretendido --</option>
+                <option value="SAPE">SAPE</option>
+                <option value="SAS">SAS</option>
+                <option value="Escola">Serviços Escolares</option>
+                <option value="Biblioteca">Biblioteca</option>
+                <option value="Direção">Direção</option>
+                <option value="Gestor-Caso">Gestor de Caso</option>
+            </b-form-select>
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
     </div>
 
       <div class="form-group">
           <label>Meio de Contacto:</label>
-          <b-form-select name="contactMedium" id="contactMedium" v-validate="'required'" v-model="data.contactMedium" class="mb-3">
-              <template slot="first">
-                  <option :value="null" disabled>-- {{this.$t('selecione_meio_contacto')}} --</option>
-              </template>
-
-              <option value="conferencia">Video Conferência</option>
-              <option value="presencial">Presencial</option>
-              <option value="telefone">Telefone</option>
-          </b-form-select>
-            <code v-if="data.contactMedium==null">{{this.$t('falta_meio_contacto')}}</code>
+          <ValidationProvider name="contactMedium" rules="required" v-slot="{ errors }">
+              <b-form-select name="contactMedium" id="contactMedium"  v-model="data.contactMedium" class="mb-3">
+                  <option :value="null" disabled>-- Selecione o meio de contacto --</option>
+                  <option value="conferencia">Video Conferência</option>
+                  <option value="presencial">Presencial</option>
+                  <option value="telefone">Telefone</option>
+              </b-form-select>
+              <code>{{ errors[0] }}</code>
+          </ValidationProvider>
       </div>
 
       <div class="form-group" v-if="data.contactMedium==='conferencia'">
-          <label for="local">Software:</label>       <code>{{this.$t('indique_software_interação')}}.</code>
-          <input class="form-control" v-model="data.software" type="text" id="software" name="software">
+          <label for="software">Software:</label>
+          <ValidationProvider name="nextInteraction" rules="required" v-slot="{ errors }">
+              <input class="form-control" v-model="data.software" type="text" id="software" name="software">
+              <br>
+              <code>{{ errors[0] }}</code>
+          </ValidationProvider>
       </div>
 
      <div class="form-group" v-if="data.contactMedium==='presencial'">
-         <label for="local">Local:</label>       <code>{{this.$t('indique_local_interação')}}.</code>
-         <input class="form-control" v-model="data.place" type="text" id="local" name="local">
+         <label for="local">Local:</label>
+         <ValidationProvider name="local" rules="required" v-slot="{ errors }">
+             <input class="form-control" v-model="data.place" type="text" id="local" name="local">
+             <br>
+             <code>{{ errors[0] }}</code>
+         </ValidationProvider>
      </div>
 
     <div class="form-group">
       <label for="decision">Medida</label>
-      <textarea class="form-control" id="decision" v-model="data.decision" name="decision" rows="3"></textarea>
+        <ValidationProvider name="decision" rules="required" v-slot="{ errors }">
+            <textarea class="form-control" id="decision" v-model="data.decision" name="decision" rows="3"></textarea>
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
     </div>
 
     <div class="form-group">
-      <label for="information">{{this.$t('informação')}}</label>
+      <label for="information">Informação</label>
+        <ValidationProvider name="information" rules="required" v-slot="{ errors }">
       <textarea
-        class="form-control"
-        id="information"
-        v-model="data.information"
-        name="information"
-        rows="3"
+          class="form-control"
+          id="information"
+          v-model="data.information"
+          name="information"
+          rows="3"
       ></textarea>
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
+
     </div>
 
     <div class="form-group">
       <label for="nextInteraction">Proxima interação:</label>
-      <date-picker type="date" v-validate="'date_format:yyyy-mm-dd|after:interactionDate'" name="nextInteraction" id="nextInteraction" v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
-        <code v-if="data.errorData">A data introduzida tem que ser maior que a data da primeira interação.</code>
+        <ValidationProvider name="nextInteraction" rules="required" v-slot="{ errors }">
+            <date-picker type="date" name="nextInteraction" id="nextInteraction" v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
+            <br>
+            <code>{{ errors[0] }}</code>
+        </ValidationProvider>
+        <br>
+        <code v-if="data.errorData">A data da próxima interação deve ser superior à data da interação</code>
     </div>
 
     <div class="form-group p-2">
@@ -107,13 +136,19 @@
       </div>
     </div>
 
-    <b-button variant="outline-success" v-on:click.prevent="save()">Guardar</b-button>
+    <b-button variant="outline-success" type="submit" v-on:click.prevent="handleSubmit(save)">Guardar</b-button>
     <b-button variant="outline-info" v-on:click.prevent="cancel()">Cancelar</b-button>
+      </ValidationObserver>
   </div>
 </template>
 <script>
 import loginVue from '../login.vue';
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue';
+
 export default {
+    components:{
+        VueTimepicker
+    },
   props: ["user", "studentCMs"],
   data: function() {
     return {
@@ -121,7 +156,7 @@ export default {
         email: "",
         interactionDate: "",
         nextInteraction: "",
-        service: "",
+        service: null,
         decision: "",
         information: "",
         place:null,
@@ -140,10 +175,10 @@ export default {
   },
   methods: {
     cancel() {
+      this.resetFields();
       this.$emit("cancel-edit");
     },
       validateDate(){
-
         if(this.data.nextInteraction>this.data.interactionDate){
             return true;
         }else{
@@ -168,7 +203,19 @@ export default {
       }else{
           this.data.errorData = true;
       }
-      //this.data = Object.assign({}, {});
+    },
+    resetFields(){
+        this.data.email="";
+        this.data.interactionDate="";
+        this.data.nextInteraction="";
+        this.data.service=null;
+        this.data.place=null;
+        this.data.contactMedium=null;
+        this.data.software=null;
+        this.data.interactionTime=null;
+        this.data.errorData=null;
+        this.data.information="";
+        this.data.decision="";
     },
     handleFiles() {
       this.files = [];

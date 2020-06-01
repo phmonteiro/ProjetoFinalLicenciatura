@@ -35,10 +35,10 @@ export default {
   },
   methods: {
     cancel() {
-      this.$emit("cancel-support");
+        this.support="";
+        this.$emit("cancel-support");
     },
     save: function() {
-        console.log(this.support.nome);
       this.$emit("save-support");
     }
   }

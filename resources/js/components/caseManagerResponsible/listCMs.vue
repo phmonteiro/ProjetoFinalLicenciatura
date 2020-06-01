@@ -39,6 +39,8 @@
                 <span>Introduza a data de início</span>
                 <date-picker required v-model="substitutionDates" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker>
             </div>
+            <code v-if="showDateError">Obrigatório definir data</code>
+
         </div>
         <br>
         <b-button @click="handleSubmit(save)">Guardar</b-button>
@@ -63,6 +65,7 @@
     name: 'listCMs',
       data(){
         return{
+            showDateError:false,
             emailMainCMActiveSubstitution:[],
             substitutionDates:null,
             substitutionType:null,
@@ -120,7 +123,8 @@
       },
       methods:{
           cancelAddSubstitute(){
-              this.showSubstitutes=false;
+              this.resetSubstituionFields()
+
           },
           getAllCaseManagers(){
               axios.get("api/getAllCMs")
@@ -142,6 +146,10 @@
               this.showSubstitutes=true;
           },
           save(){
+              if(this.substitutionDates==null){
+                  this.showDateError=true;
+              }else{
+
               var startDate;
               var endDate;
 
@@ -176,11 +184,8 @@
                           }
                       )
                       .then(response=>{
-                          this.substitute = "default";
-                          this.substitutionType = null;
-                          this.substitutionDates = null;
+                          this.resetSubstituionFields();
 
-                          this.showSubstitutes= false;
                           this.$toasted.success("Substituição realizada com sucesso.", {
                               duration: 4000,
                               position: "top-center",
@@ -190,6 +195,13 @@
                       console.log(error);
                   })
               }
+              }
+          },
+          resetSubstituionFields(){
+              this.substitute = "default";
+              this.substitutionType = null;
+              this.substitutionDates = null;
+              this.showSubstitutes= false;
           },
           getActiveSubstitutions(){
               axios.get('api/getActiveSubstitutions')

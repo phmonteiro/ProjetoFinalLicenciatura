@@ -16,8 +16,13 @@
         <b-col class="top100">
           <div v-if="supports">
             <h2>{{ $t('acompanhamento_individualizado') }}</h2>
-            <h3>{{ $t('quantidade_horas_utilizadas') }}: {{this.totalHours}}</h3>
-            <h3>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h3>
+              <br>
+              <h5>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h5>
+              <h5>{{ $t('quantidade_horas_utilizadas') }}: {{this.totalHours}}</h5>
+            <h5>{{ $t('quantidade_horas_disponiveis')}}: {{this.supportHoursLimit - this.totalHours}}</h5>
+<!--              <br>-->
+<!--              <h6>{{ $t('quantidade_horas_por_uc')}}: {{this.supportHoursLimit/supports.length}}</h6>-->
+              <br>
               <b-table striped hover :items="supports" :fields="fields">
               <template v-slot:cell(actions)="row">
                 <b-button

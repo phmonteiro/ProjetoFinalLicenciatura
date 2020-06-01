@@ -68,7 +68,7 @@
         max-rows="6"
       ></b-form-textarea>
     </div>
-
+      <br>
     <b-button variant="outline-success" v-on:click.prevent="save()">Guardar</b-button>
     <b-button variant="outline-info" v-on:click.prevent="cancel()">Cancelar</b-button>
   </div>
