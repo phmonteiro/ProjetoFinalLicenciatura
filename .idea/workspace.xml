@@ -4,6 +4,7 @@
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/addCM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/addCM.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +111,8 @@
       <workItem from="1591047628925" duration="21000" />
       <workItem from="1591048250786" duration="4000" />
       <workItem from="1591053329754" duration="262000" />
-      <workItem from="1591054059546" duration="826000" />
+      <workItem from="1591054059546" duration="1431000" />
+      <workItem from="1591132407548" duration="629000" />
     </task>
     <servers />
   </component>
