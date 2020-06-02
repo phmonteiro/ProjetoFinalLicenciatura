@@ -120,6 +120,7 @@ localize({
       date: 'Date',
       nextInteraction: 'Next interaction',
       software: 'Software',
+      hoursLimit: 'Hours Limit',
     },
   },
   pt: {
@@ -162,6 +163,7 @@ localize({
       date: 'Data',
       nextInteraction: 'Próxima interação',
       software: 'Software',
+      hoursLimit: 'Limite de Horas',
     },
   },
 });

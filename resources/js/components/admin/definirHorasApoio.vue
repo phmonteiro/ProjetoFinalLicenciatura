@@ -2,19 +2,23 @@
     <div>
         <b-container>
             <br>
-            <h4>Quantidade de horas de apoio por aluno: {{limitHours}}</h4>
+            <h4>Quantidade de horas de apoio por aluno: {{limitHours}} horas</h4>
             <label>Novo limite de horas de apoio:</label>
+            <ValidationObserver v-slot="{ handleSubmit }">
+            <ValidationProvider name="hoursLimit" rules="required|numeric" v-slot="{ errors }">
+                <input type="number" name="numeric_field" v-model="newLimitHours">
 
-            <input type="number" data-vv-as="numeric" v-validate="'numeric|required'" name="numeric_field" v-model="newLimitHours">
-            <span v-show="errors.has('numeric_field')" class="help is-danger">{{ errors.first('numeric_field') }}</span>
+                <code>{{ errors[0] }}</code>
+            </ValidationProvider>
             <br>
             <button
                 type="submit"
                 class="btn btn-secondary"
                 data-dismiss="modal"
-                v-on:click.prevent="save()"
+                v-on:click.prevent="handleSubmit(save)"
             >{{ $t('gravar') }}
             </button>
+                </ValidationObserver>
         </b-container>
     </div>
 </template>
@@ -26,7 +30,6 @@
             return {
                 limitHours: null,
                 newLimitHours: null,
-
             };
         },
         methods: {
@@ -40,11 +43,6 @@
                     });
             },
             save() {
-                this.$validator.validateAll();
-                if (this.errors.any()) {
-                    alert('Introduza valor numérico!')
-                }
-
                 if(Number(this.newLimitHours)) {
                     var confirmed = confirm('Tem a certeza que pretende mudar a quantidade de horas de apoio por predefinição para ' + this.newLimitHours + "?");
 
