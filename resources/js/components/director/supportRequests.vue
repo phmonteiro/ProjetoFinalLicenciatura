@@ -37,7 +37,7 @@
           <b-card>
             <b-row class="mb-2">
               <b-col class="text">
-                <b>Informacao:</b>
+                <b>Informação:</b>
                 {{row.item.reason}}
               </b-col>
             </b-row>

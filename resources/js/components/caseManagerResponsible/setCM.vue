@@ -50,11 +50,12 @@
             <option value="">Escolha um Gestor Caso</option>
             <option v-for="cm in caseManagers" :value="cm">{{cm.name}}</option>
         </select>
-
-        <b-button :disabled="Object.keys(studentCMs).length !== 0 || Object.keys(caseManagers).length === 0" variant="outline-success" v-on:click.prevent="save()">Atribuir</b-button>
-        <b-button  v-on:click.prevent="cancel()">Cancelar</b-button>
         <br>
+        <br>
+            <b-button :disabled="Object.keys(studentCMs).length !== 0 || Object.keys(caseManagers).length === 0" variant="outline-success" v-on:click.prevent="setCM()">Atribuir</b-button>
+            <b-button  v-on:click.prevent="cancel()">Cancelar</b-button>
 
+        <br>
         <code v-if="Object.keys(studentCMs).length !== 0 ">ENEE já tem um Gestor de Caso atribuido</code>
         <code v-if="Object.keys(caseManagers).length === 0 ">Não existem Gestor Caso na aplicação. Contacte o administrador.</code>
 
@@ -91,14 +92,22 @@ export default {
     cancel() {
       this.$emit("cancel-edit");
     },
-    save: function() {
-      this.loading = true;
-      this.setCM();
-    },
     setCM() {
-      this.data.studentName = this.user.name;
-      this.data.cmEmail= this.cm.email;
-      this.data.cmName= this.cm.name;
+        if(this.cm===""){
+            this.$toasted.error(
+                "Por favor escolha um Gestor de Caso.",
+                {
+                    duration: 4000,
+                    position: "top-center",
+                    theme: "bubble"
+                }
+            );
+        }else{
+            this.loading = true;
+
+            this.data.studentName = this.user.name;
+            this.data.cmEmail= this.cm.email;
+            this.data.cmName= this.cm.name;
 
       axios
         .post("api/setCM/" + this.user.id, this.data)
@@ -123,6 +132,7 @@ export default {
             }
           );
         });
+        }
     },
     removeCM(cm) {
       console.log(cm);

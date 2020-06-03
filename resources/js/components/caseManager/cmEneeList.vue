@@ -45,7 +45,7 @@
               </b-col>
               <b-col sm="3" class="text text-center">
                   <b-button size="sm" @click.prevent="newInteraction(row.item)">
-                      Interação
+                     Nova Interação
                       <font-awesome-icon icon="handshake" />
                   </b-button>
               </b-col>
