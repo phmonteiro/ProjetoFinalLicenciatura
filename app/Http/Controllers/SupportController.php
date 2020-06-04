@@ -30,7 +30,7 @@ class SupportController extends Controller
     public function updateStudentSupports(Request $request)
     {
         $dados = $request->validate([
-            'teachers' => 'required',
+            'teachers' => '',
             'email' => 'required|email',
             'supports' => '',
             'duration' => 'required|string',
@@ -90,10 +90,11 @@ class SupportController extends Controller
         //EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi aprovado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
 
         //Email para os professores
+        if($dados['teachers']){
         for ($i = 0; $i < sizeof($dados['teachers']); $i++) {
             //EmailController::sendEmail('O seu estudante ' . $user->name . ' obteve o estatuto de estudante com necessidades educativas especias. Obrigado', $dados['teachers'][$i], 'Aluno com estatuto de ENEE', 'Aluno com estatuto de ENEE');
         }
-
+       }
         //Email para o coordenador de curso
 
         //Email para os serviços académicos

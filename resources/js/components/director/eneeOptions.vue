@@ -87,9 +87,12 @@
             </div>
           </div>
         </div>
-        <p v-if="user.servicesApproval==null || user.servicesApproval=='requested'">
+        <p v-if="user.servicesApproval==null">
           <b>Opcional - Pode solicitar parecer através do seguinte formulário:</b>
         </p>
+          <p v-if="user.servicesApproval=='requested'">
+              <b>Parecer solicitado - a aguardar resposta</b>
+          </p>
         <div v-if="user.servicesApproval==null">
           <b-form-group>
             <b-form-checkbox-group id="checkbox-group-2" v-model="services.name" name="service">
