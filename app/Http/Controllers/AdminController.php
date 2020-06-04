@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\CaseManager;
 use App\Supports;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\SupportResource;
@@ -14,6 +15,7 @@ use App\Coordinator;
 use App\Http\Resources\CoordinatorResource;
 use Storage;
 use File;
+use Barryvdh\Debugbar\Facade as Debugbar;
 
 class AdminController extends Controller
 {
@@ -187,4 +189,45 @@ class AdminController extends Controller
     }
 
    }
+
+   public function setResponsibleCM(Request $request){
+
+        $user = User::where("email","=",$request->emailResponsibleCaseManager)->first();
+
+        if($user == null){
+            $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
+
+            $user = new User();
+
+            $user->email = $users->mail[0];
+            $user->name = $users->displayname[0];
+            $user->type = 'CaseManagerResponsible';
+            $user->course = $users->description[0];
+            $user->school = $users->company[0];
+            $user->number = $users->mailnickname[0];
+            $user->departmentNumber = $users->departmentnumber[0];
+            $user->firstLogin = 1;
+            $user->save();
+
+            return response()->json("Responsible Case Manager adicionado com sucesso!",200);
+        }else{
+        \Debugbar::info($user);
+
+            if($user->type != "CaseManager"){
+                $user->type = "CaseManagerResponsible";
+                $user->save();
+            }else{
+                $cm = CaseManager::where("caseManagerEmail","=",$request->emailResponsibleCaseManager)->where("emailMainCaseManager","=",$request->emailResponsibleCaseManager)->get();
+
+                if(!$cm->isEmpty()){
+                    return response()->json(['message' => "O colaborador (".$request->emailResponsibleCaseManager.") já está definido como Gestor de Caso de ".count($cm)." alunos. Entre em contacto com o Responsável dos Gestores de Caso para que efectue uma substituição permanente e assim libertar o colaborador em questão para assumir a função de Responsável de Gestores de Caso.  !"],201);
+                }else{
+                    $user->type="CaseManagerResponsible";
+                    $user->save();
+
+                    return response()->json("Responsible Case Manager adicionado com sucesso!",200);
+                }
+            }
+        }
+    }
 }

@@ -25,6 +25,7 @@ Route::get('getTeachers', 'AdminController@getTeachers')->name('getTeachers');
 Route::middleware('auth:api')->group(function () {
     Route::get('getAuthUser', 'Auth\LoginController@getAuthUser');
     //admin
+    Route::middleware('isAdmin')->post('setResponsibleCM', 'AdminController@setResponsibleCM');
     Route::middleware('isAdmin')->post('setHoursLimit', 'AdminController@setHoursLimit');
     Route::middleware('isAdmin')->get('getHoursLimit', 'AdminController@getHoursLimit');
     Route::middleware('isAdmin')->get('getUsers', 'AdminController@index');

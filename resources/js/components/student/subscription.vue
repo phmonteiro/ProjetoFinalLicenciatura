@@ -104,16 +104,15 @@
                 <div class="row">
                   <div class="col-6">
                     <label for="residence">{{$t('residencia')}}</label>
-<!--                      <ValidationProvider name="residence" rules="required" v-slot="{ errors }">-->
-                          <vue-google-autocomplete
+                      <ValidationProvider name="residence" rules="required" v-slot="{ errors }">
+                          <input
                               class="form-control"
                               id="residence"
                               name="residence"
-                              v-on:placechanged="getAddressData"
-                              country="pt"
-                          ></vue-google-autocomplete>
-<!--                          <code>{{ errors[0] }}</code>-->
-<!--                      </ValidationProvider>-->
+                              v-model="student.residence"
+                          />
+                          <code>{{ errors[0] }}</code>
+                      </ValidationProvider>
                   </div>
 
                   <div class="col">
@@ -124,7 +123,7 @@
                               pattern="\d\d\d\d[-]\d\d\d"
                               id="zipCode"
                               name="Zip Code"
-                              placeholder="1234-567"
+                              placeholder="####-###"
                               v-model="student.zipCode"
                           />
                           <code>{{ errors[0] }}</code>
@@ -169,7 +168,7 @@
                   <div class="col">
                     <label for="number">{{$t('numero_identificação')}}</label>
 
-                      <ValidationProvider name="identificationNumber" rules="required|alpha_num" v-slot="{ errors }">
+                      <ValidationProvider name="identificationNumber" rules="required|alpha_num|digits:8" v-slot="{ errors }">
                           <input
                               class="form-control"
                               name="ID Number"
@@ -579,17 +578,17 @@ export default {
   },
   methods: {
 
-    getAddressData(addressData, placeResultData, id) {
-      this.student.residence = addressData.route;
-      this.student.area = addressData.locality;
-      this.student.zipCode = addressData.postal_code;
-      console.log(this.student.residence);
-      let aux = this.student.residence.split(",");
-
-      if (this.student.zipCode == undefined) {
-        this.getResidence();
-      }
-    },
+    // getAddressData(addressData, placeResultData, id) {
+    //   this.student.residence = addressData.route;
+    //   this.student.area = addressData.locality;
+    //   this.student.zipCode = addressData.postal_code;
+    //   console.log(this.student.residence);
+    //   let aux = this.student.residence.split(",");
+    //
+    //   if (this.student.zipCode == undefined) {
+    //     this.getResidence();
+    //   }
+    // },
     sendForm() {
       console.log(this.student.birthDate);
 
@@ -675,23 +674,23 @@ export default {
         this.files.push(uploadedFiles[i]);
       }
     },
-    getResidence() {
-      console.log(this.student.area);
-
-      axios
-        .get(
-          "api/residence/" + this.student.residence + "/" + this.student.area
-        )
-        .then(response => {
-          console.log(response);
-
-          this.student.zipCode =
-            response.data.cpo_cod4 + "-" + response.data.cpo_cod3;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    // getResidence() {
+    //   console.log(this.student.area);
+    //
+    //   axios
+    //     .get(
+    //       "api/residence/" + this.student.residence + "/" + this.student.area
+    //     )
+    //     .then(response => {
+    //       console.log(response);
+    //
+    //       this.student.zipCode =
+    //         response.data.cpo_cod4 + "-" + response.data.cpo_cod3;
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // }
   }
 };
 </script>

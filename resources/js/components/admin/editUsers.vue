@@ -6,6 +6,9 @@
     <div class="container" v-if="users">
       <div class="container">
         <h2>Lista de utilizadores</h2>
+          <br>
+          <edit-user :user="currentUser" v-if="showEditUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
+          <br>
         <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
           <template v-slot:cell(type)="row">
             <p v-if="row.item.type==='Services'">Serviços</p>
@@ -58,7 +61,6 @@
           </ul>
         </nav>
       </div>
-        <edit-user :user="currentUser" v-if="showEditUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></edit-user>
     </div>
   </div>
 </template>

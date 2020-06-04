@@ -389,16 +389,20 @@ export default {
 
       data.email = this.currentUser.email;
 
+      var time = data.interactionTime.HH + ":" + data.interactionTime.mm;
+
       formData.append("decision", data.decision);
       formData.append("email", data.email);
       formData.append("information", data.information);
       formData.append("interactionDate", data.interactionDate);
+      formData.append("interactionTime", time);
       formData.append("nextInteraction", data.nextInteraction);
       formData.append("contactMedium", data.contactMedium);
       formData.append("software", data.software);
       formData.append("place", data.place);
       formData.append("service", data.service);
       formData.append("numberFiles", files.length);
+
 
       axios
         .post("api/setInteraction/", formData)

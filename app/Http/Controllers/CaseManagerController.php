@@ -189,6 +189,7 @@ class CaseManagerController extends Controller
         $dados = $request->validate([
             'email' => 'required|email',
             'interactionDate' => '',
+            'interactionTime' => 'required',
             'nextInteraction' => 'required|date',
             'service' => 'required',
             'decision' => 'required',
@@ -212,6 +213,7 @@ class CaseManagerController extends Controller
         $contact->contactMedium = $dados['contactMedium'];
         $contact->software = $dados['software'];
         $contact->place = $dados['place'];
+        $contact->time = $dados['interactionTime'];
         $contact->save();
 
         if ($request->numberFiles != null && $request->numberFiles > 0) {

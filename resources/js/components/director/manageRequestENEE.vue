@@ -1,15 +1,5 @@
 <template>
   <div>
-    <eneeOptions
-      v-if="currentUser"
-      :user="currentUser"
-      :teachers="teachers"
-      :studentSupports="supportsForStudent"
-      :nee="nee"
-      @refresh="getEnee"
-      @save-user="saveUser"
-      @cancel-edit="cancelEdit"
-    ></eneeOptions>
     <b-container>
       <b-row>
         <b-col></b-col>
@@ -73,6 +63,16 @@
         </ul>
       </nav>
     </b-container>
+      <eneeOptions
+          v-if="currentUser"
+          :user="currentUser"
+          :teachers="teachers"
+          :studentSupports="supportsForStudent"
+          :nee="nee"
+          @refresh="getEnee"
+          @save-user="saveUser"
+          @cancel-edit="cancelEdit"
+      ></eneeOptions>
   </div>
 </template>
 

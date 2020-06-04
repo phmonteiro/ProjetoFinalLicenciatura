@@ -42,14 +42,17 @@
       </b-row>
       <b-row>
         <b-col>
-          <b>Decisão:</b>
-          {{inter.decision}}
+            <b>Hora:</b>
+            {{inter.time}}
         </b-col>
         <b-col>
           <b>Informação:</b>
           {{inter.information}}
         </b-col>
-          <b-col></b-col>
+          <b-col>
+              <b>Decisão:</b>
+              {{inter.decision}}
+          </b-col>
       </b-row>
 
       <div class="form-group" v-if="inter.hasFiles">

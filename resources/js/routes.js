@@ -109,6 +109,14 @@ const routes = [{
     },
   },
   {
+    path: '/admin/addResponsibleCM',
+    name: 'addResponsibleCM',
+    component: require('./components/admin/addResponsibleCM.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
     path: '/admin/editUsers',
     name: 'editUsers',
     component: require('./components/admin/editUsers.vue').default,

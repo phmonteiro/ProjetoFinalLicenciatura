@@ -76,8 +76,8 @@
                         sortable: true,
                     },
                     {
-                        key: 'nextContact',
-                        label: this.$t('proximo_contacto'),
+                        key: 'time',
+                        label: this.$t('hora'),
                         sortable: true,
                     },
                     {
@@ -95,6 +95,11 @@
                         label: this.$t('local'),
                         sortable: true,
                     },
+                    {
+                        key: 'nextContact',
+                        label: this.$t('proximo_contacto'),
+                        sortable: true,
+                    }
                 ],
             };
         },

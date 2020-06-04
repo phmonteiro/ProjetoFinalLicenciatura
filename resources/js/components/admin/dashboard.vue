@@ -9,6 +9,8 @@
           <div class="sidenav" :class="{ active: active}">
             <router-link class="nav-link" :to="{name: 'editUsers'}">Editar Tipo de Utilizadores</router-link>
 
+            <router-link class="nav-link" :to="{name: 'addResponsibleCM'}">Adicionar Responsável de Gestores de Caso</router-link>
+
             <router-link class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
 
             <router-link class="nav-link" :to="{name: 'definirHorasApoio'}">Definir Horas de Apoio</router-link>

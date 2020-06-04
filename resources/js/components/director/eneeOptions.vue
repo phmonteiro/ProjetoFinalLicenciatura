@@ -77,7 +77,7 @@
       </div>
 
       <div class="form-group">
-        <h4 for="servicesApproval">Opinião servicos:</h4>
+        <h4 for="servicesApproval">Opinião dos serviços:</h4>
         <div v-if="user.servicesApproval=='denied' || user.servicesApproval=='approved'">
           <div class="container" v-for="aux in service">
             <div class="row">
@@ -109,7 +109,7 @@
         </div>
       </div>
 
-      <b-form-group id="input-group-3" label="Duracao da NEE:" label-for="input-3">
+      <b-form-group id="input-group-3" label="Duração da NEE:" label-for="input-3">
         <b-form-select id="input-3" v-model="form.duration" :options="durationOpts" required></b-form-select>
         <div v-if="form.duration=='Temporária'">
           <label for="date">Data de fim de estatuto ENEE</label>
