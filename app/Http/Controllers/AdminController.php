@@ -195,10 +195,9 @@ class AdminController extends Controller
    public function setResponsibleCM(Request $request){
 
         $user = User::where("email","=",$request->emailResponsibleCaseManager)->first();
-            \Debugbar::info($request);
 
         if($user == null){
-            $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
+            $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->emailResponsibleCaseManager);
 
             $user = null;
 
