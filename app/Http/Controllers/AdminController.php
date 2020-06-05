@@ -198,6 +198,7 @@ class AdminController extends Controller
             $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
 
             $user = new User();
+            \Debugbar::info($users);
 
             $user->email = $users->mail[0];
             $user->name = $users->displayname[0];
