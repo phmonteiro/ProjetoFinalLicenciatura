@@ -64,7 +64,7 @@
     </div>
     <div>
       <div class="form-group">
-        <h4 for="coordinatorApproval">Opinião coordenador de curso:</h4>
+        <h4 for="coordinatorApproval">Parecer do coordenador de curso:</h4>
         <p v-if="user.coordinatorApproval==1">
           <b>Aprovado</b>
         </p>
@@ -77,7 +77,7 @@
       </div>
 
       <div class="form-group">
-        <h4 for="servicesApproval">Opinião dos serviços:</h4>
+        <h4 for="servicesApproval">Parecer dos serviços:</h4>
         <div v-if="user.servicesApproval=='denied' || user.servicesApproval=='approved'">
           <div class="container" v-for="aux in service">
             <div class="row">

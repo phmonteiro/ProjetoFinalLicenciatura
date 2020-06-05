@@ -71,18 +71,18 @@ export default {
           sortable: true
         },
         {
-          key: "caseManagerEmail",
-          label: "Email Gestor Caso",
-          sortable: true
-        },
-        {
           key: "caseManagerName",
           label: "Gestor Caso",
           sortable: true
         },
         {
+              key: "caseManagerEmail",
+              label: "Email Gestor Caso",
+              sortable: true
+        },
+        {
             key:"emailMainCaseManager",
-            label:"Gestor Caso Principal",
+            label:"Gestor Caso Original",
             sortable:true
         }
       ],
