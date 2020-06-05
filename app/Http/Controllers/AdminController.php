@@ -16,6 +16,8 @@ use App\Http\Resources\CoordinatorResource;
 use Storage;
 use File;
 use Barryvdh\Debugbar\Facade as Debugbar;
+use Auth;
+
 
 class AdminController extends Controller
 {
@@ -193,12 +195,14 @@ class AdminController extends Controller
    public function setResponsibleCM(Request $request){
 
         $user = User::where("email","=",$request->emailResponsibleCaseManager)->first();
+            \Debugbar::info($request);
 
         if($user == null){
             $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->cmEmail);
 
+            $user = null;
+
             $user = new User();
-            \Debugbar::info($users);
 
             $user->email = $users->mail[0];
             $user->name = $users->displayname[0];
