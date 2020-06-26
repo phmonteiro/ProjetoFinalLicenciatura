@@ -1,1 +1,13 @@
-Foi efetuada uma substituição!
+<pre>Caro Professor Ricardo Filipe Gonçalves Martinho, em continuação estão listados os ENEs (Estudantes com Necessidades Específicas) que neste Semestre vão frequentar unidades curriculares que você leciona. Tenha em atenção que eles podem ou não pertencer ao(s) seu(s) turno(s). 
+
+
+
+
+<b>Unidade Curricular: Sistemas de Informação Empresariais </b>
+<ul>	<li>Nome: Vitor Afonso Casal Guerreiro  Email: 2161346@my.ipleiria.pt</li>
+</ul>
+
+
+
+Atenciosamente,
+A equipa 100%IN</pre>

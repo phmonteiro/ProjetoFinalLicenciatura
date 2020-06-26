@@ -90,6 +90,7 @@
 
 <script>
 import loading from "vue-full-loading";
+import moment from 'moment';
 export default {
   components: {
     loading
@@ -108,16 +109,55 @@ export default {
   },
   methods: {
     login() {
-        console.log(this.user)
       axios
         .post("api/login", this.user)
         .then(response => {
-          this.$store.commit("setUser", response.data.user);
-          this.$store.commit("setToken", response.headers.authorization);
-          this.loading = false;
-          console.log(response.data.user.type);
 
-          if (response.data.user.type == "CaseManagerResponsible") {
+            this.loading = false;
+
+            if(response.data.user.inactive==1 && response.data.user.type == "Estudante"){
+                axios
+                    .get('api/getActiveEmail/'+this.user.email)
+                    .then(activeAccountResponse=>{
+                        this.$toasted.error("Esta conta encontra-se inactiva, pois detetámos que já existe no nosso sistema uma conta mais recente associada ao mesmo estudante. A sua conta activa está associada ao seguinte email: "+activeAccountResponse.data , {
+                            duration: 60000,
+                            position: "top-center",
+                            theme: "outline"
+                        });
+                    })
+                    .catch(error=>{
+                        console.log(error);
+                    });
+
+                return;
+            }
+
+            this.$store.commit("setUser", response.data.user);
+            this.$store.commit("setToken", response.headers.authorization);
+
+          if(response.status==226 && response.data.user.type == "Estudante"){
+              this.$router.push("/transferAccountPage");
+              return;
+          }
+
+          if(response.data.user.type == "Estudante" && response.data.user.enee == "expired"){
+
+              this.$router.push("/studentForm");
+
+              return;
+          }
+
+            // if(response.data.user.enee == null && response.data.user.type == "Estudante"){
+            //     axios
+            //         .post('api/getWebServiceUserInfo',{"login": this.user.email,"password":this.user.password})
+            //             .then(response=>{
+            //             })
+            //             .catch(error=>{
+            //                 console.log(error);
+            //             })
+            // }
+
+                if (response.data.user.type == "CaseManagerResponsible") {
             this.$router.push("/caseManagerResponsible");
             return;
           }

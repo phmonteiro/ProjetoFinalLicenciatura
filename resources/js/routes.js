@@ -22,6 +22,14 @@ const routes = [{
     },
   },
   {
+    path: '/student/transferAccountStatus',
+    name: 'transferAccountStatus',
+    component: require('./components/student/transferAccountStatus.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
     path: '/student/myMeetings',
     name: 'myMeetings',
     component: require('./components/student/myMeetings.vue').default,
@@ -74,6 +82,13 @@ const routes = [{
 {
   path: '/studentForm',
   component: require('./components/student/noStatusPage.vue').default,
+  meta: {
+    middlewareAuth: true,
+  },
+},
+{
+  path: '/transferAccountPage',
+  component: require('./components/student/transferAccountPage.vue').default,
   meta: {
     middlewareAuth: true,
   },
@@ -156,15 +171,6 @@ const routes = [{
       middlewareAuth: true,
     },
   },
-  {
-    path: '/director/supportRequests',
-    name: 'supportRequests',
-    component: require('./components/director/supportRequests.vue').default,
-    meta: {
-      middlewareAuth: true,
-    },
-  },
-
   ],
 },
 {
@@ -192,6 +198,14 @@ const routes = [{
     path: '/caseManagerResponsible/cmList',
     name: 'cmList',
     component: require('./components/caseManagerResponsible/cmList.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
+    path: '/caseManagerResponsible/addCMtoENE',
+    name: 'addCaseManagerToENE',
+    component: require('./components/caseManagerResponsible/addCaseManagerToENE.vue').default,
     meta: {
       middlewareAuth: true,
     },
@@ -310,6 +324,15 @@ const routes = [{
         middlewareAuth: true,
       },
     },
+    {
+      path: '/director/supportRequests',
+      name: 'supportRequests',
+      component: require('./components/director/supportRequests.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
+
     {
       path: '/caseManager/statistics',
       name: 'statistics',

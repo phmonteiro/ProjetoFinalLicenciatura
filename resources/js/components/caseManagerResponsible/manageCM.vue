@@ -14,7 +14,7 @@
       <h2>Lista de estudantes</h2>
       <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
           <template v-slot:cell(actions)="row">
-              <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Atribuir</button>
+              <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir Gestores de Caso</button>
           </template>
       </b-table>
         <nav aria-label="Page navigation" v-if="users">

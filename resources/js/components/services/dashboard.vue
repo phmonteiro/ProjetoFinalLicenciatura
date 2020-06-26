@@ -9,9 +9,9 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link class="nav-link" :to="{name: 'eneeList'}">Lista Enee</router-link>
+            <router-link class="nav-link" :to="{name: 'eneeList'}">Lista ENE</router-link>
 
-            <router-link class="nav-link" :to="{name: 'eneeOpinion'}">Parecer ENEE</router-link>
+            <router-link class="nav-link" :to="{name: 'eneeOpinion'}">Parecer ENE</router-link>
 
             <router-link v-if="user.type == 'SA'" class="nav-link" :to="{name: 'eneeAdd'}">
               Adicionar

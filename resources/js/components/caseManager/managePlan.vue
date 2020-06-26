@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <div class="form-group">
-      <h4>Gerir Plano</h4>
+      <h4>Gerir Plano Individual de Inclusão </h4>
       <label for="inputName">Nome</label>
       <input
         type="text"
@@ -24,46 +24,83 @@
         disabled
       />
     </div>
+    <div >
 
-    <label for>Plano inclusao</label>
+    </div>
+      <label for><b>Categorias de Apoios</b></label>
+      <div id="app">
+              <span v-for="category in categories">
+                  <li style="list-style-type:none">
+<!--                      <b-form-checkbox v-if="!category.supports.length" v-model="selectedCategories" :value="category.id">-->
+<!--                              {{ category.name }}-->
+<!--                          </b-form-checkbox>-->
+                      <u>
+                          {{category.name}}:
+                      </u>
+                  </li>
+
+                  <ul>
+                          <b-form-checkbox v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">
+                              {{ sup.name }}
+                          </b-form-checkbox>
+                  </ul>
+              </span>
+
+      </div>
+      <br>
+<!--      <h4><b>Plano Individual de Inclusão</b></h4>-->
+
+<!--      <div id="app">-->
+<!--              <span v-for="category in categories">-->
+<!--                  <li>{{category.name}}</li>-->
+<!--                  <ul>-->
+<!--                          <b-form-checkbox v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">-->
+<!--                              {{ sup.name }}-->
+<!--                          </b-form-checkbox>-->
+<!--                  </ul>-->
+<!--              </span>-->
+<!--      </div>-->
+      <div class="dropdown-divider"></div>
 
     <div v-if="plan">
-      <b-form-textarea
+        <h4><b>Informação Adicional</b></h4>
+        <b-form-textarea
         id="textarea"
         v-model="plan.plan"
-        placeholder="Plano inclusao..."
+        placeholder="Informação Adicional..."
         rows="3"
         max-rows="6"
       ></b-form-textarea>
 
       <div class="dropdown-divider"></div>
 
-      <label for>Plano diagnostico</label>
+        <h4><b>Diligências</b></h4>
       <b-form-textarea
         id="textarea"
         v-model="plan.diagnostic"
-        placeholder="Plano diagnostico..."
+        placeholder="Diligências..."
         rows="3"
         max-rows="6"
       ></b-form-textarea>
     </div>
 
     <div v-else>
-      <b-form-textarea
+        <h4><b>Informação Adicional</b></h4>
+        <b-form-textarea
         id="textarea"
         v-model="data.plan"
-        placeholder="Plano inclusao..."
+        placeholder="Informação Adicional..."
         rows="3"
         max-rows="6"
       ></b-form-textarea>
-
+        <br>
       <div class="dropdown-divider"></div>
 
-      <label for>Plano diagnostico</label>
+      <h4><b>Diligências</b></h4>
       <b-form-textarea
         id="textarea"
         v-model="data.diagnostic"
-        placeholder="Plano diagnostico..."
+        placeholder="Diligências..."
         rows="3"
         max-rows="6"
       ></b-form-textarea>
@@ -78,6 +115,9 @@ export default {
   props: ["user", "plan"],
   data: function() {
     return {
+        selectedSupports:[],
+        selectedCategories:[],
+      categories:[],
       data: {
         plan: "",
         diagnostic: "",
@@ -94,6 +134,8 @@ export default {
       if (this.plan != null) {
         this.data.plan = this.plan.plan;
         this.data.diagnostic = this.plan.diagnostic;
+
+        this.data.selectedSupports=this.selectedSupports;
 
         axios
           .put("api/updatePlan/" + this.plan.id, this.data)
@@ -115,7 +157,9 @@ export default {
             });
           });
       } else {
-        axios
+          this.data.selectedSupports=this.selectedSupports;
+
+          axios
           .post("api/setPlan/", this.data)
           .then(response => {
             this.$toasted.success("Guardado com sucesso.", {
@@ -136,6 +180,29 @@ export default {
           });
       }
     },
+    getSupports(){
+        axios.get('api/getSupportsByCategory')
+            .then(response => {
+                this.categories = response.data;
+            })
+            .catch(error=>{
+                console.log(error);
+            });
+
+    },
+    getSupportsByStudent(){
+        axios
+            .get('api/getStudentSupports/'+this.user.email)
+            .then(response=>{
+                let studentSupports = response.data;
+                studentSupports.forEach(support=>{
+                    this.selectedSupports.push(support);
+                })
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+    },
     handleFiles() {
       this.files = [];
       let uploadedFiles = this.$refs.files.files;
@@ -144,6 +211,9 @@ export default {
       }
     }
   },
-  mounted() {}
+  created() {
+      this.getSupports();
+      this.getSupportsByStudent();
+  }
 };
 </script>

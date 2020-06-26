@@ -23,7 +23,7 @@ class CoordinatorController extends Controller
 
         $history = new History();
         $history->studentEmail = $user->email;
-        $history->description = "Coordenador de curso aprovou a candidatura do ENEE";
+        $history->description = "Coordenador de curso aprovou a candidatura do ENE";
         $history->date = Carbon::now();
         $history->save();
 
@@ -40,7 +40,7 @@ class CoordinatorController extends Controller
 
         $history = new History();
         $history->studentEmail = $user->email;
-        $history->description = "Coordenador de curso reprovou a candidatura do ENEE";
+        $history->description = "Coordenador de curso reprovou a candidatura do ENE";
         $history->date = Carbon::now();
         $history->save();
 

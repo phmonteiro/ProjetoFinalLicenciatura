@@ -17,7 +17,6 @@ import VueApexCharts from 'vue-apexcharts';
 import feather from 'vue-icon';
 import M16yPlugin from 'vue-accessibility-widget';
 import VueTimepicker from 'vue2-timepicker';
-
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars} from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +29,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
 import fullCalendar from 'vue-fullcalendar';
 import VModal from 'vue-js-modal';
+import moment from 'moment';
 
 
 window.Vue = require('vue');
@@ -59,6 +59,8 @@ Vue.component('set-inter', require('./components/caseManager/setInteraction.vue'
 Vue.component('manage-plan', require('./components/caseManager/managePlan.vue').default);
 Vue.component('set-meeting', require('./components/caseManager/setMeeting.vue').default);
 Vue.component('interactionsDetails', require('./components/caseManager/interactionsDetails.vue').default);
+Vue.component('historial-academico', require('./components/caseManager/historialAcademicoENE.vue').default);
+Vue.component('ene-historic', require('./components/caseManager/showENEHistoric.vue').default);
 Vue.component('eneeServiceEvaluation', require('./components/services/eneeServiceEvaluation.vue').default);
 Vue.component('increase-hours', require('./components/caseManager/increaseSupportHours').default);
 Vue.component('show-hours', require('./components/caseManager/studentSupportHours').default);
@@ -121,10 +123,15 @@ localize({
       nextInteraction: 'Next interaction',
       software: 'Software',
       hoursLimit: 'Hours Limit',
+      nomeDoApoio: 'Support name',
+      categoriaApoio: 'Support Category',
+      teachers: 'Teachers',
+      duracaoEne: 'Duração do Estatuto de Estudante com Necessidades Específicas',
     },
   },
   pt: {
     names: {
+      duracaoEne: 'Duração do Estatuto de Estudante com Necessidades Específicas',
       email: 'Endereço de Email',
       password: 'Palava-Passe',
       responsibleName: 'Nome do responsável',
@@ -164,6 +171,9 @@ localize({
       nextInteraction: 'Próxima interação',
       software: 'Software',
       hoursLimit: 'Limite de Horas',
+      nomeDoApoio: 'Nome do Apoio',
+      categoriaApoio: 'Categoria do Apoio',
+      teachers: 'Professores',
     },
   },
 });

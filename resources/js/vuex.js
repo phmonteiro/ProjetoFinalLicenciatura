@@ -20,19 +20,29 @@ const store = new Vuex.Store({
   state: {
     token: '',
     user: null,
+    webServiceUserInfo: null,
     languagePref: 'en',
   },
   mutations: {
+    setEneeStatusExpired: (state) => {
+      state.user.enee='expired';
+    },
     clearUserAndToken: (state) => {
       state.user = null;
       state.token = '';
+      state.webServiceUserInfo = null;
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('token');
+      sessionStorage.removeItem('webServiceUserInfo');
       axios.defaults.headers.common.Authorization = undefined;
     },
     clearUser: (state) => {
       state.user = null;
       sessionStorage.removeItem('user');
+    },
+    cleraWebServiceUserInfo: (state) => {
+      state.webServiceUserInfo = null;
+      sessionStorage.removeItem('webServiceUserInfo');
     },
     clearToken: (state) => {
       state.token = '';
@@ -43,6 +53,10 @@ const store = new Vuex.Store({
       state.user = user;
       sessionStorage.setItem('user', JSON.stringify(user));
     },
+    setWebServiceUserInfo: (state, webServiceUserInfo) => {
+      state.webServiceUserInfo = webServiceUserInfo;
+      sessionStorage.setItem('webServiceUserInfo', JSON.stringify(webServiceUserInfo));
+    },
     setToken: (state, token) => {
       state.token = token;
       sessionStorage.setItem('token', token);
@@ -51,14 +65,19 @@ const store = new Vuex.Store({
     loadTokenAndUserFromSession: (state) => {
       state.token = '';
       state.user = null;
+      state.webServiceUserInfo = null;
       const token = sessionStorage.getItem('token');
       const user = sessionStorage.getItem('user');
+      const webServiceUserInfo = sessionStorage.getItem('webServiceUserInfo');
       if (token) {
         state.token = token;
         axios.defaults.headers.common.Authorization = 'Bearer ' + token;
       }
       if (user) {
         state.user = JSON.parse(user);
+      }
+      if (webServiceUserInfo) {
+        state.webServiceUserInfo = JSON.parse(webServiceUserInfo);
       }
     },
     getUser: (state) => {

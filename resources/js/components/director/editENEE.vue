@@ -29,23 +29,23 @@
       <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
     </b-form-group>
 
-<!--    <div class="form-group" v-if="studentTutor!=null">-->
-<!--      <label for="inputTutor">Professor Tutor</label>-->
-<!--      <li>{{studentTutor}}</li>-->
-<!--    </div>-->
+    <div class="form-group" v-if="studentTutor!=null">
+      <label for="inputTutor">Professor Orientador</label>
+      <li>{{studentTutor}}</li>
+    </div>
 
 
-<!--    <div class="form-group">-->
-<!--      <label for="inputTutor">Alterar/Atribuir Professor Tutor</label>-->
-<!--      <input-->
-<!--        type="email"-->
-<!--        class="form-control"-->
-<!--        v-model="data.tutor"-->
-<!--        name="tutor"-->
-<!--        id="tutor"-->
-<!--        placeholder="professor.tutor@my.ipleiria.pt"-->
-<!--      />-->
-<!--    </div>-->
+    <div class="form-group">
+      <label for="inputTutor">Alterar/Atribuir Professor Orientador</label>
+      <input
+        type="email"
+        class="form-control"
+        v-model="data.tutor"
+        name="tutor"
+        id="tutor"
+        placeholder="professor.orientador@my.ipleiria.pt"
+      />
+    </div>
 
     <div class="form-group text-center">
       <button type="submit" class="btn btn-success" name="ok" v-on:click.prevent="save()">Aprovar</button>
@@ -98,7 +98,7 @@ export default {
       let data = {
         email: this.user.email,
         supports: this.studentSupports,
-        // tutor: this.data.tutor
+        tutor: this.data.tutor
       };
       this.$emit("save-user", data);
     },

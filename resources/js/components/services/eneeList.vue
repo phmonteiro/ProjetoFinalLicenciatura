@@ -56,7 +56,7 @@
                       <option value="Escola">Escola</option>
                       <option value="Biblioteca">Biblioteca</option>
                       <option value="Direção">Direção</option>
-                      <option value="Professor-Tutor">Professor-Tutor</option>
+                      <option value="Professor-Tutor">Professor Orientador</option>
                       <option value="Gestor-Caso">Gestor-Caso</option>
                     </b-form-select>
                   </div>
@@ -109,7 +109,7 @@
           </div>
         </template>
       </b-table>
-        <h4 v-else>Não existem ENEEs registados na plataforma</h4>
+        <h4 v-else>Não existem ENEs registados na plataforma</h4>
       <nav v-if="users" aria-label="Page navigation">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

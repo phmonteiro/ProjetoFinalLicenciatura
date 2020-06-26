@@ -1,4 +1,16 @@
 <template>
+    <div>
+    <b-container>
+        <b-row>
+            <b-col></b-col>
+            <b-col>
+                <div class="loader">
+                    <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
+                </div>
+            </b-col>
+            <b-col></b-col>
+        </b-row>
+    </b-container>
     <b-container>
         <b-row>
             <b-col>
@@ -26,6 +38,7 @@
             <b-button @click="cancel()">Fechar</b-button>
         </div>
     </b-container>
+    </div>
 </template>
 
 <script>
@@ -34,6 +47,7 @@
     props:['student'],
     data: function(){
         return {
+            loading:true,
             supports: null,
             totalHours:null,
             supportHoursLimit:null,
@@ -76,7 +90,7 @@
               axios
                   .get("api/supportHours/"+this.student[0].id)
                   .then(response => {
-
+                      this.loading = false;
                       this.totalHours = 0;
                       this.supports = response.data;
 

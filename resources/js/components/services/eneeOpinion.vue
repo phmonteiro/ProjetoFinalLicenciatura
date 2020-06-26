@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <h2>Listagem de pedidos de ENEE</h2>
+      <h2>Listagem de pedidos de ENE</h2>
         <br>
       <b-table striped hover v-if="requests" :items="requests" :fields="fields">
         <template v-slot:cell(actions)="row">
@@ -96,9 +96,9 @@ export default {
           this.loading = false;
         });
     },
-    approve(userId) {
+    approve(userId,information) {
       axios
-        .patch("api/approveEneeStatusByServices/" + userId)
+        .patch("api/approveEneeStatusByServices/" + userId,information)
         .then(response => {
           this.getRequests();
           this.currentUser = null;

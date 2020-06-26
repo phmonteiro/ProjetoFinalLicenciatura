@@ -133,6 +133,7 @@
               </div>
             </div>
           </div>
+            <br>
           <h3>{{$t('contacto_emergencia')}}</h3>
           <div class="container-full-width">
             <div class="row">
@@ -193,7 +194,9 @@
           <div class="dropdown-divider"></div>
         </div>
       </div>
+        <div class="text-center">
       <button type="submit" class="btn btn-primary">{{ $t('confirmar') }}</button>
+        </div>
     </form>
       </ValidationObserver>
   </div>

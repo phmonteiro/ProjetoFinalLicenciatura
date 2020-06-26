@@ -7,8 +7,9 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link class="nav-link" :to="{name: 'cmEneeList'}">Meus ENEE</router-link>
+            <router-link class="nav-link" :to="{name: 'cmEneeList'}">Meus ENE</router-link>
             <router-link class="nav-link" :to="{name: 'meetingsEneeList'}">Reuniões</router-link>
+            <router-link class="nav-link" :to="{name: 'supportRequests'}">Pedidos de Apoio</router-link>
             <router-link class="nav-link" :to="{name: 'calendar'}">Calendário</router-link>
             <router-link class="nav-link" :to="{name: 'substitution'}">Substituição</router-link>
             <router-link class="nav-link" :to="{name: 'statistics'}">Estatísticas</router-link>

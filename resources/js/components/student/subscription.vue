@@ -1,6 +1,6 @@
 <template>
   <div class="container pt-2 pb-3" v-if="user != null">
-    <div v-if="user.enee!='awaiting' && user.enee!='approved'">
+    <div v-if="user.enee!='awaiting'">
         <ValidationObserver v-slot="{ handleSubmit }">
       <form @submit.prevent="handleSubmit(sendForm)">
         <h2>{{$t('formulario')}}</h2>
@@ -52,6 +52,7 @@
                     <label for="birth-date">{{$t('data_nascimento')}}</label>
                       <ValidationProvider name="birthDate" rules="required" v-slot="{ errors }">
                           <input
+                              :disabled="!isNotApproved"
                               class="form-control"
                               value
                               id="birth-date"
@@ -84,6 +85,7 @@
                     <label for="gender">{{$t('género')}}</label>
                       <ValidationProvider name="gender" rules="required" v-slot="{ errors }">
                           <select
+                              :disabled="!isNotApproved"
                               class="custom-select"
                               name="Gender"
                               id="gender"
@@ -200,6 +202,7 @@
                     <label for="NIF">NIF</label>
                       <ValidationProvider name="nif" rules="required|digits:9|numeric" v-slot="{ errors }">
                           <input
+                              :disabled="!isNotApproved"
                               aria-label="NIF"
                               class="form-control"
                               name="NIF"
@@ -328,7 +331,7 @@
                 <div class="row">
                   <div class="col">
                     <label for="emergencyName">{{$t('nome')}}</label>
-                      <ValidationProvider name="emergencyName" rules="required|alpha_spaces" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyName" rules="alpha_spaces" v-slot="{ errors }">
                           <input
                               type="text"
                               class="form-control"
@@ -342,7 +345,7 @@
 
                   <div class="col">
                     <label for="emergencyPhone">{{$t('contacto_telefónico')}}</label>
-                      <ValidationProvider name="emergencyPhone" rules="required|digits:9|numeric" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyPhone" rules="digits:9|numeric" v-slot="{ errors }">
                           <input
                               class="form-control"
                               name="Emergency Phone"
@@ -355,7 +358,7 @@
 
                   <div class="col">
                     <label for="emergencyKin">{{$t('parentesco')}}</label>
-                      <ValidationProvider name="emergencyKin" rules="required|alpha_spaces" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyKin" rules="alpha_spaces" v-slot="{ errors }">
                           <input
                               type="text"
                               class="form-control"
@@ -369,7 +372,7 @@
 
                   <div class="col">
                     <label for="emergencyEmail">{{$t('email')}}</label>
-                      <ValidationProvider name="emergencyEmail" rules="required|email" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyEmail" rules="email" v-slot="{ errors }">
                           <input
                               type="email"
                               class="form-control"
@@ -382,7 +385,8 @@
                   </div>
                 </div>
               </div>
-
+<!--            asdddddddddddddddddddd-->
+                <div v-if="isNotApproved">
               <div class="dropdown-divider"></div>
 
               <h3>{{$t('tipos_nee')}}</h3>
@@ -497,11 +501,11 @@
                   </div>
                 </div>
               </div>
-
+                <br>
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
-                    <label for="files">{{$t('relatorio_medico')}}</label>
+                    <label for="files">{{$t('documentacao_comprovativa')}}**</label>
                     <div class="field">
                       <input
                         type="file"
@@ -510,16 +514,19 @@
                         v-on:change="handleFiles()"
                         multiple
                       />
+                        <h6>**{{$t('info_documents')}}</h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" type="submit">{{$t('submeter')}}</button>
+            </div>
+            <button v-if="isNotApproved" class="btn btn-primary" type="submit">{{$t('submeter')}}</button>
           </div>
         </div>
       </form>
     </ValidationObserver>
+        <button v-if="!isNotApproved" class="btn btn-primary" @click="updateTransferredAccount()">{{$t('actualizar_dados')}}</button>
     </div>
   </div>
 </template>
@@ -532,6 +539,8 @@ export default {
   data() {
     return {
       files: [],
+      isNotApproved:null,
+      isTransferred:null,
       student: {
         name: this.$store.state.user.name,
         number: this.$store.state.user.number,
@@ -576,7 +585,63 @@ export default {
       return this.$store.state.user;
     }
   },
-  methods: {
+  mounted() {
+      this.student = this.user;
+      this.isTransferred = this.user.transferAccountStatus === "transferred";
+      this.isNotApproved = this.user.enee !== "approved";
+  },
+    methods: {
+        updateTransferredAccount(){
+            const formData = new FormData();
+
+            formData.append("phoneNumber", this.student.phoneNumber);
+            formData.append("residence", this.student.residence);
+            formData.append("zipCode", this.student.zipCode);
+            formData.append("area", this.student.area);
+            formData.append(
+                "identificationDocument",
+                this.student.identificationDocument
+            );
+            formData.append(
+                "identificationNumber",
+                this.student.identificationNumber
+            );
+            formData.append("enruledYear", this.student.enruledYear);
+            formData.append("curricularYear", this.student.curricularYear);
+            formData.append("responsibleName", this.student.responsibleName);
+            formData.append("responsiblePhone", this.student.responsiblePhone);
+            formData.append("responsibleKin", this.student.responsibleKin);
+            formData.append("responsibleEmail", this.student.responsibleEmail);
+            formData.append("emergencyName", this.student.emergencyName);
+            formData.append("emergencyPhone", this.student.emergencyPhone);
+            formData.append("emergencyKin", this.student.emergencyKin);
+            formData.append("emergencyEmail", this.student.emergencyEmail);
+            formData.append("niss", this.student.niss);
+            formData.append("sns", this.student.sns);
+
+            axios
+                .post("api/updateTransferredAccount", formData)
+                .then(response => {
+                    this.$store.commit("setUser", response.data);
+                    this.$router.push("/student");
+                    this.$toasted.success(
+                        "Dados atualizados com sucesso.",
+                        {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        }
+                    );
+                })
+                .catch(error => {
+                        console.log(error);
+                        this.$toasted.error("Erro ao atualizar os dados.", {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        });
+                        });
+        } ,
 
     // getAddressData(addressData, placeResultData, id) {
     //   this.student.residence = addressData.route;
@@ -590,8 +655,6 @@ export default {
     //   }
     // },
     sendForm() {
-      console.log(this.student.birthDate);
-
       const formData = new FormData();
       for (var i = 0; i < this.files.length; i++) {
         formData.append("photo" + i, this.files[i]);
@@ -650,7 +713,7 @@ export default {
           this.$store.commit("setUser", response.data);
           this.$router.push("/student");
           this.$toasted.success(
-            "Candidatura ao estatuto de ENEE submetida com sucesso.",
+            "Candidatura ao estatuto de ENE submetida com sucesso.",
             {
               duration: 4000,
               position: "top-center",

@@ -27,7 +27,7 @@
     </div>
     <div class="form-group">
         <div>
-            <label for="decision">Data da interação:</label>
+            <label for="interactionDate">Data da interação:</label>
             <ValidationProvider name="date" rules="required" v-slot="{ errors }">
                 <date-picker type="date" ref="interactionDate" name="interactionDate" id="interactionDate" v-model="data.interactionDate" valueType="format" lang="pt-br"></date-picker>
                 <br>
@@ -49,9 +49,9 @@
 
 
     <div class="form-group">
-      <label for="decision">Serviço:</label>
+      <label for="service">Serviço:</label>
         <ValidationProvider name="service" rules="required" v-slot="{ errors }">
-            <b-form-select v-model="data.service" class="mb-3">
+            <b-form-select name="service" v-model="data.service" class="mb-3">
                 <option :value="null" disabled>-- Selecionar o serviço pretendido --</option>
                 <option value="SAPE">SAPE</option>
                 <option value="SAS">SAS</option>
@@ -59,6 +59,7 @@
                 <option value="Biblioteca">Biblioteca</option>
                 <option value="Direção">Direção</option>
                 <option value="Gestor-Caso">Gestor de Caso</option>
+                <option value="Professor-Tutor">Professor Orientador</option>
             </b-form-select>
             <code>{{ errors[0] }}</code>
         </ValidationProvider>
@@ -79,7 +80,7 @@
 
       <div class="form-group" v-if="data.contactMedium==='conferencia'">
           <label for="software">Software:</label>
-          <ValidationProvider name="nextInteraction" rules="required" v-slot="{ errors }">
+          <ValidationProvider name="Software" rules="required" v-slot="{ errors }">
               <input class="form-control" v-model="data.software" type="text" id="software" name="software">
               <br>
               <code>{{ errors[0] }}</code>
@@ -96,14 +97,6 @@
      </div>
 
     <div class="form-group">
-      <label for="decision">Medida</label>
-        <ValidationProvider name="decision" rules="required" v-slot="{ errors }">
-            <textarea class="form-control" id="decision" v-model="data.decision" name="decision" rows="3"></textarea>
-            <code>{{ errors[0] }}</code>
-        </ValidationProvider>
-    </div>
-
-    <div class="form-group">
       <label for="information">Informação</label>
         <ValidationProvider name="information" rules="required" v-slot="{ errors }">
       <textarea
@@ -116,17 +109,6 @@
             <code>{{ errors[0] }}</code>
         </ValidationProvider>
 
-    </div>
-
-    <div class="form-group">
-      <label for="nextInteraction">Proxima interação:</label>
-        <ValidationProvider name="nextInteraction" rules="required" v-slot="{ errors }">
-            <date-picker type="date" name="nextInteraction" id="nextInteraction" v-model="data.nextInteraction" valueType="format" lang="pt-br"></date-picker>
-            <br>
-            <code>{{ errors[0] }}</code>
-        </ValidationProvider>
-        <br>
-        <code v-if="data.errorData">A data da próxima interação deve ser superior à data da interação</code>
     </div>
 
     <div class="form-group p-2">
@@ -155,15 +137,12 @@ export default {
       data: {
         email: "",
         interactionDate: "",
-        nextInteraction: "",
         service: null,
-        decision: "",
         information: "",
         place:null,
         contactMedium:null,
         software:null,
         interactionTime:null,
-        errorData:null,
       },
 
       meeting: {
@@ -178,18 +157,8 @@ export default {
       this.resetFields();
       this.$emit("cancel-edit");
     },
-      validateDate(){
-        if(this.data.nextInteraction>this.data.interactionDate){
-            return true;
-        }else{
-            return false;
-        }
-     },
-    save: function() {
-      if(this.validateDate()) {
-          this.data.errorData=false;
-          console.log(this.data.nextInteraction);
 
+    save: function() {
           if(this.contactMedium==="presencial"){
               this.software=null;
           }else if(this.contactMedium==="conferencia"){
@@ -200,22 +169,16 @@ export default {
           }
 
           this.$emit("save-interaction", this.data, this.files);
-      }else{
-          this.data.errorData = true;
-      }
     },
     resetFields(){
         this.data.email="";
         this.data.interactionDate="";
-        this.data.nextInteraction="";
         this.data.service=null;
         this.data.place=null;
         this.data.contactMedium=null;
         this.data.software=null;
         this.data.interactionTime=null;
-        this.data.errorData=null;
         this.data.information="";
-        this.data.decision="";
     },
     handleFiles() {
       this.files = [];

@@ -24,10 +24,10 @@
 
         <ValidationProvider name="subType" rules="required" v-slot="{ errors }">
             <input type="radio" id="temporary" value="temporary" v-model="substitutionType">
-            <label for="one">Substituição Temporária</label>
+            <label for>Substituição Temporária</label>
             <br>
             <input type="radio" id="permanent" value="permanent" v-model="substitutionType">
-            <label for="two">Substituição Permanente</label><br>
+            <label for>Substituição Permanente</label><br>
             <code>{{ errors[0] }}</code>
         </ValidationProvider>
         <br>

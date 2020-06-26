@@ -25,7 +25,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="inputNee">Necessidades educativas especiais</label>
+      <label for="inputNee">Necessidades específicas</label>
       <div v-for="aux in nee">
         <li>{{aux.name}}</li>
       </div>
@@ -62,17 +62,21 @@
         v-if="user.enee!='reproved'"
       >Download ficheiros médicos</button>
     </div>
-    <div>
+      <ValidationObserver v-slot="{ handleSubmit }">
+
+      <div>
       <div class="form-group">
         <h4 for="coordinatorApproval">Parecer do coordenador de curso:</h4>
         <p v-if="user.coordinatorApproval==1">
-          <b>Aprovado</b>
+          <span>Aprovado</span>
         </p>
         <p v-if="user.coordinatorApproval==0">
-          <b>Rejeitado</b>
+          <span>Rejeitado</span>
         </p>
         <p v-if="user.coordinatorApproval==null">
-          <b>Pedido de parecer enviado automaticamente - a aguardar resposta</b>
+          <span>Pedido de parecer enviado automaticamente - a aguardar resposta</span>
+            <br>
+            <code v-if="showCoordinatorNoResponseError">O parecer do Coordenador de Curso ainda não foi emitido. Impossível avançar.</code>
         </p>
       </div>
 
@@ -83,15 +87,16 @@
             <div class="row">
               <div class="col-sm-2">{{aux.name}}</div>
               <div class="col-sm-2">{{aux.approval}}</div>
-              <div class="col-sm-8"></div>
+                <label v-if="aux.comment" for>Informação adicional</label>
+              <div v-if="aux.comment" class="col-sm-8">{{aux.comment}}</div>
             </div>
           </div>
         </div>
         <p v-if="user.servicesApproval==null">
-          <b>Opcional - Pode solicitar parecer através do seguinte formulário:</b>
+          <span>Opcional - Pode solicitar parecer através do seguinte formulário:</span>
         </p>
           <p v-if="user.servicesApproval=='requested'">
-              <b>Parecer solicitado - a aguardar resposta</b>
+              <span>Parecer solicitado - a aguardar resposta</span>
           </p>
         <div v-if="user.servicesApproval==null">
           <b-form-group>
@@ -112,41 +117,60 @@
         </div>
       </div>
 
-      <b-form-group id="input-group-3" label="Duração da NEE:" label-for="input-3">
-        <b-form-select id="input-3" v-model="form.duration" :options="durationOpts" required></b-form-select>
-        <div v-if="form.duration=='Temporária'">
-          <label for="date">Data de fim de estatuto ENEE</label>
-          <input class="form-control" type="date" value id="date" name="date" v-model="data.date" />
-        </div>
-      </b-form-group>
+
+          <h4>Duração da Necessidade Específica:</h4>
+          <ValidationProvider name="duracaoEne" rules="required" v-slot="{ errors }">
+              <b-form-group id="input-group-3" label-for="input-3">
+                  <b-form-select id="input-3" v-model="form.duration" :options="durationOpts" required></b-form-select>
+                  <div v-if="form.duration=='Temporária'">
+                      <label for="date">Data de fim de estatuto ENE</label>
+                      <input class="form-control" type="date" value id="date" name="date" v-model="data.date" />
+                  </div>
+              </b-form-group>
+              <code>{{ errors[0] }}</code>
+          </ValidationProvider>
     </div>
+      <br>
+         <b-form-checkbox v-model="gestorCasoApoios">Plano de Inclusão a ser definido pelo Gestor de Caso.</b-form-checkbox>
+      <br>
+      <div class="form-group">
+          <h4>Professores a ser notificados</h4>
+          <ul v-if="aux.length!=0">
+              <li v-for="prof in aux">
+                  {{prof.name}} - {{prof.subject}}
+              </li>
+          </ul>
+          <span v-else>Nenhum professor selecionado.</span>
+          <br>
+          <br>
+          <b-button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModalLong"
+          >Notificar Professores</b-button>
+      </div>
 
-    <b-form-group label="Apoios ao estudante">
-      <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
-    </b-form-group>
-
-<!--    <div class="form-group">-->
-<!--      <label for="inputTutor">Professor Tutor</label>-->
-<!--      <input-->
-<!--        type="email"-->
-<!--        class="form-control"-->
-<!--        v-model="data.tutor"-->
-<!--        name="tutor"-->
-<!--        id="tutor"-->
-<!--        placeholder="professor.tutor@my.ipleiria.pt"-->
-<!--      />-->
-<!--    </div>-->
+      <div class="form-group">
+      <h4>Professor Orientador</h4>
+      <input
+        type="email"
+        class="form-control"
+        v-model="data.tutor"
+        name="tutor"
+        id="tutor"
+        placeholder="professor.orientador@my.ipleiria.pt"
+      />
+    </div>
 
     <!-- Button trigger modal -->
     <button
       type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#exampleModalLong"
-    >Continuar</button>
-    <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
-
-    <!-- Modal -->
+      class="btn btn-success"
+      v-on:click.prevent="handleSubmit(save)"
+    >Aprovar</button>
+     <b-button class="btn btn-danger"  @click="cancel()">Cancelar</b-button>
+    </ValidationObserver>
     <div
       class="modal fade"
       id="exampleModalLong"
@@ -157,66 +181,72 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+            <div class="modal-header">
             <h5
               class="modal-title"
               id="exampleModalLongTitle"
             >Definir professores notificados do estatuto</h5>
           </div>
           <div class="modal-body">
-            <div>
+              <div>
               <ClipLoader sizeUnit="px" class="loading" v-if="!teachers" :size="15" />
             </div>
-            <div v-if="teachers">
-              <div v-for="(teacher, index) in teachers" :key="index">
+              <div v-if="teachers">
+
                 <div class="switch-sex">
-                  <input type="radio" :value="teachers[index].email" v-model="aux[index]" />
-                  <label>
-                    Professor {{teachers[index].name}}
-                    <br />
-                    Disciplina: {{teachers[index].subject}}
-                  </label>
+                        <b-form-checkbox autofocus v-for="teacher in teachers" :value="teacher" v-model="aux" >
+                        <label>
+                            Professor {{teacher.name}}
+                            <br />
+                            Disciplina: {{teacher.subject}}
+                        </label>
+                        </b-form-checkbox>
+                        <br>
                 </div>
-              </div>
+
               <button
                 type="button"
                 class="btn btn-danger"
                 v-on:click.prevent="cancelAux()"
               >Limpar seleção</button>
+              <button
+                  type="button"
+                  class="btn btn-info"
+                  v-on:click.prevent="selectAllTeachers()"
+              >Selecionar Todos</button>
             </div>
           </div>
           <div class="modal-footer">
             <button
-              v-if="teachers"
-              v-b-modal.modal-1
-              type="submit"
-              class="btn btn-success"
-              name="ok"
-              v-on:click.prevent="save()"
-            >Aprovar</button>
-            <button
               type="button"
               class="btn btn-secondary"
-              v-on:click.prevent="cancel()"
+              data-target="#exampleModalLong"
               data-dismiss="modal"
-            >Cancelar</button>
+            >Fechar</button>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 <script>
 export default {
-  props: ["user", "studentSupports", "nee", "teachers"],
+  props: ["user", "nee", "teachers"],
   data: function() {
     return {
       service: null,
       aux: [],
-      data: {
+      showCoordinatorNoResponseError:false,
+        gestorCasoApoios:true,
+        selectedSupports:[],
+        selectedCategories:[],
+        categories:[],
+        data: {
         selected: null,
         options: null,
-        // tutor: "",
+        tutor: "",
         date: ""
       },
       services: {
@@ -238,6 +268,9 @@ export default {
     };
   },
   methods: {
+      selectAllTeachers(){
+          this.aux = this.teachers;
+      },
     downloadPDF(id) {
       axios({
         url: "api/medicalReport/download/" + id,
@@ -298,36 +331,42 @@ export default {
         });
     },
     save: function() {
+        if(this.user.coordinatorApproval != 1){
+            this.showCoordinatorNoResponseError = true;
+            return;
+        }
+
+        let teacherEmails=[];
+       this.aux.forEach(teacher=>{
+           teacherEmails.push(teacher.email);
+       });
+
       let data = {
-        teachers: this.aux,
+        teachers: teacherEmails,
         email: this.user.email,
-        supports: this.studentSupports,
-        // tutor: this.data.tutor,
+        supports: this.selectedSupports,
+        tutor: this.data.tutor,
         date: this.data.date,
         duration: this.form.duration
       };
+      if(this.form.duration == null){
+          this.$toasted.error("Por favor escolha a duração do estatuto: temporário ou permanente", {
+              duration: 4000,
+              position: "top-center",
+              theme: "bubble"
+          });
+      }else{
       this.$emit("save-user", data);
+      }
     },
     cancelAux: function() {
       this.aux = [];
-    },
-    getAllSupports() {
-      axios
-        .get("api/getSupports")
-        .then(response => {
-          this.options = response.data;
-          console.log("supports aqui" + this.options);
-        })
-        .catch(error => {
-          console.log(error);
-        });
     },
     getServicesEvaluation() {
       axios
         .get("api/getServicesEvaluation/" + this.user.id)
         .then(response => {
           this.service = response.data;
-          console.log("ola" + this.service);
         })
         .catch(error => {
           console.log(error);
@@ -335,7 +374,6 @@ export default {
     }
   },
   created() {
-    this.getAllSupports();
     this.getServicesEvaluation();
   },
 

@@ -219,4 +219,13 @@ class CaseManagerResponsibleController extends Controller
 
                     return SubstitutionResource::collection(Substitution::Orderby('startDate')->paginate(10));
         }
+
+        public function getEneWithoutCaseManager(){
+
+            $studentEmailsWithCaseManager = CaseManager::select('studentEmail')->get()->toArray();
+
+            $studentsEmail = User::where('type','=','Estudante')->whereNotIn('email',$studentEmailsWithCaseManager)->paginate(10);
+
+            return response()->json($studentsEmail,200);
+        }
 }

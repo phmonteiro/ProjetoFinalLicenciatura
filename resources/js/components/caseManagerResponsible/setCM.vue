@@ -56,7 +56,7 @@
             <b-button  v-on:click.prevent="cancel()">Cancelar</b-button>
 
         <br>
-        <code v-if="Object.keys(studentCMs).length !== 0 ">ENEE já tem um Gestor de Caso atribuido</code>
+        <code v-if="Object.keys(studentCMs).length !== 0 ">ENE já tem um Gestor de Caso atribuido</code>
         <code v-if="Object.keys(caseManagers).length === 0 ">Não existem Gestor Caso na aplicação. Contacte o administrador.</code>
 
     </div>

@@ -25,7 +25,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="inputNee">Necessidades educativas especiais</label>
+      <label for="inputNee">Necessidades específicas</label>
       <input
         v-for="aux in nee"
         type="text"
@@ -56,6 +56,16 @@
         v-if="user.enee!='reproved'"
       >Download ficheiros médicos</button>
     </div>
+      <div>
+          <label for="information">Informação adicional</label>
+          <textarea
+              class="form-control"
+              type="text"
+              name="information"
+              id="information"
+              v-model="information"
+          ></textarea>
+      </div>
     <div class="form-group">
       <button type="submit" class="btn btn-success" name="ok" v-on:click.prevent="save()">Aprovar</button>
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>
@@ -66,7 +76,9 @@
 export default {
   props: ["user", "nee"],
   data: function() {
-    return {};
+    return {
+        information:""
+    };
   },
   methods: {
     downloadPDF(id) {
@@ -111,7 +123,7 @@ export default {
       this.$emit("cancel-edit");
     },
     save: function() {
-      this.$emit("approve", this.user.id);
+      this.$emit("approve", this.user.id,this.information);
     }
   },
 

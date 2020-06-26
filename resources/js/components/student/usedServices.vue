@@ -14,9 +14,28 @@
     <b-container>
       <b-row>
         <b-col class="top100">
-          <div v-if="services">
+          <div v-if="supports">
             <h2>{{$t('apoios_usufruidos')}}</h2>
-            <b-table striped hover :items="services" :fields="fieldsServices"></b-table>
+              <label for><b>Categorias de Apoios</b></label>
+              <div id="app">
+              <span v-for="category in categories">
+                  <li style="list-style-type:none">
+<!--                      <b-form-checkbox disabled v-if="!category.supports.length" v-model="selectedCategories" :value="category.id">-->
+<!--                              {{ category.name }}-->
+<!--                          </b-form-checkbox>-->
+                      <label>
+                          {{category.name}}
+                      </label>
+                  </li>
+
+                  <ul>
+                          <b-form-checkbox disabled v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">
+                              {{ sup.name }}
+                          </b-form-checkbox>
+                  </ul>
+              </span>
+
+              </div>
           </div>
         </b-col>
       </b-row>
@@ -29,37 +48,45 @@ export default {
   data() {
     return {
       pagination: {},
-      services: null,
+      supports: [],
       loading: true,
-
-      fieldsServices: [
-        {
-          key: "text",
-          label: this.$t("nome_serviço"),
-          sortable: true
-        }
-      ]
-
-      
+      selectedSupports:[],
+      selectedCategories:[],
+      categories:[],
     };
   },
   methods: {
-    getServices() {
+      getSupportsByStudent() {
       axios
-        .get("api/getServices")
+        .get("api/getSupportsByStudent")
         .then(response => {
           this.loading = false;
-          this.services = response.data;
-          console.log(this.services);
+          this.supports = response.data;
+          this.supports.forEach(support => {
+              this.selectedSupports.push(support.id);
+          })
+
+          console.log(this.supports);
         })
         .catch(error => {
           console.log(error);
           this.loading = false;
         });
-    }
+    },
+  getSupports(){
+      axios.get('api/getSupportsByCategory')
+          .then(response => {
+              this.categories = response.data;
+          })
+          .catch(error=>{
+              console.log(error);
+          });
+
+        },
   },
   created() {
-    this.getServices();
+    this.getSupportsByStudent();
+    this.getSupports();
   },
   computed: {
     user: function() {

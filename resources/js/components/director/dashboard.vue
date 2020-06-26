@@ -7,11 +7,10 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link class="nav-link" :to="{name: 'manageRequestENEE'}">Candidatos a ENEE</router-link>
+            <router-link class="nav-link" :to="{name: 'manageRequestENEE'}">Candidatos a ENE</router-link>
 
-            <router-link class="nav-link" :to="{name: 'manageENEE'}">ENEE</router-link>
+            <router-link class="nav-link" :to="{name: 'manageENEE'}">ENE</router-link>
 
-            <router-link class="nav-link" :to="{name: 'supportRequests'}">Pedidos de Apoio</router-link>
           </div>
         </section>
         <b-col cols="12">

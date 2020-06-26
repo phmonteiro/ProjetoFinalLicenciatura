@@ -231,7 +231,7 @@ class ServiceController extends Controller
         //
     }
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
@@ -240,6 +240,7 @@ class ServiceController extends Controller
 
         $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->first();
         $service->approval  = 'Aprovado';
+        $service->comment  = $request->information;
         $service->save();
         $history = new History();
         $history->studentEmail = $user->email;
@@ -334,6 +335,15 @@ class ServiceController extends Controller
         $contact->nextContact = $dados['nextContact'];
         $contact->decision = $dados['decision'];
         $contact->save();
+
+        if($dados['service'] === "Professor Orientador"){
+
+            $professorOrientador = Tutor::where('studentEmail','=',$dados['email'])->first();
+
+            if($professorOrientador != null){
+                EmailController::sendEmailWithCC('O seu Gestor de Caso agendou uma interação com o Professor Orientador. Obrigado', $user->email, 'Marcação de interação com Professor Orientador', 'Marcação de interação com Professor Orientador',  $professorOrientador->tutorEmail);
+            }
+        }
 
         $history = new History();
         $history->studentEmail = $user->email;

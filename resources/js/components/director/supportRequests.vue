@@ -17,12 +17,12 @@
         <template v-slot:cell(actions)="row">
           <b-row class="text-center">
             <b-col md="4" sm="12">
-              <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>
+<!--              <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails"></b-form-checkbox>-->
               <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye" />
+                  <b-button @click="row.toggleDetails" >Ocultar</b-button>
               </div>
               <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                <font-awesome-icon icon="eye-slash" />
+                  <b-button @click="row.toggleDetails" >Detalhes</b-button>
               </div>
             </b-col>
             <b-col md="4" sm="12">
@@ -115,7 +115,7 @@ export default {
         .then(response => {
           this.loading = false;
           this.supportRequests = response.data.data;
-          pg.makePagination(response.data.meta, response.data.links);
+          pg.makePagination(response.data);
           this.loading = false;
         })
         .catch(error => {
@@ -123,7 +123,7 @@ export default {
           this.loading = false;
         });
     },
-    makePagination(meta, links) {
+    makePagination(data) {
       let pagination = {
         current_page: data.current_page,
         last_page: data.last_page,
@@ -132,9 +132,9 @@ export default {
       };
       this.pagination = pagination;
     },
-    approve(data) {
+    approve(row) {
       axios
-        .post("api/addStudentSupport/" + data.id)
+        .post("api/addStudentSupport/" + row.id)
         .then(response => {
           this.getSupportRequests();
           this.$toasted.success("Apoio adicionado com sucesso.", {
@@ -157,7 +157,7 @@ export default {
         .patch("api/rejectStudentSupport/" + data.id)
         .then(response => {
           this.getSupportRequests();
-          this.$toasted.success("Apoio rejeitado com sucesso.", {
+          this.$toasted.success("Apoio rejeitado.", {
             duration: 4000,
             position: "top-center",
             theme: "bubble"

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Tutor;
 use App\CaseManager;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\CaseManagerResponsibleResource;
@@ -22,59 +23,6 @@ use Illuminate\Support\Facades\DB;
 
 class DirectorController extends Controller
 {
-    public function addStudentSupport($id)
-    {
-        $service = Service::findOrFail($id);
-        $service->aprovedDate = Carbon::now();
-        $service->save();
-
-        $studentSupport = new Student_Supports();
-        $studentSupport->email = $service->email;
-        $studentSupport->support_value = $service->support;
-        $studentSupport->save();
-
-        $history = new History();
-        $apoio = Supports::findOrFail($service->support);
-        $history->studentEmail = $service->email;
-        $history->description = "O diretor atribui o apoio " . $apoio->text;
-        $history->date = Carbon::now();
-        $history->save();
-
-        //EmailController::sendEmail('O diretor atribuiu-lhe um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio', 'Atribuição de novo apoio');
-
-        return response()->json($studentSupport, 200);
-    }
-
-    public function rejectStudentSupport($id)
-    {
-        $service = Service::findOrFail($id);
-        $service->rejectedDate = Carbon::now();
-        $service->save();
-
-        $history = new History();
-        $apoio = Supports::findOrFail($service->support);
-        $history->studentEmail = $service->email;
-        $history->description = "O diretor rejeitou o pedido do apoio " . $apoio->text . " ao estudante.";
-        $history->date = Carbon::now();
-        $history->save();
-
-        //EmailController::sendEmail('O diretor rejeitou o seu pedido de um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio rejeitada', 'Atribuição de novo apoio rejeitada');
-
-        return response()->json($service, 200);
-    }
-
-    public function supportRequests()
-    {
-        $requests = DB::table('services')
-            ->join('users', 'users.email', '=', 'services.email')
-            ->join('supports', 'value', '=', 'services.support')
-            ->whereNull('services.aprovedDate')
-            ->whereNull('services.rejectedDate')
-            ->select('services.*', 'users.name', 'supports.text')
-            ->paginate(10);
-        return response()->json($requests, 200);
-    }
-
     public function approvalRequest(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -101,6 +49,7 @@ class DirectorController extends Controller
         $dados = $request->validate([
             'email' => 'required|email',
             'supports' => '',
+            'tutor' => ''
         ]);
 
         $user = User::Where('email', $dados['email'])->first();
@@ -108,7 +57,34 @@ class DirectorController extends Controller
         $user->type = "Estudante";
         $user->dateEneeApproved = Carbon::now();
 
+        if ($dados['tutor'] != null) {
+            $currentTutor = Tutor::where('studentEmail', $dados['email'])->firstOrFail();
+            if ($currentTutor != null) {
+                $currentTutor->tutorEmail = $dados['tutor'];
+                $currentTutor->save();
 
+                $history = new History();
+                $history->studentEmail = $user->email;
+                $history->description = "O diretor alterou para o tutor " . $currentTutor->tutorEmail;
+                $history->date = Carbon::now();
+                $history->save();
+
+                //EmailController::sendEmailWithCC('O diretor alterou o seu professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
+            } else {
+                $tutor = new Tutor();
+                $tutor->studentEmail = $user->email;
+                $tutor->tutorEmail = $dados['tutor'];
+                $tutor->save();
+
+                $history = new History();
+                $history->studentEmail = $user->email;
+                $history->description = "O diretor atribui o tutor " . $tutor->tutorEmail;
+                $history->date = Carbon::now();
+                $history->save();
+
+                //EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
+            }
+        }
 
         $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
 

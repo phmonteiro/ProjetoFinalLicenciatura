@@ -2,13 +2,15 @@
   <div class="container mt-3" v-if="support">
     <div class="form-group">
       <div class="form-group">
-        <label for="inputEmail">Alterar Descricao</label>
+        <label for="inputEmail">Alterar Descrição do Apoio</label>
         <input
           type="text"
           class="form-control"
-          v-model="support.text"
+          v-model="support.name"
           name="description"
           id="description"
+          ref="inputEdit"
+          autofocus
         />
       </div>
 

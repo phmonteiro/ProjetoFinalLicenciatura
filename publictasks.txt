@@ -1,0 +1,23 @@
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Class 'App\Console\Commands\User' not found
+
+  at /home/bevas/Documents/ProjetoFinal/app/Console/Commands/notifyTeachersEachSemester.php:41
+    37|      * @return mixed
+    38|      */
+    39|     public function handle()
+    40|     {
+  > 41|         $enes = User::where('type','=','Estudante')->where('enee','=','approved')->get();
+    42| 
+    43|         $eneBySubjects =  array();
+    44|         $subjects = array();
+    45|
+
+  Exception trace:
+
+  1   App\Console\Commands\notifyTeachersEachSemester::handle()
+      /home/bevas/Documents/ProjetoFinal/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:32
+
+  2   call_user_func_array([])
+      /home/bevas/Documents/ProjetoFinal/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:32
+
+  Please use the argument -v to see more details.

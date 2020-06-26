@@ -17,6 +17,9 @@ use Chumper\Zipper\Zipper;
 use App\User;
 use App\CaseManager;
 use App\Contact;
+use App\Support;
+use App\Student_Supports;
+use App\Service;
 use App\Meeting;
 use App\History;
 use App\EneeDiagnostic;
@@ -34,7 +37,10 @@ class CaseManagerController extends Controller
             'studentId' => 'required|integer',
             'plan' => 'required|string',
             'diagnostic' => 'required|string',
+            'selectedSupports' => ''
         ]);
+
+        $newSupports = $dados['selectedSupports'];
 
 
         $plan = new EneeDiagnostic();
@@ -44,6 +50,40 @@ class CaseManagerController extends Controller
         $plan->save();
 
         $student = User::findOrFail($dados['studentId']);
+
+        $existingSupports = Student_Supports::where('email','=',$student->email)->pluck('id_support')->toArray();
+
+        $supportsToAdd = array_diff($newSupports, $existingSupports);
+
+        foreach($supportsToAdd as $support){
+            $studentSupport = new Student_Supports();
+            $studentSupport->email = $student->email;
+            $studentSupport->id_support = $support;
+
+            $history = new History();
+            $history->studentEmail = $student->email;
+            $history->description = "O gestor de caso adicionou o suporte nº ".$support." ao aluno.";
+            $history->date = Carbon::now();
+            $history->save();
+
+            $studentSupport->save();
+        }
+
+        $supportsToDelete = array_diff($existingSupports,$newSupports);
+
+        foreach($supportsToDelete as $support){
+            $studentSupport = Student_Supports::where('id_support','=',$support)->first();
+
+            $history = new History();
+            $history->studentEmail = $student->email;
+            $history->description = "O gestor de caso eliminou o suporte \"".$studentSupport->name."\" do aluno.";
+            $history->date = Carbon::now();
+            $history->save();
+
+            $studentSupport->delete();
+
+        }
+
 
         $history = new History();
         $history->studentEmail = $student->email;
@@ -92,13 +132,48 @@ class CaseManagerController extends Controller
         $dados = $request->validate([
             'plan' => 'required|string',
             'diagnostic' => 'required|string',
+            'selectedSupports' => ''
         ]);
+
+        $newSupports = $dados['selectedSupports'];
 
         $plan->plan = $dados['plan'];
         $plan->diagnostic = $dados['diagnostic'];
         $plan->save();
 
         $student = User::findOrFail($plan->studentId);
+
+        $existingSupports = Student_Supports::where('email','=',$student->email)->pluck('id_support')->toArray();
+
+        $supportsToAdd = array_diff($newSupports, $existingSupports);
+
+        foreach($supportsToAdd as $support){
+            $studentSupport = new Student_Supports();
+            $studentSupport->email = $student->email;
+            $studentSupport->id_support = $support;
+
+            $history = new History();
+            $history->studentEmail = $student->email;
+            $history->description = "O gestor de caso adicionou o suporte nº ".$support." ao aluno.";
+            $history->date = Carbon::now();
+            $history->save();
+
+            $studentSupport->save();
+        }
+
+        $supportsToDelete = array_diff($existingSupports,$newSupports);
+
+        foreach($supportsToDelete as $support){
+            $studentSupport = Student_Supports::where('id_support','=',$support)->first();
+
+            $history = new History();
+            $history->studentEmail = $student->email;
+            $history->description = "O gestor de caso eliminou o suporte \"".$studentSupport->name."\" do aluno.";
+            $history->date = Carbon::now();
+            $history->save();
+
+            $studentSupport->delete();
+        }
 
         $history = new History();
         $history->studentEmail = $student->email;
@@ -164,7 +239,7 @@ class CaseManagerController extends Controller
 
     public function getEneeInteractions($email)
     {
-        return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->orderBy('nextContact', 'desc')->paginate(10));
+        return ContactResource::collection(Contact::Where('studentEmail', $email)->orderBy('date', 'desc')->paginate(10));
     }
 
     public function getCmEnee($id)
@@ -190,9 +265,7 @@ class CaseManagerController extends Controller
             'email' => 'required|email',
             'interactionDate' => '',
             'interactionTime' => 'required',
-            'nextInteraction' => 'required|date',
             'service' => 'required',
-            'decision' => 'required',
             'information' => 'required',
             'contactMedium' => 'required',
             'software' => '',
@@ -207,14 +280,21 @@ class CaseManagerController extends Controller
             $contact->date = $dados['interactionDate'];
         }
         $contact->service = $dados['service'];
-        $contact->decision = $dados['decision'];
         $contact->information = $dados['information'];
-        $contact->nextContact = $dados['nextInteraction'];
         $contact->contactMedium = $dados['contactMedium'];
         $contact->software = $dados['software'];
         $contact->place = $dados['place'];
         $contact->time = $dados['interactionTime'];
         $contact->save();
+
+        if($dados['service'] === "Professor Orientador"){
+
+            $professorOrientador = Tutor::where('studentEmail','=',$dados['email'])->first();
+
+            if($professorOrientador != null){
+                EmailController::sendEmailWithCC('O seu Gestor de Caso agendou uma interação com o Professor Orientador. Obrigado', $user->email, 'Marcação de interação com Professor Orientador', 'Marcação de interação com Professor Orientador',  $professorOrientador->tutorEmail);
+            }
+        }
 
         if ($request->numberFiles != null && $request->numberFiles > 0) {
             $contact->hasFiles = '1';
@@ -323,5 +403,64 @@ class CaseManagerController extends Controller
         return response()->json($caseManagerResponsible->email, 200);
     }
 
+    public function getENEHistories($email){
+        $histories = History::where('studentEmail','=',$email)->orderBy('date','desc')->get();
+
+        return response()->json($histories,200);
+    }
+
+    public function supportRequests()
+    {
+        $requests = DB::table('services')
+            ->join('users', 'users.email', '=', 'services.email')
+            ->join('supports', 'supports.id', '=', 'services.support')
+            ->whereNull('services.aprovedDate')
+            ->whereNull('services.rejectedDate')
+            ->select('services.*', 'users.name', 'supports.name')
+            ->paginate(10);
+
+        return response()->json($requests, 200);
+    }
+
+    public function addStudentSupport($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->aprovedDate = Carbon::now();
+        $service->save();
+
+        $studentSupport = new Student_Supports();
+        $studentSupport->email = $service->email;
+        $studentSupport->id_support = $service->support;
+        $studentSupport->save();
+
+        $history = new History();
+        $apoio = Support::findOrFail($service->support);
+        $history->studentEmail = $service->email;
+        $history->description = "O diretor atribui o apoio " . $apoio->name;
+        $history->date = Carbon::now();
+        $history->save();
+
+        //EmailController::sendEmail('O diretor atribuiu-lhe um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio', 'Atribuição de novo apoio');
+
+        return response()->json($studentSupport, 200);
+    }
+
+    public function rejectStudentSupport($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->rejectedDate = Carbon::now();
+        $service->save();
+
+        $history = new History();
+        $apoio = Supports::findOrFail($service->support);
+        $history->studentEmail = $service->email;
+        $history->description = "O diretor rejeitou o pedido do apoio " . $apoio->text . " ao estudante.";
+        $history->date = Carbon::now();
+        $history->save();
+
+        //EmailController::sendEmail('O diretor rejeitou o seu pedido de um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio rejeitada', 'Atribuição de novo apoio rejeitada');
+
+        return response()->json($service, 200);
+    }
 
 }

@@ -12,10 +12,10 @@
       </b-row>
     </b-container>
     <b-container>
-      <h2>Lista de candidatos a ENEE</h2>
+      <h2>Lista de candidatos a ENE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template v-slot:cell(enee)="{ value }">
-          <p v-if="value==='awaiting'">Aguardando</p>
+          <p v-if="value==='awaiting'">A aguardar</p>
           <p v-if="value==='denied'">Reprovado</p>
           <p v-if="value==='approved'">Aprovado</p>
         </template>
@@ -38,7 +38,7 @@
           </b-row>
         </template>
       </b-table>
-        <h4 v-else>Não existem pedidos de candidatura ao estatuto ENEE</h4>
+        <h4 v-else>Não existem pedidos de candidatura ao estatuto ENE</h4>
 
       <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
@@ -67,7 +67,6 @@
           v-if="currentUser"
           :user="currentUser"
           :teachers="teachers"
-          :studentSupports="supportsForStudent"
           :nee="nee"
           @refresh="getEnee"
           @save-user="saveUser"
@@ -153,7 +152,6 @@ export default {
     },
     editUser(row) {
       this.currentUser = Object.assign({}, row);
-      this.getStudentSupports();
 
       let user = row.id;
       axios
@@ -187,7 +185,7 @@ export default {
         .patch("api/reproveSubscription/" + row.id)
         .then(response => {
           this.getEnee();
-          this.$toasted.success("Candidatura reprovada com sucesso.", {
+          this.$toasted.success("Candidatura reprovada.", {
             duration: 4000,
             position: "top-center",
             theme: "bubble"
@@ -203,17 +201,6 @@ export default {
               theme: "bubble"
             }
           );
-        });
-    },
-    getStudentSupports() {
-      axios
-        .get("api/getStudentSupports/" + this.currentUser.email)
-        .then(response => {
-          console.log(response);
-          this.supportsForStudent = response.data;
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     saveUser(data) {

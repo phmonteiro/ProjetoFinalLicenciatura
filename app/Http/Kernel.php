@@ -75,11 +75,12 @@ class Kernel extends HttpKernel
         'isStudentNoStatus' => \App\Http\Middleware\isStudentNoStatus::Class,
         'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
         'isDirectorServices' => \App\Http\Middleware\isDirectorServices::Class,
-        'isAdminDirectorStudent' => \App\Http\Middleware\isAdminDirectorStudent::Class,
+        'isAdminDirectorStudentCaseManager' => \App\Http\Middleware\isAdminDirectorStudentCaseManager::Class,
         'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
         'isStudentOrDirector' => \App\Http\Middleware\isStudentOrDirector::Class,
         'isStudentOrCaseManager' => \App\Http\Middleware\isStudentOrCaseManager::Class,
-        'isCaseManagerOrCaseManagerResponsible'=> \App\Http\Middleware\isCaseManagerOrCaseManagerResponsible::Class
+        'isCaseManagerOrCaseManagerResponsible'=> \App\Http\Middleware\isCaseManagerOrCaseManagerResponsible::Class,
+        'isStudentWithoutENEStatus' => \App\Http\Middleware\isStudentWithoutENEStatus::Class
 
     ];
 

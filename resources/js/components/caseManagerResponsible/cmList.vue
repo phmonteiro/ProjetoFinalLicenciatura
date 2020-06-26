@@ -13,7 +13,7 @@
     </b-container>
 <!--    <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>-->
     <div class="container">
-      <h2>Lista de ENEEs por Gestores de Caso</h2>
+      <h2>Lista de ENEs por Gestores de Caso</h2>
       <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
 
       </b-table>

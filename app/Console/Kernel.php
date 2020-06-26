@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -26,7 +27,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('substitutions:active')->cron("* * * * *");
         $schedule->command('substitutions:end')->cron("* * * * *");
-
+        $schedule->command('notify:teachers-semester')->cron("0 0 16 9 *");
+        $schedule->command('notify:teachers-semester')->cron("0 0 1 3 *");
     }
 
     /**

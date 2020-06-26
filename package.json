@@ -45,6 +45,8 @@
         "cloudinary-vue": "file:../../cloudinary-vue",
         "dayspan-vuetify": "^0.4.0",
         "google-autocomplete-vue": "^1.0.17",
+        "log-timestamp": "^0.3.0",
+        "moment": "^2.26.0",
         "vee-validate": "^3.3.0",
         "vue-accessibility-widget": "file:../../vue-accessibility-widget",
         "vue-apexcharts": "^1.5.3",

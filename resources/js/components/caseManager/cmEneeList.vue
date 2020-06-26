@@ -12,7 +12,7 @@
       </b-row>
     </b-container>
     <div class="container">
-      <h2>Lista de Enee</h2>
+      <h2>Lista de ENE</h2>
       <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
         <template v-slot:cell(actions)="row">
           <b-row class="text-center">
@@ -38,13 +38,13 @@
               <b-col>
                 <b-row class="mb-2">
                   <b-col sm="5" class="text">
-                    <b>Ano curricular:</b>
-                    {{row.item.curricularYear}}
+                    <b>Idade:</b>
+                    {{calculateAge(row.item.birthDate)}}
                   </b-col>
                 </b-row>
               </b-col>
               <b-col sm="3" class="text text-center">
-                  <b-button size="sm" @click.prevent="newInteraction(row.item)">
+                  <b-button size="sm" @click.prevent="showComponents('newInteraction',row.item)">
                      Nova Interação
                       <font-awesome-icon icon="handshake" />
                   </b-button>
@@ -65,7 +65,7 @@
                 </b-row>
               </b-col>
                 <b-col sm="3" class="text text-center">
-                    <b-button size="sm" @click.prevent="seeInteractions(row.item)">
+                    <b-button size="sm" @click.prevent="showComponents('seeInteractions',row.item)">
                         Ver Interações
                         <font-awesome-icon icon="handshake" />
                     </b-button>
@@ -86,8 +86,8 @@
                 </b-row>
               </b-col>
                 <b-col sm="3" class="m-1 text-center">
-                    <b-button size="sm" @click.prevent="managePlan(row.item)">
-                        Plano
+                    <b-button size="sm" @click.prevent="showComponents('managePlan',row.item)">
+                        Plano de Inclusão
                         <font-awesome-icon icon="book" />
                     </b-button>
                 </b-col>
@@ -109,7 +109,7 @@
                 </b-row>
               </b-col>
                 <b-col sm="3" class="m-1 text-center">
-                    <b-button size="sm" @click.prevent="increaseSupportHours(row.item)">
+                    <b-button size="sm" @click.prevent="showComponents('increaseSupportHours',row.item)">
                         Gerir horas de apoio
                         <font-awesome-icon icon="book" />
                     </b-button>
@@ -132,17 +132,50 @@
                 </b-row>
               </b-col>
                 <b-col sm="3" class="m-1 text-center">
-                    <b-button   size="sm" @click.prevent="showSupportHours(row.item)" >
+                    <b-button   size="sm" @click.prevent="showComponents('supportHours',row.item)" >
                         Consultar Horas de Apoio
                         <font-awesome-icon icon="book" />
                     </b-button>
                 </b-col>
             </b-row>
+
             <b-row class="mb-2">
               <b-col sm="4" class="text">
                 <b>Estatuto aprovado a: {{row.item.dateEneeApproval}}</b>
               </b-col>
+                <b-col>
+                    <b-row class="mb-9">
+                        <b-col sm="9" class="text">
+
+                        </b-col>
+                    </b-row>
+                </b-col>
+                <b-col sm="3" class="m-1 text-center">
+                    <b-button size="sm" @click.prevent="showComponents('academicHistorial',row.item)">
+                        Historial académico
+                        <font-awesome-icon icon="book" />
+                    </b-button>
+                </b-col>
             </b-row>
+
+              <b-row class="mb-2">
+                  <b-col sm="4" class="text">
+                  </b-col>
+                  <b-col>
+                      <b-row class="mb-9">
+                          <b-col sm="9" class="text">
+
+                          </b-col>
+                      </b-row>
+                  </b-col>
+                  <b-col sm="3" class="m-1 text-center">
+                      <b-button size="sm" @click.prevent="showComponents('showENEHistoric',row.item)">
+                          Ver Histórico do ENE
+                          <font-awesome-icon icon="book" />
+                      </b-button>
+                  </b-col>
+              </b-row>
+
               <b-row class="mb-2">
                   <b-col sm="4" class="text">
 
@@ -185,28 +218,40 @@
       <show-hours
           :student="enee"
           v-if="showStudentHours"
-          @cancel-show-hours="cancelShowHours()">
+          @cancel-show-hours="hideAllComponents()">
       </show-hours>
-      <manage-plan v-if="showPlan" :user="currentUser" :plan="currentPlan" @cancel-edit2="cancelEdit2()"></manage-plan>
-      <set-inter v-if="showNewInteraction" :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="cancelEdit()"></set-inter>
+      <manage-plan v-if="showPlan" :user="currentUser" :plan="currentPlan" @cancel-edit2="hideAllComponents()"></manage-plan>
+      <set-inter v-if="showNewInteraction" :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="hideAllComponents()"></set-inter>
       <increase-hours
         v-if="showIncreaseHours"
         :student="currentUser"
-        @cancel-increase="cancelIncrease"
+        @cancel-increase="hideAllComponents"
         @save-increase="saveIncrease"
     ></increase-hours>
     <interactionsDetails
        v-if="showDetails"
       :user="currentUser"
       :interactions="interactions"
-      @cancel-edit="cancelInteractions()"
+      @cancel-edit="hideAllComponents()"
     ></interactionsDetails>
-
+      <historial-academico
+      v-if="showHistorialAcademico"
+      :student="currentUser"
+      @cancel-academic="hideAllComponents()"
+      ></historial-academico>
+      <ene-historic
+      v-if="showENEHistoric"
+      :student="currentUser"
+      @cancel-historic="hideAllComponents()"
+      >
+      </ene-historic>
   </div>
 </template>
 
 <script>
-export default {
+    import moment from 'moment';
+
+    export default {
   data() {
     return {
       yourTimeValue: {},
@@ -245,28 +290,70 @@ export default {
       currentPlan: null,
       showIncreaseHours:false,
       showNewInteraction:false,
+      showHistorialAcademico:false,
       showPlan:false,
       showDetails:false,
       newTotalHours:null,
-      showStudentHours:false
+      showStudentHours:false,
+      showENEHistoric:false,
     };
   },
   methods: {
-    cancelShowHours(){
-        this.showStudentHours = false;
-        },
-    showSupportHours(enee){
+    calculateAge(birthday){
+       return moment().diff(birthday, 'years');
+    },
+
+      hideAllComponents(){
+          this.showIncreaseHours=false;
+          this.showPlan=false;
+          this.showDetails=false;
+          this.showNewInteraction=false;
+          this.showStudentHours = false;
+          this.showHistorialAcademico=false;
+          this.showENEHistoric=false;
+      },
+    showComponents(componentName,row){
         this.showIncreaseHours=false;
         this.showPlan=false;
         this.showDetails=false;
         this.showNewInteraction=false;
-        this.showStudentHours = true;
-        this.student=enee;
+        this.showStudentHours = false;
+        this.showHistorialAcademico=false;
+        this.showENEHistoric=false;
+
+        switch(componentName){
+            case "supportHours":
+                this.student=row;
+                this.showStudentHours = true;
+                break;
+            case "increaseSupportHours":
+                this.showIncreaseHours=true;
+                this.currentUser = Object.assign({}, row);
+                break;
+            case "seeInteractions":
+                this.currentUser = Object.assign({}, row);
+                this.showDetails=true;
+                this.getEneeInteractions(this.currentUser);
+                break;
+            case "newInteraction":
+                this.currentUser = Object.assign({}, row);
+                this.showNewInteraction=true;
+                break;
+            case "managePlan":
+                this.currentUser = Object.assign({}, row);
+                this.showPlan=true;
+                this.getPlan(row.id);
+                break;
+            case "academicHistorial":
+                this.currentUser = Object.assign({}, row);
+                this.showHistorialAcademico=true;
+                break;
+            case "showENEHistoric":
+                this.showENEHistoric=true;
+                this.currentUser = Object.assign({}, row);
+        }
     },
-    cancelIncrease(){
-      this.showIncreaseHours=false;
-      this.currentUser=null;
-    },
+
     saveIncrease(newTotalHours){
         axios.put("api/setSupportHours/"+this.currentUser.id,{"newTotalHours":newTotalHours})
             .then(response=>{
@@ -282,15 +369,6 @@ export default {
             .catch(error=>{
                 console.log(error);
             })
-    },
-    increaseSupportHours(row){
-        this.currentUser = Object.assign({}, row);
-        this.showIncreaseHours=true;
-        this.showPlan=false;
-        this.showDetails=false;
-        this.showNewInteraction=false;
-        this.showStudentHours = false;
-
     },
     getCmEnee() {
       axios
@@ -312,15 +390,6 @@ export default {
       };
       this.pagination = pagination;
     },
-    seeInteractions(row) {
-      this.currentUser = Object.assign({}, row);
-        this.showIncreaseHours=false;
-        this.showPlan=false;
-        this.showDetails=true;
-        this.showStudentHours = false;
-        this.showNewInteraction=false;
-      this.getEneeInteractions(this.currentUser);
-    },
     getEneeInteractions(user) {
       axios
         .get("api/getEneeInteractions/" + user.email)
@@ -341,29 +410,8 @@ export default {
           console.log(error);
         });
     },
-    newInteraction(row) {
-        this.currentUser = Object.assign({}, row);
-        this.showIncreaseHours=false;
-        this.showPlan=false;
-        this.showDetails=false;
-        this.showNewInteraction=true;
-        this.showStudentHours = false;
-    },
-    managePlan(row) {
-      this.currentUser = Object.assign({}, row);
-        this.showIncreaseHours=false;
-        this.showPlan=true;
-        this.showDetails=false;
-        this.showNewInteraction=false;
-        this.showStudentHours = false;
-        this.getPlan(row.id);
-    },
     cancelEdit: function() {
         this.showNewInteraction=false;
-        this.currentUser = null;
-    },
-    cancelEdit2: function() {
-        this.showPlan=false;
         this.currentUser = null;
     },
     cancelInteractions: function() {
@@ -371,8 +419,6 @@ export default {
         this.currentUser = null;
     },
     saveInteraction(data, files) {
-      console.log(data);
-
       //add - for missing values, for better reading
       if(data.software==null){
           data.software = '-';
@@ -391,12 +437,10 @@ export default {
 
       var time = data.interactionTime.HH + ":" + data.interactionTime.mm;
 
-      formData.append("decision", data.decision);
       formData.append("email", data.email);
       formData.append("information", data.information);
       formData.append("interactionDate", data.interactionDate);
       formData.append("interactionTime", time);
-      formData.append("nextInteraction", data.nextInteraction);
       formData.append("contactMedium", data.contactMedium);
       formData.append("software", data.software);
       formData.append("place", data.place);
@@ -427,7 +471,64 @@ export default {
             theme: "bubble"
           });
         });
-    }
+    },
+      // cancelEdit2: function() {
+      //     this.showPlan=false;
+      //     this.currentUser = null;
+      // },
+      // cancelShowHours(){
+      //     this.showStudentHours = false;
+      //     },
+      //   cancelHistorialAcademico(){
+      //     this.showHistorialAcademico = false;
+      //   },
+
+      // showSupportHours(enee){
+      //     this.showIncreaseHours=false;
+      //     this.showPlan=false;
+      //     this.showDetails=false;
+      //     this.showNewInteraction=false;
+      //     this.showStudentHours = true;
+      //     this.student=enee;
+      // },
+      //   cancelIncrease(){
+      //       this.showIncreaseHours=false;
+      //       this.currentUser=null;
+      //   },
+      //   increaseSupportHours(row){
+      //       this.currentUser = Object.assign({}, row);
+      //       this.showIncreaseHours=true;
+      //       this.showPlan=false;
+      //       this.showDetails=false;
+      //       this.showNewInteraction=false;
+      //       this.showStudentHours = false;
+      //   },
+      //   seeInteractions(row) {
+      //       this.currentUser = Object.assign({}, row);
+      //       this.showIncreaseHours=false;
+      //       this.showPlan=false;
+      //       this.showDetails=true;
+      //       this.showStudentHours = false;
+      //       this.showNewInteraction=false;
+      //       this.getEneeInteractions(this.currentUser);
+      //   },
+      //   newInteraction(row) {
+      //       this.currentUser = Object.assign({}, row);
+      //       this.showIncreaseHours=false;
+      //       this.showPlan=false;
+      //       this.showDetails=false;
+      //       this.showNewInteraction=true;
+      //       this.showStudentHours = false;
+      //   },
+      //   managePlan(row) {
+      //       this.currentUser = Object.assign({}, row);
+      //       this.showIncreaseHours=false;
+      //       this.showPlan=true;
+      //       this.showDetails=false;
+      //       this.showNewInteraction=false;
+      //       this.showStudentHours = false;
+      //       this.getPlan(row.id);
+      //   },
   },
   created() {
     this.getCmEnee();

@@ -35,10 +35,6 @@
           <b>Serviço:</b>
           {{inter.service}}
         </b-col>
-        <b-col>
-          <b>Próximo Contacto:</b>
-          {{inter.nextContact}}
-        </b-col>
       </b-row>
       <b-row>
         <b-col>
@@ -49,10 +45,6 @@
           <b>Informação:</b>
           {{inter.information}}
         </b-col>
-          <b-col>
-              <b>Decisão:</b>
-              {{inter.decision}}
-          </b-col>
       </b-row>
 
       <div class="form-group" v-if="inter.hasFiles">
@@ -64,7 +56,7 @@
       <div class="dropdown-divider"></div>
     </b-container>
 
-    <div class="form-group">
+    <div class="form-group text-center">
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Fechar</button>
     </div>
   </div>
