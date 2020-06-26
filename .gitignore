@@ -1,7 +1,11 @@
 /node_modules
 /public/hot
 /public/storage
+# adicionado /public/ ao gitignore 26/junho
+/public/
 /storage/*.key
+# adicionado /storage/debugbar ao gitignore 26/junho
+/storage/debugbar 
 /vendor
 .env
 .phpunit.result.cache
