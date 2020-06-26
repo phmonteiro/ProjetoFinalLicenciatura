@@ -452,7 +452,7 @@ class CaseManagerController extends Controller
         $service->save();
 
         $history = new History();
-        $apoio = Supports::findOrFail($service->support);
+        $apoio = Support::findOrFail($service->support);
         $history->studentEmail = $service->email;
         $history->description = "O diretor rejeitou o pedido do apoio " . $apoio->text . " ao estudante.";
         $history->date = Carbon::now();

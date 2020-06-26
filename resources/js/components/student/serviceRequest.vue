@@ -5,16 +5,13 @@
       <b-container class="top100">
         <b-row>
           <b-col>
-
-        \Debugbar::info($supportsToAdd);
-        \Debugbar::info($existingSupports);
-        \Debugbar::info($newSupports);
-        \Debugbar::info($supportsToDelete);     <h2>{{ $t('pedido_apoio') }}</h2>
-            <div class="form-group">
+              <h2>{{ $t('pedido_apoio') }}</h2>
+              <div class="form-group">
               <div v-if="supports">
                 <b-form-group label="Apoios ao estudante">
                     <ValidationProvider name="support" rules="required" v-slot="{ errors }">
                         <div id="app">
+
                               <span v-for="category in categories">
                                   <li style="list-style-type:none">
 <!--                                      <b-form-checkbox  v-if="!category.supports.length" v-model="selectedCategories" :value="category.id">-->
@@ -26,9 +23,9 @@
                                   </li>
 
                                   <ul>
-                                          <b-form-checkbox  v-model="selectedSupports" :disabled="mainSupports.includes(sup.id)" :value="sup.id" v-for="sup in category.supports">
+                                      <b-form-checkbox  v-model="selectedSupports" :disabled="mainSupports.includes(sup.id)" :value="sup.id" v-for="sup in category.supports">
                                               {{ sup.name }}
-                                          </b-form-checkbox>
+                                      </b-form-checkbox>
                                   </ul>
                               </span>
 
