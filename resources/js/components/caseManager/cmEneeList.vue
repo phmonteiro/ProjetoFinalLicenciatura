@@ -350,7 +350,10 @@
                 this.showNewInteraction=true;
                 console.log("ref");
                 this.$nextTick(() => {
-                    this.$refs.newInteraction.$el.children[0].focus();
+                    this.$refs.newInteraction.$el.children[0].children[0].focus();
+                    console.log(this.$refs.newInteraction.$el);
+                    console.log(this.$refs.newInteraction.$el.children[0].focus());
+                    console.log(this.$refs.newInteraction.$el.children[0].children[0].focus());
                 });
                 break;
             case "managePlan":
