@@ -348,7 +348,7 @@
             case "newInteraction":
                 this.currentUser = Object.assign({}, row);
                 this.showNewInteraction=true;
-                this.$nextTick(() => this.$refs.netInteraction.$el.focus());
+                this.$nextTick(() => this.$refs.newInteraction.$el.focus());
                 break;
             case "managePlan":
                 this.currentUser = Object.assign({}, row);
