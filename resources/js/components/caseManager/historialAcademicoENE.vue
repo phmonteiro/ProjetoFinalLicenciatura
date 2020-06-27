@@ -102,7 +102,8 @@
     },
     created(){
         this.getHistorialAcademico();
-        this.$refs.historialacademico.$el.children[0].children[0].focus();
+        this.$nextTick(() => this.$refs.historialacademico.$el.children[0].focus());
+
     },
 
   };
