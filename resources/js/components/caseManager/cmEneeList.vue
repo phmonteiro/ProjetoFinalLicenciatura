@@ -226,7 +226,7 @@
                    :plan="currentPlan"
                    @cancel-edit2="hideAllComponents()">
       </manage-plan>
-      <set-inter    autofocus
+      <set-inter ref="newInteraction"
                  v-if="showNewInteraction"
                  :user="currentUser"
                  @save-interaction="saveInteraction"
@@ -347,8 +347,9 @@
                 break;
             case "newInteraction":
                 this.currentUser = Object.assign({}, row);
-                console.log(this.$refs.newInteraction);
-                console.log("AAAA");
+                this.$nextTick(() => {
+                    this.$refs.editButton.focus();
+                });
                 this.showNewInteraction=true;
                 break;
             case "managePlan":
