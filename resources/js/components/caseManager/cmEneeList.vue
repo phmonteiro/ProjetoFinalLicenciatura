@@ -226,7 +226,7 @@
                    :plan="currentPlan"
                    @cancel-edit2="hideAllComponents()">
       </manage-plan>
-      <set-inter ref="newInteraction"
+      <set-inter    autofocus
                  v-if="showNewInteraction"
                  :user="currentUser"
                  @save-interaction="saveInteraction"
