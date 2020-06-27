@@ -25,7 +25,7 @@
                   <b-button  @click="row.toggleDetails">Opções<font-awesome-icon icon="eye"/>
                   </b-button>
               </div>
-            </b-col>\
+            </b-col>
           </b-row>
         </template>
         <template slot="row-details" slot-scope="row">
