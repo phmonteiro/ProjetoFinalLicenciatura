@@ -347,10 +347,10 @@
                 break;
             case "newInteraction":
                 this.currentUser = Object.assign({}, row);
-                this.$nextTick(() => {
-                    this.$refs.editButton.focus();
-                });
                 this.showNewInteraction=true;
+                this.$nextTick(() => {
+                    this.$refs.showNewInteraction.focus();
+                });
                 break;
             case "managePlan":
                 this.currentUser = Object.assign({}, row);
