@@ -226,7 +226,7 @@
                    :plan="currentPlan"
                    @cancel-edit2="hideAllComponents()">
       </manage-plan>
-      <set-inter ref="newInteraction"
+      <set-inter v-focus
                  v-if="showNewInteraction"
                  :user="currentUser"
                  @save-interaction="saveInteraction"
@@ -308,6 +308,14 @@
       showENEHistoric:false,
     };
   },
+        directives: {
+            focus: {
+                // directive definition
+                inserted: function (el) {
+                    el.focus()
+                }
+            }
+        },
   methods: {
     calculateAge(birthday){
        return moment().diff(birthday, 'years');
