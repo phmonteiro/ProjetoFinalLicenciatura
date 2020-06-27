@@ -26,7 +26,9 @@
                   </b-form-select>
                   <code>{{ errors[0] }}</code>
               </ValidationProvider>
-
+              <div v-if="meeting.service != null && meeting.service != 'Gestor-Caso'">
+                    <h4>Atenção: ao submeter um pedido de reunião com um docente, estará a enviar um correio electrónico para o docente seleccionado</h4>
+              </div>
           </div>
           <div class="form-group">
             <span for="comment">{{ $t('comentário') }}</span>

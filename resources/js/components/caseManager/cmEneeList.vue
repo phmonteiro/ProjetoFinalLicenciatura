@@ -18,14 +18,14 @@
           <b-row class="text-center">
               <b-col sm="12" class="m-1">
               <div v-if="row.detailsShowing">
-                  <b-button  @click="row.toggleDetails">Fechar                   <font-awesome-icon icon="eye-slash" />
+                  <b-button  @click="row.toggleDetails">Fechar<font-awesome-icon icon="eye-slash"/>
                   </b-button>
               </div>
               <div v-if="!row.detailsShowing">
-                  <b-button  @click="row.toggleDetails">Opções                   <font-awesome-icon icon="eye" />
+                  <b-button  @click="row.toggleDetails">Opções<font-awesome-icon icon="eye"/>
                   </b-button>
               </div>
-            </b-col>
+            </b-col>\
           </b-row>
         </template>
         <template slot="row-details" slot-scope="row">
@@ -215,34 +215,44 @@
       </nav>
     </div>
       <br>
-      <show-hours
-          :student="enee"
-          v-if="showStudentHours"
-          @cancel-show-hours="hideAllComponents()">
+      <show-hours autofocus
+                  :student="enee"
+                  v-if="showStudentHours"
+                  @cancel-show-hours="hideAllComponents()">
       </show-hours>
-      <manage-plan v-if="showPlan" :user="currentUser" :plan="currentPlan" @cancel-edit2="hideAllComponents()"></manage-plan>
-      <set-inter v-if="showNewInteraction" :user="currentUser" @save-interaction="saveInteraction" @cancel-edit="hideAllComponents()"></set-inter>
-      <increase-hours
-        v-if="showIncreaseHours"
-        :student="currentUser"
-        @cancel-increase="hideAllComponents"
-        @save-increase="saveIncrease"
+      <manage-plan autofocus
+                   v-if="showPlan"
+                   :user="currentUser"
+                   :plan="currentPlan"
+                   @cancel-edit2="hideAllComponents()">
+      </manage-plan>
+      <set-inter autofocus
+                 v-if="showNewInteraction"
+                 :user="currentUser"
+                 @save-interaction="saveInteraction"
+                 @cancel-edit="hideAllComponents()">
+      </set-inter>
+      <increase-hours autofocus
+                      v-if="showIncreaseHours"
+                      :student="currentUser"
+                      @cancel-increase="hideAllComponents"
+                      @save-increase="saveIncrease"
     ></increase-hours>
-    <interactionsDetails
-       v-if="showDetails"
-      :user="currentUser"
-      :interactions="interactions"
-      @cancel-edit="hideAllComponents()"
+    <interactionsDetails autofocus
+                         v-if="showDetails"
+                         :user="currentUser"
+                         :interactions="interactions"
+                         @cancel-edit="hideAllComponents()"
     ></interactionsDetails>
-      <historial-academico
-      v-if="showHistorialAcademico"
-      :student="currentUser"
-      @cancel-academic="hideAllComponents()"
+      <historial-academico autofocus
+                           v-if="showHistorialAcademico"
+                           :student="currentUser"
+                           @cancel-academic="hideAllComponents()"
       ></historial-academico>
-      <ene-historic
-      v-if="showENEHistoric"
-      :student="currentUser"
-      @cancel-historic="hideAllComponents()"
+      <ene-historic autofocus
+                    v-if="showENEHistoric"
+                    :student="currentUser"
+                    @cancel-historic="hideAllComponents()"
       >
       </ene-historic>
   </div>

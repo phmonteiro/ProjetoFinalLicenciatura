@@ -352,7 +352,7 @@ class StudentController extends Controller
 
         $history = new History();
         $history->studentEmail = $user->email;
-        $history->description = "O estudante pediu para agendar uma reunião com o" . $meeting->service;
+        $history->description = "O estudante pediu para agendar uma reunião com " . $meeting->service;
         $history->date = Carbon::now();
         $history->save();
 
