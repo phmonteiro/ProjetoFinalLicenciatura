@@ -102,6 +102,7 @@
     },
     created(){
         this.getHistorialAcademico();
+        this.$refs.historialacademico.$el.focus()
     },
 
   };

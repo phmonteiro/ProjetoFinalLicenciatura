@@ -215,41 +215,41 @@
       </nav>
     </div>
       <br>
-      <show-hours autofocus
+      <show-hours
                   :student="enee"
                   v-if="showStudentHours"
                   @cancel-show-hours="hideAllComponents()">
       </show-hours>
-      <manage-plan autofocus
+      <manage-plan
                    v-if="showPlan"
                    :user="currentUser"
                    :plan="currentPlan"
                    @cancel-edit2="hideAllComponents()">
       </manage-plan>
-      <set-inter v-focus
+      <set-inter
                  v-if="showNewInteraction"
                  :user="currentUser"
                  @save-interaction="saveInteraction"
                  @cancel-edit="hideAllComponents()">
       </set-inter>
-      <increase-hours autofocus
+      <increase-hours
                       v-if="showIncreaseHours"
                       :student="currentUser"
                       @cancel-increase="hideAllComponents"
                       @save-increase="saveIncrease"
     ></increase-hours>
-    <interactionsDetails autofocus
+    <interactionsDetails
                          v-if="showDetails"
                          :user="currentUser"
                          :interactions="interactions"
                          @cancel-edit="hideAllComponents()"
     ></interactionsDetails>
-      <historial-academico autofocus
+      <historial-academico
                            v-if="showHistorialAcademico"
                            :student="currentUser"
                            @cancel-academic="hideAllComponents()"
       ></historial-academico>
-      <ene-historic autofocus
+      <ene-historic ref="historialacademico"
                     v-if="showENEHistoric"
                     :student="currentUser"
                     @cancel-historic="hideAllComponents()"

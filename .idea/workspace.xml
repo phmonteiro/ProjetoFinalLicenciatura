@@ -4,7 +4,7 @@
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/setInteraction.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/setInteraction.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/historialAcademicoENE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/historialAcademicoENE.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +160,7 @@
       <workItem from="1593079045352" duration="23187000" />
       <workItem from="1593110178590" duration="786000" />
       <workItem from="1593187131376" duration="8075000" />
-      <workItem from="1593272777308" duration="6817000" />
+      <workItem from="1593272777308" duration="7449000" />
     </task>
     <servers />
   </component>
@@ -215,10 +215,11 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="366" y="190" width="1366" height="768" key="dock-window-1/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1587043529797" />
-    <state x="1952" y="69" width="807" height="804" key="find.popup" timestamp="1593100282597">
-      <screen x="1366" y="0" width="1920" height="1080" />
+    <state x="417" y="361" width="724" height="572" key="find.popup" timestamp="1593283359689">
+      <screen x="0" y="312" width="1366" height="768" />
     </state>
     <state x="608" y="162" width="807" height="783" key="find.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590011012823" />
+    <state x="417" y="361" width="724" height="572" key="find.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593283359689" />
     <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593100282597" />
     <state x="1990" y="231" width="672" height="677" key="run.anything.popup" timestamp="1592422153844">
       <screen x="1366" y="0" width="1920" height="1080" />
