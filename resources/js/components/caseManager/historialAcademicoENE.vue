@@ -3,7 +3,7 @@
 
         <div class="container mt-3">
             <div class="form-group">
-                <label for="inputName">Nome</label>
+                <label ref="nome" for="inputName">Nome</label>
                 <input
                     type="text"
                     class="form-control"
@@ -100,9 +100,11 @@
                 })
         },
     },
+      mounted(){
+        this.$refs.nome.$el.focus();
+      },
     created(){
         this.getHistorialAcademico();
-        this.$nextTick(() => this.$refs.historialacademico.$el.focus());
 
     },
 
