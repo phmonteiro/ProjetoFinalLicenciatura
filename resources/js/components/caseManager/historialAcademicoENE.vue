@@ -100,9 +100,6 @@
                 })
         },
     },
-      mounted(){
-          this.$nextTick(() => this.$refs.nome.$el.focus());
-      },
     created(){
         this.getHistorialAcademico();
 
