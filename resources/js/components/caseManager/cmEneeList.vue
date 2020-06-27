@@ -347,9 +347,9 @@
                 break;
             case "newInteraction":
                 this.currentUser = Object.assign({}, row);
-                this.showNewInteraction=true;
                 console.log(this.$refs.newInteraction);
                 console.log("AAAA");
+                this.showNewInteraction=true;
                 break;
             case "managePlan":
                 this.currentUser = Object.assign({}, row);
