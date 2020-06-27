@@ -101,7 +101,7 @@
         },
     },
       mounted(){
-          this.$nextTick(() => this.$refs.nome.$el.children[0].focus());
+          this.$nextTick(() => this.$refs.nome.$el.focus());
       },
     created(){
         this.getHistorialAcademico();
