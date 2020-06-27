@@ -152,6 +152,14 @@ export default {
       files: [],
     };
   },
+    directives: {
+        focus: {
+            // directive definition
+            inserted: function (el) {
+                el.focus()
+            }
+        }
+    },
   methods: {
     cancel() {
       this.resetFields();
