@@ -69,7 +69,7 @@ Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 // eslint-disable-next-line camelcase
-import {required, email, regex, alpha, digits, numeric, alpha_spaces, max, min, alpha_num} from 'vee-validate/dist/rules';
+import {required, email, regex, alpha, digits, numeric, alpha_spaces, between, max, min, alpha_num} from 'vee-validate/dist/rules';
 import {localize} from 'vee-validate';
 import en from 'vee-validate/dist/locale/en.json';
 import pt from 'vee-validate/dist/locale/pt_PT.json';
