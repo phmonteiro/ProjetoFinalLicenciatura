@@ -13,6 +13,7 @@
     </b-container>
     <div class="container">
       <h2>Lista de pedidos</h2>
+        <hr v-if="!requests">
       <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">
         <template v-slot:cell(actions)="row">
           <b-row class="text-center">

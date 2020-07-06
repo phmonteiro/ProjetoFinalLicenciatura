@@ -2,7 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/isCaseManagerOrDirector.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Student_Supports.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Student_Supports.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/edit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/edit.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/historialAcademicoENE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/historialAcademicoENE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/interactionsDetails.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/interactionsDetails.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/setMeeting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/setMeeting.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/showENEHistoric.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/showENEHistoric.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/studentSupportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/studentSupportHours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/subHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/subHistory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/editENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/editENEE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/contactDetails.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/contactDetails.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +183,9 @@
       <workItem from="1593079045352" duration="23187000" />
       <workItem from="1593110178590" duration="786000" />
       <workItem from="1593187131376" duration="8075000" />
-      <workItem from="1593272777308" duration="14972000" />
+      <workItem from="1593272777308" duration="15573000" />
+      <workItem from="1593525122290" duration="672000" />
+      <workItem from="1594043933483" duration="9770000" />
     </task>
     <servers />
   </component>
@@ -213,9 +240,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="366" y="190" width="1366" height="768" key="dock-window-1/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1587043529797" />
-    <state x="417" y="361" width="724" height="572" key="find.popup" timestamp="1593283359689">
-      <screen x="0" y="312" width="1366" height="768" />
+    <state x="417" y="74" width="724" height="554" key="find.popup" timestamp="1594065503585">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
+    <state x="417" y="74" width="724" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1594065503585" />
     <state x="608" y="162" width="807" height="783" key="find.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590011012823" />
     <state x="417" y="361" width="724" height="572" key="find.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593283359689" />
     <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593100282597" />
@@ -224,13 +252,13 @@
     </state>
     <state x="624" y="252" key="run.anything.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186517315" />
     <state x="1990" y="231" width="672" height="677" key="run.anything.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1592422153844" />
-    <state x="443" y="481" width="672" height="495" key="search.everywhere.popup" timestamp="1593280972901">
-      <screen x="0" y="312" width="1366" height="768" />
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup" timestamp="1594044533426">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1589210468764" />
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1594044533426" />
     <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186512459" />
     <state x="443" y="481" width="672" height="495" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593280972901" />
-    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593110286350" />
+    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593525139562" />
     <state x="2051" y="460" width="540" height="193" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1592491918706">
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>

@@ -59,12 +59,10 @@
 
 <script>
   export default {
-    props:["student"],
+    props:["student","historial","loading"],
     name: 'historialAcademicoENE',
     data(){
         return{
-            loading:true,
-            historial:[],
             fields: [
                 {
                     key: "nome",
@@ -88,21 +86,6 @@
         cancel(){
             this.$emit("cancel-academic");
         },
-        getHistorialAcademico() {
-            axios
-                .get('api/getAcademicRecord/'+this.student.id)
-                .then(response=>{
-                    this.historial = response.data;
-                    this.loading=false;
-                })
-                .catch(error=>{
-                    console.log(error)
-                })
-        },
-    },
-    created(){
-        this.getHistorialAcademico();
-
     },
 
   };

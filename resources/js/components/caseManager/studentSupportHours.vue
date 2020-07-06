@@ -5,7 +5,7 @@
             <b-col></b-col>
             <b-col>
                 <div class="loader">
-                    <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
+                    <ClipLoader sizeUnit="px" class="loading" v-if="supportHoursLoading" :size="50" />
                 </div>
             </b-col>
             <b-col></b-col>
@@ -32,6 +32,9 @@
                         </template>
                     </b-table>
                 </div>
+                <div v-else>
+                    <h4>O estudante não tem Unidades Curriculares atribuídas.</h4>
+                </div>
             </b-col>
         </b-row>
         <div class="text-center">
@@ -44,13 +47,9 @@
 <script>
   export default {
     name: 'studentSupportHours',
-    props:['student'],
+      props: ["loading", "student", "supports", "totalHours", "supportHoursLimit"],
     data: function(){
         return {
-            loading:true,
-            supports: null,
-            totalHours:null,
-            supportHoursLimit:null,
             user:null,
             fields: [
                 {
@@ -69,44 +68,17 @@
                     sortable: true
                 }
             ]
-
         };
     }  ,
       methods:{
         cancel(){
             this.$emit("cancel-show-hours");
         },
-          getTotalHours(){
-              axios
-                  .get("api/getTotalSupportHours/"+this.student[0].id)
-                  .then(response => {
-                      this.supportHoursLimit = response.data})
-                  .catch(error => {
-                      console.log(error)
-                  })
-          },
-          getHours() {
-
-              axios
-                  .get("api/supportHours/"+this.student[0].id)
-                  .then(response => {
-                      this.loading = false;
-                      this.totalHours = 0;
-                      this.supports = response.data;
-
-                      this.supports.forEach(element => {
-                          this.totalHours += element.hours;
-                      });
-                  })
-                  .catch(error => {
-                      console.log(error);
-                  });
-          },
       },
-      created() {
-          this.getHours();
-          this.getTotalHours();
-      }
+    computed: { supportHoursLoading: function() {
+        return this.loading;
+        }
+    },
   };
 </script>
 

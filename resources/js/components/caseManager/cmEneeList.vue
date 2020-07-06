@@ -215,10 +215,13 @@
       </nav>
     </div>
       <br>
-      <show-hours
-                  :student="enee"
+      <show-hours :student="enee"
                   v-if="showStudentHours"
-                  @cancel-show-hours="hideAllComponents()">
+                  :supports="supports"
+                  :totalHours="totalHours"
+                  :supportHoursLimit="supportHoursLimit"
+                  @cancel-show-hours="hideAllComponents()" >
+
       </show-hours>
       <manage-plan
                    v-if="showPlan"
@@ -226,11 +229,12 @@
                    :plan="currentPlan"
                    @cancel-edit2="hideAllComponents()">
       </manage-plan>
-      <set-inter v-focus
-                 v-if="showNewInteraction"
-                 :user="currentUser"
-                 @save-interaction="saveInteraction"
-                 @cancel-edit="hideAllComponents()">
+      <set-inter
+          v-focus
+          v-if="showNewInteraction"
+          :user="currentUser"
+          @save-interaction="saveInteraction"
+          @cancel-edit="hideAllComponents()">
       </set-inter>
       <increase-hours
                       v-if="showIncreaseHours"
@@ -245,15 +249,18 @@
                          @cancel-edit="hideAllComponents()"
     ></interactionsDetails>
       <historial-academico
-                           v-if="showHistorialAcademico"
-                           :student="currentUser"
-                           @cancel-academic="hideAllComponents()"
-      ></historial-academico>
-      <ene-historic ref="historialacademico"
-                    v-if="showENEHistoric"
-                    :student="currentUser"
-                    @cancel-historic="hideAllComponents()"
-      >
+          v-if="showHistorialAcademico"
+          :historial="historial"
+          :loading="historialLoading"
+          :student="currentUser"
+          @cancel-academic="hideAllComponents()" >
+      </historial-academico>
+      <ene-historic
+          v-if="showENEHistoric"
+          :student="currentUser"
+          :historic="historic"
+          :loading="historicLoading"
+          @cancel-historic="hideAllComponents()" >
       </ene-historic>
   </div>
 </template>
@@ -264,6 +271,14 @@
     export default {
   data() {
     return {
+      historial: [],
+      historic: [],
+      supportHoursLimit: null,
+      supports: [],
+      totalHours: null,
+      historialLoading: false,
+      historicLoading: false,
+      showStudentHoursLoading: false,
       yourTimeValue: {},
       pagination: {},
       loading: true,
@@ -271,7 +286,7 @@
       fields: [
         {
           key: "name",
-          label: "Nome Estudande",
+          label: "Nome Estudante",
           sortable: true
         },
         {
@@ -341,12 +356,14 @@
 
         switch(componentName){
             case "supportHours":
-                this.student=row;
+                this.currentUser = Object.assign({}, row);
                 this.showStudentHours = true;
+                this.getHours();
+                this.getTotalHours();
                 break;
             case "increaseSupportHours":
-                this.showIncreaseHours=true;
                 this.currentUser = Object.assign({}, row);
+                this.showIncreaseHours=true;
                 break;
             case "seeInteractions":
                 this.currentUser = Object.assign({}, row);
@@ -365,10 +382,12 @@
             case "academicHistorial":
                 this.currentUser = Object.assign({}, row);
                 this.showHistorialAcademico=true;
+                this.getHistorialAcademico();
                 break;
             case "showENEHistoric":
-                this.showENEHistoric=true;
                 this.currentUser = Object.assign({}, row);
+                this.showENEHistoric=true;
+                this.getENEHistoric();
         }
     },
 
@@ -388,6 +407,58 @@
                 console.log(error);
             })
     },
+      getHours() {
+        axios
+            .get("api/supportHours/" + this.currentUser.id)
+            .then(response => {
+                this.loading = false;
+                this.totalHours = 0;
+                this.supports = response.data;
+                this.supports.forEach(element => {
+                    this.totalHours += element.hours;
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+      getENEHistoric() {
+        axios
+            .get("api/getENEHistories/" + this.currentUser.email)
+            .then(response => {
+                this.historic = response.data;
+                this.historicLoading = false;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+      getHistorialAcademico() {
+        this.historialLoading = true;
+        this.historial = [];
+
+        axios
+            .get("api/getAcademicRecord/" + this.currentUser.id)
+            .then(response => {
+                this.historial = response.data;
+                this.historialLoading = false;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+      getTotalHours() {
+        this.showStudentHoursLoading = true;
+        axios
+            .get("api/getTotalSupportHours/" + this.currentUser.id)
+            .then(response => {
+                this.supportHoursLimit = response.data;
+                this.showStudentHoursLoading = false;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
     getCmEnee() {
       axios
         .get("api/getCmEnee/" + this.user.id)

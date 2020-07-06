@@ -25,11 +25,11 @@
     </div>
 
     <div class="form-group">
-      <label for="inputType">Tipo de utilizador:</label>
-      <select class="form-control" v-model="user.type" id="type" name="type">
+      <label for="type">Tipo de utilizador:</label>
+      <select class="form-control" v-model="user.type" :disabled="user.type==='Estudante'" id="type" name="type">
         <option value="Administrator">Administrador</option>
         <option value="Services">Serviços</option>
-        <option value="Estudante">Estudante</option>
+<!--        <option value="Estudante">Estudante</option>-->
         <option value="Director">Diretor</option>
         <option value="CaseManagerResponsible">Responsável Gestor de Caso</option>
         <option value="CaseManager">Gestor de Caso</option>

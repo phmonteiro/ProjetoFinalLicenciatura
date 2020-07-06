@@ -80,7 +80,8 @@ class Kernel extends HttpKernel
         'isStudentOrDirector' => \App\Http\Middleware\isStudentOrDirector::Class,
         'isStudentOrCaseManager' => \App\Http\Middleware\isStudentOrCaseManager::Class,
         'isCaseManagerOrCaseManagerResponsible'=> \App\Http\Middleware\isCaseManagerOrCaseManagerResponsible::Class,
-        'isStudentWithoutENEStatus' => \App\Http\Middleware\isStudentWithoutENEStatus::Class
+        'isStudentWithoutENEStatus' => \App\Http\Middleware\isStudentWithoutENEStatus::Class,
+        'isCaseManagerOrDirector' => \App\Http\Middleware\isCaseManagerOrDirector::Class
 
     ];
 

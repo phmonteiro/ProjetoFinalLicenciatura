@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('substitutions:end')->cron("* * * * *");
         $schedule->command('notify:teachers-semester')->cron("0 0 16 9 *");
         $schedule->command('notify:teachers-semester')->cron("0 0 1 3 *");
+//         $schedule->command('expire:ene')->cron("* * * * *");
     }
 
     /**

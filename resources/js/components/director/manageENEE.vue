@@ -13,7 +13,8 @@
     </b-container>
     <div class="container">
       <h2>Lista de ENE</h2>
-      <b-table striped hover v-if="enee" :items="enee" :fields="fields">
+        <hr v-if="!enee" />
+        <b-table striped hover v-if="enee" :items="enee" :fields="fields">
         <template v-slot:cell(enee)="{ value }">
           <p v-if="value==='awaiting'">A aguardar</p>
           <p v-if="value==='denied'">Reprovado</p>
@@ -28,7 +29,7 @@
         </template>
       </b-table>
         <h4 v-else>Não existem ENEs registados na plataforma</h4>
-      <nav aria-label="Page navigation" v-if="enee">
+        <nav aria-label="Page navigation" v-if="enee">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
             <a

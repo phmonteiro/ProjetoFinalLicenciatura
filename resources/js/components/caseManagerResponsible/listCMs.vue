@@ -5,6 +5,7 @@
         <button v-if="!emailMainCMActiveSubstitution.includes(row.item.email)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
     </template>
 </b-table>
+    <h4 v-else>De momento não há Gestores de Caso na plataforma.</h4>
 
 
     <div v-if="showSubstitutes">

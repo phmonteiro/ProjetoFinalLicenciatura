@@ -53,13 +53,13 @@
           <!-- <date-picker v-model="data.date" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker> -->
           <!-- <div v-for="type in types" :key="type"> -->
 
-          <label for="meetingDate">Data</label>
+          <label>Data</label>
           <b-form-input class="col-md-2" name="meetingDate" id="meetingDate" type="date" v-model="data.date"></b-form-input>
           <!-- </div> -->
         <br>
           <!-- <date-picker v-model="data.date" valuetype="'YYYY-MM-DD'" type="date" format='YYYY-MM-DD' lang="pt-br"></date-picker> -->
               <!-- <div v-for="type in types" :key="type"> -->
-            <label for="meetingTime">Hora</label><br>
+            <label>Hora</label><br>
         <vue-timepicker :minute-interval="5" format="HH:mm" v-model="data.time" id="meetingTime" name="meetingTime">
         </vue-timepicker>
               <!-- </div> -->
@@ -106,8 +106,14 @@ export default {
     cancel() {
       this.$emit("cancel-edit");
     },
-    save: function() {
-      this.$emit("save-meeting", this.data);
+      save: function() {
+        if (new Date(this.data.date) < Date.now()) {
+            this.$toasted.error( "Para agendar uma reunião tem de indicar uma data igual ou superior à data de hoje", {                     duration: 40000,
+                position: "top-center",
+                theme: "bubble" });
+        } else {
+            this.$emit("save-meeting", this.data);
+        }
     }
   },
   mounted() {}

@@ -25,6 +25,9 @@
       />
     </div>
 
+      <br v-if="!isInteractions" />
+
+    <div v-if="isInteractions">
     <b-container v-for="inter in interactions" :key="inter.id">
       <b-row>
         <b-col>
@@ -55,8 +58,9 @@
       </div>
       <div class="dropdown-divider"></div>
     </b-container>
-
-    <div class="form-group text-center">
+    </div>
+        <h4 style="text-align: center" v-else>Ainda não houve alguma interação com o ENE.</h4>
+        <div class="form-group text-center">
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Fechar</button>
     </div>
   </div>
@@ -103,6 +107,14 @@ export default {
           );
         });
     }
+  },
+    computed: {
+      isInteractions: function() {
+           if (this.interactions == null || this.interactions.length === 0) {
+               return null;
+           }
+           return true;
+      }
   }
 };
 </script>

@@ -25,25 +25,28 @@
       />
     </div>
 
-    <b-form-group label="Apoios ao estudante">
-      <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>
-    </b-form-group>
+<!--    <b-form-group label="Apoios ao estudante">-->
+<!--      <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>-->
+<!--    </b-form-group>-->
+      <b-form-group label="Apoios ao estudante">
+          <b-form-checkbox v-model="studentSupports" :value="option.supportId" v-for="option in options" :key="option.supportId" >{{ option.supportName }}</b-form-checkbox>
+      </b-form-group>
 
-    <div class="form-group" v-if="studentTutor!=null">
-      <label for="inputTutor">Professor Orientador</label>
-      <li>{{studentTutor}}</li>
-    </div>
+      <div class="form-group" v-if="studentTutor!=null">
+      <label for>Professor Orientador</label>
+          <li>{{ studentTutor.name }} - {{studentTutor.email}}</li>
+      </div>
 
 
     <div class="form-group">
-      <label for="inputTutor">Alterar/Atribuir Professor Orientador</label>
+      <label for>Alterar/Atribuir Professor Orientador</label>
       <input
         type="email"
         class="form-control"
         v-model="data.tutor"
         name="tutor"
         id="tutor"
-        placeholder="professor.orientador@my.ipleiria.pt"
+        placeholder="nome.professor@ipleiria.pt"
       />
     </div>
 

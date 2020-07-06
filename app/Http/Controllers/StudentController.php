@@ -346,6 +346,7 @@ class StudentController extends Controller
         $meeting->studentId = $user->id;
         $meeting->email = $user->email;
         $meeting->name = $user->name;
+        $meeting->requestDate = Carbon::now();
         $meeting->service = $dados['service'];
         $meeting->comment = $dados['comment'];
         $meeting->save();

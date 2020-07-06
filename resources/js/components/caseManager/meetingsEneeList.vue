@@ -95,14 +95,14 @@
                         </template>
                         <template slot="row-details" slot-scope="row">
                             <b-card>
-                                <b-row class="mb-2">
+                                <b-row v-if="showScheduled"  class="mb-2">
                                     <b-col class="text">
                                         <b>Informação:</b>
                                         {{ row.item.info }}
                                     </b-col>
                                 </b-row>
 
-                                <b-row class="mb-2">
+                                <b-row v-if="showScheduled"  class="mb-2">
                                     <b-col class="text">
                                         <b>Local:</b>
                                         {{ row.item.place }}
@@ -110,8 +110,12 @@
                                 </b-row>
                                 <b-row class="mb-2">
                                     <b-col class="text">
-                                        <b>Comentário:</b>
-                                        {{ row.item.comment }}
+                                        <b>Comentário do ENE sobre o pedido de reunião:</b>
+                                        <br />
+                                        <div style="padding-left: 4em;">
+                                            {{ row.item.comment }}
+                                        </div>
+                                        <br />
                                     </b-col>
                                 </b-row>
                                 <b-row class="text-center mb-2">
@@ -192,7 +196,7 @@ export default {
             fields: [
                 {
                     key: "name",
-                    label: "Nome Estudande",
+                    label: "Nome Estudante",
                     sortable: true
                 },
                 {
@@ -203,6 +207,11 @@ export default {
                 {
                     key: "service",
                     label: "Servico",
+                    sortable: true
+                },
+                {
+                    key: "requestDate",
+                    label: "Data do Pedido",
                     sortable: true
                 },
                 {

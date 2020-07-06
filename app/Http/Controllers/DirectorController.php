@@ -86,13 +86,13 @@ class DirectorController extends Controller
             }
         }
 
-        $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('support_value')->toArray();
+        $existingSupports = Student_Supports::where('email', $dados['email'])->pluck('id_support')->toArray();
 
         if (sizeof($existingSupports) == 0) {
             foreach ($dados['supports'] as &$support) {
                 $newStudent_Supports = new Student_Supports();
                 $newStudent_Supports->email = $dados['email'];
-                $newStudent_Supports->support_value = $support;
+                $newStudent_Supports->id_support = $support;
                 $newStudent_Supports->save();
             }
         }
@@ -102,7 +102,7 @@ class DirectorController extends Controller
             foreach ($newSupports as &$support) {
                 $newStudent_Supports = new Student_Supports();
                 $newStudent_Supports->email = $dados['email'];
-                $newStudent_Supports->support_value = $support;
+                $newStudent_Supports->id_support = $support;
                 $newStudent_Supports->save();
             }
         }
@@ -110,7 +110,7 @@ class DirectorController extends Controller
         if (sizeof($existingSupports) != 0) {
             $newSupports = array_diff($existingSupports, $dados['supports']);
             foreach ($newSupports as &$support) { //Duvida no &$
-                Student_Supports::where('email', $dados['email'])->where('support_value', $support)->delete();
+                Student_Supports::where('email', $dados['email'])->where('id_support', $support)->delete();
             }
         }
         $history = new History();

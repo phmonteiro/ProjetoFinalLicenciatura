@@ -14,7 +14,6 @@
               <ValidationProvider name="service" rules="required" v-slot="{ errors }">
                   <b-form-select
                       v-model="meeting.service"
-                      v-validate="'required'"
                       name="service"
                       class="mb-3"
                       aria-label="Escolher serviço"
@@ -36,7 +35,6 @@
               <ValidationProvider name="comment" rules="required" v-slot="{ errors }">
             <textarea
                 aria-label="Texto para escrever o comentário"
-                v-validate="'required'"
                 class="form-control"
                 id="decision"
                 v-model="meeting.comment"

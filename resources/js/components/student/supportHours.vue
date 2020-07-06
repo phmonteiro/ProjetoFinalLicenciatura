@@ -34,6 +34,9 @@
               </template>
             </b-table>
           </div>
+          <div v-else>
+              <h4>Não está inscrito em quaisquer Unidades Curriculares.</h4>
+          </div>
         </b-col>
       </b-row>
     </b-container>

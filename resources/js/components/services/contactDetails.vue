@@ -11,9 +11,11 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <div class="container" v-if="user && history">
-      <b-table striped hover :items="history" :fields="fields"></b-table>
-    </div>
+      <hr v-if="!history || history.length===0">
+      <b-table v-if="history" striped hover :items="history" :fields="fields">
+
+      </b-table>
+      <h4 v-else>O ENE não tem histórico na plataforma.</h4>
   </div>
 </template>
 

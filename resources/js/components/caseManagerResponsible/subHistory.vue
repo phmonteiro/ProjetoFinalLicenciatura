@@ -1,5 +1,6 @@
 <template>
     <div>
+        <br>
         <h3>Histórico de Substituições</h3>
         <div class="loader">
             <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
@@ -7,6 +8,8 @@
         <b-table striped hover v-if="substitutions!=null" :items="substitutions" :fields="fields">
 
         </b-table>
+        <h4 v-else>Ainda não foi realizada qualquer substituição.</h4>
+
         <nav aria-label="Page navigation" v-if="substitutions">
             <ul class="pagination">
                 <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

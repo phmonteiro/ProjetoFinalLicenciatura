@@ -16,6 +16,7 @@
         <b-col class="top100">
           <div v-if="meetings">
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
+              <hr v-if="meetings == null">
               <br>
             <b-table id="meetingsTable" striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
               <template v-slot:cell(actions)="row">
@@ -50,6 +51,7 @@
                 </b-card>
               </template>
             </b-table>
+              <h4 v-else>Não existem pedidos de agendamento de reunião de momento.</h4>
             <nav aria-label="Page navigation">
               <ul class="pagination">
                 <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
@@ -136,7 +138,7 @@ export default {
         .get(page_url)
         .then(response => {
           this.loading = false;
-          this.meetings = response.data.data;
+          this.meetings = response.data.data.length === 0 ? null : response.data.data;
           console.log(this.meetings);
 
           pg.makePagination(response.data.meta, response.data.links);

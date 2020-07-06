@@ -42,8 +42,9 @@
             <b-button @click="cancel()">Fechar</b-button>
         </div>
         <br>
-        <b-table striped hover :items="historic" :fields="fields">
+        <b-table v-if="historic!=null && historic.length>0" striped hover :items="historic" :fields="fields">
         </b-table>
+        <h4 v-else>Não existe histórico para mostrar.</h4>
         <div v-if="historic" class="text-center">
             <b-button @click="cancel()">Fechar</b-button>
         </div>
@@ -52,12 +53,10 @@
 
 <script>
     export default {
-        props:["student"],
+        props:["student","historic","loading"],
         name: 'showENEHistoric',
         data(){
             return{
-                loading:true,
-                historic:[],
                 fields: [
                     {
                         key: "date",
@@ -76,23 +75,8 @@
             cancel(){
                 this.$emit("cancel-historic");
             },
-            getENEHistoric() {
-                axios
-                    .get('api/getENEHistories/'+this.student.email)
-                    .then(response=>{
-                        this.historic = response.data;
-                        this.loading=false;
-                    })
-                    .catch(error=>{
-                        console.log(error)
-                    })
-            },
         },
-        created(){
-            this.getENEHistoric();
-        },
-
-    };
+        };
 </script>
 
 <style scoped>

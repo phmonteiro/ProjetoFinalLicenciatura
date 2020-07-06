@@ -98,7 +98,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCoordinator')->patch('denyEneeStatus/{id}', 'CoordinatorController@deny');
 
     //Case managers Responsible
-    Route::middleware('isCaseManager')->get('getStudentSupports/{email}', 'SupportController@getSupportsByStudent');
+    Route::middleware('isCaseManagerOrDirector')->get('getStudentSupports/{email}', 'SupportController@getSupportsByStudent');
     Route::middleware('isCaseManagerResponsible')->get('getEneWithoutCaseManager', 'CaseManagerResponsibleController@getEneWithoutCaseManager');
     Route::middleware('isCaseManagerResponsible')->get('substitutionsHistory', 'CaseManagerResponsibleController@substitutionsHistory');
     Route::middleware('isCaseManagerResponsible')->get('getActiveSubstitutions', 'CaseManagerResponsibleController@getActiveSubstitutions');

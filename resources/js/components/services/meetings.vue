@@ -13,7 +13,8 @@
     </b-container>
     <div class="container" v-if="this.meetings">
       <h2>Pedidos Reuniao</h2>
-      <b-table striped hover :items="meetings" :fields="fields">
+        <hr v-if="!meetings || meetings.length===0">
+        <b-table v-if="meetings" striped hover :items="meetings" :fields="fields">
         <template v-slot:cell(actions)="row">
           <button
             type="button"
@@ -52,10 +53,10 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="decision">Informação adicional:</label>
+                    <label for="additionalInfo">Informação adicional:</label>
                     <textarea
                       class="form-control"
-                      id="decision"
+                      id="additionalInfo"
                       v-model="meeting.info"
                       name="decision"
                       rows="3"
@@ -88,6 +89,8 @@
           </div>
         </template>
       </b-table>
+        <h4 v-else>Não existem reuniões para mostrar.</h4>
+
       <nav aria-label="Page navigation">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

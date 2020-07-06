@@ -11,7 +11,7 @@ class Student_Supports extends Model
 
     public function support()
     {
-        return $this->belongsTo('App\Supports', 'support_value',  'value');
+        return $this->belongsTo('App\Supports', 'id_support',  'id');
     }
 }
 
