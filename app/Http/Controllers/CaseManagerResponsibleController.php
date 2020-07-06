@@ -227,7 +227,7 @@ class CaseManagerResponsibleController extends Controller
 
             $studentEmailsWithCaseManager = CaseManager::select('studentEmail')->get()->toArray();
 
-            $studentsEmail = User::where('type','=','Estudante')->whereNotIn('email',$studentEmailsWithCaseManager)->paginate(10);
+            $studentsEmail = User::where('type','=','Estudante')->where('enee','=','approved')->whereNotIn('email',$studentEmailsWithCaseManager)->paginate(10);
 
             return response()->json($studentsEmail,200);
         }
