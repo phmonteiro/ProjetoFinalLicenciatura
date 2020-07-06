@@ -31,7 +31,10 @@ class CaseManagerResponsibleController extends Controller
 
     public function getStudents()
     {
-        $students = User::where('type', 'Estudante')->where('enee', 'approved')->paginate(10);
+        $enesWithCM = CaseManager::groupBy('studentEmail')->pluck('studentEmail')->toArray();
+
+        $students = User::whereIn('email', $enesWithCM)->where('enee', 'approved')->paginate(10);
+
         return response()->json(new UserResource($students), 200);
     }
 
