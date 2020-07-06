@@ -188,6 +188,7 @@ extend('alpha_spaces', alpha_spaces);
 extend('max', max);
 extend('min', min);
 extend('alpha_num', alpha_num);
+extend('between', between);
 
 extend('isDefault', {
   message: 'Tem de selecionar um Gestor de Caso',

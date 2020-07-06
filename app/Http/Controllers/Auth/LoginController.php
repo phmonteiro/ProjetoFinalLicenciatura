@@ -105,11 +105,12 @@ class LoginController extends Controller
                 $user->nif = $webServiceUserInfo['NR_CONTRIB'];
                 $user->area = $webServiceUserInfo['DISTRITO'];
 
-                if(Carbon::parse($user->eneeExpirationDate)->isPast()){
-                    $user->enee = "expired";
-                    $user->save();
+                if($user->eneeExpirationDate!=null){
+                    if(Carbon::parse($user->eneeExpirationDate)->isPast()){
+                        $user->enee = "expired";
+                        $user->save();
+                    }
                 }
-
                 $user->save();
 
                 $mostRecentAccountId = User::where('nif','=',$webServiceUserInfo['NR_CONTRIB'])->whereNull('inactive')->max('id');

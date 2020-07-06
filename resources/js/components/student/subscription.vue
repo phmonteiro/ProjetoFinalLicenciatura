@@ -170,7 +170,7 @@
                   <div class="col">
                     <label for="number">{{$t('numero_identificação')}}</label>
 
-                      <ValidationProvider name="identificationNumber" rules="required|alpha_num|digits:8" v-slot="{ errors }">
+                      <ValidationProvider name="identificationNumber" rules="required|alpha_num" v-slot="{ errors }">
                           <input
                               class="form-control"
                               name="ID Number"
@@ -234,7 +234,7 @@
                 <div class="row">
                   <div class="col">
                     <label for="year">{{$t('ano_curricular')}}</label>
-                      <ValidationProvider name="curricularYear" rules="required|digits:4|numeric" v-slot="{ errors }">
+                      <ValidationProvider name="curricularYear" rules="required|between:1,5|numeric" v-slot="{ errors }">
                           <input
                               min="2000"
                               class="form-control"
@@ -385,7 +385,6 @@
                   </div>
                 </div>
               </div>
-<!--            asdddddddddddddddddddd-->
                 <div v-if="isNotApproved">
               <div class="dropdown-divider"></div>
 
