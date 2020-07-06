@@ -11,7 +11,9 @@
         <b-col></b-col>
       </b-row>
     <div class="container">
-      <h2>Lista de estudantes</h2>
+        <br>
+      <h3>Lista de estudantes</h3>
+        <hr v-if="users==null || users.length===0">
       <b-table striped hover v-if="users!=null && users.length>0" :items="users" :fields="fields">
           <template v-slot:cell(actions)="row">
               <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir Gestores de Caso</button>
