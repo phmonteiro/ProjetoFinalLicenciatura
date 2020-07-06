@@ -17,6 +17,8 @@
               <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir Gestores de Caso</button>
           </template>
       </b-table>
+        <h5 v-else>Neste momento não existem  ENEs com Gestores de Caso atribuídos.</h5>
+
         <nav aria-label="Page navigation" v-if="users">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">

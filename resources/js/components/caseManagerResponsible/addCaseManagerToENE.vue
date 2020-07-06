@@ -2,7 +2,7 @@
     <div>
     <h3>Lista de ENEs sem Gestor de Caso</h3>
         <br>
-    <b-table striped hover v-if="users!=null" :items="users" :fields="fields">
+    <b-table striped hover v-if="users!=null && users.length>0" :items="users" :fields="fields">
         <template v-slot:cell(actions)="row">
             <button class="btn btn-secondary" v-on:click.prevent="addCM(row.item)">Atribuir</button>
         </template>
