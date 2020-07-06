@@ -14,9 +14,11 @@
 <!--    <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>-->
     <div class="container">
       <h2>Lista de ENEs por Gestores de Caso</h2>
-      <b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
+      <b-table striped hover v-if="caseManagers!=null && caseManagers.length>0" :items="caseManagers" :fields="fields">
 
       </b-table>
+        <h4 v-else>Não existem Gestores de Caso com ENEs atribuídos.</h4>
+
       <nav aria-label="Page navigation" v-if="caseManagers">
         <ul class="pagination">
           <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
