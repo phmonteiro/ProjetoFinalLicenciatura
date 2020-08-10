@@ -8,25 +8,27 @@
               <font-awesome-icon icon="bars" size="lg" />
             </a>
             <div class="sidenav" :class="{ active: active}">
-              <router-link class="nav-link" :to="{name: 'contact'}">{{ $t('contatos') }}</router-link>
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'contact'}">{{ $t('contatos') }}</router-link>
 
-              <router-link class="nav-link" :to="{name: 'myMeetings'}">{{ $t('reuniões') }}</router-link>
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'myMeetings'}">{{ $t('reuniões') }}</router-link>
 
-              <router-link class="nav-link" :to="{name: 'setMeeting'}">{{ $t('agendar_reunião') }}</router-link>
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'setMeeting'}">{{ $t('agendar_reunião') }}</router-link>
 
               <router-link
+                @click.native="toggleNav()"
                 class="nav-link"
                 :to="{name: 'usedServices'}"
               >{{ $t('apoios_usufruidos') }}</router-link>
 
               <router-link
+                @click.native="toggleNav()"
                 class="nav-link"
                 :to="{name: 'serviceRequest'}"
               >{{ $t('pedidos_apoios') }}</router-link>
 
-              <router-link class="nav-link" :to="{name: 'editProfile'}">{{ $t('editar_perfil') }}</router-link>
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'editProfile'}">{{ $t('editar_perfil') }}</router-link>
 
-              <router-link class="nav-link" :to="{name: 'supportHours'}">{{ $t('acompanhamento') }}</router-link>
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'supportHours'}">{{ $t('acompanhamento') }}</router-link>
             </div>
           </section>
           <b-col cols="12">

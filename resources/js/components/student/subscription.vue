@@ -170,7 +170,7 @@
                   <div class="col">
                     <label for="number">{{$t('numero_identificação')}}</label>
 
-                      <ValidationProvider name="identificationNumber" rules="required|alpha_num" v-slot="{ errors }">
+                          <ValidationProvider name="identificationNumber" rules="required|alpha_num" v-slot="{ errors }">
                           <input
                               class="form-control"
                               name="ID Number"

@@ -331,7 +331,7 @@ class StudentController extends Controller
     public function myMeetingsStudent()
     {
         $user = Auth::user();
-        return MeetingResource::collection(Meeting::where('email', $user->email)->Orderby('date')->paginate(10));
+        return MeetingResource::collection(Meeting::where('email', $user->email)->Orderby('date', 'desc')->paginate(10));
     }
 
     public function setMeeting(Request $request)
@@ -455,7 +455,6 @@ class StudentController extends Controller
             for ($i = 5; $i < sizeof($response); $i += 8) {
                 $subject = new Subject();
                 $subject->studentEmail = Auth::user()->email;
-                $subject->nome = trim(mb_convert_encoding($response[$i], 'UTF-8', 'html-entities'));
                 $subject->semester = $response[$i + 1];
                 $subject->hours = 0;
                 $subject->subjectCode = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));

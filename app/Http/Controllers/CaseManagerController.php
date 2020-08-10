@@ -117,9 +117,9 @@ class CaseManagerController extends Controller
        \Debugbar::info($request->requested);
 
     if($request->requested==0){
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNotNull('date')->paginate(10);
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNotNull('date')->orderBy('date','desc')->paginate(10);
 }else if($request->requested==1){
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNull('date')->paginate(10);
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNull('date')->orderBy('requestDate','asc')->paginate(10);
 }
 
         return response()->json($meetings, 200);

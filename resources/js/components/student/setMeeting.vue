@@ -25,7 +25,7 @@
                   </b-form-select>
                   <code>{{ errors[0] }}</code>
               </ValidationProvider>
-              <div v-if="meeting.service != null && meeting.service != 'Gestor-Caso'">
+              <div v-if="meeting.service != null && meeting.service != 'Gestor de Caso'">
                     <h4>Atenção: ao submeter um pedido de reunião com um docente, estará a enviar um correio electrónico para o docente seleccionado</h4>
               </div>
           </div>
@@ -80,7 +80,7 @@ export default {
 
                   this.loading =  false;
 
-                  this.serviceOptions.name.push("Gestor-Caso");
+                  this.serviceOptions.name.push("Gestor de Caso");
                   this.serviceOptions.email.push("Gestor-Caso");
 
                   this.teachers.forEach(teacher=>{
@@ -95,6 +95,9 @@ export default {
 
       },
     setMeeting() {
+        if(this.meeting.service == "Gestor de Caso")
+            this.meeting.service = "Gestor-Caso";
+
       axios
         .post("api/setMeeting", this.meeting)
         .then(response => {

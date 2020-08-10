@@ -25,12 +25,22 @@
       />
     </div>
 
-<!--    <b-form-group label="Apoios ao estudante">-->
-<!--      <b-form-checkbox-group v-model="studentSupports" :options="options" switches></b-form-checkbox-group>-->
-<!--    </b-form-group>-->
-      <b-form-group label="Apoios ao estudante">
-          <b-form-checkbox v-model="studentSupports" :value="option.supportId" v-for="option in options" :key="option.supportId" >{{ option.supportName }}</b-form-checkbox>
-      </b-form-group>
+      <div id="app">
+              <span v-for="category in categories">
+                  <li style="list-style-type:none">
+                      <label>
+                          {{category.name}}
+                      </label>
+                  </li>
+
+                  <ul>
+                          <b-form-checkbox disabled v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">
+                              {{ sup.name }}
+                          </b-form-checkbox>
+                  </ul>
+              </span>
+
+      </div>
 
       <div class="form-group" v-if="studentTutor!=null">
       <label for>Professor Orientador</label>
@@ -39,7 +49,8 @@
 
 
     <div class="form-group">
-      <label for>Alterar/Atribuir Professor Orientador</label>
+      <label v-if="studentTutor!=null">Substituir Professor Orientador</label>
+      <label v-if="studentTutor==null">Definir Professor Orientador</label>
       <input
         type="email"
         class="form-control"
@@ -61,6 +72,9 @@ export default {
   props: ["user", "studentSupports", "studentTutor"],
   data: function() {
     return {
+        selectedSupports:[],
+        selectedCategories:[],
+        categories:[],
       data: {
         tutor: ""
       },
@@ -105,20 +119,33 @@ export default {
       };
       this.$emit("save-user", data);
     },
-    getAllSupports() {
-      axios
-        .get("api/getSupports")
-        .then(response => {
-          this.options = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
+      getSupports(){
+          axios.get('api/getSupportsByCategory')
+              .then(response => {
+                  this.categories = response.data;
+              })
+              .catch(error=>{
+                  console.log(error);
+              });
 
+      },
+      getSupportsByStudent(){
+          axios
+              .get('api/getStudentSupports/'+this.user.email)
+              .then(response=>{
+                  let studentSupports = response.data;
+                  studentSupports.forEach(support=>{
+                      this.selectedSupports.push(support);
+                  })
+              })
+              .catch(error=>{
+                  console.log(error);
+              })
+      },
   },
   created() {
-    this.getAllSupports();
+    this.getSupports();
+    this.getSupportsByStudent();
   },
   computed: {
     state() {

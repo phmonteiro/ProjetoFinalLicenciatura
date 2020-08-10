@@ -116,6 +116,13 @@ export default {
         }
     }
   },
-  mounted() {}
+    updated(){
+        if(!this.meetingRequest) {
+            this.data.date = "";
+            this.data.place = "";
+            this.data.time = "";
+            this.data.info = "";
+        }
+    },
 };
 </script>

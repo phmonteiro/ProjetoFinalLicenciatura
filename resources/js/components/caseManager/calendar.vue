@@ -178,16 +178,17 @@
             },
             saveEvent() {
                 let data = this.event.startDate.split('T');
-
-                let hours = this.event.hours.HH+":"+this.event.hours.mm
+                let hours = null;
+                hours = this.event.hours.HH+":"+this.event.hours.mm;
                 this.event.hours = hours;
+                console.log(hours);
                 console.log(this.event);
                 axios
                     .post("api/addEvent", this.event)
                     .then(response => {
 
                         let event = {
-                            title: "Reunião com " + this.event.title,
+                            title: this.event.title,
                             start: data[0],
                             extendedProps:{
                                 hours:this.event.hours
@@ -195,6 +196,8 @@
                         };
 
                         this.calendarEvents.push(event);
+
+                        this.event.hours=null;
 
                         this.hideAddEvent();
 

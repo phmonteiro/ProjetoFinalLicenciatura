@@ -22,7 +22,7 @@ const messages = {
     apoio_componente_letiva: 'Apoio à componente letiva',
     apoio_sala_aula: 'Apoios em sala de aula',
     apoio_social: 'Apoio social',
-    apoios_usufruidos: 'Apoios usufruidos',
+    apoios_usufruidos: 'Apoios usufruídos',
     asperger: 'Síndrome de Asperger, Deficit atenção',
     audição: 'Audição',
     ação: 'Ações',

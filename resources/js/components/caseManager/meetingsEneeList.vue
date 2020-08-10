@@ -210,11 +210,6 @@ export default {
                     sortable: true
                 },
                 {
-                    key: "requestDate",
-                    label: "Data do Pedido",
-                    sortable: true
-                },
-                {
                     key: "date",
                     label: "Data",
                     sortable: true
@@ -222,6 +217,11 @@ export default {
                 {
                     key: "time",
                     label: "Hora",
+                    sortable: true
+                },
+                {
+                    key: "requestDate",
+                    label: "Data do Pedido",
                     sortable: true
                 },
                 {

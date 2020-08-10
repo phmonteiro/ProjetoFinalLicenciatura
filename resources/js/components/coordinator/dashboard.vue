@@ -7,7 +7,7 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link class="nav-link" :to="{name: 'eneeRequests'}">Pedidos a ENE</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'eneeRequests'}">Pedidos a ENE</router-link>
           </div>
         </section>
         <b-col cols="12">
