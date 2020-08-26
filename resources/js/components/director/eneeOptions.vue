@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group">
-      <label for="inputEmail">E-mail</label>
+      <label for>E-mail</label>
       <input
         type="text"
         class="form-control"
@@ -25,7 +25,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="inputNee">Necessidades específicas</label>
+      <label for>Necessidades específicas</label>
       <div v-for="aux in nee">
         <li>{{aux.name}}</li>
       </div>
@@ -50,7 +50,7 @@
         class="form-control"
         v-model="user.educationalSupport"
         name="functionalAnalysis"
-        id="functionalAnalysis"
+        id="inputAnalysis"
         disabled
       />
     </div>
@@ -59,25 +59,63 @@
       <button
         class="btn btn-secondary"
         v-on:click.prevent="downloadPDF(user.id)"
-        v-if="user.enee!='reproved'"
+        v-if="user.enee!=='reproved'"
       >Download ficheiros médicos</button>
     </div>
       <ValidationObserver v-slot="{ handleSubmit }">
-
       <div>
+
       <div class="form-group">
         <h4 for="coordinatorApproval">Parecer do coordenador de curso:</h4>
-        <p v-if="user.coordinatorApproval==1">
-          <span>Aprovado</span>
-        </p>
-        <p v-if="user.coordinatorApproval==0">
-          <span>Rejeitado</span>
-        </p>
-        <p v-if="user.coordinatorApproval==null">
-          <span>Pedido de parecer enviado automaticamente - a aguardar resposta</span>
-            <br>
-            <code v-if="showCoordinatorNoResponseError">O parecer do Coordenador de Curso ainda não foi emitido. Impossível avançar.</code>
-        </p>
+          <div v-if="coordinator.email!= null && coordinator.email!==''">
+              <span>Email do Coordenador de Curso de {{user.course}}: </span>
+              <b>{{coordinator.email}}</b>
+              <br>
+              <span v-if="coordinator.secondaryEmail">Email Secundário: </span>
+              <b>{{coordinator.secondaryEmail}}</b>
+          </div>
+          <div v-else>
+              <span>O Email do Coordenador de Curso de {{user.course}} ainda não está definido. Por favor defina o email para avançar no processo.</span>
+          </div>
+
+          <div v-if="coordinator.email">
+              <div v-if="user.coordinatorApproval!==1 && user.coordinatorApproval!==0">
+                  <label for>Alterar Email do Coordenador de Curso de {{user.course}}</label>
+                  <button class="btn btn-outline-secondary" @click.prevent="alterarEmail()">Alterar</button>
+              </div>
+              <div v-if="showAlterarEmail">
+                  <b-input-group prepend="Email do Novo Coordenador de Curso: " class="mt-sm-4 p-sm-4 w-75">
+                      <b-form-input v-model="newCoordinatorEmail"></b-form-input>
+                      <b-input-group-append>
+                          <b-button variant="outline-success" v-on:click.prevent="saveNewCoordinatorEmail()">Gravar</b-button>
+                      </b-input-group-append>
+                  </b-input-group>
+              </div>
+          </div>
+          <div v-else>
+              <label for>Definir Email do Coordenador de Curso de {{user.course}}</label>
+              <button class="btn btn-outline-secondary">Definir</button>
+          </div>
+          <br>
+          <div>
+              <p v-if="user.coordinatorApproval==null">
+                  <span>Confirme o email do Coordenador de Curso e peça o parecer do mesmo.</span>
+              </p>
+              <p v-if="user.coordinatorApproval==1">
+                  <b>O pedido foi aprovado pelo Coordenador de Curso.</b>
+              </p>
+              <p v-if="user.coordinatorApproval==0">
+                  <b>O pedido foi rejeitado pelo Coordenador de Curso.</b>
+              </p>
+              <p v-if="user.coordinatorApproval==-1">
+                  <span>Pedido de parecer enviado - a aguardar resposta</span>
+                  <br>
+                  <code v-if="showCoordinatorNoResponseError">O parecer do Coordenador de Curso ainda não foi emitido. Impossível avançar.</code>
+              </p>
+          </div>
+
+          <button v-if="user.coordinatorApproval!==1 && user.coordinatorApproval!==0" class="btn btn-secondary" :disabled="coordinator.email == '' || coordinator == null" @click.prevent="pedirParecer()">Pedir Parecer</button>
+
       </div>
 
       <div class="form-group">
@@ -87,9 +125,12 @@
             <div class="row">
               <div class="col-sm-2">{{aux.name}}</div>
               <div class="col-sm-2">{{aux.approval}}</div>
-                <label v-if="aux.comment" for>Informação adicional</label>
-              <div v-if="aux.comment" class="col-sm-8">{{aux.comment}}</div>
             </div>
+              <div v-if="aux.comment">
+                  Informação adicional disponibilizada pelo {{aux.name}}:
+                  {{aux.comment}}
+              </div>
+              <hr>
           </div>
         </div>
         <p v-if="user.servicesApproval==null">
@@ -101,10 +142,10 @@
         <div v-if="user.servicesApproval==null">
           <b-form-group>
             <b-form-checkbox-group id="checkbox-group-2" v-model="services.name" name="service">
-              <b-form-checkbox value="SAPE">Serviços de Apoio ao Estudante</b-form-checkbox>
+              <b-form-checkbox value="SAPE">Serviço de Apoio ao Estudante</b-form-checkbox>
               <b-form-checkbox value="CRID">Centro de Recursos para a Inclusão Digital</b-form-checkbox>
               <b-form-checkbox value="SAS">Serviços de Ação Social</b-form-checkbox>
-              <b-form-checkbox value="UED">Unidade de Ensino á Distância</b-form-checkbox>
+              <b-form-checkbox value="UED">Unidade de Ensino à Distância</b-form-checkbox>
               <b-form-checkbox value="DST">Direção de Serviços Técnicos</b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
@@ -134,7 +175,7 @@
          <b-form-checkbox v-model="gestorCasoApoios">Plano de Inclusão a ser definido pelo Gestor de Caso.</b-form-checkbox>
       <br>
       <div class="form-group">
-          <h4>Professores a ser notificados</h4>
+          <h4>Professores a notificar</h4>
           <ul v-if="aux.length!=0">
               <li v-for="prof in aux">
                   {{prof.name}} - {{prof.subject}}
@@ -152,7 +193,7 @@
       </div>
 
       <div class="form-group">
-      <h4>Professor Orientador</h4>
+      <h4>Definir Professor Orientador (Opcional)</h4>
       <input
         type="email"
         class="form-control"
@@ -171,6 +212,7 @@
     >Aprovar</button>
      <b-button class="btn btn-danger"  @click="cancel()">Cancelar</b-button>
     </ValidationObserver>
+
     <div
       class="modal fade"
       id="exampleModalLong"
@@ -238,6 +280,9 @@ export default {
     return {
       service: null,
       aux: [],
+      newCoordinatorEmail:"",
+      coordinator:null,
+      showAlterarEmail:false,
       showCoordinatorNoResponseError:false,
         gestorCasoApoios:true,
         selectedSupports:[],
@@ -268,6 +313,21 @@ export default {
     };
   },
   methods: {
+      saveNewCoordinatorEmail(){
+        axios.
+            post("/api/defineCoordinatorEmail/"+this.user.departmentNumber,{'coordinatorEmail':this.newCoordinatorEmail})
+                .then(response=>{
+                    this.showAlterarEmail=false;
+                    this.coordinator.email = this.newCoordinatorEmail;
+                    this.secondaryEmail = null;
+                })
+                .catch(error=>{
+                    console.log(error);
+                });
+      },
+      alterarEmail(){
+          this.showAlterarEmail = !this.showAlterarEmail;
+      },
       selectAllTeachers(){
           this.aux = this.teachers;
       },
@@ -331,7 +391,7 @@ export default {
         });
     },
     save: function() {
-        if(this.user.coordinatorApproval != 1){
+        if(this.user.coordinatorApproval !== 1 && this.user.coordinatorApproval !== 0){
             this.showCoordinatorNoResponseError = true;
             return;
         }
@@ -371,10 +431,42 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+    getCoordinatorEmail(){
+          axios.
+              get('/api/getCoordinatorEmail/'+this.user.departmentNumber)
+              .then(response=>{
+                  this.coordinator = response.data;
+              })
+              .catch(error=>{
+                  console.log(error);
+              })
+    },
+      pedirParecer() {
+          axios
+              .post('/api/pedirParecerCoordenador/'+this.user.number)
+                .then(response=>{
+                    this.user.coordinatorApproval = -1;
+                    this.$toasted.success("O Pedido de Parecer do Coordenador de Curso foi emitido.", {
+                        duration: 4000,
+                        position: "top-center",
+                        theme: "bubble"
+                    });
+                })
+                .catch(error=>{
+                    this.$toasted.error("Erro ao pedir o Parecer do Coordenador de Curso.", {
+                        duration: 4000,
+                        position: "top-center",
+                        theme: "bubble"
+                    });
+                });
+
+
+      }
   },
   created() {
     this.getServicesEvaluation();
+    this.getCoordinatorEmail();
   },
 
   computed: {

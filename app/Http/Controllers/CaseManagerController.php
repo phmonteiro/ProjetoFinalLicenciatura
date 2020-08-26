@@ -60,11 +60,15 @@ class CaseManagerController extends Controller
             $studentSupport->email = $student->email;
             $studentSupport->id_support = $support;
 
+            $sup = Support::where('id',$support)->first();
+
             $history = new History();
             $history->studentEmail = $student->email;
-            $history->description = "O gestor de caso adicionou o suporte nº ".$support." ao aluno.";
+            $history->description = "O gestor de caso adicionou o apoio ".$sup->name." ao aluno.";
             $history->date = Carbon::now();
             $history->save();
+
+//             EmailController::sendEmail('Foi lhe concedido o apoio '.$sup->name .'. Obrigado', $student->email, '[100%IN] Apoio concedido', '[100%IN] Apoio concedido');
 
             $studentSupport->save();
         }
@@ -74,11 +78,15 @@ class CaseManagerController extends Controller
         foreach($supportsToDelete as $support){
             $studentSupport = Student_Supports::where('id_support','=',$support)->first();
 
+            $sup = Support::where('id',$support)->first();
+
             $history = new History();
             $history->studentEmail = $student->email;
-            $history->description = "O gestor de caso eliminou o suporte \"".$studentSupport->name."\" do aluno.";
+            $history->description = "O gestor de caso eliminou o apoio \"".$sup->name."\" do aluno.";
             $history->date = Carbon::now();
             $history->save();
+
+//             EmailController::sendEmail('Foi lhe removido o apoio '.$sup->name .'. Obrigado', $student->email, '[100%IN] Apoio removido', '[100%IN] Apoio removido');
 
             $studentSupport->delete();
 
@@ -102,9 +110,11 @@ class CaseManagerController extends Controller
 
             $history = new History();
             $history->studentEmail = $user->email;
-            $history->description = "O case manager alterou o limite de horas de suporte do enee para ".$request->newTotalHours.".";
+            $history->description = "O Gestor de Caso alterou o limite de horas de suporte do ENE para ".$request->newTotalHours.".";
             $history->date = Carbon::now();
             $history->save();
+
+//             EmailController::sendEmail('O seu limite de horas foi alterado para '.$user->supportHours .'. Obrigado', $user->email, '[100%IN] Limite de Horas alterado', '[100%IN] Limite de Horas alterado');
 
             return response()->json(new UserResource($user), 200);
     }
@@ -152,11 +162,15 @@ class CaseManagerController extends Controller
             $studentSupport->email = $student->email;
             $studentSupport->id_support = $support;
 
+            $sup = Support::where('id',$support)->first();
+
             $history = new History();
             $history->studentEmail = $student->email;
-            $history->description = "O gestor de caso adicionou o suporte nº ".$support." ao aluno.";
+            $history->description = "O gestor de caso adicionou o apoio ".$sup->name." ao aluno.";
             $history->date = Carbon::now();
             $history->save();
+
+//             EmailController::sendEmail('Foi lhe concedido o apoio '.$sup->name .'. Obrigado', $student->email, '[100%IN] Apoio concedido', '[100%IN] Apoio concedido');
 
             $studentSupport->save();
         }
@@ -166,11 +180,15 @@ class CaseManagerController extends Controller
         foreach($supportsToDelete as $support){
             $studentSupport = Student_Supports::where('id_support','=',$support)->first();
 
+            $sup = Support::where('id',$support)->first();
+
             $history = new History();
             $history->studentEmail = $student->email;
-            $history->description = "O gestor de caso eliminou o suporte \"".$studentSupport->name."\" do aluno.";
+            $history->description = "O gestor de caso eliminou o suporte \"".$sup->name."\" do aluno.";
             $history->date = Carbon::now();
             $history->save();
+
+//             EmailController::sendEmail('Foi lhe removido o apoio '.$sup->name .'. Obrigado', $student->email, '[100%IN] Apoio removido', '[100%IN] Apoio removido');
 
             $studentSupport->delete();
         }
@@ -213,7 +231,7 @@ class CaseManagerController extends Controller
         $history->date = Carbon::now();
         $history->save();
 
-        //EmailController::sendEmail('Foi marcada uma reunião em' . $meeting->date . ' ás ' . $meeting->time . '. Obrigado', $meeting->email, 'Marcação de reunião', 'Marcação de reunião');
+//         EmailController::sendEmail('Foi marcada uma reunião para ' . $meeting->date . ' às ' . $meeting->time . '. Para mais informação aceda ao menu das reuniões na Plataforma. Obrigado', $meeting->email, '[100%IN] Marcação de reunião', '[100%IN] Marcação de reunião');
 
 
         return response()->json(new MeetingResource($meeting), 201);
@@ -289,10 +307,47 @@ class CaseManagerController extends Controller
 
         if($dados['service'] === "Professor Orientador"){
 
+            $aluno = User::where('email',$contact->studentEmail)->first();
+
             $professorOrientador = Tutor::where('studentEmail','=',$dados['email'])->first();
 
+            $caseManager = CaseManager::where('studentEmail',$contact->studentEmail)->first();
+
             if($professorOrientador != null){
-                EmailController::sendEmailWithCC('O seu Gestor de Caso agendou uma interação com o Professor Orientador. Obrigado', $user->email, 'Marcação de interação com Professor Orientador', 'Marcação de interação com Professor Orientador',  $professorOrientador->tutorEmail);
+                if($contact->contactMedium == 'conferencia'){
+//                     EmailController::sendEmail('Foi agendada uma interação com o aluno '.$aluno->name.'
+//                     Detalhes da reunião:
+//                     Data: '.$contact->date.'
+//                     Hora: '.$contact->time.'
+//                     Meio de Contacto: Video-Conferência
+//                     Software: '.$contact->software.'
+//                     Informação: '.$contact->information.'
+//                     Em caso de alguma dúvida contacte o Gestor de Caso através do email '.$caseManager->caseManagerEmail.'
+//                     Obrigado', $professorOrientador->tutorEmail, 'Marcação de interação com ENE', 'Marcação de interação com ENE');
+                }elseif($contact->contactMedium == 'presencial'){
+//                     EmailController::sendEmail('Foi agendada uma interação com o aluno '.$aluno->name.'
+//                     Detalhes da reunião:
+//                     Data: '.$contact->date.'
+//                     Hora: '.$contact->time.'
+//                     Meio de Contacto: Presencial
+//                     Local: '.$contact->place.'
+//                     Informação: '.$contact->information.'
+//                     Em caso de alguma dúvida contacte o Gestor de Caso através do email '.$caseManager->caseManagerEmail.'
+//                     Obrigado', $professorOrientador->tutorEmail, 'Marcação de interação com ENE', 'Marcação de interação com ENE');
+                }else{
+//                     EmailController::sendEmail('Foi agendada uma interação com o aluno '.$aluno->name.'
+//                     Detalhes da reunião:
+//                     Data: '.$contact->date.'
+//                     Hora: '.$contact->time.'
+//                     Meio de Contacto: Telefone
+//                     Nº de Telefone do Aluno: '.$aluno->phoneNumber.'
+//                     Informação: '.$contact->information.'
+//                     Em caso de alguma dúvida contacte o Gestor de Caso através do email '.$caseManager->caseManagerEmail.'
+//                     Obrigado', $professorOrientador->tutorEmail, 'Marcação de interação com ENE', 'Marcação de interação com ENE');
+                }
+
+//                 EmailController::sendEmail('O seu Gestor de Caso agendou uma interação com o Professor Orientador. Para mais informações consulte a Plataforma. Obrigado', $dados['email'], '[100%IN] Marcação de interação com Professor Orientador', '[100%IN] Marcação de interação com Professor Orientador');
+
             }
         }
 
@@ -313,7 +368,7 @@ class CaseManagerController extends Controller
         }
         $history = new History();
         $history->studentEmail = $dados['email'];
-        $history->description = "Gestor de caso reuniu com o estudante";
+        $history->description = "Foi agendado uma interação entre o estudante e o ".$contact->service;
         $history->date = Carbon::now();
         $history->save();
 
@@ -436,11 +491,11 @@ class CaseManagerController extends Controller
         $history = new History();
         $apoio = Support::findOrFail($service->support);
         $history->studentEmail = $service->email;
-        $history->description = "O diretor atribui o apoio " . $apoio->name;
+        $history->description = "O Gestor de Caso atribui o apoio " . $apoio->name;
         $history->date = Carbon::now();
         $history->save();
 
-        //EmailController::sendEmail('O diretor atribuiu-lhe um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio', 'Atribuição de novo apoio');
+//             EmailController::sendEmail('Foi lhe concedido o apoio '.$apoio->name .'. Obrigado', $student->email, '[100%IN] Apoio concedido', '[100%IN] Apoio concedido');
 
         return response()->json($studentSupport, 200);
     }
@@ -454,11 +509,11 @@ class CaseManagerController extends Controller
         $history = new History();
         $apoio = Support::findOrFail($service->support);
         $history->studentEmail = $service->email;
-        $history->description = "O diretor rejeitou o pedido do apoio " . $apoio->text . " ao estudante.";
+        $history->description = "O Gestor de Caso rejeitou o pedido do apoio " . $apoio->name . " ao estudante.";
         $history->date = Carbon::now();
         $history->save();
 
-        //EmailController::sendEmail('O diretor rejeitou o seu pedido de um novo apoio. Obrigado', $service->email, 'Atribuição de novo apoio rejeitada', 'Atribuição de novo apoio rejeitada');
+//             EmailController::sendEmail('Foi lhe rejeitado o apoio '.$apoio->name .'. Para mais informações consulte a Plataforma. Obrigado', $student->email, '[100%IN] Apoio rejeitado', '[100%IN] Apoio rejeitado');
 
         return response()->json($service, 200);
     }

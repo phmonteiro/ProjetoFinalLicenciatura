@@ -11,11 +11,22 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-      <hr v-if="!history || history.length===0">
-      <b-table v-if="history" striped hover :items="history" :fields="fields">
+      <router-link class="nav-link text-center" :to="{name: 'eneeList'}">
+          <button class="btn btn-secondary">Fechar</button>
+      </router-link>
+      <div v-if="history!=null && history.length!==0">
+          <b-table striped hover :items="history" :fields="fields">
 
-      </b-table>
-      <h4 v-else>O ENE não tem histórico na plataforma.</h4>
+          </b-table>
+      </div>
+      <div v-else>
+          <br>
+          <h4>O ENE não tem histórico na plataforma.</h4>
+      </div>
+      <router-link class="nav-link text-center" :to="{name: 'eneeList'}">
+          <button class="btn btn-secondary">Fechar</button>
+      </router-link>
+
   </div>
 </template>
 

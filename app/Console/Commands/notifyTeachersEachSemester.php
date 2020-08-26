@@ -104,7 +104,7 @@ class notifyTeachersEachSemester extends Command
             }
             $msg .= "Atenciosamente,\nA equipa 100%IN</pre>";
 
-            EmailController::sendEmail(new HtmlString($msg), "recyclebinonline@gmail.com", 'Relatório Semestral de ENEs', 'Relatório Semestral de ENEs');
+//             EmailController::sendEmail(new HtmlString($msg), "recyclebinonline@gmail.com", 'Relatório Semestral de ENEs', 'Relatório Semestral de ENEs');
         }
         echo($msg);
     }

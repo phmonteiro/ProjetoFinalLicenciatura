@@ -1,23 +1,28 @@
 <template>
   <div>
     <div class="container">
-      <h2>Listagem de pedidos de ENE</h2>
-        <br>
-      <b-table striped hover v-if="requests" :items="requests" :fields="fields">
-        <template v-slot:cell(actions)="row">
-          <button
-            class="btn btn-info"
-            v-on:click.prevent="editUser(row.item)"
-            v-if="row.item.enee!='approved'"
-          >Avaliar</button>
-          <button
-            class="btn btn-danger"
-            v-on:click.prevent="deny(row.item.id)"
-            v-if="row.item.number != user.number"
-          >Rejeitar</button>
-        </template>
-      </b-table>
-      <h4 v-else>Não existem pedidos de parecer pendentes.</h4>
+      <h2>Pedidos de parecer</h2>
+        <hr>
+      <div v-if="requests!=null && requests.length!==0">
+          <b-table striped hover :items="requests" :fields="fields">
+              <template v-slot:cell(actions)="row">
+                  <button
+                      class="btn btn-info"
+                      v-on:click.prevent="editUser(row.item)"
+                      v-if="row.item.enee!='approved'"
+                  >Avaliar</button>
+                  <button
+                      class="btn btn-danger"
+                      v-on:click.prevent="deny(row.item.id)"
+                      v-if="row.item.number != user.number"
+                  >Rejeitar</button>
+              </template>
+          </b-table>
+      </div>
+      <div v-else>
+          <br>
+          <h4>Não existem pedidos de parecer pendentes.</h4>
+      </div>
 
     </div>
       <eneeServiceEvaluation
@@ -98,7 +103,7 @@ export default {
     },
     approve(userId,information) {
       axios
-        .patch("api/approveEneeStatusByServices/" + userId,information)
+        .patch("api/approveEneeStatusByServices/" + userId,{'information':information})
         .then(response => {
           this.getRequests();
           this.currentUser = null;

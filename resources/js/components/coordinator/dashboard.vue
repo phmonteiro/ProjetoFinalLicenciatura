@@ -8,12 +8,12 @@
           </a>
           <div class="sidenav" :class="{ active: active}">
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'eneeRequests'}">Pedidos a ENE</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'editProfileCC'}">Adicionar Email Secundário</router-link>
           </div>
         </section>
         <b-col cols="12">
           <div class="container pt-3 content">
             <h4 class="welcome-msg">Bem vindo, {{user.name}}</h4>
-            <!-- <h3>Sou Coordenador</h3> -->
           </div>
           <router-view></router-view>
         </b-col>

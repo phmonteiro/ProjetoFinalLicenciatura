@@ -14,7 +14,8 @@
     <div class="container">
       <h2>Lista de ENE</h2>
         <hr v-if="!enee" />
-        <b-table striped hover v-if="enee" :items="enee" :fields="fields">
+        <div v-if="enee.length !== 0 && enee != null">
+        <b-table striped hover :items="enee" :fields="fields">
         <template v-slot:cell(enee)="{ value }">
           <p v-if="value==='awaiting'">A aguardar</p>
           <p v-if="value==='denied'">Reprovado</p>
@@ -28,29 +29,34 @@
           </b-row>
         </template>
       </b-table>
-        <h4 v-else>Não existem ENEs registados na plataforma</h4>
-        <nav aria-label="Page navigation" v-if="enee">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getEnee(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
+            <nav aria-label="Page navigation" v-if="enee">
+                <ul class="pagination">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getEnee(pagination.prev_page_url)"
+                        >Anterior</a>
+                    </li>
 
-          <li class="page-item disabled">
-            <a class="page-link text-dark" href="#">
-              Página {{ pagination.current_page }} de
-              {{ pagination.last_page }}
-            </a>
-          </li>
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="#">
+                            Página {{ pagination.current_page }} de
+                            {{ pagination.last_page }}
+                        </a>
+                    </li>
 
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a class="page-link" href="#" @click.prevent="getEnee(pagination.next_page_url)">Próximo</a>
-          </li>
-        </ul>
-      </nav>
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                        <a class="page-link" href="#" @click.prevent="getEnee(pagination.next_page_url)">Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-else>
+            <br>
+            <h5>Não existem ENEs registados na plataforma</h5>
+        </div>
+
     </div>
       <eneeEdit
           :user="currentUser"

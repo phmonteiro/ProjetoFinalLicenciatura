@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 use Carbon\Carbon;
 use App\Http\Controllers\EmailController;
 use Barryvdh\Debugbar\Facade as Debugbar;
+use Config;
 
 class LoginController extends Controller
 {
@@ -84,9 +85,9 @@ class LoginController extends Controller
 
                 $parts = explode("@",$request->email);
                 $numAluno = $parts[0];
-
+//                 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/webserviceDadosAlunos.php'
                 $client = new \GuzzleHttp\Client();
-                $response = $client->request("POST", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/webserviceDadosAlunos.php', [
+                $response = $client->request("POST", config("global.ws_dadosAluno_link"), [
                 'form_params' => [
                      'login' => $numAluno,
                      'password' => $request->password
@@ -97,13 +98,21 @@ class LoginController extends Controller
                 $jsonfied = substr_replace($parts[1] ,"",-1);
                 $webServiceUserInfo = json_decode($jsonfied,true);
 
+                $fields = config('global.ws_dadosAluno_fields');
 
-                $user->residence = $webServiceUserInfo['DS_MORADA'];
-                $user->zipCode = $webServiceUserInfo['CD_POSTAL'].'-'.$webServiceUserInfo['CD_SUBPOS'];
-                $user->phoneNumber = $webServiceUserInfo['NR_TELEMOV'];
-                $user->birthDate = $webServiceUserInfo['DT_NASCIME']['date'];
-                $user->nif = $webServiceUserInfo['NR_CONTRIB'];
-                $user->area = $webServiceUserInfo['DISTRITO'];
+                $user->residence = $webServiceUserInfo[$fields[0]];
+                $user->zipCode = $webServiceUserInfo[$fields[1]].'-'.$webServiceUserInfo[$fields[2]];
+                $user->phoneNumber = $webServiceUserInfo[$fields[3]];
+                $user->birthDate = $webServiceUserInfo[$fields[4]]['date'];
+                $user->nif = $webServiceUserInfo[$fields[5]];
+                $user->area = $webServiceUserInfo[$fields[6]];
+
+//                 $user->residence = $webServiceUserInfo['DS_MORADA'];
+//                 $user->zipCode = $webServiceUserInfo['CD_POSTAL'].'-'.$webServiceUserInfo['CD_SUBPOS'];
+//                 $user->phoneNumber = $webServiceUserInfo['NR_TELEMOV'];
+//                 $user->birthDate = $webServiceUserInfo['DT_NASCIME']['date'];
+//                 $user->nif = $webServiceUserInfo['NR_CONTRIB'];
+//                 $user->area = $webServiceUserInfo['DISTRITO'];
 
                     if($user->eneeExpirationDate!=null && Carbon::parse($user->eneeExpirationDate)->isPast()){
                         $user->enee = "expired";
@@ -126,7 +135,7 @@ class LoginController extends Controller
                    $account = User::where('id','=',$accountId)->first();
                    $account->inactive = 1;
                    $account->save();
-                }
+               }
 
                 if($inactiveAccountIds){
                     $user->transferAccountStatus = "transferring";
@@ -134,6 +143,16 @@ class LoginController extends Controller
 
                     $token = $user->createToken(rand())->accessToken;
                     return response()->json(['user' => Auth::user()], 226)->header('Authorization', $token);
+                }
+
+                //Creating Coordinator...
+                $coordinator = Coordinator::where('departmentNumber',$user->departmentNumber)->first();
+
+                if($coordinator==null){
+                    $coordinator->departmentNumber = $user->departmentNumber;
+                    $coordinator->course = $user->course;
+                    $coordinator->school = $user->school;
+                    $coordinator->save();
                 }
 
                 $token = $user->createToken(rand())->accessToken;

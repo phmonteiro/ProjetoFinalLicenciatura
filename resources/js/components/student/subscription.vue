@@ -262,13 +262,13 @@
               </div>
 
               <div class="dropdown-divider"></div>
-
+                <hr>
               <h3>{{$t('identificação_responsável')}}</h3>
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
                     <label for="responsibleName">{{$t('nome')}}</label>
-                      <ValidationProvider name="responsibleName" rules="required|alpha_spaces" v-slot="{ errors }">
+                      <ValidationProvider name="responsibleName" rules="alpha_spaces" v-slot="{ errors }">
                           <input
                               type="text"
                               class="form-control"
@@ -282,7 +282,7 @@
 
                   <div class="col">
                     <label for="responsiblePhone">{{$t('contacto_telefónico')}}</label>
-                      <ValidationProvider name="responsiblePhone" rules="required|digits:9|numeric" v-slot="{ errors }">
+                      <ValidationProvider name="responsiblePhone" rules="digits:9|numeric" v-slot="{ errors }">
                           <input
                               class="form-control"
                               name="Responsible Phone"
@@ -297,7 +297,7 @@
 
                   <div class="col">
                     <label for="responsibleKin">{{$t('parentesco')}}</label>
-                      <ValidationProvider name="responsibleKin" rules="required|alpha_spaces" v-slot="{ errors }">
+                      <ValidationProvider name="responsibleKin" rules="alpha_spaces" v-slot="{ errors }">
                           <input
                               type="text"
                               class="form-control"
@@ -311,7 +311,7 @@
 
                   <div class="col">
                     <label for="responsibleEmail">{{$t('email')}}</label>
-                      <ValidationProvider name="responsibleEmail" rules="required|email" v-slot="{ errors }">
+                      <ValidationProvider name="responsibleEmail" rules="email" v-slot="{ errors }">
                           <input
                               type="email"
                               class="form-control"
@@ -324,14 +324,14 @@
                   </div>
                 </div>
               </div>
-
+                <hr>
               <h3>{{$t('contacto_emergencia')}}</h3>
 
               <div class="container-full-width">
                 <div class="row">
                   <div class="col">
                     <label for="emergencyName">{{$t('nome')}}</label>
-                      <ValidationProvider name="emergencyName" rules="alpha_spaces" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyName" rules="required|alpha_spaces" v-slot="{ errors }">
                           <input
                               type="text"
                               class="form-control"
@@ -345,7 +345,7 @@
 
                   <div class="col">
                     <label for="emergencyPhone">{{$t('contacto_telefónico')}}</label>
-                      <ValidationProvider name="emergencyPhone" rules="digits:9|numeric" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyPhone" rules="required|digits:9|numeric" v-slot="{ errors }">
                           <input
                               class="form-control"
                               name="Emergency Phone"
@@ -358,7 +358,7 @@
 
                   <div class="col">
                     <label for="emergencyKin">{{$t('parentesco')}}</label>
-                      <ValidationProvider name="emergencyKin" rules="alpha_spaces" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyKin" rules="required|alpha_spaces" v-slot="{ errors }">
                           <input
                               type="text"
                               class="form-control"
@@ -372,7 +372,7 @@
 
                   <div class="col">
                     <label for="emergencyEmail">{{$t('email')}}</label>
-                      <ValidationProvider name="emergencyEmail" rules="email" v-slot="{ errors }">
+                      <ValidationProvider name="emergencyEmail" rules="required|email" v-slot="{ errors }">
                           <input
                               type="email"
                               class="form-control"
@@ -387,7 +387,7 @@
               </div>
                 <div v-if="isNotApproved">
               <div class="dropdown-divider"></div>
-
+                    <hr>
               <h3>{{$t('tipos_nee')}}</h3>
 
               <div class="container-full-width">

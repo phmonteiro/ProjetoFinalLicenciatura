@@ -5,37 +5,43 @@
         <div class="loader">
             <ClipLoader sizeUnit="px" class="loading" v-if="loading" :size="50" />
         </div>
-        <b-table striped hover v-if="substitutions!=null" :items="substitutions" :fields="fields">
+        <div v-if="substitutions!=null && substitutions.length!==0">
+            <b-table striped hover :items="substitutions" :fields="fields">
 
-        </b-table>
-        <h4 v-else>Ainda não foi realizada qualquer substituição.</h4>
+            </b-table>
+            <nav aria-label="Page navigation" v-if="substitutions">
+                <ul class="pagination">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getcaseManagers(pagination.prev_page_url)"
+                        >Anterior</a>
+                    </li>
 
-        <nav aria-label="Page navigation" v-if="substitutions">
-            <ul class="pagination">
-                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-                    <a
-                        class="page-link"
-                        href="#"
-                        @click.prevent="getcaseManagers(pagination.prev_page_url)"
-                    >Anterior</a>
-                </li>
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="#">
+                            Página {{ pagination.current_page }} de
+                            {{ pagination.last_page }}
+                        </a>
+                    </li>
 
-                <li class="page-item disabled">
-                    <a class="page-link text-dark" href="#">
-                        Página {{ pagination.current_page }} de
-                        {{ pagination.last_page }}
-                    </a>
-                </li>
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getcaseManagers(pagination.next_page_url)"
+                        >Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-else>
+            <br>
+            <h4>Ainda não foi realizada qualquer substituição.</h4>
+        </div>
 
-                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                    <a
-                        class="page-link"
-                        href="#"
-                        @click.prevent="getcaseManagers(pagination.next_page_url)"
-                    >Próximo</a>
-                </li>
-            </ul>
-        </nav>
+
     </div>
 </template>
 

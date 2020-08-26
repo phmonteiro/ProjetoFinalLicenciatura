@@ -16,40 +16,47 @@
                 <b-col class="top100">
                     <div v-if="contacts">
                         <h2>{{ $t('contatos') }}</h2>
-                        <b-table striped hover :items="contacts" :fields="fields">
-                            <template v-slot:cell(contactMedium)="{ value }">
-                                <p v-if="value==='conferencia'">Video-Conferência</p>
-                                <p v-if="value==='telefone'">Telefone</p>
-                                <p v-if="value==='presencial'">Presencial</p>
-                            </template>
-                        </b-table>
+                        <hr>
+                        <div v-if="contacts!=null && contacts.length!==0">
+                            <b-table striped hover :items="contacts" :fields="fields">
+                                <template v-slot:cell(contactMedium)="{ value }">
+                                    <p v-if="value==='conferencia'">Video-Conferência</p>
+                                    <p v-if="value==='telefone'">Telefone</p>
+                                    <p v-if="value==='presencial'">Presencial</p>
+                                </template>
+                            </b-table>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                                        <a
+                                            class="page-link"
+                                            href="#"
+                                            @click.prevent="getContacts(pagination.prev_page_url)"
+                                        >Anterior</a>
+                                    </li>
 
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-                                    <a
-                                        class="page-link"
-                                        href="#"
-                                        @click.prevent="getContacts(pagination.prev_page_url)"
-                                    >Anterior</a>
-                                </li>
+                                    <li class="page-item disabled">
+                                        <a
+                                            class="page-link text-dark"
+                                            href="#"
+                                        >Página {{ pagination.current_page }} de {{ pagination.last_page }}</a>
+                                    </li>
 
-                                <li class="page-item disabled">
-                                    <a
-                                        class="page-link text-dark"
-                                        href="#"
-                                    >Página {{ pagination.current_page }} de {{ pagination.last_page }}</a>
-                                </li>
+                                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                                        <a
+                                            class="page-link"
+                                            href="#"
+                                            @click.prevent="getContacts(pagination.next_page_url)"
+                                        >Próximo</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div v-else>
+                            <br>
+                            <h5>{{ $t('contactos_vazio') }}</h5>
+                        </div>
 
-                                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                                    <a
-                                        class="page-link"
-                                        href="#"
-                                        @click.prevent="getContacts(pagination.next_page_url)"
-                                    >Próximo</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </b-col>
             </b-row>

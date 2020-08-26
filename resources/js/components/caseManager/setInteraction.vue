@@ -49,7 +49,7 @@
 
 
     <div class="form-group">
-      <label for="service">Serviço:</label>
+      <label for>Serviço:</label>
         <ValidationProvider name="service" rules="required" v-slot="{ errors }">
             <b-form-select name="service" v-model="data.service" class="mb-3">
                 <option :value="null" disabled>-- Selecionar o serviço pretendido --</option>
