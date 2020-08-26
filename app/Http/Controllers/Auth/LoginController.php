@@ -74,12 +74,16 @@ class LoginController extends Controller
                 $token = $user->createToken(rand())->accessToken;
                 return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
             } else {
+                
+                /*
                 $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
                 $user->type = $users->title[0];
                 $user->course = $users->description[0];
                 $user->school = $users->company[0];
                 $user->number = $users->mailnickname[0];
-                $user->departmentNumber = $users->departmentnumber[0];
+                $user->departmentNumber = $users->departmentnumber[0]; 
+                */
+
                 $user->firstLogin = 1;
 
                 $parts = explode("@",$request->email);

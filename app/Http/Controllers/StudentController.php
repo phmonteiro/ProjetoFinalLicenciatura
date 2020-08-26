@@ -8,6 +8,7 @@ use App\Http\Resources\ContactResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\ZipCodeResource;
+use App\Http\Resources\SupportHoursRequestResource;
 use App\Meeting;
 use App\Tutor;
 use App\Contact;
@@ -19,6 +20,7 @@ use App\Student_Supports;
 use App\User;
 use App\Schedule;
 use App\EneeDiagnostic;
+use App\SupportHoursRequest;
 use App\Http\Resources\ServiceResource;
 use App\Service;
 use Illuminate\Support\Facades\Storage;
@@ -471,6 +473,37 @@ class StudentController extends Controller
         }
     }
 
+    public function requestSupportHours(Request $request)
+    {
+        $user = Auth::user();
+        $subject = Subject::where('studentEmail', $user->email)->pluck('hours');
+        $subjectName = Subject::where('studentEmail', $user->email)->pluck('nome');
+        $studentName = User::where('email', $user->email)->first()->name;
+
+        $horasApoioUsadas = 0;
+        for ($i = 0; $i < sizeof($subject); $i++) {
+            if (strcmp($subjectName[$i], $request->nome) != 0) {
+                $horasApoioUsadas += $subject[$i];
+            }
+        }
+
+        if ($request->hours > ($user->supportHours-$horasApoioUsadas)) {
+            return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
+        }
+
+        $supportHoursRequest = new SupportHoursRequest();
+        $supportHoursRequest->subject_name = $request->nome;
+        $supportHoursRequest->subject_code = Subject::where('nome', $request->nome)->first()->subjectCode;
+        $supportHoursRequest->student_email = $request->studentEmail;
+        $supportHoursRequest->student_name = $studentName;
+        $supportHoursRequest->hours = $request->hours;
+        $supportHoursRequest->date = Carbon::now();
+        $supportHoursRequest->status = "waiting"; // waiting-approved-denied
+        $supportHoursRequest->save();
+
+        return response()->json(new SupportHoursRequestResource($subject), 200);
+    }
+
     public function setSupportHours(Request $request)
     {
         $user = Auth::user();
@@ -487,7 +520,6 @@ class StudentController extends Controller
         if ($request->hours > ($user->supportHours-$horasApoioUsadas)) {
             return response()->json(['message' => 'Erro, número máximo  de horas excedido. Por favor tente novamente.'], 406);
         }
-
 
         if ($horasApoioUsadas + $request->hours <= $user->supportHours) {
             $subject = Subject::Where('studentEmail', $user->email)->where('nome', $request->nome)->first();

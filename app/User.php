@@ -29,6 +29,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function supportHoursRequests()
+    {
+        return $this->hasMany('App\SupportHoursRequests', 'email', 'student_email');
+    }
+
     public function services()
     {
         return $this->hasMany('App\Student_Supports', 'email', 'email');

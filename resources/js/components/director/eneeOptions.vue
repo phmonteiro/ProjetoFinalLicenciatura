@@ -134,7 +134,7 @@
          <b-form-checkbox v-model="gestorCasoApoios">Plano de Inclusão a ser definido pelo Gestor de Caso.</b-form-checkbox>
       <br>
       <div class="form-group">
-          <h4>Professores a ser notificados</h4>
+          <h4>Professores a notificar</h4>
           <ul v-if="aux.length!=0">
               <li v-for="prof in aux">
                   {{prof.name}} - {{prof.subject}}
