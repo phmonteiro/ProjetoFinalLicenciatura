@@ -8,7 +8,8 @@
       <b-row>
         <b-col class="top100">
           <h2>{{ $t('pedir_agendamento_reunião') }}</h2>
-            <br><br>
+            <hr>
+            <br>
           <div class="form-group">
 
               <ValidationProvider name="service" rules="required" v-slot="{ errors }">

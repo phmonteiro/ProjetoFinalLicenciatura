@@ -27,6 +27,9 @@ Route::get('getTeachers', 'AdminController@getTeachers')->name('getTeachers');
 Route::middleware('auth:api')->group(function () {
     Route::get('getAuthUser', 'Auth\LoginController@getAuthUser');
     //admin
+    Route::middleware('isAdmin')->post('addService', 'AdminController@addService');
+    Route::middleware('isAdmin')->get('getWebServiceConfigs', 'AdminController@getWebServiceConfigs');
+    Route::middleware('isAdmin')->post('setWebServiceConfigs', 'AdminController@setWebServiceConfigs');
     Route::middleware('isAdmin')->post('setResponsibleCM', 'AdminController@setResponsibleCM');
     Route::middleware('isAdmin')->post('setHoursLimit', 'AdminController@setHoursLimit');
     Route::middleware('isAdmin')->get('getHoursLimit', 'AdminController@getHoursLimit');
@@ -82,6 +85,11 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isAcademicServices')->post('eneeAdd', 'ServiceController@create');
 
     //Director
+    Route::middleware('isDirector')->post('defineCoordinatorEmail/{dep}', 'DirectorController@defineCoordinatorEmail');
+    Route::middleware('isDirector')->get('getCoordinatorEmail/{dep}', 'DirectorController@getCoordinatorEmail');
+    Route::middleware('isDirector')->post('pedirParecerCoordenador/{num}', 'DirectorController@pedirParecerCoordenador');
+
+    Route::middleware('isDirector')->post('removeStudentStatus/{id}', 'DirectorController@removeStudentStatus');
     Route::middleware('isDirector')->get('getStudentTutor/{id}', 'StudentController@getStudentTutor');
     Route::middleware('isAdminDirectorStudentCaseManager')->get('getSupports', 'SupportController@getSupports');
     Route::middleware('isAdminDirectorStudentCaseManager')->get('getSupportsByCategory', 'SupportController@getSupportsByCategory');
@@ -94,6 +102,8 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Coordinator
+    Route::middleware('isCoordinator')->get('getSecondaryEmail', 'CoordinatorController@getSecondaryEmail');
+    Route::middleware('isCoordinator')->post('setSecondaryEmail', 'CoordinatorController@setSecondaryEmail');
     Route::middleware('isCoordinator')->get('getRequests', 'CoordinatorController@requests');
     Route::middleware('isCoordinator')->patch('approveEneeStatus/{id}', 'CoordinatorController@approve');
     Route::middleware('isCoordinator')->patch('denyEneeStatus/{id}', 'CoordinatorController@deny');
@@ -105,6 +115,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManagerResponsible')->get('getActiveSubstitutions', 'CaseManagerResponsibleController@getActiveSubstitutions');
     Route::middleware('isCaseManagerResponsible')->put('cancelSubstitution', 'CaseManagerResponsibleController@cancelSubstitution');
     Route::middleware('isCaseManagerResponsible')->get('getAllCMs', 'CaseManagerResponsibleController@getAllCMs');
+    Route::middleware('isCaseManagerResponsible')->get('getAllCMsActivateDeactivate', 'CaseManagerResponsibleController@getAllCMsActivateDeactivate');
     Route::middleware('isCaseManagerResponsible')->post('addCM', 'CaseManagerResponsibleController@addCM');
     Route::middleware('isCaseManagerResponsible')->post('setCmSubstitute', 'CaseManagerResponsibleController@setCmSubstitute');
     Route::middleware('isCaseManagerResponsible')->get('getCaseManagers', 'CaseManagerResponsibleController@index');
@@ -112,6 +123,9 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManagerResponsible')->get('getStudents', 'CaseManagerResponsibleController@getStudents');
     Route::middleware('isCaseManagerResponsible')->get('getStudentCMs/{email}', 'CaseManagerResponsibleController@getStudentCMs');
     Route::middleware('isCaseManagerResponsible')->delete('removeCM/{id}', 'CaseManagerResponsibleController@removeCM');
+    Route::middleware('isCaseManagerResponsible')->post('activateCM/{email}', 'CaseManagerResponsibleController@activateCaseManager');
+    Route::middleware('isCaseManagerResponsible')->post('deactivateCM/{email}', 'CaseManagerResponsibleController@deactivateCaseManager');
+    Route::middleware('isCaseManagerResponsible')->get('getCMWithENE', 'CaseManagerResponsibleController@getCMWithENE');
 
     //Case Manager
     Route::middleware('isCaseManager')->patch('approveSupportHoursRequest/{requestId}', 'CaseManagerController@approveSupportHoursRequest');

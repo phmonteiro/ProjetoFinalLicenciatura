@@ -44,10 +44,10 @@
                 <b-col>
                     <h2 v-if="showRequested">Pedidos Reunião</h2>
                     <h2 v-if="showScheduled">Reuniões Agendadas</h2>
+                    <div v-if="meetings != null && meetings.length!==0">
                     <b-table
                         striped
                         hover
-                        v-if="meetings != null"
                         :items="meetings"
                         :fields="fields"
                     >
@@ -130,49 +130,54 @@
                             </b-card>
                         </template>
                     </b-table>
-                    <h5 v-if="!meetings.length">
-                        Não existem reuniões para mostrar.
-                    </h5>
-                </b-col>
-            </b-row>
-            <nav aria-label="Page navigation" v-if="meetings">
-                <ul class="pagination">
-                    <li
-                        v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-                        class="page-item"
-                    >
-                        <a
-                            class="page-link"
-                            href="#"
-                            @click.prevent="
+                        <nav aria-label="Page navigation" v-if="meetings">
+                            <ul class="pagination">
+                                <li
+                                    v-bind:class="[{ disabled: !pagination.prev_page_url }]"
+                                    class="page-item"
+                                >
+                                    <a
+                                        class="page-link"
+                                        href="#"
+                                        @click.prevent="
                                 getMeetingsEnee(pagination.prev_page_url)
                             "
-                            >Anterior</a
-                        >
-                    </li>
+                                    >Anterior</a
+                                    >
+                                </li>
 
-                    <li class="page-item disabled">
-                        <a class="page-link text-dark" href="#">
-                            Página {{ pagination.current_page }} de
-                            {{ pagination.last_page }}
-                        </a>
-                    </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link text-dark" href="#">
+                                        Página {{ pagination.current_page }} de
+                                        {{ pagination.last_page }}
+                                    </a>
+                                </li>
 
-                    <li
-                        v-bind:class="[{ disabled: !pagination.next_page_url }]"
-                        class="page-item"
-                    >
-                        <a
-                            class="page-link"
-                            href="#"
-                            @click.prevent="
+                                <li
+                                    v-bind:class="[{ disabled: !pagination.next_page_url }]"
+                                    class="page-item"
+                                >
+                                    <a
+                                        class="page-link"
+                                        href="#"
+                                        @click.prevent="
                                 getMeetingsEnee(pagination.next_page_url)
                             "
-                            >Próximo</a
-                        >
-                    </li>
-                </ul>
-            </nav>
+                                    >Próximo</a
+                                    >
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div v-else>
+                        <br>
+                        <h5>
+                            Não existem reuniões para mostrar.
+                        </h5>
+                    </div>
+
+                </b-col>
+            </b-row>
         </b-container>
 
         <set-meeting

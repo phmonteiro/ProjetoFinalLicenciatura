@@ -67,6 +67,8 @@ class expireENE extends Command
                 // get all ENEs that expire today
                 $ene->eneeExpirationDate = null;
                 $ene->enee = "expired";
+                $ene->coordinatorApproval = null;
+                $ene->servicesApproval = null;
                 $ene->save();
 
                 // get all Supports attributed to currenwt ENE and delete them

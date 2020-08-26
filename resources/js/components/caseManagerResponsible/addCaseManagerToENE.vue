@@ -2,13 +2,18 @@
     <div>
         <br>
         <h3>Lista de ENEs sem Gestor de Caso</h3>
-        <hr v-if="users==null || users.length===0">
-        <b-table striped hover v-if="users!=null && users.length>0" :items="users" :fields="fields">
-        <template v-slot:cell(actions)="row">
-            <button class="btn btn-secondary" v-on:click.prevent="addCM(row.item)">Atribuir</button>
-        </template>
-    </b-table>
-     <h5 v-else>Neste momento todos os ENEs já têm um Gestor de Caso atribuído.</h5>
+        <div v-if="users!=null && users.length!==0">
+            <b-table striped hover  :items="users" :fields="fields">
+                <template v-slot:cell(actions)="row">
+                    <button class="btn btn-secondary" v-on:click.prevent="addCM(row.item)">Atribuir</button>
+                </template>
+            </b-table>
+
+        </div>
+        <div v-else>
+            <br>
+            <h5>Neste momento todos os ENEs já têm um Gestor de Caso atribuído.</h5>
+        </div>
 
 
         <div v-if="showAddCM">
@@ -38,13 +43,14 @@
             <br>
             <h4>Adicionar Gestor de caso</h4> <br>
 
-            <select v-model="cm">
+            <select v-if="caseManagers!=null && caseManagers.length!==0" v-model="cm">
                 <option value="">Escolha um Gestor Caso</option>
                 <option v-for="cm in caseManagers" :value="cm">{{cm.name}}</option>
             </select>
+            <span v-else>Não existem Gestores de Caso registados na Plataforma</span>
             <br>
             <br>
-            <b-button variant="outline-success" v-on:click.prevent="setCM()">Atribuir</b-button>
+            <b-button :disabled="caseManagers==null || caseManagers.length===0" variant="outline-success" v-on:click.prevent="setCM()">Atribuir</b-button>
             <b-button v-on:click.prevent="cancel()">Cancelar</b-button>
 
         </div>
@@ -167,7 +173,12 @@
                               position: "top-center",
                               theme: "bubble"
                           });
+                          let index = this.users.findIndex((sc => {
+                              return sc.id === this.user.id
+                          }));
+                          if (index !== -1) this.users.splice(index, 1);
 
+                          this.cancel();
                           this.$emit("save-user");
                       })
                       .catch(error => {

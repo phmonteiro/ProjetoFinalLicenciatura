@@ -135,6 +135,22 @@ const routes = [{
     },
   },
   {
+    path: '/admin/addService',
+    name: 'addService',
+    component: require('./components/admin/addService.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
+    path: '/admin/configs',
+    name: 'configs',
+    component: require('./components/admin/webServiceManagement.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
     path: '/admin/addResponsibleCM',
     name: 'addResponsibleCM',
     component: require('./components/admin/addResponsibleCM.vue').default,
@@ -199,6 +215,14 @@ const routes = [{
     meta: {
       middlewareAuth: true,
     },
+  },
+  {
+    path: '/coordinator/editProfile',
+    name: 'editProfileCC',
+    component: require('./components/coordinator/editProfile.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
   }],
 },
 // CASE MANAGER RESPONSIBLE
@@ -220,6 +244,14 @@ const routes = [{
     path: '/caseManagerResponsible/addCMtoENE',
     name: 'addCaseManagerToENE',
     component: require('./components/caseManagerResponsible/addCaseManagerToENE.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
+    path: '/caseManagerResponsible/deactivateCM',
+    name: 'deactivateCM',
+    component: require('./components/caseManagerResponsible/deactivateCM.vue').default,
     meta: {
       middlewareAuth: true,
     },

@@ -201,9 +201,17 @@ export default {
             this.$router.push("/coordinator");
             return;
           }
-          if (response.data.user.type == "CaseManager") {
+          if (response.data.user.type == "CaseManager" && response.data.user.inactive != 1) {
             this.$router.push("/caseManager");
             return;
+          }else{
+              this.$toasted.error("Conta inactiva. Por favor contacte o Responsável de Gestores de Caso para mais informações.", {
+                  duration: 10000,
+                  position: "top-center",
+                  theme: "bubble"
+              });
+              this.$store.commit("clearUserAndToken");
+              return;
           }
         })
         .catch(error => {

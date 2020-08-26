@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Nee;
 use App\Tutor;
 use App\CaseManager;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\CaseManagerResponsibleResource;
 use App\Service;
 use App\Supports;
+use App\Coordinator;
 use App\Student_Supports;
 use App\MedicalFile;
 use Illuminate\Support\Facades\Storage;
@@ -136,5 +138,94 @@ class DirectorController extends Controller
         $zipper->make('medicalReport/' . $seed . '.zip')->add($array);
         $zipper->close();
         return response()->download(public_path('medicalReport/' . $seed . '.zip'));
+    }
+
+    public function removeStudentStatus($id){
+            $ene = User::findOrFail($id);
+
+            $ene->eneeExpirationDate = null;
+            $ene->enee = "rejected";
+            $ene->save();
+
+            // get all Supports attributed to currenwt ENE and delete them
+            $studentSupports = Student_Supports::where('email', '=', $ene->email);
+            foreach ($studentSupports as $studentSupport) {
+                $studentSupport->delete();
+            }
+
+            $eneTutor = Tutor::where('studentEmail', '=', $ene->email);
+            $eneTutor->delete();
+
+            $eneCm = CaseManager::where('studentEmail', '=', $ene->email);
+            $eneCm->delete();
+
+            $nees = Nee::where('studentEmail', '=', $ene->email);
+            foreach ($nees as $nee) {
+                $nee->delete();
+            }
+
+                            //EmailController::sendEmailWithCC('O diretor atribui-lhe um professor tutor. Obrigado', $user->email, 'Atribuição de um novo professor tutor', 'Atribuição de um novo professor tutor',  $currentTutor->tutorEmail);
+    }
+
+    public function defineCoordinatorEmail(Request $request, $dep){
+        $dados = $request->validate([
+            'coordinatorEmail' => 'required',
+        ]);
+
+        $user = User::where('email',$coordinator->email)->first();
+        $user->secondEmail = null;
+        $user->save();
+
+        $coordinator = Coordinator::where('departmentNumber',$dep)->first();
+        $coordinator->email = $dados['coordinatorEmail'];
+        $coordinator->secondaryEmail = null;
+        $coordinator->save();
+
+        //....................
+         $coordinator = User::where('email',$dados['coordinatorEmail'])->first();
+
+        if($coordinator !== null){
+            return response()->json(418);
+        }
+
+        $users = \Adldap\Laravel\Facades\Adldap::search()->find($dados['coordinatorEmail']);
+
+        $user = null;
+
+        $user = new User();
+
+        $user->email = $users->mail[0];
+        $user->name = $users->displayname[0];
+        $user->type = 'Coordinator';
+        $user->course = $users->description[0];
+        $user->school = $users->company[0];
+        $user->number = $users->mailnickname[0];
+        $user->departmentNumber = $users->departmentnumber[0];
+        $user->firstLogin = 1;
+        $user->save();
+
+        \Debugbar::info($users->departmentnumber[0]);
+        //....................
+
+        return response()->json("Success",200);
+    }
+
+    public function getCoordinatorEmail($dep){
+        $coordinatorEmail = Coordinator::where('departmentNumber',$dep)->first();
+
+        if($coordinatorEmail==null){
+            $coordinatorEmail = "";
+        }
+
+        return response()->json($coordinatorEmail,200);
+    }
+
+    public function pedirParecerCoordenador(Request $request, $num){
+        $user = User::where('number',$num)->first();
+
+        $user->coordinatorApproval = -1;
+        $user->save();
+
+        return response()->json(200);
     }
 }

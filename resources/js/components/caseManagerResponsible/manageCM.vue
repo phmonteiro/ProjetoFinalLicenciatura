@@ -14,39 +14,44 @@
         <br>
       <h3>Lista de estudantes</h3>
         <hr v-if="users==null || users.length===0">
-      <b-table striped hover v-if="users!=null && users.length>0" :items="users" :fields="fields">
-          <template v-slot:cell(actions)="row">
-              <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir Gestores de Caso</button>
-          </template>
-      </b-table>
-        <h5 v-else>Neste momento não existem  ENEs com Gestores de Caso atribuídos.</h5>
 
-        <nav aria-label="Page navigation" v-if="users">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getStudent(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
+        <div v-if="users!=null && users.length!==0">
+            <b-table striped hover :items="users" :fields="fields">
+                <template v-slot:cell(actions)="row">
+                    <button class="btn btn-secondary" v-on:click.prevent="editUser(row.item)">Gerir Gestores de Caso</button>
+                </template>
+            </b-table>
+            <nav aria-label="Page navigation" v-if="users">
+                <ul class="pagination">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getStudent(pagination.prev_page_url)"
+                        >Anterior</a>
+                    </li>
 
-          <li class="page-item disabled">
-            <a class="page-link text-dark" href="#">
-              Página {{ pagination.current_page }} de
-              {{ pagination.last_page }}
-            </a>
-          </li>
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="#">
+                            Página {{ pagination.current_page }} de
+                            {{ pagination.last_page }}
+                        </a>
+                    </li>
 
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getStudent(pagination.next_page_url)"
-            >Próximo</a>
-          </li>
-        </ul>
-      </nav>
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getStudent(pagination.next_page_url)"
+                        >Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-else>
+            <br>
+            <h5>Neste momento não existem  ENEs com Gestores de Caso atribuídos.</h5>
+        </div>
     </div>
     </b-container>
       <set-cm
@@ -136,6 +141,7 @@ export default {
     },
     saveUser() {
       this.currentUser = null;
+      this.cancelEdit();
     }
   },
   created() {

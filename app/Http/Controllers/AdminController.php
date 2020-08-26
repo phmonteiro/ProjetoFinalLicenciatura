@@ -17,6 +17,8 @@ use Storage;
 use File;
 use Barryvdh\Debugbar\Facade as Debugbar;
 use Auth;
+use Config;
+use stdClass;
 
 
 class AdminController extends Controller
@@ -160,7 +162,13 @@ class AdminController extends Controller
             $coordinator->school = $dados['school'];
             $coordinator->save();
 
-            //EmailController::sendEmail('Foi adicionado como coordenador de curso na plataforma 100%In. Obrigado', $coordinator->email, 'Adicionado como coordenador de curso', 'Adicionado como coordenador de curso');
+            $admin = User::where('type','Administrador')->first();
+
+            if($admin!=null){
+//               EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como Coordenador de Curso. Se tiver alguma dúvida contacte o admnistrador da Plataforma através do email '.$admin->email.'.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+            }else{
+//               EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como Coordenador de Curso. Se tiver alguma dúvida contacte o admnistrador da Plataforma.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+            }
 
             return response()->json(new CoordinatorResource($coordinator), 201);
         }
@@ -213,12 +221,23 @@ class AdminController extends Controller
             $user->firstLogin = 1;
             $user->save();
 
+            $admin = User::where('type','Administrador')->first();
+
+            if($admin!=null){
+//               EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como Responsável dos Gestores de Caso. Se tiver alguma dúvida contacte o admnistrador da Plataforma através do email '.$admin->email.'.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+            }else{
+//               EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como Responsável dos Gestores de Caso. Se tiver alguma dúvida contacte o admnistrador da Plataforma.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+            }
+
             return response()->json("Responsible Case Manager adicionado com sucesso!",200);
         }else{
         \Debugbar::info($user);
 
             if($user->type != "CaseManager"){
                 $user->type = "CaseManagerResponsible";
+
+//                 EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como Responsável dos Gestores de Caso. Se tiver alguma dúvida contacte o admnistrador da Plataforma.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+
                 $user->save();
             }else{
                 $cm = CaseManager::where("caseManagerEmail","=",$request->emailResponsibleCaseManager)->where("emailMainCaseManager","=",$request->emailResponsibleCaseManager)->get();
@@ -229,9 +248,101 @@ class AdminController extends Controller
                     $user->type="CaseManagerResponsible";
                     $user->save();
 
+//                     EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como Responsável dos Gestores de Caso. Se tiver alguma dúvida contacte o admnistrador da Plataforma.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+
                     return response()->json("Responsible Case Manager adicionado com sucesso!",200);
                 }
             }
         }
+    }
+
+    public function getWebServiceConfigs(){
+        $linkWSDadosAlunos = config("global.ws_dadosAluno_link");
+        $fieldsWSDadosAlunos = config('global.ws_dadosAluno_fields');
+        $fieldNamesWSDadosAlunos = config('global.ws_dadosAluno_fieldNames');
+
+        $arr = array();
+
+        for($i = 0; $i < sizeof($fieldsWSDadosAlunos); $i ++){
+            $obj = new stdClass();
+            $obj->name = $fieldNamesWSDadosAlunos[$i];
+            $obj->jsonParameter =$fieldsWSDadosAlunos[$i];
+
+            array_push($arr,$obj);
+        }
+
+        return response()->json([$linkWSDadosAlunos,$arr], 200);
+    }
+
+    public function setWebServiceConfigs(Request $request){
+            $dados = $request->validate([
+                'parameters' => '',
+                'linkWebService' => '',
+            ]);
+
+        $fieldNames = array();
+        $fields = array();
+
+        foreach($dados['parameters'] as $param){
+            array_push($fieldNames,$param['name']);
+            array_push($fields,$param['jsonParameter']);
+        }
+
+        config(['global.ws_dadosAluno_link' => $dados['linkWebService']]);
+        config(['global.ws_dadosAluno_fields' => $fields]);
+        config(['global.ws_dadosAluno_fieldNames' => $fieldNames]);
+
+        $fp = fopen(base_path() .'/config/global.php' , 'w');
+        fwrite($fp, '<?php return ' . var_export(config('global'), true) . ';');
+        fclose($fp);
+
+        return response()->json(200);
+    }
+
+    public function addService(Request $request){
+        $dados = $request->validate([
+            'email' => 'required',
+            'service' => 'required',
+        ]);
+
+         $service = User::where('email',$dados['email'])->first();
+
+        if($service !== null){
+            if($user->type===$dados['service']){
+                return response()->json(409);
+            }else{
+                return response()->json(418);
+            }
+        }
+
+        $users = \Adldap\Laravel\Facades\Adldap::search()->find($dados['email']);
+
+//         \Debugbar::info($users);
+
+        $user = null;
+
+        $user = new User();
+
+        $user->email = $users->mail[0];
+        $user->name = $users->displayname[0];
+        $user->type = $dados['service'];
+        $user->course = $users->description[0];
+        $user->school = $users->company[0];
+        $user->number = $users->mailnickname[0];
+        $user->departmentNumber = $users->departmentnumber[0];
+        $user->firstLogin = 1;
+        $user->save();
+
+        $admin = User::where('type','Administrador')->first();
+
+        if($admin!=null){
+//           EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como um dos seus Serviços de apoio. Se tiver alguma dúvida contacte o admnistrador da Plataforma através do email '.$admin->email.'.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+        }else{
+//           EmailController::sendEmail('Foi adicionado à Plataforma de Acompanhamento de Estudantes com Necessidades Específicas (ENE) do IPLeiria, como um dos seus Serviços de apoio. Se tiver alguma dúvida contacte o admnistrador da Plataforma.', $user->email, 'Atribuição de função na Plataforma 100%IN', 'Atribuição de função na Plataforma 100%IN');
+        }
+
+
+
+        return response()->json(200);
     }
 }

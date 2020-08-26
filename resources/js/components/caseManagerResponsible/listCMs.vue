@@ -1,11 +1,16 @@
 <template>
 <div>
-<b-table striped hover v-if="caseManagers!=null" :items="caseManagers" :fields="fields">
-    <template v-slot:cell(actions)="row">
-        <button v-if="!emailMainCMActiveSubstitution.includes(row.item.email)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
-    </template>
-</b-table>
-    <h4 v-else>De momento não há Gestores de Caso na plataforma.</h4>
+    <div v-if="caseManagers!=null && caseManagers.length!==0">
+        <b-table striped hover  :items="caseManagers" :fields="fields">
+            <template v-slot:cell(actions)="row">
+                <button v-if="!emailMainCMActiveSubstitution.includes(row.item.email)" class="btn btn-success" v-on:click.prevent="toggleSubstituir(row.item)">Substituir</button>
+            </template>
+        </b-table>
+    </div>
+    <div v-else>
+        <br>
+        <h4>De momento não há Gestores de Caso na plataforma.</h4>
+    </div>
 
 
     <div v-if="showSubstitutes">
