@@ -156,6 +156,7 @@
                 </div>
               </div>
             </div>
+              <hr>
 
             <div class="container-full-width">
               <div class="row">
@@ -273,7 +274,7 @@
               <div class="row">
                 <div class="col">
                   <label for="responsibleName">{{$t('nome')}}</label>
-                    <ValidationProvider name="responsibleName" rules="required|alpha_spaces" v-slot="{ errors }">
+                    <ValidationProvider name="responsibleName" rules="alpha_spaces" v-slot="{ errors }">
                         <input
                             type="text"
                             class="form-control"
@@ -286,7 +287,7 @@
                 </div>
                 <div class="col">
                   <label for="responsiblePhone">{{$t('contacto_telefónico')}}</label>
-                    <ValidationProvider name="responsiblePhone" rules="required|digits:9|numeric" v-slot="{ errors }">
+                    <ValidationProvider name="responsiblePhone" rules="digits:9|numeric" v-slot="{ errors }">
                         <input
                             class="form-control"
                             name="Responsible Phone"
@@ -300,7 +301,7 @@
                 </div>
                 <div class="col">
                   <label for="responsibleKin">{{$t('parentesco')}}</label>
-                    <ValidationProvider name="responsibleKin" rules="required|alpha_spaces" v-slot="{ errors }">
+                    <ValidationProvider name="responsibleKin" rules="alpha_spaces" v-slot="{ errors }">
                         <input
                             type="text"
                             class="form-control"
@@ -313,7 +314,7 @@
                 </div>
                 <div class="col">
                   <label for="responsibleEmail">{{$t('email')}}</label>
-                    <ValidationProvider name="responsibleEmail" rules="required|email" v-slot="{ errors }">
+                    <ValidationProvider name="responsibleEmail" rules="email" v-slot="{ errors }">
                         <input
                             type="email"
                             class="form-control"
@@ -326,7 +327,7 @@
                 </div>
               </div>
             </div>
-
+              <hr>
             <h5>{{$t('contacto_emergencia')}}</h5>
             <div class="container-full-width">
               <div class="row">
@@ -498,13 +499,14 @@
                 </div>
               </div>
             </div>
-
+              <hr>
             <div class="container-full-width">
               <div class="row">
                 <div class="col">
-                  <label for="files">{{$t('relatorio_medico')}}</label>
+                  <label for="files">{{$t('documentacao_comprovativa')}}</label>
                   <div class="field">
                     <input type="file" id="files" ref="files" v-on:change="handleFiles()" multiple />
+                      <h6>**{{$t('info_documents')}}</h6>
                   </div>
                 </div>
               </div>
@@ -669,7 +671,7 @@ export default {
           console.log(error);
         });
     }
-  }
+  },
 };
 </script>
 

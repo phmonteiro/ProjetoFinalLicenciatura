@@ -7,6 +7,11 @@
             <br>
             <b v-if="isExpired">{{$t('mensagem_renovar_estatuto')}}</b>
             <br>
+            <div v-if="student.directorComment">
+                <b>{{$t('msg_diretor_estatuto_rejeitado')}}</b>
+                <br>
+                <span class="jumbotron-fluid">{{student.directorComment}}</span>
+            </div>
             <br>
           <a v-if="isExpired" class="btn btn-secondary" v-on:click.prevent="subscribe()" href>{{$t('renovar_estatuto')}}</a>
           <a v-else class="btn btn-secondary" v-on:click.prevent="subscribe()" href>{{$t('pedir_estatuto')}}</a>

@@ -2,30 +2,27 @@
   <div class="container mt-3" v-if="user">
     <div class="form-group">
       <h4>Estudante:</h4>
-      <label for="inputName">Nome</label>
+      <label for>Nome</label>
       <input
         type="text"
         class="form-control"
         v-model="user.name"
         name="name"
-        id="inputName"
         disabled
       />
     </div>
 
     <div class="form-group">
-      <label for="inputEmail">E-mail</label>
+      <label for>E-mail</label>
       <input
         type="text"
         class="form-control"
         v-model="user.email"
-        name="coordinatorAproval"
-        id="inputcoordinatorAproval"
         disabled
       />
     </div>
     <div class="form-group">
-      <label for="inputNee">Necessidades específicas</label>
+      <label for="nee">Necessidades específicas</label>
       <input
         v-for="aux in nee"
         type="text"
@@ -38,7 +35,7 @@
     </div>
 
     <div class="form-group" v-if="user.functionalAnalysis!=null">
-      <label for="inputAnalysis">Análise Funcional</label>
+      <label for="functionalAnalysis">Análise Funcional</label>
       <input
         type="text"
         class="form-control"
@@ -66,6 +63,7 @@
               v-model="information"
           ></textarea>
       </div>
+      <br>
     <div class="form-group">
       <button type="submit" class="btn btn-success" name="ok" v-on:click.prevent="save()">Aprovar</button>
       <button class="btn btn-secondary" v-on:click.prevent="cancel()">Cancelar</button>

@@ -14,70 +14,74 @@
     <b-container>
       <b-row>
         <b-col class="top100">
-          <div v-if="meetings">
+          <div>
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
-              <hr v-if="meetings == null">
-              <br>
-            <b-table id="meetingsTable" striped hover v-if="meetings!=null" :items="meetings" :fields="fields">
-              <template v-slot:cell(actions)="row">
-                <b-row class="text-center">
-                  <b-col md="4" sm="12">
-                    <div v-if="row.detailsShowing" style="margin-left: -8px;">
-                        <b-button aria-label="Mostrar detalhes" @click="row.toggleDetails">                       {{$t('fechar')}} <font-awesome-icon icon="eye-slash" />
-                        </b-button>
-                    </div>
-                    <div v-if="!row.detailsShowing" style="margin-left: -8px;">
-                        <b-button aria-label="Mostrar detalhes" @click="row.toggleDetails">                       {{$t('detalhes')}} <font-awesome-icon icon="eye" />
-                        </b-button>
-                    </div>
-                  </b-col>
-                </b-row>
-              </template>
-              <template slot="row-details" slot-scope="row">
-                <b-card>
-                  <b-row class="mb-2">
-                    <b-col class="text">
-                      <b>{{ $t('informação') }}</b>
-                      {{row.item.info}}
-                    </b-col>
-                  </b-row>
-                  <b-row class="mb-2">
-                    <b-col class="text">
-                      <b>{{ $t('comentário') }}</b>
-                      {{row.item.comment}}
-                    </b-col>
-                  </b-row>
-                  <b-button size="sm" @click="row.toggleDetails">{{ $t('esconder') }}</b-button>
-                </b-card>
-              </template>
-            </b-table>
-              <h4 v-else>Não existem pedidos de agendamento de reunião de momento.</h4>
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="getMyMeetings(pagination.prev_page_url)"
-                  >{{ $t('anterior') }}</a>
-                </li>
+              <hr>
+            <div v-if="meetings!=null && meetings.length!==0">
+                <b-table id="meetingsTable" striped hover :items="meetings" :fields="fields">
+                    <template v-slot:cell(actions)="row">
+                        <b-row class="text-center">
+                            <b-col md="4" sm="12">
+                                <div v-if="row.detailsShowing" style="margin-left: -8px;">
+                                    <b-button aria-label="Mostrar detalhes" @click="row.toggleDetails">                       {{$t('fechar')}} <font-awesome-icon icon="eye-slash" />
+                                    </b-button>
+                                </div>
+                                <div v-if="!row.detailsShowing" style="margin-left: -8px;">
+                                    <b-button aria-label="Mostrar detalhes" @click="row.toggleDetails">                       {{$t('detalhes')}} <font-awesome-icon icon="eye" />
+                                    </b-button>
+                                </div>
+                            </b-col>
+                        </b-row>
+                    </template>
+                    <template slot="row-details" slot-scope="row">
+                        <b-card>
+                            <b-row class="mb-2">
+                                <b-col class="text">
+                                    <b>{{ $t('informação') }}</b>
+                                    {{row.item.info}}
+                                </b-col>
+                            </b-row>
+                            <b-row class="mb-2">
+                                <b-col class="text">
+                                    <b>{{ $t('comentário') }}</b>
+                                    {{row.item.comment}}
+                                </b-col>
+                            </b-row>
+                            <b-button size="sm" @click="row.toggleDetails">{{ $t('esconder') }}</b-button>
+                        </b-card>
+                    </template>
+                </b-table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                            <a
+                                class="page-link"
+                                href="#"
+                                @click.prevent="getMyMeetings(pagination.prev_page_url)"
+                            >{{ $t('anterior') }}</a>
+                        </li>
 
-                <li class="page-item disabled">
-                  <a
-                    class="page-link text-dark"
-                    href="#"
-                  >{{ $t('página') }} {{ pagination.current_page }} {{ $t('de') }} {{ pagination.last_page }}</a>
-                </li>
+                        <li class="page-item disabled">
+                            <a
+                                class="page-link text-dark"
+                                href="#"
+                            >{{ $t('página') }} {{ pagination.current_page }} {{ $t('de') }} {{ pagination.last_page }}</a>
+                        </li>
 
-                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="getMyMeetings(pagination.next_page_url)"
-                  >{{ $t('próximo') }}</a>
-                </li>
-              </ul>
-            </nav>
+                        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                            <a
+                                class="page-link"
+                                href="#"
+                                @click.prevent="getMyMeetings(pagination.next_page_url)"
+                            >{{ $t('próximo') }}</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div v-else>
+                <br>
+                <h5>{{$t('reunioes_vazio')}}</h5>
+            </div>
           </div>
         </b-col>
       </b-row>

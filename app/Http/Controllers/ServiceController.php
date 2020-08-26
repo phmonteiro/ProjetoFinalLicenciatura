@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Auth;
 use App\ServiceRequest;
 use Illuminate\Support\Facades\DB;
 use App\Schedule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
+use App\Contacts_Files;
+
 
 class ServiceController extends Controller
 {
@@ -233,6 +238,10 @@ class ServiceController extends Controller
 
     public function approve(Request $request, $id)
     {
+        $dados = $request->validate([
+            'information' => '',
+        ]);
+
         $user = User::findOrFail($id);
 
         $user->servicesApproval = 'approved';
@@ -240,7 +249,8 @@ class ServiceController extends Controller
 
         $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->first();
         $service->approval  = 'Aprovado';
-        $service->comment  = $request->information;
+        $service->comment  = $dados['information'];
+        $service->answerDate = Carbon::now();
         $service->save();
         $history = new History();
         $history->studentEmail = $user->email;
@@ -278,7 +288,7 @@ class ServiceController extends Controller
 
     public function getServicesRequests()
     {
-        $services = ServiceRequest::where('name', Auth::user()->type)->whereNull('approval')->get();
+        $services = ServiceRequest::where('name', Auth::user()->type)->whereNull('approval')->whereNull('answerDate')->get();
         $users = array();
         for ($i = 0; $i < sizeOf($services); $i++) {
             $aux = $services[$i]->studentEmail;
@@ -322,18 +332,23 @@ class ServiceController extends Controller
         $user = User::findOrFail($id);
         $dados = $request->validate([
             'information' => 'required|string',
-            'nextContact' => 'required|date|after:today',
+            'date' => 'required|date|after:today',
             'service' => 'required|string',
-            'decision' => 'required|string'
+            'time' => 'required',
+            'contactMedium' => 'required',
+            'software' => '',
+            'place' => '',
         ]);
 
         $contact = new Contact();
         $contact->studentEmail = $user->email;
-        $contact->date = Carbon::now();
+        $contact->date = $dados['date'];
+        $contact->time = $dados['time'];
+        $contact->place = $dados['place'];
+        $contact->contactMedium = $dados['contactMedium'];
+        $contact->software = $dados['software'];
         $contact->service = $dados['service'];
         $contact->information = $dados['information'];
-        $contact->nextContact = $dados['nextContact'];
-        $contact->decision = $dados['decision'];
         $contact->save();
 
         if($dados['service'] === "Professor Orientador"){
@@ -341,13 +356,29 @@ class ServiceController extends Controller
             $professorOrientador = Tutor::where('studentEmail','=',$dados['email'])->first();
 
             if($professorOrientador != null){
-                EmailController::sendEmailWithCC('O seu Gestor de Caso agendou uma interação com o Professor Orientador. Obrigado', $user->email, 'Marcação de interação com Professor Orientador', 'Marcação de interação com Professor Orientador',  $professorOrientador->tutorEmail);
+//                 EmailController::sendEmailWithCC('O seu Gestor de Caso agendou uma interação com o Professor Orientador. Obrigado', $user->email, 'Marcação de interação com Professor Orientador', 'Marcação de interação com Professor Orientador',  $professorOrientador->tutorEmail);
+            }
+        }
+
+        if ($request->numberFiles != null && $request->numberFiles > 0) {
+            $contact->hasFiles = '1';
+            $contact->save();
+
+            for ($i = 0; $i < $request->numberFiles; $i++) {
+                $file = Input::file('file' . $i);
+                $ext = $file->getClientOriginalExtension();
+                $uploadedFile = "InteractionFile - " . $contact->id . "-" . $i . '.' . $ext;
+                Storage::disk('public')->put('interactionFiles/' . $uploadedFile, File::get($file));
+                $interactionFile = new Contacts_Files();
+                $interactionFile->contact_id = $contact->id;
+                $interactionFile->filename = $uploadedFile;
+                $interactionFile->save();
             }
         }
 
         $history = new History();
         $history->studentEmail = $user->email;
-        $history->description = "O " . $contact->service . " teve uma reunião com o estudante";
+        $history->description = "O " . $contact->service . " agendou uma reunião com o estudante";
         $history->date = Carbon::now();
         $history->save();
 

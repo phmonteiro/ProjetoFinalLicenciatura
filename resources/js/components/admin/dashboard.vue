@@ -15,6 +15,10 @@
 
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'definirHorasApoio'}">Definir Horas de Apoio</router-link>
 
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'configs'}">Configurações</router-link>
+
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addService'}">Adicionar Serviço</router-link>
+
             <router-link
               @click.native="toggleNav()"
               class="nav-link"

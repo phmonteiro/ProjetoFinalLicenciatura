@@ -19,8 +19,10 @@
       },
       methods:{
         save(){
-          // if(!this.cmEmail.includes("ipleiria.pt") || this.cmEmail.includes("my.ipleiria.pt")){
-            if(false){
+
+                //ToDo
+            // if(!this.cmEmail.includes("ipleiria.pt") || this.cmEmail.includes("my.ipleiria.pt")){
+            if(this.cmEmail.includes("my.ipleiria.pt")){
                 this.$toasted.error(
                     "Insira um email válido.",
                     {

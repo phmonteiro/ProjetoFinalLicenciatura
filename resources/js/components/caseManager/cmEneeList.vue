@@ -12,8 +12,23 @@
       </b-row>
     </b-container>
     <div class="container">
-      <h2>Lista de ENE</h2>
-      <b-table striped hover v-if="enee!=null" :items="enee" :fields="fields">
+        <div>
+            <h2 class="d-inline-block">Lista de ENE</h2>
+            <download-excel
+                class="btn btn-outline-success"
+                style="margin-left:30px; margin-bottom:10px"
+                :data   = "enee"
+                :fields = "json_fields"
+                worksheet = "My Worksheet"
+                name    = "filename.xls">
+
+                Exportar para Excel
+
+            </download-excel>
+        </div>
+
+    <div v-if="enee.length!==0 && enee!=null">
+      <b-table striped hover :items="enee" :fields="fields">
         <template v-slot:cell(actions)="row">
           <b-row class="text-center">
               <b-col sm="12" class="m-1">
@@ -103,7 +118,7 @@
               <b-col>
                 <b-row class="mb-2">
                   <b-col sm="5" class="text">
-                    <b>1ª matricula:</b>
+                    <b>Matrícula:</b>
                     {{row.item.enruledYear}}
                   </b-col>
                 </b-row>
@@ -120,8 +135,10 @@
               <b-col sm="4" class="text">
                 <b>Estatuto:</b>
                 <span v-if="row.item.enee == 'approved'">Aprovado</span>
-                <span v-if="row.item.enee == 'awaiting'">A espera</span>
-                <span v-if="row.item.enee == null">Nao pedido</span>
+                <span v-if="row.item.enee == 'awaiting'">À espera</span>
+                <span v-if="row.item.enee == null">Não pedido</span>
+                <span v-if="row.item.enee == 'expired'">Expirado</span>
+                <span v-if="row.item.enee == 'rejected'">Rejeitado</span>
               </b-col>
               <b-col>
                 <b-row class="mb-9">
@@ -214,6 +231,11 @@
         </ul>
       </nav>
     </div>
+    <div v-else>
+        <br>
+        <h5>De momento não tem nenhum ENE atribuído.</h5>
+    </div>
+    </div>
       <br>
       <show-hours :student="enee"
                   v-if="showStudentHours"
@@ -271,6 +293,60 @@
     export default {
   data() {
     return {
+        //---------------tests-----------------------
+        // json_data: [
+        //     {
+        //         'name': 'Tony Peña',
+        //         'city': 'New York',
+        //         'country': 'United States',
+        //         'birthdate': '1978-03-15',
+        //         'phone': {
+        //             'mobile': '1-541-754-3010',
+        //             'landline': '(541) 754-3010'
+        //         }
+        //     },
+        //     {
+        //         'name': 'Thessaloniki',
+        //         'city': 'Athens',
+        //         'country': 'Greece',
+        //         'birthdate': '1987-11-23',
+        //         'phone': {
+        //             'mobile': '+1 855 275 5071',
+        //             'landline': '(2741) 2621-244'
+        //         }
+        //     }
+        // ],
+        json_fields: {
+            'Número' : 'number',
+            'Nome Completo': 'name',
+            'Email': 'email',
+            'Nº Telefone': 'phoneNumber',
+            'Código Postal' : 'zipCode',
+            'Cidade': 'area',
+            'Data de Nascimento': 'birthDate',
+            'Curso': 'course',
+            'Nº Matrícula': 'curricularYear',
+            'Ano de Ingresso': 'enruledYear',
+            'Instituição': 'school',
+            'Documento de Identificação': 'identificationDocument',
+            'Número de Identificação': 'identificationNumber',
+            'educationalSupport': 'educationalSupport',
+            'Expiração de Estatuto': 'eneeExpirationDate',
+            'Nome do Responsável': 'responsibleName',
+            'Número do Responsável': 'responsibleNumber',
+            'Email do Responsável': 'responsibleEmail',
+            'Nome do Contacto de Emergência': 'emergencyName',
+            'Número do Contacto de Emergência': 'emergencyNumber',
+            'Email do Contacto de Emergência': 'emergencyEmail',
+            'Análise Funcional': 'functionalAnalysis',
+        },
+        // 'Telephone 2' : {
+        //     field: 'phone.landline',
+        //     callback: (value) => {
+        //         return `Landline Phone - ${value}`;
+        //     }
+        // },
+        //--------------------------------
       historial: [],
       historic: [],
       supportHoursLimit: null,
@@ -629,3 +705,6 @@
   }
 };
 </script>
+<style>
+
+</style>

@@ -110,8 +110,13 @@ class SupportController extends Controller
 
     public function reproveSubscription(Request $request, $id)
     {
+        $dados = $request->validate([
+            'comment' => '',
+        ]);
         $user = User::findOrFail($id);
-        $user->enee = "denied";
+        $user->enee = "rejected";
+        $user->coordinatorApproval = null;
+        $user->directorComment = $dados['comment'];
         $user->save();
 
         $history = new History();

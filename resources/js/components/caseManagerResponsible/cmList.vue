@@ -14,39 +14,55 @@
 <!--    <set-cm :user="currentUser" @save-user="saveUser()" @cancel-edit="cancelEdit()"></set-cm>-->
     <div class="container">
         <br>
-      <h3>Lista de ENEs por Gestores de Caso</h3>
-        <hr v-if="caseManagers==null || caseManagers.length===0">
-      <b-table striped hover v-if="caseManagers!=null && caseManagers.length>0" :items="caseManagers" :fields="fields">
+
+      <h3 class="d-inline-block">Lista de ENEs por Gestores de Caso</h3>
+        <download-excel
+            class="btn btn-outline-success"
+            style="margin-left:30px; margin-bottom:10px"
+            :data   = "caseManagers"
+            :fields = "json_fields"
+            worksheet = "My Worksheet"
+            name    = "filename.xls">
+
+            Exportar para Excel
+
+        </download-excel>
+
+        <div v-if="caseManagers!=null && caseManagers.length!==0">
+      <b-table striped hover :items="caseManagers" :fields="fields">
 
       </b-table>
-        <h5 v-else>Não existem Gestores de Caso com ENEs atribuídos.</h5>
+        <nav aria-label="Page navigation" v-if="caseManagers">
+            <ul class="pagination">
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                    <a
+                        class="page-link"
+                        href="#"
+                        @click.prevent="getcaseManagers(pagination.prev_page_url)"
+                    >Anterior</a>
+                </li>
 
-      <nav aria-label="Page navigation" v-if="caseManagers">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getcaseManagers(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
+                <li class="page-item disabled">
+                    <a class="page-link text-dark" href="#">
+                        Página {{ pagination.current_page }} de
+                        {{ pagination.last_page }}
+                    </a>
+                </li>
 
-          <li class="page-item disabled">
-            <a class="page-link text-dark" href="#">
-              Página {{ pagination.current_page }} de
-              {{ pagination.last_page }}
-            </a>
-          </li>
-
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getcaseManagers(pagination.next_page_url)"
-            >Próximo</a>
-          </li>
-        </ul>
-      </nav>
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                    <a
+                        class="page-link"
+                        href="#"
+                        @click.prevent="getcaseManagers(pagination.next_page_url)"
+                    >Próximo</a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+        <div v-else>
+            <br>
+            <h5>Não existem Gestores de Caso com ENEs atribuídos.</h5>
+        </div>
     </div>
       <br>
   </div>
@@ -56,6 +72,15 @@
 export default {
   data() {
     return {
+      //---------------------------------------------
+        json_fields: {
+            'Email do Estudante':'studentEmail',
+            'Nome do Estudante':'studentName',
+            'Email do Gestor de Caso':'caseManagerEmail',
+            'Nome do Gestor de Caso':'caseManagerName',
+            'Email do Gestor de Caso Principal em caso de substituição':'emailMainCaseManager'
+        },
+      //---------------------------------------------
       cmSubstitutes:[],
       emailEnee:null,
       substitute:"default",

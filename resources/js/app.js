@@ -17,6 +17,7 @@ import VueApexCharts from 'vue-apexcharts';
 import feather from 'vue-icon';
 import M16yPlugin from 'vue-accessibility-widget';
 import VueTimepicker from 'vue2-timepicker';
+import JsonExcel from 'vue-json-excel';
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars} from '@fortawesome/free-solid-svg-icons';
@@ -46,6 +47,7 @@ Vue.use(VueTimepicker);
 Vue.use(VModal);
 window.Event = new Vue();
 
+Vue.component('downloadExcel', JsonExcel);
 Vue.component('vue-layout', require('./layout.vue').default);
 Vue.component('apexchart', VueApexCharts);
 Vue.component('nav-bar', require('./components/navbar.vue').default);

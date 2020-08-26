@@ -12,9 +12,11 @@
              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addCaseManagerToENE'}">Atribuir Gestor de Caso</router-link>
 
 
-              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores Caso</router-link>
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'manageCM'}">Gerir Gestores de Caso</router-link>
 
-            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addCM'}">Adicionar Gestor Caso à Plataforma</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addCM'}">Adicionar Gestor de Caso à Plataforma</router-link>
+
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'deactivateCM'}">Ativar/Desativar Gestor de Caso</router-link>
 
               <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'listCMs'}">Substituições</router-link>
 

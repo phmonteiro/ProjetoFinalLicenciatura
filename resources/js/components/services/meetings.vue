@@ -11,112 +11,118 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <div class="container" v-if="this.meetings">
-      <h2>Pedidos Reuniao</h2>
-        <hr v-if="!meetings || meetings.length===0">
-        <b-table v-if="meetings" striped hover :items="meetings" :fields="fields">
-        <template v-slot:cell(actions)="row">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-toggle="modal"
-            data-target="#modalReunioes"
-          >Marcar Reuniao</button>
+    <div class="container">
+<!--        v-if="meetings"-->
+      <h2>Pedidos de Reunião</h2>
+        <hr>
 
-          <div
-            class="modal fade"
-            id="modalReunioes"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="modalReunioesLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalReunioesLabel">Reuniao com {{row.item.service}}</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="decision">Comentario:</label>
-                    <textarea
-                      class="form-control"
-                      id="decision"
-                      v-model="row.item.comment"
-                      name="decision"
-                      rows="3"
-                      disabled
-                    ></textarea>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="additionalInfo">Informação adicional:</label>
-                    <textarea
-                      class="form-control"
-                      id="additionalInfo"
-                      v-model="meeting.info"
-                      name="decision"
-                      rows="3"
-                    ></textarea>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="date">Data Reuniao</label>
-                    <input
-                      id="date"
-                      type="date"
-                      class="form-control"
-                      v-model="meeting.date"
-                      name="date"
-                    >
-                  </div>
-
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <div v-if="meetings!=null && meetings.length!==0">
+            <b-table striped hover :items="meetings" :fields="fields">
+                <template v-slot:cell(actions)="row">
                     <button
-                      type="submit"
-                      class="btn btn-primary"
-                      data-dismiss="modal"
-                      v-on:click.prevent="setMeeting(row.item.id)"
-                    >Confirmar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </b-table>
-        <h4 v-else>Não existem reuniões para mostrar.</h4>
+                        type="button"
+                        class="btn btn-secondary"
+                        data-toggle="modal"
+                        data-target="#modalReunioes"
+                    >Marcar Reuniao</button>
 
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getMeetings(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
+                    <div
+                        class="modal fade"
+                        id="modalReunioes"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="modalReunioesLabel"
+                        aria-hidden="true"
+                    >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalReunioesLabel">Reuniao com {{row.item.service}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="decision">Comentario:</label>
+                                        <textarea
+                                            class="form-control"
+                                            id="decision"
+                                            v-model="row.item.comment"
+                                            name="decision"
+                                            rows="3"
+                                            disabled
+                                        ></textarea>
+                                    </div>
 
-          <li class="page-item disabled">
-            <a
-              class="page-link text-dark"
-              href="#"
-            >Página {{ pagination.current_page }} de {{ pagination.last_page }}</a>
-          </li>
+                                    <div class="form-group">
+                                        <label for="additionalInfo">Informação adicional:</label>
+                                        <textarea
+                                            class="form-control"
+                                            id="additionalInfo"
+                                            v-model="meeting.info"
+                                            name="decision"
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
 
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getMeetings(pagination.next_page_url)"
-            >Próximo</a>
-          </li>
-        </ul>
-      </nav>
+                                    <div class="form-group">
+                                        <label for="date">Data Reuniao</label>
+                                        <input
+                                            id="date"
+                                            type="date"
+                                            class="form-control"
+                                            v-model="meeting.date"
+                                            name="date"
+                                        >
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-dismiss="modal"
+                                            v-on:click.prevent="setMeeting(row.item.id)"
+                                        >Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </b-table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getMeetings(pagination.prev_page_url)"
+                        >Anterior</a>
+                    </li>
+
+                    <li class="page-item disabled">
+                        <a
+                            class="page-link text-dark"
+                            href="#"
+                        >Página {{ pagination.current_page }} de {{ pagination.last_page }}</a>
+                    </li>
+
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getMeetings(pagination.next_page_url)"
+                        >Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-else>
+            <br>
+            <h5>Não existem reuniões para mostrar.</h5>
+        </div>
     </div>
   </div>
 </template>
