@@ -9,7 +9,8 @@
           <div class="sidenav" :class="{ active: active}">
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'cmEneeList'}">Meus ENE</router-link>
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'meetingsEneeList'}">Reuniões</router-link>
-            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'supportRequests'}">Pedidos de Apoio</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'supportRequests'}">Pedidos de Apoios</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'supportHoursRequests'}">Pedidos de Horas</router-link>
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'calendar'}">Calendário</router-link>
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'substitution'}">Substituição</router-link>
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'statistics'}">Estatísticas</router-link>

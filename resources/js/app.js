@@ -40,7 +40,6 @@ Vue.use(BootstrapVue);
 Vue.use(Toasted);
 Vue.use(VueSpinners);
 Vue.use(DatePicker);
-// Vue.use(VeeValidate, {fieldsBagName: 'formFields'});
 Vue.use(TimeSelector);
 Vue.use(M16yPlugin);
 Vue.use(VueTimepicker);

@@ -6,6 +6,7 @@ const routes = [{
   path: '/',
   component: require('./components/login.vue').default,
 },
+// STUDENT
 {
   path: '/student',
   component: require('./components/student/dashboard.vue').default,
@@ -13,70 +14,79 @@ const routes = [{
   meta: {
     middlewareAuth: true,
   },
-  children: [{
-    path: '/student/contact',
-    name: 'contact',
-    component: require('./components/student/contact.vue').default,
-    meta: {
-      middlewareAuth: true,
+  children: [
+    {
+      path: '/student/contact',
+      name: 'contact',
+      component: require('./components/student/contact.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/transferAccountStatus',
-    name: 'transferAccountStatus',
-    component: require('./components/student/transferAccountStatus.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/supportHoursRequestsList',
+      name: 'supportHoursRequestsList',
+      component: require('./components/student/supportHoursRequestsList.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/myMeetings',
-    name: 'myMeetings',
-    component: require('./components/student/myMeetings.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/transferAccountStatus',
+      name: 'transferAccountStatus',
+      component: require('./components/student/transferAccountStatus.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/supportHours',
-    name: 'supportHours',
-    component: require('./components/student/supportHours.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/myMeetings',
+      name: 'myMeetings',
+      component: require('./components/student/myMeetings.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/edit',
-    name: 'editProfile',
-    component: require('./components/student/editProfile.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/supportHours',
+      name: 'supportHours',
+      component: require('./components/student/supportHours.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/serviceRequest',
-    name: 'serviceRequest',
-    component: require('./components/student/serviceRequest.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/edit',
+      name: 'editProfile',
+      component: require('./components/student/editProfile.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/setMeeting',
-    name: 'setMeeting',
-    component: require('./components/student/setMeeting.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/serviceRequest',
+      name: 'serviceRequest',
+      component: require('./components/student/serviceRequest.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
-  {
-    path: '/student/usedServices',
-    name: 'usedServices',
-    component: require('./components/student/usedServices.vue').default,
-    meta: {
-      middlewareAuth: true,
+    {
+      path: '/student/setMeeting',
+      name: 'setMeeting',
+      component: require('./components/student/setMeeting.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
     },
-  },
+    {
+      path: '/student/usedServices',
+      name: 'usedServices',
+      component: require('./components/student/usedServices.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
   ],
 },
 {
@@ -101,6 +111,7 @@ const routes = [{
     middlewareAuth: true,
   },
 },
+// ADMIN
 {
   path: '/admin',
   component: require('./components/admin/dashboard.vue').default,
@@ -114,7 +125,7 @@ const routes = [{
     meta: {
       middlewareAuth: true,
     },
-  }, // DEFINE SUPPORT HOURS
+  },
   {
     path: '/admin/defineSupportHours',
     name: 'definirHorasApoio',
@@ -165,6 +176,7 @@ const routes = [{
   },
   ],
 },
+// DIRECTOR
 {
   path: '/director',
   component: require('./components/director/dashboard.vue').default,
@@ -189,6 +201,7 @@ const routes = [{
   },
   ],
 },
+// COORDINATOR
 {
   path: '/coordinator',
   component: require('./components/coordinator/dashboard.vue').default,
@@ -212,6 +225,7 @@ const routes = [{
     },
   }],
 },
+// CASE MANAGER RESPONSIBLE
 {
   path: '/caseManagerResponsible',
   component: require('./components/caseManagerResponsible/dashboard.vue').default,
@@ -276,6 +290,7 @@ const routes = [{
   },
   ],
 },
+// SERVICES
 {
   path: '/services',
   component: require('./components/services/dashboard.vue').default,
@@ -324,6 +339,7 @@ const routes = [{
   },
   ],
 },
+// CASE MANAGER
 {
   path: '/caseManager',
   component: require('./components/caseManager/dashboard.vue').default,
@@ -331,6 +347,14 @@ const routes = [{
     middlewareAuth: true,
   },
   children: [
+    {
+      path: '/caseManager/supportHoursRequests',
+      name: 'supportHoursRequests',
+      component: require('./components/caseManager/supportHoursRequests.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
     {
       path: '/caseManager/cmEneeList',
       name: 'cmEneeList',

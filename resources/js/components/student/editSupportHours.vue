@@ -14,15 +14,17 @@
         type="submit"
         class="btn btn-secondary"
         data-dismiss="modal"
-        v-on:click.prevent="handleSubmit(save)"
-      >{{ $t('gravar') }}</button>
+        v-on:click.prevent="handleSubmit(request)"
+      >{{ $t('solicitar_horas_apoio') }}
+      </button>
         </ValidationObserver>
       <button
         type="submit"
         class="btn btn-secondary"
         data-dismiss="modal"
         v-on:click.prevent="cancel"
-      >{{ $t('cancelar') }}</button>
+      >{{ $t('cancelar') }}
+      </button>
     </b-container>
   </div>
 </template>
@@ -36,10 +38,10 @@ export default {
   methods: {
     cancel() {
         this.support="";
-        this.$emit("cancel-support");
+        this.$emit("cancel-request");
     },
-    save: function() {
-      this.$emit("save-support");
+    request: function() {
+      this.$emit("request-support-hours");
     }
   }
 };

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
@@ -9,12 +10,14 @@ use App\Http\Resources\UserResource;
 use App\Http\Resources\ContactResource;
 use App\Http\Resources\MeetingResource;
 use App\Http\Resources\EneeDiagnosticResource;
+use App\Http\Resources\SupportHoursRequestResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Chumper\Zipper\Zipper;
 use App\User;
+use App\Subject;
 use App\CaseManager;
 use App\Contact;
 use App\Support;
@@ -24,12 +27,82 @@ use App\Meeting;
 use App\History;
 use App\EneeDiagnostic;
 use App\Contacts_Files;
-use Illuminate\Support\Arr;
+use App\SupportHoursRequest;
 use App\Nee;
 use App\Schedule;
 
 class CaseManagerController extends Controller
 {
+
+    public function approveSupportHoursRequest($requestId) {
+
+        $newSupportHoursRequest = SupportHoursRequest::where('id', $requestId)->first();
+        
+        $newSupportHoursRequest->status = "approved";
+
+        $subject = Subject::where('studentEmail', '=', $newSupportHoursRequest->student_email)->where('subjectCode', '=', $newSupportHoursRequest->subject_code)->first();
+
+        $subject->hours += $newSupportHoursRequest->hours;
+
+        $subject->save();
+        
+        return response()->json('success', 200);
+
+    }
+
+    public function denySupportHoursRequest(Request $request) {
+
+        $newSupportHoursRequest = SupportHoursRequest::where('id', $request->input('id'))->first();
+
+        $newSupportHoursRequest->status = "denied";
+        $newSupportHoursRequest->decision = $request->input('decision');
+
+        $newSupportHoursRequest->save();
+
+        return response()->json('failure', 200);
+
+    }
+
+    public function getAllSupportHoursRequests(Request $request) {
+        
+        $user = Auth::user();
+
+        if ($user->type == "CaseManager"){
+            $studentEmails = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
+
+            $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::whereIn('student_email', $studentEmails)->where('status', '=', "waiting")->paginate(10));
+    
+            return response()->json($supportHoursRequests, 200);
+        } else {
+            $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::whereIn('student_email', $user->email)->paginate(10));
+    
+            \Debugbar::info($supportHoursRequests);
+        
+            return response()->json($supportHoursRequests, 200);
+        }
+        
+    }
+    
+
+    public function getSupportHoursRequests(Request $request) {
+        
+        $user = Auth::user();
+        \Debugbar::info($user);
+
+        if ($user->type == "CaseManager"){
+            $studentEmails = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
+
+            $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::whereIn('student_email', $studentEmails)->where('status', '=', "waiting")->paginate(10));
+    
+            return response()->json($supportHoursRequests, 200);
+        } else {
+            $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::where('student_email', '=', $user->email)->get());
+
+            \Debugbar::info($supportHoursRequests);
+        
+            return response()->json($supportHoursRequests, 200);
+        }
+    }
 
     public function setPlan(Request $request)
     {
@@ -54,7 +127,6 @@ class CaseManagerController extends Controller
         $existingSupports = Student_Supports::where('email','=',$student->email)->pluck('id_support')->toArray();
 
         $supportsToAdd = array_diff($newSupports, $existingSupports);
-
         foreach($supportsToAdd as $support){
             $studentSupport = new Student_Supports();
             $studentSupport->email = $student->email;

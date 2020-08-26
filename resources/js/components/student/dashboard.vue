@@ -26,9 +26,15 @@
                 :to="{name: 'serviceRequest'}"
               >{{ $t('pedidos_apoios') }}</router-link>
 
-              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'editProfile'}">{{ $t('editar_perfil') }}</router-link>
+              <router-link
+                @click.native="toggleNav()"
+                class="nav-link"
+                :to="{name: 'supportHoursRequestsList'}"
+              >{{ $t('pedidos_horas_apoio') }}</router-link>
 
               <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'supportHours'}">{{ $t('acompanhamento') }}</router-link>
+  
+              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'editProfile'}">{{ $t('editar_perfil') }}</router-link>            
             </div>
           </section>
           <b-col cols="12">

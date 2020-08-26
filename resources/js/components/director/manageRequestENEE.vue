@@ -229,8 +229,6 @@ export default {
         .catch(error => {console.log(error)});
     },
     cancelEdit: function() {
-      console.log("CHEGOU AUI");
-
       this.currentUser = null;
     },
     reprovedSubscription() {

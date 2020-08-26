@@ -44,6 +44,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isAdmin')->post('addCoordinator', 'AdminController@addCoordinator')->name('addCoordinator');
 
     //student
+    Route::middleware('isStudent')->post('requestSupportHours', 'StudentController@requestSupportHours');
     Route::middleware('isStudent')->post('updateTransferredAccount', 'StudentController@updateTransferredAccount');
     Route::middleware('isStudent')->get('getSupportRequestsByStudent', 'StudentController@getSupportRequestsByStudent');
     Route::middleware('isStudentNoStatus')->post('getWebServiceUserInfo', 'StudentController@getWebServiceUserInfo');
@@ -127,6 +128,10 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManagerResponsible')->get('getCMWithENE', 'CaseManagerResponsibleController@getCMWithENE');
 
     //Case Manager
+    Route::middleware('isCaseManager')->patch('approveSupportHoursRequest/{requestId}', 'CaseManagerController@approveSupportHoursRequest');
+    Route::middleware('isCaseManager')->patch('denySupportHoursRequest', 'CaseManagerController@denySupportHoursRequest');
+    Route::middleware('isCaseManager')->get('getAllSupportHoursRequests', 'CaseManagerController@getAllSupportHoursRequests');
+    Route::middleware('isCaseManagerOrStudent')->get('getSupportHoursRequests', 'CaseManagerController@getSupportHoursRequests');
     Route::middleware('isCaseManager')->post('addStudentSupport/{id}', 'CaseManagerController@addStudentSupport');
     Route::middleware('isCaseManager')->patch('rejectStudentSupport/{id}', 'CaseManagerController@rejectStudentSupport');
     Route::middleware('isCaseManager')->get('getSupportRequests', 'CaseManagerController@supportRequests');

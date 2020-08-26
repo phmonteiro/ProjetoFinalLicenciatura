@@ -68,7 +68,10 @@ class Kernel extends HttpKernel
         'isStudent' => \App\Http\Middleware\isStudent::Class,
         'isAcademicServices' => \App\Http\Middleware\isAcademicServices::Class,
         'isCaseManager' => \App\Http\Middleware\isCaseManager::Class,
+        'isCaseManagerOrStudent' => \App\Http\Middleware\isCaseManagerOrStudent::Class,
         'isCaseManagerResponsible' => \App\Http\Middleware\isCaseManagerResponsible::Class,
+        'isCaseManagerOrDirector' => \App\Http\Middleware\isCaseManagerOrDirector::Class,
+        'isCaseManagerOrCaseManagerResponsible'=> \App\Http\Middleware\isCaseManagerOrCaseManagerResponsible::Class,
         'isCoordinator' => \App\Http\Middleware\isCoordinator::Class,
         'isDirector' => \App\Http\Middleware\isDirector::Class,
         'isService' => \App\Http\Middleware\isService::Class,
@@ -79,9 +82,7 @@ class Kernel extends HttpKernel
         'isAsStudentNoStatus' => \App\Http\Middleware\isAsStudentNoStatus::Class,
         'isStudentOrDirector' => \App\Http\Middleware\isStudentOrDirector::Class,
         'isStudentOrCaseManager' => \App\Http\Middleware\isStudentOrCaseManager::Class,
-        'isCaseManagerOrCaseManagerResponsible'=> \App\Http\Middleware\isCaseManagerOrCaseManagerResponsible::Class,
         'isStudentWithoutENEStatus' => \App\Http\Middleware\isStudentWithoutENEStatus::Class,
-        'isCaseManagerOrDirector' => \App\Http\Middleware\isCaseManagerOrDirector::Class
 
     ];
 
