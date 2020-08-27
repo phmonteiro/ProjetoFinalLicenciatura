@@ -142,7 +142,7 @@
                                         @click.prevent="
                                 getMeetingsEnee(pagination.prev_page_url)
                             "
-                                    >Anterior</a
+                                    >{{$t('anterior')}}</a
                                     >
                                 </li>
 
@@ -163,7 +163,7 @@
                                         @click.prevent="
                                 getMeetingsEnee(pagination.next_page_url)
                             "
-                                    >Próximo</a
+                                    >{{$t('próximo')}}</a
                                     >
                                 </li>
                             </ul>

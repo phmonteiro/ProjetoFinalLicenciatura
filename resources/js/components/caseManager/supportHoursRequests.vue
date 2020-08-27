@@ -13,93 +13,97 @@
     </b-container>
     <div class="container mt-3">
       <h2>Pedidos de Horas de Apoio</h2>
-      <hr v-if="!requests" />
-      <b-table striped hover v-if="requests!=null" :items="requests" :fields="fields">
-        <template v-slot:cell(status)="{ value }">
-          <p v-if="value==='waiting'">Em avaliação</p>
-        </template>
-        <template v-slot:cell(actions)="row">
-          <b-row class="text-center">
-            <b-col md="4" sm="12">
-              <button class="btn btn-success" v-on:click.prevent="approve(row.item.id)">Aprovar</button>
-            </b-col>
-            <b-col md="4" sm="12">
-              <!-- Button trigger modal -->
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-toggle="modal"
-                data-target="#modalSupportHoursRequestDecision"
-              >Rejeitar</button>
+        <div v-if="requests!=null && requests.length!==0">
+            <b-table striped hover  :items="requests" :fields="fields">
+                <template v-slot:cell(status)="{ value }">
+                    <p v-if="value==='waiting'">Em avaliação</p>
+                </template>
+                <template v-slot:cell(actions)="row">
+                    <b-row class="text-center">
+                        <b-col md="4" sm="12">
+                            <button class="btn btn-success" v-on:click.prevent="approve(row.item.id)">Aprovar</button>
+                        </b-col>
+                        <b-col md="4" sm="12">
+                            <!-- Button trigger modal -->
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                data-toggle="modal"
+                                data-target="#modalSupportHoursRequestDecision"
+                            >Rejeitar</button>
 
-              <!-- Modal -->
-              <div
-                class="modal fade"
-                id="modalSupportHoursRequestDecision"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5
-                        class="modal-title"
-                        id="exampleModalLongTitle"
-                      >Justifique a sua decisão (opcional)</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <b-form-textarea
-                        id="txtSupportHoursRequestDecision"
-                        v-model="row.item.decision"
-                        placeholder="Escreva aqui a informação relativa à rejeição do pedido de horas de apoio (opcional)"
-                        rows="5"
-                        max-rows="10"
-                      ></b-form-textarea>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button class="btn btn-danger" v-on:click.prevent="deny(row.item)">Rejeitar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </b-col>
-          </b-row>
-        </template>
-      </b-table>
-      <h4 v-else>Não existem pedidos de horas de apoio.</h4>
+                            <!-- Modal -->
+                            <div
+                                class="modal fade"
+                                id="modalSupportHoursRequestDecision"
+                                tabindex="-1"
+                                role="dialog"
+                                aria-labelledby="exampleModalCenterTitle"
+                                aria-hidden="true"
+                            >
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5
+                                                class="modal-title"
+                                                id="exampleModalLongTitle"
+                                            >Justifique a sua decisão (opcional)</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <b-form-textarea
+                                                id="txtSupportHoursRequestDecision"
+                                                v-model="row.item.decision"
+                                                placeholder="Escreva aqui a informação relativa à rejeição do pedido de horas de apoio (opcional)"
+                                                rows="5"
+                                                max-rows="10"
+                                            ></b-form-textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button class="btn btn-danger" v-on:click.prevent="deny(row.item)">Rejeitar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </b-col>
+                    </b-row>
+                </template>
+            </b-table>
+            <nav aria-label="Page navigation" v-if="requests">
+                <ul class="pagination">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getRequests(pagination.prev_page_url)"
+                        >Anterior</a>
+                    </li>
 
-      <nav aria-label="Page navigation" v-if="requests">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getRequests(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="#">
+                            Página {{ pagination.current_page }} de
+                            {{ pagination.last_page }}
+                        </a>
+                    </li>
 
-          <li class="page-item disabled">
-            <a class="page-link text-dark" href="#">
-              Página {{ pagination.current_page }} de
-              {{ pagination.last_page }}
-            </a>
-          </li>
-
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getRequests(pagination.next_page_url)"
-            >Próximo</a>
-          </li>
-        </ul>
-      </nav>
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                        <a
+                            class="page-link"
+                            href="#"
+                            @click.prevent="getRequests(pagination.next_page_url)"
+                        >Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-else>
+            <hr>
+            <br>
+            <h4>Não existem pedidos de horas de apoio.</h4>
+        </div>
     </div>
   </div>
 </template>

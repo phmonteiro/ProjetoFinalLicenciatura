@@ -36,7 +36,7 @@
                             class="page-link"
                             href="#"
                             @click.prevent="getEnee(pagination.prev_page_url)"
-                        >Anterior</a>
+                        >{{$t('anterior')}}</a>
                     </li>
 
                     <li class="page-item disabled">
@@ -47,7 +47,7 @@
                     </li>
 
                     <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-                        <a class="page-link" href="#" @click.prevent="getEnee(pagination.next_page_url)">Próximo</a>
+                        <a class="page-link" href="#" @click.prevent="getEnee(pagination.next_page_url)">{{$t('próximo')}}</a>
                     </li>
                 </ul>
             </nav>

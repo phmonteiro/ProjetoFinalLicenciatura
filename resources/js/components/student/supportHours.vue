@@ -14,7 +14,7 @@
     <b-container>
       <b-row>
         <b-col class="top100">
-          <div v-if="supports">
+          <div v-if="supports!=null && supports.length!==0">
             <h2>{{ $t('acompanhamento_individualizado') }}</h2>
             <br />
             <h5>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h5>
@@ -33,7 +33,9 @@
             </b-table>
           </div>
           <div v-else>
-            <h4>Não está inscrito em quaisquer Unidades Curriculares.</h4>
+              <hr>
+              <br>
+            <h4>{{$t('sem_inscricoes')}}</h4>
           </div>
         </b-col>
       </b-row>
@@ -183,7 +185,7 @@ export default {
         });
     },
 
-    /* 
+    /*
         setSupportHours() {
           axios
             .post("api/setSupportHours", this.currentSupport)
@@ -208,7 +210,7 @@ export default {
                 theme: "bubble"
               });
             });
-        }, 
+        },
       */
     cancelSupportHoursRequest: function () {
       this.currentSupport = null;

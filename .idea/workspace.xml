@@ -2,58 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/admin/addService.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/admin/webServiceManagement.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/deactivateCM.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/coordinator/editProfile.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/expireENE.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/expireENE.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/notifyTeachersEachSemester.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/notifyTeachersEachSemester.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerResponsibleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CoordinatorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CoordinatorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SupportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SupportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/dashboard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/medicalReport/148505158.zip" beforeDir="false" afterPath="$PROJECT_DIR$/public/medicalReport/148505158.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/medicalReport/1925970784.zip" beforeDir="false" afterPath="$PROJECT_DIR$/public/medicalReport/1925970784.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/medicalReport/2067975346.zip" beforeDir="false" afterPath="$PROJECT_DIR$/public/medicalReport/2067975346.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/medicalReport/916767290.zip" beforeDir="false" afterPath="$PROJECT_DIR$/public/medicalReport/916767290.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/publictasks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/publictasks.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/editUsers.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/cmEneeList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/setInteraction.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/setInteraction.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/addCM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/addCM.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/addCaseManagerToENE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/addCaseManagerToENE.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/supportHoursRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/supportHoursRequests.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/cmList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/listCMs.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/manageCM.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/subHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManagerResponsible/subHistory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/dashboard.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/eneeRequests.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/editENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/editENEE.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageENEE.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/manageRequestENEE.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/supportRequests.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/contactDetails.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/contactDetails.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeAdd.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeServiceEvaluation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeServiceEvaluation.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/meetings.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/student/contact.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/contact.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/noStatusPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/noStatusPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/setMeeting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/setMeeting.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/subscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/subscription.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHoursRequestsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHoursRequestsList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/plugins/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/plugins/i18n.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +202,8 @@
       <workItem from="1598282056751" duration="11984000" />
       <workItem from="1598371219158" duration="9374000" />
       <workItem from="1598381089798" duration="675000" />
-      <workItem from="1598455362514" duration="6663000" />
+      <workItem from="1598455362514" duration="7260000" />
+      <workItem from="1598533879061" duration="1563000" />
     </task>
     <servers />
   </component>
@@ -273,10 +245,10 @@
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="1979" y="171" width="683" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1591881526335" />
-    <state x="378" y="66" width="806" height="554" key="find.popup" timestamp="1598467699705">
+    <state x="378" y="66" width="884" height="622" key="find.popup" timestamp="1598534924887">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="378" y="66" width="806" height="554" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1598467699705" />
+    <state x="378" y="66" width="884" height="622" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1598534924887" />
     <state x="608" y="162" width="807" height="783" key="find.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590011012823" />
     <state x="417" y="361" width="724" height="572" key="find.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593283359689" />
     <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1596812671097" />
@@ -286,17 +258,17 @@
     <state x="444" y="185" width="479" height="465" key="run.anything.popup/0.27.1366.741@0.27.1366.741" timestamp="1597781847506" />
     <state x="624" y="252" key="run.anything.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186517315" />
     <state x="1990" y="231" width="672" height="677" key="run.anything.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1592422153844" />
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup" timestamp="1598371782859">
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup" timestamp="1598535249851">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1598371782859" />
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1598535249851" />
     <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053/1920.312.1366.768@0.27.1920.1053" timestamp="1590186512459" />
     <state x="443" y="481" width="672" height="495" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593280972901" />
     <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593525139562" />
-    <state x="573" y="258" width="498" height="180" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1597152882693">
+    <state x="573" y="258" width="498" height="187" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1598534079366">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="573" y="258" width="498" height="180" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.27.1366.741@0.27.1366.741" timestamp="1597152882693" />
+    <state x="573" y="258" width="498" height="187" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.27.1366.741@0.27.1366.741" timestamp="1598534079366" />
     <state x="2051" y="460" width="540" height="193" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1592491918706" />
   </component>
 </project>

@@ -134,13 +134,16 @@ const messages = {
     mensagem_renovar_estatuto: 'O seu estatuto expirou, por favor inicie o processo de renovação de estatuto',
     reunioes_vazio: 'Ainda não tem nenhuma reunião registada na plataforma.',
     solicitar_horas_apoio: 'Solicitar horas de apoio',
-    pedidos_horas_apoio: 'Pedidos de horas de apoio',
+    pedidos_horas_apoio: 'Pedidos de Horas de Apoio',
     ver_decisao: 'Ver Decisão',
     relatorio_medico: 'Documentos Comprovativos',
     msg_diretor_estatuto_rejeitado: 'O seu pedido de estatuto anterior foi rejeitado devido a: ',
-
+    sem_inscricoes: 'Não está inscrito em quaisquer Unidades Curriculares.',
+    sem_pedidos_apoio: 'Não existem pedidos de horas de apoio.',
   },
   'en': {
+    sem_pedidos_apoio: 'You have no support requests at the moment',
+    sem_inscricoes: 'You are not registered in any subjects at the moment',
     aceitar: 'Accept',
     pedidos_horas_apoio: 'Support hours requests',
     solicitar_horas_apoio: 'Request support hours',

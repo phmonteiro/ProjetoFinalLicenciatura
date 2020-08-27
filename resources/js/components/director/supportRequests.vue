@@ -54,7 +54,7 @@
                             class="page-link"
                             href="#"
                             @click.prevent="getsupportRequests(pagination.prev_page_url)"
-                        >Anterior</a>
+                        >{{$t('anterior')}}</a>
                     </li>
 
                     <li class="page-item disabled">
@@ -69,7 +69,7 @@
                             class="page-link"
                             href="#"
                             @click.prevent="getsupportRequests(pagination.next_page_url)"
-                        >Próximo</a>
+                        >{{$t('próximo')}}</a>
                     </li>
                 </ul>
             </nav>

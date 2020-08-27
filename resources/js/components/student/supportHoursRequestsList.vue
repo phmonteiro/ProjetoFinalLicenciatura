@@ -12,9 +12,8 @@
       </b-row>
     </b-container>
     <div class="container mt-3">
-      <h2>Pedidos de Horas de Apoio</h2>
-      <hr v-if="!requests" />
-      <div v-if="requests!=null">
+      <h2>{{$t('pedidos_horas_apoio')}}</h2>
+      <div v-if="requests!=null && requests.length!==0">
       <b-table striped hover :items="requests" :fields="fields">
         <template v-slot:cell(status)="{ value }">
           <p v-if="value==='waiting'">{{ $t('em_avaliação') }}</p>
@@ -67,34 +66,38 @@
           </b-row>
         </template>
       </b-table>
-      </div>
-      <h4 v-else>Não existem pedidos de horas de apoio.</h4>
       <nav aria-label="Page navigation" v-if="requests">
-        <ul class="pagination">
-          <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getRequests(pagination.prev_page_url)"
-            >Anterior</a>
-          </li>
+          <ul class="pagination">
+              <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                  <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="getRequests(pagination.prev_page_url)"
+                  >{{$t('anterior')}}</a>
+              </li>
 
-          <li class="page-item disabled">
-            <a class="page-link text-dark" href="#">
-              Página {{ pagination.current_page }} de
-              {{ pagination.last_page }}
-            </a>
-          </li>
+              <li class="page-item disabled">
+                  <a class="page-link text-dark" href="#">
+                      Página {{ pagination.current_page }} de
+                      {{ pagination.last_page }}
+                  </a>
+              </li>
 
-          <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="getRequests(pagination.next_page_url)"
-            >Próximo</a>
-          </li>
-        </ul>
+              <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                  <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="getRequests(pagination.next_page_url)"
+                  >{{$t('próximo')}}</a>
+              </li>
+          </ul>
       </nav>
+      </div>
+      <div v-else>
+          <hr>
+          <br>
+          <h4>{{$t('sem_pedidos_apoio')}}</h4>
+      </div>
     </div>
   </div>
 </template>
@@ -105,7 +108,7 @@ export default {
     return {
       decision: "",
       pagination: {},
-      loading: true,
+      loading: false,
       requests: null,
       fields: [
         {
@@ -143,6 +146,7 @@ export default {
   },
   methods: {
     getRequests(page_url) {
+      this.loading=true;
       let pg = this;
       page_url = page_url || "api/getSupportHoursRequests?page=1";
       axios

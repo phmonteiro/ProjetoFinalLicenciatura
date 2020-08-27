@@ -16,7 +16,6 @@
         <b-col class="top100">
           <div>
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
-              <hr>
             <div v-if="meetings!=null && meetings.length!==0">
                 <b-table id="meetingsTable" striped hover :items="meetings" :fields="fields">
                     <template v-slot:cell(actions)="row">
@@ -79,6 +78,7 @@
                 </nav>
             </div>
             <div v-else>
+                <hr>
                 <br>
                 <h5>{{$t('reunioes_vazio')}}</h5>
             </div>
