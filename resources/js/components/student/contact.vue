@@ -16,7 +16,6 @@
                 <b-col class="top100">
                     <div v-if="contacts">
                         <h2>{{ $t('contatos') }}</h2>
-                        <hr>
                         <div v-if="contacts!=null && contacts.length!==0">
                             <b-table striped hover :items="contacts" :fields="fields">
                                 <template v-slot:cell(contactMedium)="{ value }">
@@ -53,6 +52,7 @@
                             </nav>
                         </div>
                         <div v-else>
+                            <hr>
                             <br>
                             <h5>{{ $t('contactos_vazio') }}</h5>
                         </div>

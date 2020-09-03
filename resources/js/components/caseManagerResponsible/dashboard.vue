@@ -7,7 +7,7 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'cmList'}">Lista de ENEs</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'cmList'}">Lista  ENE</router-link>
 
              <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addCaseManagerToENE'}">Atribuir Gestor de Caso</router-link>
 

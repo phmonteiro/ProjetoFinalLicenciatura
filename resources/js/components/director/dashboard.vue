@@ -7,7 +7,7 @@
             <font-awesome-icon icon="bars" size="lg" />
           </a>
           <div class="sidenav" :class="{ active: active}">
-            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'manageRequestENEE'}">Candidatos a ENE</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'manageRequestENEE'}">Novas Solicitações ENE</router-link>
 
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'manageENEE'}">ENE</router-link>
 

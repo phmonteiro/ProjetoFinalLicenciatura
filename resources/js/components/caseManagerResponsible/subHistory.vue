@@ -15,7 +15,7 @@
                         <a
                             class="page-link"
                             href="#"
-                            @click.prevent="getcaseManagers(pagination.prev_page_url)"
+                            @click.prevent="getSubstitutions(pagination.prev_page_url)"
                         >{{$t('anterior')}}</a>
                     </li>
 
@@ -30,7 +30,7 @@
                         <a
                             class="page-link"
                             href="#"
-                            @click.prevent="getcaseManagers(pagination.next_page_url)"
+                            @click.prevent="getSubstitutions(pagination.next_page_url)"
                         >{{$t('próximo')}}</a>
                     </li>
                 </ul>

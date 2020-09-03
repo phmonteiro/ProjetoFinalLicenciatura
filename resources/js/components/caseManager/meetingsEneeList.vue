@@ -211,7 +211,7 @@ export default {
                 },
                 {
                     key: "service",
-                    label: "Servico",
+                    label: "Serviço",
                     sortable: true
                 },
                 {

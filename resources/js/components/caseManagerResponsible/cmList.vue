@@ -15,7 +15,7 @@
     <div class="container">
         <br>
 
-      <h3 class="d-inline-block">Lista de ENEs por Gestores de Caso</h3>
+      <h3 class="d-inline-block">Lista ENE por Gestores de Caso</h3>
         <download-excel
             class="btn btn-outline-success"
             style="margin-left:30px; margin-bottom:10px"

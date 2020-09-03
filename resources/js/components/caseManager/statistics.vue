@@ -3,8 +3,8 @@
       <h4 for="selectBox">Selecione a estatística que quer visualizar:</h4><br>
     <select id="selectBox" class="custom-select" name="selectBox" single v-model="stats">
       <option value="curso" >Estatísticas por curso</option>
-      <option value="nee">Estatísticas por necessidade educativa especial</option>
-      <option value="escola">Estísticas por escola</option>
+      <option value="nee">Estatísticas por necessidade específica</option>
+      <option value="escola">Estatísticas por escola</option>
       <option value="sexo">Estatísticas por sexo</option>
     </select>
       <br><br>

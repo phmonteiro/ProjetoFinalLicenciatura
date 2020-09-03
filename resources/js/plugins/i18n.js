@@ -7,7 +7,7 @@ const messages = {
   'pt': {
     a_carregar: 'A carregar',
     aceitar: 'Aceitar',
-    acompanhamento: 'Acompanhamento',
+    acompanhamento: 'Cartão de Horas de Apoio',
     acompanhamento_individualizado: 'Acompanhamento individualizado',
     acompanhamento_professor_tutor: 'Acompanhamento por professor tutor',
     adicionar: 'Adicionar',
@@ -89,7 +89,7 @@ const messages = {
     passaporte: 'Passaporte',
     pedido_apoio: 'Pedido de apoio',
     pedidos_agendamento_reunião: 'Pedidos de agendamento de reunião',
-    pedidos_apoios: 'Pedido de apoios',
+    pedidos_apoios: 'Pedido de apoio',
     pedir_agendamento_reunião: 'Pedir agendamento de reunião',
     pedir_estatuto: 'Pedir estatuto ENE',
     pedir_reunião: 'Pedir reunião',

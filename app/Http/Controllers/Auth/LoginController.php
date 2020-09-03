@@ -75,14 +75,14 @@ class LoginController extends Controller
                 $token = $user->createToken(rand())->accessToken;
                 return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
             } else {
-                
+
                 /*
                 $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
                 $user->type = $users->title[0];
                 $user->course = $users->description[0];
                 $user->school = $users->company[0];
                 $user->number = $users->mailnickname[0];
-                $user->departmentNumber = $users->departmentnumber[0]; 
+                $user->departmentNumber = $users->departmentnumber[0];
                 */
 
                 $user->firstLogin = 1;
@@ -110,6 +110,7 @@ class LoginController extends Controller
                 $user->birthDate = $webServiceUserInfo[$fields[4]]['date'];
                 $user->nif = $webServiceUserInfo[$fields[5]];
                 $user->area = $webServiceUserInfo[$fields[6]];
+                $user->type = "Estudante";
 
 //                 $user->residence = $webServiceUserInfo['DS_MORADA'];
 //                 $user->zipCode = $webServiceUserInfo['CD_POSTAL'].'-'.$webServiceUserInfo['CD_SUBPOS'];

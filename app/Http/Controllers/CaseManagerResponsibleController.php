@@ -81,6 +81,7 @@ class CaseManagerResponsibleController extends Controller
 
         }
 
+
         foreach ($cms as $cm)
         {
             $substitution = new Substitution();
@@ -103,16 +104,18 @@ class CaseManagerResponsibleController extends Controller
         }
 
         $responsible = User::where('type','CaseManagerResponsible')->first();
+        $mainCM = User::where('email',$request->emailCurrentCaseManager)->first();
+        $substituteCM = User::where('email',$request->emailSubstituteCaseManager)->first();
 
         //mandar email a avisar
-        if($substitution->type==="temporary"){
-//             EmailController::sendEmail('Foi definido como Substituto para o Gestor de Caso '.$substitution->nameMainCM.'. Substituição temporária de '.$substitution->startDate.' a '.$substitution->endDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'.  Obrigado', $substitution->emailSubstituteCM, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
+        if($request->substitutionType==="temporary"){
+//             EmailController::sendEmail('Foi definido como Substituto para o Gestor de Caso '.$mainCM->name.'. Substituição temporária de '.$request->startDate.' a '.$request->endDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'.  Obrigado', $substituteCM->email, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
 
-//             EmailController::sendEmail('Foi substituído pelo Gestor de Caso '.$substitution->nameSubstituteCM.'. Substituição temporária de '.$substitution->startDate.' a '.$substitution->endDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'. Obrigado', $substitution->emailMainCM, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
+//             EmailController::sendEmail('Foi substituído pelo Gestor de Caso '.$substituteCM->name.'. Substituição temporária de '.$request->startDate.' a '.$request->endDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'. Obrigado', $mainCM->email, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
         }else{
-//             EmailController::sendEmail('Foi definido como Substituto para o Gestor de Caso '.$substitution->nameMainCM.'. Substituição permanente com início a '.$substitution->startDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'.  Obrigado', $substitution->emailSubstituteCM, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
+//             EmailController::sendEmail('Foi definido como Substituto para o Gestor de Caso '.$mainCM->name.'. Substituição permanente com início a '.$request->startDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'.  Obrigado', $substituteCM->email, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
 
-//             EmailController::sendEmail('Foi substituído pelo Gestor de Caso '.$substitution->nameSubstituteCM.'. Substituição permanente com início a '.$substitution->startDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'. Obrigado', $substitution->emailMainCM, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
+//             EmailController::sendEmail('Foi substituído pelo Gestor de Caso '.$substituteCM->name.'. Substituição permanente com início a '.$request->startDate.'. Qualquer dúvida pode contactar o Responsável dos Gestores de Caso através do email '.$responsible->email.'. Obrigado', $mainCM->email, '[100%IN] Substituição efetuada', '[100%IN] Substituição efetuada');
         }
 
 

@@ -12,7 +12,7 @@
       </b-row>
     </b-container>
     <b-container>
-      <h2>Lista de candidatos a ENE</h2>
+      <h2>Novas Solicitações de Estatuto ENE</h2>
       <div v-if="enee!=null && enee.length!==0">
       <b-table striped hover :items="enee" :fields="fields">
         <template v-slot:cell(enee)="{ value }">
