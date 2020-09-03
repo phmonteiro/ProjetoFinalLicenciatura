@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Mail;
 use App\User;
+use App\Coordinator;
 use App\Nee;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
