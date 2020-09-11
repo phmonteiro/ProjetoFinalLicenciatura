@@ -151,4 +151,6 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManager')->post('setPlan', 'CaseManagerController@setPlan');
     Route::middleware('isCaseManager')->post('addEvent', 'CaseManagerController@addEvent');
     Route::middleware('isCaseManager')->get('getEvents', 'CaseManagerController@getEvent');
+    Route::middleware('isCaseManager')->get('getStudentSupportNotes/{id}', 'CaseManagerController@getStudentSupportNotes');
+    Route::middleware('isCaseManager')->post('saveSupportNote', 'CaseManagerController@saveSupportNote');
 });

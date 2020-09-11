@@ -38,28 +38,16 @@
                           {{category.name}}:
                       </u>
                   </li>
-
                   <ul>
-                          <b-form-checkbox v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">
-                              {{ sup.name }}
-                          </b-form-checkbox>
+                     <b-form-checkbox v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">
+                        {{ sup.name }}
+                        <a href="#" @click.prevent="toggleNotes(sup)">Notas</a>
+                     </b-form-checkbox>
                   </ul>
               </span>
 
       </div>
       <br>
-<!--      <h4><b>Plano Individual de Inclusão</b></h4>-->
-
-<!--      <div id="app">-->
-<!--              <span v-for="category in categories">-->
-<!--                  <li>{{category.name}}</li>-->
-<!--                  <ul>-->
-<!--                          <b-form-checkbox v-model="selectedSupports" :value="sup.id" v-for="sup in category.supports">-->
-<!--                              {{ sup.name }}-->
-<!--                          </b-form-checkbox>-->
-<!--                  </ul>-->
-<!--              </span>-->
-<!--      </div>-->
       <div class="dropdown-divider"></div>
 
     <div v-if="plan">
@@ -105,6 +93,44 @@
         max-rows="6"
       ></b-form-textarea>
     </div>
+
+      <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+      >
+          <div class="modal-dialog modal-lg h-auto" role="document">
+              <ValidationObserver v-slot="{ handleSubmit }">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 v-if="support" class="modal-title" id="exampleModalLabel">Notas do apoio "{{support.name}}":</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="form-group text-center">
+                              <ValidationProvider name="comment" rules="required" v-slot="{ errors }">
+                                  <label for="note">Notas:</label>
+                                  <br>
+                                  <textarea v-focus ref="note" name="note" placeholder="Insira aqui a nota" id="note" v-model="note" cols="50" rows="10">
+                                  </textarea>
+                                  <br>
+                                  <code>{{ errors[0] }}</code>
+                              </ValidationProvider>
+                              <br>
+                              <button class="btn btn-outline-success" @click.prevent="handleSubmit(saveNotes)">Gravar</button>
+                              <button class="btn btn-outline-secondary" @click.prevent="closeNotes()">Voltar</button>
+                          </div>
+                      </div>
+                  </div>
+              </ValidationObserver>
+          </div>
+      </div>
+
       <br>
     <b-button variant="outline-success" v-on:click.prevent="save()">Guardar</b-button>
     <b-button variant="outline-info" v-on:click.prevent="cancel()">Cancelar</b-button>
@@ -115,6 +141,9 @@ export default {
   props: ["user", "plan"],
   data: function() {
     return {
+        student_notes:null,
+        note:"",
+        support:null,
         selectedSupports:[],
         selectedCategories:[],
       categories:[],
@@ -126,6 +155,52 @@ export default {
     };
   },
   methods: {
+      saveNotes(){
+          axios
+              .post('api/saveSupportNote',{'note':this.note,'student_email':this.user.email,'support_id':this.support.id})
+              .then(response=>{
+                  this.$toasted.success("Guardado com sucesso.", {
+                      duration: 4000,
+                      position: "top-center",
+                      theme: "bubble"
+                  });
+                  this.note = "";
+                  this.student_notes = response.data;
+                  $('#exampleModal').modal('hide');
+              })
+              .catch(error=>{
+                 console.log(error);
+              });
+      },
+      getNotes(){
+          axios
+              .get('api/getStudentSupportNotes/'+this.user.id)
+              .then(response=>{
+                console.log(response);
+                this.student_notes = response.data;
+              })
+              .catch(error=>{
+                 console.log(error);
+              });
+      },
+      closeNotes(){
+          $('#exampleModal').modal('hide');
+          this.note="";
+          this.support=null;
+      },
+      toggleNotes(support){
+          this.student_notes.forEach(note => {
+             if(note.support_id === support.id){
+                 this.note = note.note;
+             }
+          });
+
+          this.support = support;
+          $('#exampleModal').modal('show');
+          setTimeout(() => {
+              this.$refs.note.focus();
+          })
+      },
     cancel() {
       this.$emit("cancel-edit2");
     },
@@ -211,9 +286,18 @@ export default {
       }
     }
   },
+  directives: {
+      focus: {
+          // directive definition
+          inserted: function (el) {
+              el.focus()
+          }
+      }
+  },
   created() {
       this.getSupports();
       this.getSupportsByStudent();
+      this.getNotes();
   }
 };
 </script>

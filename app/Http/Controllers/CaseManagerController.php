@@ -30,6 +30,7 @@ use App\Contacts_Files;
 use App\SupportHoursRequest;
 use App\Nee;
 use App\Schedule;
+use App\Support_Note;
 
 class CaseManagerController extends Controller
 {
@@ -37,7 +38,7 @@ class CaseManagerController extends Controller
     public function approveSupportHoursRequest($requestId) {
 
         $newSupportHoursRequest = SupportHoursRequest::where('id', $requestId)->first();
-        
+
         $newSupportHoursRequest->status = "approved";
 
         $subject = Subject::where('studentEmail', '=', $newSupportHoursRequest->student_email)->where('subjectCode', '=', $newSupportHoursRequest->subject_code)->first();
@@ -45,7 +46,7 @@ class CaseManagerController extends Controller
         $subject->hours += $newSupportHoursRequest->hours;
 
         $subject->save();
-        
+
         return response()->json('success', 200);
 
     }
@@ -64,28 +65,28 @@ class CaseManagerController extends Controller
     }
 
     public function getAllSupportHoursRequests(Request $request) {
-        
+
         $user = Auth::user();
 
         if ($user->type == "CaseManager"){
             $studentEmails = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
 
             $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::whereIn('student_email', $studentEmails)->where('status', '=', "waiting")->paginate(10));
-    
+
             return response()->json($supportHoursRequests, 200);
         } else {
             $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::whereIn('student_email', $user->email)->paginate(10));
-    
+
             \Debugbar::info($supportHoursRequests);
-        
+
             return response()->json($supportHoursRequests, 200);
         }
-        
+
     }
-    
+
 
     public function getSupportHoursRequests(Request $request) {
-        
+
         $user = Auth::user();
         \Debugbar::info($user);
 
@@ -93,13 +94,13 @@ class CaseManagerController extends Controller
             $studentEmails = CaseManager::where('caseManagerEmail', $user->email)->pluck('studentEmail')->toArray();
 
             $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::whereIn('student_email', $studentEmails)->where('status', '=', "waiting")->paginate(10));
-    
+
             return response()->json($supportHoursRequests, 200);
         } else {
             $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::where('student_email', '=', $user->email)->get());
 
             \Debugbar::info($supportHoursRequests);
-        
+
             return response()->json($supportHoursRequests, 200);
         }
     }
@@ -590,4 +591,39 @@ class CaseManagerController extends Controller
         return response()->json($service, 200);
     }
 
+    public function saveSupportNote(Request $request){
+        $dados = $request->validate([
+            'student_email' => 'required',
+            'support_id' => 'required',
+            'note' => 'required|string'
+        ]);
+
+        $note = Support_Note::where('student_email',$dados['student_email'])->where('support_id',$dados['support_id'])->first();
+
+        if($note == null){
+            $support_note = new Support_Note();
+            $support_note->student_email = $dados['student_email'];
+            $support_note->support_id = $dados['support_id'];
+            $support_note->note = $dados['note'];
+            $support_note->save();
+
+            $support_notes = Support_Note::where('student_email',$support_note->student_email)->get();
+
+        }else{
+            $note->note = $dados['note'];
+            $note->save();
+
+            $support_notes = Support_Note::where('student_email',$note->student_email)->get();
+        }
+
+        return response()->json($support_notes,200);
+    }
+
+    public function getStudentSupportNotes($id){
+        $student = User::findOrFail($id);
+
+        $support_notes = Support_Note::where('student_email',$student->email)->get();
+
+        return response()->json($support_notes,200);
+    }
 }
