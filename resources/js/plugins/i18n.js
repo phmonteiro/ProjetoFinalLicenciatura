@@ -140,8 +140,10 @@ const messages = {
     msg_diretor_estatuto_rejeitado: 'O seu pedido de estatuto anterior foi rejeitado devido a: ',
     sem_inscricoes: 'Não está inscrito em quaisquer Unidades Curriculares.',
     sem_pedidos_apoio: 'Não existem pedidos de horas de apoio.',
+    justificacao_rejeicao: 'Justificação da rejeição',
   },
   'en': {
+    justificacao_rejeicao: 'Refusal reason',
     sem_pedidos_apoio: 'You have no support requests at the moment',
     sem_inscricoes: 'You are not registered in any subjects at the moment',
     aceitar: 'Accept',

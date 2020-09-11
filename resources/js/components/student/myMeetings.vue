@@ -17,7 +17,9 @@
           <div>
             <h2>{{ $t('pedidos_agendamento_reunião') }}</h2>
             <div v-if="meetings!=null && meetings.length!==0">
-                <b-table id="meetingsTable" striped hover :items="meetings" :fields="fields">
+                <b-table id="meetingsTable" striped hover :items="formattedItems" :fields="fields">
+                    <template v-slot:="row">
+                    </template>
                     <template v-slot:cell(actions)="row">
                         <b-row class="text-center">
                             <b-col md="4" sm="12">
@@ -46,7 +48,15 @@
                                     {{row.item.comment}}
                                 </b-col>
                             </b-row>
-                            <b-button size="sm" @click="row.toggleDetails">{{ $t('esconder') }}</b-button>
+                            <b-row v-if="row.item.rejected">
+                                <b-col class="text">
+                                    <b>{{ $t('justificacao_rejeicao') }}</b>
+                                    {{row.item.rejectReason}}
+                                </b-col>
+                            </b-row>
+                            <b-row class="justify-content-center">
+                                <b-button class="text-center" size="sm" @click="row.toggleDetails">{{ $t('esconder') }}</b-button>
+                            </b-row>
                         </b-card>
                     </template>
                 </b-table>
@@ -132,9 +142,23 @@ export default {
   computed: {
     user: function() {
       return this.$store.state.user;
-    }
+    },
+      formattedItems () {
+          if (!this.meetings) return [];
+          return this.meetings.map(item => {
+              item._rowVariant  = this.getVariant(item.rejected);
+              return item
+          })
+      }
   },
   methods: {
+      getVariant (status) {
+          switch (status) {
+              case 1:
+                  return 'danger';
+              default:
+          }
+      },
     getMyMeetings(page_url) {
       let pg = this;
       page_url = page_url || "api/getStudentMeetings/?page=1";

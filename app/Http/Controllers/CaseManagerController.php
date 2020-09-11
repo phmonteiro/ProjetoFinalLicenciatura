@@ -200,10 +200,10 @@ class CaseManagerController extends Controller
 
        \Debugbar::info($request->requested);
 
-    if($request->requested==0){
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNotNull('date')->orderBy('date','desc')->paginate(10);
-}else if($request->requested==1){
-        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNull('date')->orderBy('requestDate','asc')->paginate(10);
+    if($request->requested==0){ //reuniões agendadas
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNotNull('date')->orderBy('date','desc')->whereNull('rejected')->paginate(10);
+}else if($request->requested==1){ //pedidos de reunião
+        $meetings = DB::table('meetings')->whereIn('email', $students)->where('service', 'Gestor-Caso')->whereNull('date')->orderBy('requestDate','asc')->whereNull('rejected')->paginate(10);
 }
 
         return response()->json($meetings, 200);
@@ -683,4 +683,18 @@ class CaseManagerController extends Controller
 
         return response()->download(public_path('interactionFiles/' . $seed . '.zip'));
     }
+
+    public function rejectMeeting(Request $request, $id) {
+            $dados = $request->validate([
+                'rejectReason' => 'required|string'
+            ]);
+            $meeting = Meeting::where('id', $id)->first();
+            $meeting->rejectReason = $dados['rejectReason'];
+            $meeting->rejected = 1;
+            $meeting->save();
+
+            // email xpto
+
+            return response()->json('success', 200);
+        }
 }

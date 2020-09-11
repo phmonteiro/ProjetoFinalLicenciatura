@@ -20,12 +20,12 @@ import VueTimepicker from 'vue2-timepicker';
 import JsonExcel from 'vue-json-excel';
 // icons
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import 'material-design-icons-iconfont/dist/material-design-icons.css'; // Ensure you are using css-loader
 
 
-library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars);
+library.add(faEye, faHandshake, faEyeSlash, faArrowCircleDown, faBook, faBars, faTrashAlt);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 // --
 import fullCalendar from 'vue-fullcalendar';

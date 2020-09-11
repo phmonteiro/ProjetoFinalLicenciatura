@@ -91,6 +91,15 @@
                                         <font-awesome-icon icon="handshake" />
                                     </b-button>
                                 </b-col>
+                                <b-col md="4" sm="12">
+                                    <b-button v-if="showRequested"
+                                              size="sm"
+                                              variant="danger"
+                                              v-on:click.prevent="toggleRejectModal(row.item)" >
+                                        Rejeitar
+                                        <font-awesome-icon icon="trash-alt" />
+                                    </b-button>
+                                </b-col>
                             </b-row>
                         </template>
                         <template slot="row-details" slot-scope="row">
@@ -185,6 +194,57 @@
                     </div>
 
                 </b-col>
+            <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog modal-lg h-auto" role="document">
+                    <ValidationObserver v-slot="{ handleSubmit }">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5
+                                    v-if="currentMeeting"
+                                    class="modal-title"
+                                    id="exampleModalLabel"
+                                >Justifique a rejeição da reunião:</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group text-center">
+                                    <ValidationProvider name="comment" rules="required" v-slot="{ errors }">
+                                        <label for="rejectReason">Justificação:</label>
+                                        <br />
+                                        <textarea
+                                            v-focus
+                                            ref="rejectReason"
+                                            name="rejectReason"
+                                            placeholder="Insira aqui a justificação"
+                                            id="rejectReason"
+                                            v-model="rejectReason"
+                                            cols="50"
+                                            rows="10"
+                                        ></textarea>
+                                        <br />
+                                        <code>{{ errors[0] }}</code>
+                                    </ValidationProvider>
+                                    <br />
+                                    <button
+                                        class="btn btn-outline-success"
+                                        @click.prevent="handleSubmit(cancelMeeting)"
+                                    >Gravar</button>
+                                    <button class="btn btn-outline-secondary" @click.prevent="closeRejectModal()">Voltar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ValidationObserver>
+                </div>
+            </div>
             </b-row>
         </b-container>
 
@@ -206,6 +266,12 @@ export default {
             requestedMeetings: [],
             scheduledMeetings: [],
             meetings: null,
+            currentMeeting: null,
+            userInteractions: null,
+            interactions: null,
+            showRequested: true,
+            rejectReason: "",
+            showScheduled: null,
             fields: [
                 {
                     key: "name",
@@ -242,14 +308,39 @@ export default {
                     label: "Ações"
                 }
             ],
-            currentMeeting: null,
-            userInteractions: null,
-            interactions: null,
-            showRequested: true,
-            showScheduled: null
         };
     },
     methods: {
+        cancelMeeting() {
+            axios
+                .patch("api/rejectMeeting/" + this.currentMeeting.id, {'rejectReason': this.rejectReason})
+                .then((response) => {
+                    this.getMeetingsEnee();
+                    this.currentMeeting = null;
+                    this.rejectReason = "";
+                    $('#exampleModal').modal('hide');
+                    this.$toasted.success("Reunião rejeitada.", {
+                        duration: 4000,
+                        position: "top-center",
+                        theme: "bubble",
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        closeRejectModal(){
+            $('#exampleModal').modal('hide');
+            this.rejectReason="";
+            this.currentMeeting=null;
+        },
+        toggleRejectModal(currentMeeting){
+            this.currentMeeting = currentMeeting;
+            $('#exampleModal').modal('show');
+            setTimeout(() => {
+                this.$refs.rejectReason.focus();
+            })
+        },
         downloadFiles(id) {
             axios({
                 url: "api/meeting/download/" + id,
@@ -366,6 +457,14 @@ export default {
     },
     created() {
         this.getMeetingsEnee();
+    },
+    directives: {
+        focus: {
+// directive definition
+            inserted: function (el) {
+                el.focus()
+            }
+        }
     },
     computed: {
         user: function() {

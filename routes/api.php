@@ -128,6 +128,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManagerResponsible')->get('getCMWithENE', 'CaseManagerResponsibleController@getCMWithENE');
 
     //Case Manager
+    Route::middleware('isCaseManager')->patch('rejectMeeting/{id}', 'CaseManagerController@rejectMeeting');
     Route::middleware('isCaseManager')->patch('approveSupportHoursRequest/{requestId}', 'CaseManagerController@approveSupportHoursRequest');
     Route::middleware('isCaseManager')->patch('denySupportHoursRequest', 'CaseManagerController@denySupportHoursRequest');
     Route::middleware('isCaseManager')->get('getAllSupportHoursRequests', 'CaseManagerController@getAllSupportHoursRequests');
