@@ -145,6 +145,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isCaseManager')->get('statistics/{stats}', 'CaseManagerController@statistics');
     Route::middleware('isCaseManager')->post('setInteraction', 'CaseManagerController@setInteraction');
     Route::middleware('isCaseManager')->get('contact/download/{id}', 'CaseManagerController@downloadContactFiles');
+    Route::middleware('isCaseManager')->get('meeting/download/{id}', 'CaseManagerController@downloadMeetingFiles');
     Route::middleware('isCaseManager')->put('setEneeMeeting/{id}', 'CaseManagerController@setEneeMeeting');
     Route::middleware('isCaseManager')->get('getEneePlan/{id}', 'CaseManagerController@getEneePlan');
     Route::middleware('isCaseManager')->put('updatePlan/{id}', 'CaseManagerController@updatePlan');

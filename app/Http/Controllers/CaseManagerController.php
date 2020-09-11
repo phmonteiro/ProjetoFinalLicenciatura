@@ -20,6 +20,7 @@ use App\User;
 use App\Subject;
 use App\CaseManager;
 use App\Contact;
+use App\Meeting_file;
 use App\Support;
 use App\Student_Supports;
 use App\Service;
@@ -439,6 +440,45 @@ class CaseManagerController extends Controller
                 $interactionFile->save();
             }
         }
+
+        if ($dados['service'] == "Gestor-Caso") {
+                    $meeting = new Meeting();
+                    $meeting->email = $dados['email'];
+                    if ($dados['interactionDate'] == null) {
+                        $meeting->date = Carbon::now();
+                    } else {
+                        $meeting->date = $dados['interactionDate'];
+                    }
+
+                    $student = User::where('email',$dados['email'])->first();
+
+                    $meeting->comment = "N/D";
+                    $meeting->name = $student->name;
+                    $meeting->studentId = $student->id;
+                    $meeting->service = $dados['service'];
+                    $meeting->info = $dados['information'];
+                    $meeting->contactMedium = $dados['contactMedium'];
+                    $meeting->software = $dados['software'];
+                    $meeting->place = $dados['place'];
+                    $meeting->time = $dados['interactionTime'];
+                    $meeting->save();
+
+                    if ($request->numberFiles != null && $request->numberFiles > 0) {
+                        $meeting->hasFiles = '1';
+                        $meeting->save();
+                        for ($i = 0; $i < $request->numberFiles; $i++) {
+                            $file = Input::file('file' . $i);
+                            $ext = $file->getClientOriginalExtension();
+                            $uploadedFile = "MeetingFile - " . $meeting->id . "-" . $i . '.' . $ext;
+                            Storage::disk('public')->put('interactionFiles/' . $uploadedFile, File::get($file));
+                            $meetingFile = new Meeting_file();
+                            $meetingFile->meeting_id = $meeting->id;
+                            $meetingFile->filename = $uploadedFile;
+                            $meetingFile->save();
+                        }
+                    }
+                }
+
         $history = new History();
         $history->studentEmail = $dados['email'];
         $history->description = "Foi agendado uma interação entre o estudante e o ".$contact->service;
@@ -625,5 +665,22 @@ class CaseManagerController extends Controller
         $support_notes = Support_Note::where('student_email',$student->email)->get();
 
         return response()->json($support_notes,200);
+    }
+
+    public function downloadMeetingFiles($id){
+        $meeting = Meeting::findOrFail($id);
+        $meetingFiles = Meeting_File::where('meeting_id', $meeting->id)->get();
+        $array =  array();
+        for ($i = 0; $i < sizeof($meetingFiles); $i++) {
+            $file = base_path('storage/app/public/interactionFiles/' . $meetingFiles[$i]->filename);
+            array_push($array, $file);
+        }
+        $seed = rand();
+        $zipper = new Zipper();
+        $zipper->make('interactionFiles/' . $seed . '.zip');
+
+        $zipper->add($array)->close();
+
+        return response()->download(public_path('interactionFiles/' . $seed . '.zip'));
     }
 }

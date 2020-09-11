@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Support_Note.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Meeting_file.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/managePlan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/managePlan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -188,6 +188,7 @@
       <workItem from="1598533879061" duration="8037000" />
       <workItem from="1599156502684" duration="1405000" />
       <workItem from="1599648543543" duration="8258000" />
+      <workItem from="1599831223492" duration="3368000" />
     </task>
     <servers />
   </component>
@@ -199,9 +200,10 @@
       <screen x="0" y="312" width="1366" height="768" />
     </state>
     <state x="395" y="396" width="800" height="684" key="#ESLint/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593281176234" />
-    <state x="1569" y="236" width="828" height="423" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1591725807350">
-      <screen x="1366" y="0" width="1920" height="1080" />
+    <state x="144" y="189" width="618" height="298" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599833279406">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
+    <state x="144" y="189" width="618" height="298" key="#com.intellij.fileTypes.FileTypeChooser/0.27.1366.741@0.27.1366.741" timestamp="1599833279406" />
     <state x="1569" y="236" key="#com.intellij.fileTypes.FileTypeChooser/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1591725807349" />
     <state width="1897" height="252" key="GridCell.Tab.0.bottom" timestamp="1592593423198">
       <screen x="1366" y="0" width="1920" height="1080" />
@@ -238,10 +240,10 @@
     </state>
     <state x="444" y="185" width="479" height="465" key="run.anything.popup/0.27.1366.741@0.27.1366.741" timestamp="1597781847506" />
     <state x="1990" y="231" width="672" height="677" key="run.anything.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1592422153844" />
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup" timestamp="1599655276253">
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup" timestamp="1599834018007">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1599655276253" />
+    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1599834018007" />
     <state x="443" y="481" width="672" height="495" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593280972901" />
     <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593525139562" />
     <state x="573" y="258" width="498" height="187" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1598534079366">

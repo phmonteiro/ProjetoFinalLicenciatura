@@ -118,6 +118,14 @@
                                         <br />
                                     </b-col>
                                 </b-row>
+                                <b-row v-if="row.item.hasFiles" class="text-center mb-2">
+                                    <b-col class="text">
+                                        <button class="btn btn-info" v-on:click.prevent="downloadFiles(row.item.id)">
+                                            Descarregar ficheiros anexados
+                                            <font-awesome-icon icon="arrow-circle-down" />
+                                        </button>
+                                    </b-col>
+                                </b-row>
                                 <b-row class="text-center mb-2">
                                     <b-col class="text">
                                         <b-button
@@ -242,6 +250,37 @@ export default {
         };
     },
     methods: {
+        downloadFiles(id) {
+            axios({
+                url: "api/meeting/download/" + id,
+                method: "GET",
+                responseType: "blob"
+            }).then(response => {
+                console.log(response);
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "Ficheiros" + this.user.name + ".zip");
+                document.body.appendChild(link);
+                link.click();
+                this.$toasted.success("Download efetuado com sucesso.", {
+                    duration: 4000,
+                    position: "top-center",
+                    theme: "bubble"
+                });
+            })
+                .catch(error => {
+                    console.log(error, "error");
+                    this.$toasted.error(
+                        "Error ao fazer download. Por favor tente novamente.",
+                        {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        }
+                    );
+                });
+        },
         showRequestedMeetings() {
             this.showRequested = true;
             this.showScheduled = false;
