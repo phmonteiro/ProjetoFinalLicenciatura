@@ -56,7 +56,7 @@
                             </b-row>
                             <b-row class="justify-content-center">
                                 <b-button class="text-center" size="sm" @click="row.toggleDetails">{{ $t('esconder') }}</b-button>
-                            </b-row>
+                            </b-row>e
                         </b-card>
                     </template>
                 </b-table>

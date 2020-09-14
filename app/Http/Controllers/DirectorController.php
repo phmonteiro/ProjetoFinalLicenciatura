@@ -172,14 +172,14 @@ class DirectorController extends Controller
             'coordinatorEmail' => 'required',
         ]);
 
-        $user = User::where('email',$coordinator->email)->first();
-        $user->secondEmail = null;
-        $user->save();
-
         $coordinator = Coordinator::where('departmentNumber',$dep)->first();
         $coordinator->email = $dados['coordinatorEmail'];
         $coordinator->secondaryEmail = null;
         $coordinator->save();
+
+//         $user = User::where('email',$coordinator->email)->first();
+//         $user->secondEmail = null;
+//         $user->save();
 
         //....................
          $coordinator = User::where('email',$dados['coordinatorEmail'])->first();

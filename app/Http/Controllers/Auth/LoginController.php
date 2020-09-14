@@ -126,8 +126,8 @@ class LoginController extends Controller
 
                 $user->save();
 
-                $mostRecentAccountId = User::where('nif','=',$webServiceUserInfo['NR_CONTRIB'])->whereNull('inactive')->max('id');
-                $allUserAccountIds = User::where('nif','=',$webServiceUserInfo['NR_CONTRIB'])->whereNull('inactive')->pluck('id')->toArray();
+                $mostRecentAccountId = User::where('nif','=',$user->nif)->whereNull('inactive')->max('id');
+                $allUserAccountIds = User::where('nif','=',$user->nif)->whereNull('inactive')->pluck('id')->toArray();
                 \Debugbar::info($allUserAccountIds);
                 \Debugbar::info($mostRecentAccountId);
 

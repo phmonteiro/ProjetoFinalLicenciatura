@@ -95,7 +95,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isAdminDirectorStudentCaseManager')->get('getSupportsByCategory', 'SupportController@getSupportsByCategory');
     Route::middleware('isAdminDirectorStudentCaseManager')->get('getSupportCategories', 'SupportController@getSupportCategories');
     Route::middleware('isDirector')->patch('reproveSubscription/{id}', 'SupportController@reproveSubscription');
-    Route::middleware('isDirector')->post('servicesApprovalRequest/{id}', 'DirectorController@approvalRequest');
+    Route::middleware('isDirector')->post('getServicesEvaluation/{id}', 'DirectorController@approvalRequest');
     Route::middleware('isDirector')->put('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
     Route::middleware('isDirector')->put('updateEnee', 'DirectorController@updateEnee');
     Route::middleware('isDirectorServices')->get('medicalReport/download/{id}', 'DirectorController@downloadStudentDocuments');

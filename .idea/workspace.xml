@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/meetingsEneeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SupportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SupportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/addCoordinator.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/addCoordinator.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/addService.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/addService.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/myMeetings.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/plugins/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/plugins/i18n.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
@@ -191,7 +194,9 @@
       <workItem from="1599156502684" duration="1405000" />
       <workItem from="1599648543543" duration="8258000" />
       <workItem from="1599831223492" duration="3555000" />
-      <workItem from="1599841008978" duration="2948000" />
+      <workItem from="1599841008978" duration="3130000" />
+      <workItem from="1600038705358" duration="527000" />
+      <workItem from="1600102488075" duration="3178000" />
     </task>
     <servers />
   </component>
@@ -232,23 +237,23 @@
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="1979" y="171" width="683" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1591881526335" />
-    <state x="378" y="66" width="884" height="622" key="find.popup" timestamp="1599655289703">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="1952" y="69" width="807" height="804" key="find.popup" timestamp="1600106982338">
+      <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="378" y="66" width="884" height="622" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1599655289703" />
     <state x="417" y="361" width="724" height="572" key="find.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593283359689" />
-    <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1596812671097" />
+    <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1600106982338" />
     <state x="444" y="185" width="479" height="465" key="run.anything.popup" timestamp="1597781847506">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="444" y="185" width="479" height="465" key="run.anything.popup/0.27.1366.741@0.27.1366.741" timestamp="1597781847506" />
     <state x="1990" y="231" width="672" height="677" key="run.anything.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1592422153844" />
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup" timestamp="1599843941781">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup" timestamp="1600109021585">
+      <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1599843941781" />
     <state x="443" y="481" width="672" height="495" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@0.312.1366.768" timestamp="1593280972901" />
-    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1593525139562" />
+    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1600109021585" />
     <state x="573" y="258" width="498" height="187" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1598534079366">
       <screen x="0" y="27" width="1366" height="741" />
     </state>

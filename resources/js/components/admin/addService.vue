@@ -1,7 +1,7 @@
 <template>
     <div>
         <br>
-        <h4>Adicionar Serviço</h4>
+        <h4>Configurar Serviços</h4>
         <hr>
         <ValidationObserver v-slot="{ handleSubmit }">
             <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">

@@ -94,7 +94,16 @@
           </div>
           <div v-else>
               <label for>Definir Email do Coordenador de Curso de {{user.course}}</label>
-              <button class="btn btn-outline-secondary">Definir</button>
+              <button class="btn btn-outline-secondary" @click="adicionarEmail()">Definir</button>
+              <br>
+          </div>
+          <div v-if="showAddEmail">
+              <b-input-group prepend="Email do Coordenador de Curso: " class="mt-sm-4 p-sm-4 w-75">
+                  <b-form-input v-model="newCoordinatorEmail"></b-form-input>
+                  <b-input-group-append>
+                      <b-button variant="outline-success" v-on:click.prevent="saveNewCoordinatorEmail()">Gravar</b-button>
+                  </b-input-group-append>
+              </b-input-group>
           </div>
           <br>
           <div>
@@ -283,6 +292,7 @@ export default {
       newCoordinatorEmail:"",
       coordinator:null,
       showAlterarEmail:false,
+        showAddEmail:false,
       showCoordinatorNoResponseError:false,
         gestorCasoApoios:true,
         selectedSupports:[],
@@ -327,6 +337,9 @@ export default {
       },
       alterarEmail(){
           this.showAlterarEmail = !this.showAlterarEmail;
+      },
+      adicionarEmail(){
+          this.showAddEmail = !this.showAddEmail;
       },
       selectAllTeachers(){
           this.aux = this.teachers;
@@ -373,7 +386,7 @@ export default {
     },
     askForServicesApproval() {
       axios
-        .post("api/servicesApprovalRequest/" + this.user.id, this.services)
+        .post("api/getServicesEvaluation/" + this.user.id, this.services)
         .then(response => {
           this.$emit("refresh");
           this.$toasted.success("Pedido efetuado com sucesso.", {

@@ -9,6 +9,8 @@ use App\Http\Resources\SupportResource;
 use App\User;
 use App\SupportCategory;
 use App\Tutor;
+use App\ServiceRequest;
+use App\Nee;
 use App\History;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Carbon;
@@ -115,9 +117,21 @@ class SupportController extends Controller
         ]);
         $user = User::findOrFail($id);
         $user->enee = "rejected";
+        $user->servicesApproval = null;
         $user->coordinatorApproval = null;
         $user->directorComment = $dados['comment'];
         $user->save();
+
+        $nees = Nee::where('studentEmail',$user->email)->get();
+        $requests = ServiceRequest::where('studentEmail',$user->email)->get();
+
+        foreach($requests as $req){
+            $req->delete();
+        }
+
+        foreach($nees as $nee){
+            $nee->delete();
+        }
 
         $history = new History();
         $history->studentEmail = $user->email;

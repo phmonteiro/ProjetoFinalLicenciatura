@@ -26,7 +26,7 @@
           <input class="form-control" name="course" id="course" v-model="data.course" />
         </div>
         <div class="col">
-          <label for="departmentNumber">Número do departamento</label>
+          <label for="departmentNumber">Número do curso</label>
           <input
             type="number"
             min="0000"

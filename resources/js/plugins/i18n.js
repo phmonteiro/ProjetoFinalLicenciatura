@@ -74,7 +74,7 @@ const messages = {
     localidade: 'Localidade',
     masculino: 'Masculino',
     meio_contacto: 'Meio de Contacto',
-    mensagem_estudante: 'O seu pedido ao estatuto de estudante com necessidades educativas especais está no estado de:',
+    mensagem_estudante: 'O seu pedido ao estatuto de estudante com necessidades educativas específicas está no estado de:',
     motivo: 'Motivo',
     motora: 'Motora',
     nome: 'Nome',
