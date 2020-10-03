@@ -189,6 +189,10 @@ class StudentController extends Controller
             'identificationNumber' => 'required|integer',
             'enruledYear' => 'required|size:4',
             'curricularYear' => 'required|integer|min:0',
+            'responsibleName' => 'string',
+            'responsibleEmail' => '',
+            'responsibleKin' => 'string',
+            'responsiblePhone' => '',
             'emergencyName' => 'required|string',
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
@@ -201,11 +205,6 @@ class StudentController extends Controller
             'neeTypeDisease' => 'required_if:neeTypeAnotherDisease,true|string',
             'functionalAnalysis' => '',
         ]);
-//                     'responsibleName' => 'string',
-//                     'responsibleEmail' => 'email',
-//                     'responsibleKin' => 'string',
-//                     'responsiblePhone' => 'integer|regex:/[0-9]{9}/',
-
 
         for ($i = 0; $i < $request->numberPhotos; $i++) {
             $file = Input::file('photo' . $i);
