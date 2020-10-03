@@ -230,6 +230,20 @@ class StudentController extends Controller
         $user->responsibleEmail = $dados['responsibleEmail'];
         $user->responsibleKin = $dados['responsibleKin'];
         $user->responsiblePhone = $dados['responsiblePhone'];
+
+        if($dados['responsibleName']=='null'){
+            $user->responsibleName = null;
+        }
+        if($dados['responsibleEmail']=='null'){
+            $user->responsibleEmail = null;
+        }
+        if($dados['responsibleKin']=='null'){
+            $user->responsibleKin = null;
+        }
+        if($dados['responsiblePhone']=='null'){
+            $user->responsiblePhone = null;
+        }
+
         $user->emergencyName = $dados['emergencyName'];
         $user->emergencyPhone = $dados['emergencyPhone'];
         $user->emergencyEmail = $dados['emergencyEmail'];
