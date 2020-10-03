@@ -230,17 +230,17 @@ class StudentController extends Controller
         $user->responsibleEmail = $dados['responsibleEmail'];
         $user->responsibleKin = $dados['responsibleKin'];
         $user->responsiblePhone = $dados['responsiblePhone'];
-        \Debugbar::info($dados);
-        if($dados['responsibleName']=='null'){
+
+        if($dados['responsibleName']=='null' || $dados['responsibleName']=='undefined'){
             $user->responsibleName = null;
         }
-        if($dados['responsibleEmail']=='null'){
+        if($dados['responsibleEmail']=='null' || $dados['responsibleEmail']=='undefined'){
             $user->responsibleEmail = null;
         }
-        if($dados['responsibleKin']=='null'){
+        if($dados['responsibleKin']=='null' || $dados['responsibleKin']=='undefined'){
             $user->responsibleKin = null;
         }
-        if($dados['responsiblePhone']=='null'){
+        if($dados['responsiblePhone']=='null' || $dados['responsiblePhone']=='undefined'){
             $user->responsiblePhone = null;
         }
 
