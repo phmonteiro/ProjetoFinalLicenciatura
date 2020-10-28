@@ -59,7 +59,9 @@ class CoordinatorController extends Controller
     }
 
     public function getSecondaryEmail(){
-        $secondaryEmail = Auth::user()->secondEmail;
+        $emailCoord = Auth::user()->email;
+        $coord = Coordinator::where('email',$emailCoord)->first();
+        $secondaryEmail = $coord->secondaryEmail;
 
         if($secondaryEmail == null){
             $secondaryEmail = "";

@@ -271,8 +271,10 @@ class ServiceController extends Controller
         $user->servicesApproval = 'denied';
         $user->save();
 
-        $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->get();
+        $service = ServiceRequest::where('studentEmail', $user->email)->where('name', Auth::user()->type)->whereNull('approval')->whereNull('answerDate')->first();
         $service->approval  = 'Rejeitado';
+        $service->answerDate = Carbon::now();
+        $service->save();
 
         $history = new History();
         $history->studentEmail = $user->email;
@@ -446,7 +448,7 @@ class ServiceController extends Controller
     public function getServicesEvaluation($id)
     {
         $user = User::findOrFail($id);
-        $schedule = ServiceRequest::where('studentEmail', $user->email)->get();
+        $schedule = ServiceRequest::where('studentEmail', $user->email)->whereNull('expired')->get();
         return response()->json($schedule, 201);
     }
 }

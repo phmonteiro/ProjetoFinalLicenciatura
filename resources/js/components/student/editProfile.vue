@@ -11,7 +11,7 @@
             <div class="row">
               <div class="col">
                 <label for="student-name">{{ $t('nome') }}</label>
-                  <ValidationProvider name="nome" id="valNome" rules="required|alpha_spaces" v-slot="{ errors }">
+<!--                  <ValidationProvider name="nome" id="valNome" rules="required|alpha_spaces" v-slot="{ errors }">-->
                       <input
                           type="text"
                           class="form-control"
@@ -21,8 +21,8 @@
                           v-model="user.name"
                           disabled
                       />
-                      <code>{{ errors[0] }}</code>
-                  </ValidationProvider>
+<!--                      <code>{{ errors[0] }}</code>-->
+<!--                  </ValidationProvider>-->
               </div>
             </div>
 
@@ -80,7 +80,7 @@
             <div class="row">
               <div class="col">
                 <label for="responsibleName">{{$t('nome')}}</label>
-                  <ValidationProvider name="responsibleName" rules="required|alpha" v-slot="{ errors }">
+                  <ValidationProvider name="responsibleName" rules="alpha" v-slot="{ errors }">
                       <input
                           type="text"
                           class="form-control"
@@ -93,7 +93,7 @@
               </div>
               <div class="col">
                 <label for="responsiblePhone">{{$t('contacto_telefónico')}}</label>
-                  <ValidationProvider name="responsiblePhone" rules="required|digits:9" v-slot="{ errors }">
+                  <ValidationProvider name="responsiblePhone" rules="digits:9" v-slot="{ errors }">
                       <input
                           class="form-control"
                           name="responsiblePhone"
@@ -107,7 +107,7 @@
               </div>
               <div class="col">
                 <label for="responsibleKin">{{$t('parentesco')}}</label>
-                  <ValidationProvider name="responsibleKin" rules="required" v-slot="{ errors }">
+                  <ValidationProvider name="responsibleKin" rules="alpha" v-slot="{ errors }">
                       <input
                           type="text"
                           class="form-control"
@@ -120,7 +120,7 @@
               </div>
               <div class="col">
                 <label for="responsibleEmail">{{$t('email')}}</label>
-                  <ValidationProvider name="responsibleEmail" rules="required|email" v-slot="{ errors }">
+                  <ValidationProvider name="responsibleEmail" rules="email" v-slot="{ errors }">
                       <input
                           type="email"
                           class="form-control"

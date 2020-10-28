@@ -30,6 +30,14 @@ class DirectorController extends Controller
         $user = User::findOrFail($id);
         $user->servicesApproval = 'requested';
 
+        //expire old service requests
+        $old_requests = ServiceRequest::where('studentEmail',$user->email)->whereNotNull('answerDate')->get();
+
+        foreach($old_requests as $req){
+            $req->expired = 1;
+            $req->save();
+        }
+
         for ($i = 0; $i < sizeOf($request->name); $i++) {
             $serviceRequest = new ServiceRequest();
             $serviceRequest->name = $request->name[$i];

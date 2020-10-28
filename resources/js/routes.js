@@ -135,6 +135,14 @@ const routes = [{
     },
   },
   {
+    path: '/admin/editDirectors',
+    name: 'editDirectors',
+    component: require('./components/admin/addDirector.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  },
+  {
     path: '/admin/addService',
     name: 'addService',
     component: require('./components/admin/addService.vue').default,

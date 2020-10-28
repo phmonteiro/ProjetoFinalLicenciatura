@@ -11,6 +11,8 @@
 
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addResponsibleCM'}">Adicionar Responsável de Gestores de Caso</router-link>
 
+<!--            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'editDirectors'}">Editar Diretores</router-link>-->
+
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'manageSupports'}">Gerir Apoios</router-link>
 
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'definirHorasApoio'}">Definir Horas de Apoio</router-link>

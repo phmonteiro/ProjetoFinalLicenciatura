@@ -14,8 +14,8 @@
     <b-container>
       <b-row>
         <b-col class="top100">
-          <div v-if="supports!=null && supports.length!==0">
             <h2>{{ $t('acompanhamento_individualizado') }}</h2>
+            <div v-if="supports!=null && supports.length!==0">
             <br />
             <h5>{{ $t('quantidade_horas_total')}}: {{this.supportHoursLimit}}</h5>
             <h5>{{ $t('quantidade_horas_utilizadas') }}: {{this.totalHours}}</h5>

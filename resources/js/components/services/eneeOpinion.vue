@@ -2,7 +2,6 @@
   <div>
     <div class="container">
       <h2>Pedidos de parecer</h2>
-        <hr>
       <div v-if="requests!=null && requests.length!==0">
           <b-table striped hover :items="requests" :fields="fields">
               <template v-slot:cell(actions)="row">

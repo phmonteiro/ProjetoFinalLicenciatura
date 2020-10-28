@@ -119,9 +119,14 @@
               <p v-if="user.coordinatorApproval==-1">
                   <span>Pedido de parecer enviado - a aguardar resposta</span>
                   <br>
-                  <code v-if="showCoordinatorNoResponseError">O parecer do Coordenador de Curso ainda não foi emitido. Impossível avançar.</code>
               </p>
           </div>
+
+          <div>
+              <code v-if="user.coordinatorApproval == null">O parecer do Coordenador de Curso ainda não foi requisitado. Impossível avançar.</code>
+              <code v-if="user.coordinatorApproval === -1">O parecer do Coordenador de Curso ainda não foi emitido. Impossível avançar.</code>
+          </div>
+          <br>
 
           <button v-if="user.coordinatorApproval!==1 && user.coordinatorApproval!==0" class="btn btn-secondary" :disabled="coordinator.email == '' || coordinator == null" @click.prevent="pedirParecer()">Pedir Parecer</button>
 
@@ -133,7 +138,8 @@
           <div class="container" v-for="aux in service">
             <div class="row">
               <div class="col-sm-2">{{aux.name}}</div>
-              <div class="col-sm-2">{{aux.approval}}</div>
+              <div v-if="aux.approval==null" class="col-sm-2">Pendente...</div>
+              <div v-else class="col-sm-2"><b>{{aux.approval}}</b></div>
             </div>
               <div v-if="aux.comment">
                   Informação adicional disponibilizada pelo {{aux.name}}:
@@ -151,11 +157,11 @@
         <div v-if="user.servicesApproval==null">
           <b-form-group>
             <b-form-checkbox-group id="checkbox-group-2" v-model="services.name" name="service">
-              <b-form-checkbox value="SAPE">Serviço de Apoio ao Estudante</b-form-checkbox>
-              <b-form-checkbox value="CRID">Centro de Recursos para a Inclusão Digital</b-form-checkbox>
-              <b-form-checkbox value="SAS">Serviços de Ação Social</b-form-checkbox>
-              <b-form-checkbox value="UED">Unidade de Ensino à Distância</b-form-checkbox>
-              <b-form-checkbox value="DST">Direção de Serviços Técnicos</b-form-checkbox>
+              <b-form-checkbox :disabled="requestedServices.includes('SAPE')" value="SAPE">Serviço de Apoio ao Estudante</b-form-checkbox>
+              <b-form-checkbox :disabled="requestedServices.includes('CRID')" value="CRID">Centro de Recursos para a Inclusão Digital</b-form-checkbox>
+              <b-form-checkbox :disabled="requestedServices.includes('SAS')" value="SAS">Serviços de Ação Social</b-form-checkbox>
+              <b-form-checkbox :disabled="requestedServices.includes('UED')" value="UED">Unidade de Ensino à Distância</b-form-checkbox>
+              <b-form-checkbox :disabled="requestedServices.includes('DST')" value="DST">Direção de Serviços Técnicos</b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
           <button
@@ -167,24 +173,33 @@
         </div>
       </div>
 
-
+      <div>
           <h4>Duração da Necessidade Específica:</h4>
           <ValidationProvider name="duracaoEne" rules="required" v-slot="{ errors }">
               <b-form-group id="input-group-3" label-for="input-3">
                   <b-form-select id="input-3" v-model="form.duration" :options="durationOpts" required></b-form-select>
-                  <div v-if="form.duration=='Temporária'">
-                      <label for="date">Data de fim de estatuto ENE</label>
-                      <input class="form-control" type="date" value id="date" name="date" v-model="data.date" />
-                  </div>
               </b-form-group>
               <code>{{ errors[0] }}</code>
           </ValidationProvider>
+      </div>
+      <div v-if="form.duration=='Temporária'">
+          <label for="date">Data de fim de estatuto ENE</label>
+          <ValidationProvider name="duracaoEne" rules="required" v-slot="{ errors }">
+              <input class="form-control" type="date" value id="date" name="date" v-model="data.date" />
+              <code>{{ errors[0] }}</code>
+          </ValidationProvider>
+      </div>
+
+
+
     </div>
       <br>
          <b-form-checkbox v-model="gestorCasoApoios">Plano de Inclusão a ser definido pelo Gestor de Caso.</b-form-checkbox>
       <br>
       <div class="form-group">
           <h4>Professores a notificar</h4>
+          <code v-if="teachers == null || teachers.length === 0">Atualmente, o estudante não está inscrito a nenhuma UC.</code>
+          <br>
           <ul v-if="aux.length!=0">
               <li v-for="prof in aux">
                   {{prof.name}} - {{prof.subject}}
@@ -194,6 +209,7 @@
           <br>
           <br>
           <b-button
+              :disabled="teachers == null || teachers.length === 0"
               type="button"
               class="btn btn-primary"
               data-toggle="modal"
@@ -203,14 +219,24 @@
 
       <div class="form-group">
       <h4>Definir Professor Orientador (Opcional)</h4>
-      <input
-        type="email"
-        class="form-control"
-        v-model="data.tutor"
-        name="tutor"
-        id="tutor"
-        placeholder="professor.orientador@my.ipleiria.pt"
-      />
+          <div v-if="studentTutorEmail">
+              Professor Orientador Atual: {{studentTutorEmail}}
+          </div>
+          <br>
+<!--      <input-->
+<!--        type="email"-->
+<!--        class="form-control"-->
+<!--        v-model="data.tutor"-->
+<!--        name="tutor"-->
+<!--        id="tutor"-->
+<!--        placeholder="professor.orientador@my.ipleiria.pt"-->
+<!--      />-->
+      <b-input-group prepend="Email do Professor Orientador: ">
+          <b-form-input v-model="data.tutor"
+                        name="tutor"
+                        id="tutor"
+                        placeholder="professor.orientador@my.ipleiria.pt"></b-form-input>
+      </b-input-group>
     </div>
 
     <!-- Button trigger modal -->
@@ -292,8 +318,10 @@ export default {
       newCoordinatorEmail:"",
       coordinator:null,
       showAlterarEmail:false,
+        requestedServices:[],
         showAddEmail:false,
-      showCoordinatorNoResponseError:false,
+      // showCoordinatorNoResponseError:false,
+        studentTutorEmail: null,
         gestorCasoApoios:true,
         selectedSupports:[],
         selectedCategories:[],
@@ -302,7 +330,7 @@ export default {
         selected: null,
         options: null,
         tutor: "",
-        date: ""
+        date: null
       },
       services: {
         name: ""
@@ -323,6 +351,29 @@ export default {
     };
   },
   methods: {
+      getStudentTutor(){
+          axios
+              .get("api/getStudentTutor/" + this.user.id)
+              .then(response => {
+                  this.studentTutorEmail = response.data['tutorEmail'];
+                    console.log(response.data);
+                  if(this.isEmpty(response.data))
+                      this.studentTutorEmail=null;
+
+              })
+              .catch(error => {
+                  console.log(error);
+              });
+      },
+       isEmpty(obj) {
+            for(var prop in obj) {
+                if(obj.hasOwnProperty(prop)) {
+                    return false;
+                }
+            }
+
+            return JSON.stringify(obj) === JSON.stringify({});
+        },
       saveNewCoordinatorEmail(){
         axios.
             post("/api/defineCoordinatorEmail/"+this.user.departmentNumber,{'coordinatorEmail':this.newCoordinatorEmail})
@@ -385,6 +436,8 @@ export default {
       this.$emit("cancel-edit");
     },
     askForServicesApproval() {
+      this.requestedServices = this.services.name;
+
       axios
         .post("api/getServicesEvaluation/" + this.user.id, this.services)
         .then(response => {
@@ -405,7 +458,6 @@ export default {
     },
     save: function() {
         if(this.user.coordinatorApproval !== 1 && this.user.coordinatorApproval !== 0){
-            this.showCoordinatorNoResponseError = true;
             return;
         }
 
@@ -480,6 +532,7 @@ export default {
   created() {
     this.getServicesEvaluation();
     this.getCoordinatorEmail();
+    this.getStudentTutor();
   },
 
   computed: {

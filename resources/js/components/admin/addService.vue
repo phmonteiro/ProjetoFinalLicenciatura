@@ -20,7 +20,7 @@
                     <option value="SA">SA</option>
                     <option value="CRID">CRID</option>
                     <option value="DST">DST</option>
-                </b-form-select>
+            </b-form-select>
                 <code>{{ errors[0] }}</code>
             </ValidationProvider>
             <br>

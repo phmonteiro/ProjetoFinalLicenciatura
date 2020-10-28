@@ -99,10 +99,10 @@ class StudentController extends Controller
         $dados = $request->validate([
             'email' => 'required|email',
             'secondEmail' => 'nullable|email',
-            'responsibleName' => 'required|string',
-            'responsibleEmail' => 'required|email',
-            'responsibleKin' => 'required|string',
-            'responsiblePhone' => 'required|integer|regex:/[0-9]{9}/',
+            'responsibleName' => 'string',
+            'responsibleEmail' => 'email',
+            'responsibleKin' => 'string',
+            'responsiblePhone' => 'integer|regex:/[0-9]{9}/',
             'emergencyName' => 'required|string',
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
@@ -418,7 +418,8 @@ class StudentController extends Controller
 
     public function getStudentTutor($id)
     {
-        $tutorEmail = Tutor::where('studentEmail', $id)->first('tutorEmail');
+        $user = User::where('id',$id)->first();
+        $tutorEmail = Tutor::where('studentEmail', $user->email)->first('tutorEmail');
         return response()->json($tutorEmail, 200);
     }
 

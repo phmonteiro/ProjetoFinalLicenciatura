@@ -5,7 +5,7 @@
             <br>
             <div class="d-inline-block">
                 <span>Web Service Estado UCs Estudante</span>
-                <b-button size="sm" class="btn btn-secondary" disabled>Configurar</b-button>
+                <b-button disabled size="sm" class="btn btn-secondary" @click.prevent="showConfigs('Web Service Estado das UCs do Aluno')">Configurar</b-button>
             </div>
             <br>
             <br>
@@ -14,14 +14,16 @@
                 <b-button style="margin-left: 35px" @click.prevent="showConfigs('Web Service Dados dos Alunos')" size="sm" class="btn btn-secondary">Configurar</b-button>
             </div>
         </div>
+        <div>
+<!--            links dos web services  ....-->
+
+
+        </div>
         <div v-if="showConfig">
             <br>
             <h4 class="text-center">{{title}}</h4>
             <b-input-group prepend="Link do Web Service" class="mt-sm-4 p-sm-4 w-100">
                 <b-form-input v-model="linkWebService"></b-form-input>
-<!--                <b-input-group-append>-->
-<!--                    <b-button variant="outline-success" v-on:click.prevent="saveLink()">Gravar</b-button>-->
-<!--                </b-input-group-append>-->
             </b-input-group>
             <br>
             <b-table striped hover :items="parameters" :fields="fields">
