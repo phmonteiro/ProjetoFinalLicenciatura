@@ -473,6 +473,7 @@ class StudentController extends Controller
                 $subject = new Subject();
                 $subject->studentEmail = Auth::user()->email;
                 $subject->semester = $response[$i + 1];
+                mb_convert_encoding($response[$i], 'UTF-8', 'UTF-8');
                 $subject->nome = $response[$i];
                 $subject->hours = 0;
                 $subject->subjectCode = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));
