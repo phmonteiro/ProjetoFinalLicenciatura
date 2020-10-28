@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Director.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/admin/addDirector.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CoordinatorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CoordinatorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DirectorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/addService.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/addService.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/webServiceManagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/webServiceManagement.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeOpinion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/editProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/editProfile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +197,7 @@
       <workItem from="1603545422922" duration="9126000" />
       <workItem from="1603555089458" duration="627000" />
       <workItem from="1603814525142" duration="9538000" />
-      <workItem from="1603897852963" duration="2643000" />
+      <workItem from="1603897852963" duration="3930000" />
     </task>
     <servers />
   </component>

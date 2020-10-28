@@ -123,7 +123,7 @@
           </div>
 
           <div>
-              <code v-if="user.coordinatorApproval == null">O parecer do Coordenador de Curso ainda não foi requisitado. Impossível avançar.</code>
+<!--              <code v-if="user.coordinatorApproval == null">O parecer do Coordenador de Curso ainda não foi requisitado. Impossível avançar.</code>-->
               <code v-if="user.coordinatorApproval === -1">O parecer do Coordenador de Curso ainda não foi emitido. Impossível avançar.</code>
           </div>
           <br>
@@ -378,7 +378,15 @@ export default {
         axios.
             post("/api/defineCoordinatorEmail/"+this.user.departmentNumber,{'coordinatorEmail':this.newCoordinatorEmail})
                 .then(response=>{
-                    this.showAlterarEmail=false;
+                    this.$toasted.success(
+                        "Email guardado com sucesso!",
+                        {
+                            duration: 4000,
+                            position: "top-center",
+                            theme: "bubble"
+                        }
+                    );
+                    this.alterarEmail();
                     this.coordinator.email = this.newCoordinatorEmail;
                     this.secondaryEmail = null;
                 })
