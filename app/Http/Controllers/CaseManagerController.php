@@ -98,7 +98,7 @@ class CaseManagerController extends Controller
 
             return response()->json($supportHoursRequests, 200);
         } else {
-            $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::where('student_email', '=', $user->email)->get());
+            $supportHoursRequests = SupportHoursRequestResource::collection(SupportHoursRequest::where('student_email', '=', $user->email)->paginate(10));
 
             \Debugbar::info($supportHoursRequests);
 
