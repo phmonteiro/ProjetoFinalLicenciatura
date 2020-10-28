@@ -486,13 +486,14 @@ class StudentController extends Controller
             $aux = $response->getBody()->getContents();
             $response = explode(';', $aux);
             $subjects = array();
-            $response = convert_from_latin1_to_utf8_recursively($response);
+//             $response = $this->convert_from_latin1_to_utf8_recursively($response);
             Debugbar::info($response);
             for ($i = 5; $i < sizeof($response); $i += 8) {
                 $subject = new Subject();
                 $subject->studentEmail = Auth::user()->email;
                 $subject->semester = $response[$i + 1];
-                $subject->nome = $response[$i];
+//                 $subject->nome = $response[$i];
+                $subject->nome = trim(mb_convert_encoding($response[$i], 'UTF-8', 'html-entities'));
                 $subject->hours = 0;
                 $subject->subjectCode = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));
                 $subject->yearLective = $yearLective;
