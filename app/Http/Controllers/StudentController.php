@@ -447,6 +447,24 @@ class StudentController extends Controller
         return response()->json($teachers, 200);
     }
 
+   public static function convert_from_latin1_to_utf8_recursively($dat)
+   {
+      if (is_string($dat)) {
+         return utf8_encode($dat);
+      } elseif (is_array($dat)) {
+         $ret = [];
+         foreach ($dat as $i => $d) $ret[ $i ] = self::convert_from_latin1_to_utf8_recursively($d);
+
+         return $ret;
+      } elseif (is_object($dat)) {
+         foreach ($dat as $i => $d) $dat->$i = self::convert_from_latin1_to_utf8_recursively($d);
+
+         return $dat;
+      } else {
+         return $dat;
+      }
+   }
+
     public function supportHours($id)
     {
         $student = User::findOrFail($id);
@@ -468,12 +486,12 @@ class StudentController extends Controller
             $aux = $response->getBody()->getContents();
             $response = explode(';', $aux);
             $subjects = array();
+            $response = convert_from_latin1_to_utf8_recursively($response);
             Debugbar::info($response);
             for ($i = 5; $i < sizeof($response); $i += 8) {
                 $subject = new Subject();
                 $subject->studentEmail = Auth::user()->email;
                 $subject->semester = $response[$i + 1];
-                mb_convert_encoding($response[$i], 'UTF-8', 'UTF-8');
                 $subject->nome = $response[$i];
                 $subject->hours = 0;
                 $subject->subjectCode = trim(mb_convert_encoding($response[$i - 2], 'UTF-8', 'html-entities'));
