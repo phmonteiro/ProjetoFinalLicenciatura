@@ -153,7 +153,7 @@ export default {
         .get(page_url)
         .then((response) => {
           this.loading = false;
-          console.log(response.data);
+          console.log(response);
           this.requests = response.data;
           pg.makePagination(response.data.data.meta, response.data.data.links);
         })

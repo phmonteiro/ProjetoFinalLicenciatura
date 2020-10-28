@@ -386,7 +386,7 @@ export default {
                             theme: "bubble"
                         }
                     );
-                    this.alterarEmail();
+                    this.adicionarEmail();
                     this.coordinator.email = this.newCoordinatorEmail;
                     this.secondaryEmail = null;
                 })
