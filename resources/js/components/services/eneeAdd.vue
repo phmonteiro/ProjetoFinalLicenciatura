@@ -241,7 +241,7 @@
               <div class="row">
                 <div class="col">
                   <label for="year">{{$t('ano_curricular')}}</label>
-                    <ValidationProvider name="curricularYear" rules="required|digits:4|numeric" v-slot="{ errors }">
+                    <ValidationProvider name="curricularYear" rules="required|between:1,5|numeric" v-slot="{ errors }">
                         <input
                             min="2000"
                             class="form-control"
@@ -511,8 +511,31 @@
                 </div>
               </div>
             </div>
+            <div>
+                <br>
+                <br>
+              <div>
+                  <h5>Duração da Necessidade Específica:</h5>
+                  <ValidationProvider name="duracaoEne" rules="required" v-slot="{ errors }">
+                      <b-form-group id="input-group-3" label-for="input-3">
+                          <b-form-select id="input-3" v-model="student.typeENE" :options="durationOpts" required></b-form-select>
+                      </b-form-group>
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
+              </div>
+              <div v-if="student.typeENE==='Temporária'">
+                  <label for="date">Data de fim de estatuto ENE</label>
+                  <ValidationProvider name="duracaoEne" rules="required" v-slot="{ errors }">
+                      <input class="form-control" type="date" value id="date" name="date" v-model="student.durationENE" />
+                      <code>{{ errors[0] }}</code>
+                  </ValidationProvider>
+              </div>
+            </div>
           </div>
-          <button class="btn btn-primary" type="submit">{{$t('adicionar')}}</button>
+            <br>
+          <div class="text-center">
+              <button class="btn btn-primary" type="submit">{{$t('adicionar')}}</button>
+          </div>
         </div>
       </div>
     </form>
@@ -561,8 +584,19 @@ export default {
         educationalSupport: null,
         niss: null,
         nif: null,
-        sns: null
+        sns: null,
+        typeENE: null,
+        durationENE: null,
       },
+      durationOpts: [
+        {
+            text: "Escolha uma",
+            disabled: true,
+            value: null
+        },
+        "Temporária",
+        "Permanente"
+      ],
       index: 0
     };
   },
@@ -630,6 +664,8 @@ export default {
       formData.append("niss", this.student.niss);
       formData.append("sns", this.student.sns);
       formData.append("nif", this.student.nif);
+      formData.append("typeENE", this.student.typeENE);
+      formData.append("durationENE", this.student.durationENE);
 
       axios
         .post("api/eneeAdd", formData)

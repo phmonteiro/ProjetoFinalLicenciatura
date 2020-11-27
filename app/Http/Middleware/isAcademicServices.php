@@ -15,7 +15,7 @@ class isAcademicServices
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->type == 'SA') {
+        if ($request->user() && ($request->user()->type == 'SA' || $request->user()->type == 'CaseManager')) {
             return $next($request);
         }
         return Response::json([

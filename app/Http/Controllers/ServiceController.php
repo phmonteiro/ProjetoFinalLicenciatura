@@ -62,10 +62,10 @@ class ServiceController extends Controller
             'identificationNumber' => 'required|integer',
             'enruledYear' => 'required|size:4',
             'curricularYear' => 'required|integer|min:0',
-            'responsibleName' => 'required|string',
-            'responsibleEmail' => 'required|email',
-            'responsibleKin' => 'required|string',
-            'responsiblePhone' => 'required|integer|regex:/[0-9]{9}/',
+            'responsibleName' => '',
+            'responsibleEmail' => '',
+            'responsibleKin' => '',
+            'responsiblePhone' => '',
             'emergencyName' => 'required|string',
             'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
             'emergencyEmail' => 'required|email',
@@ -76,14 +76,16 @@ class ServiceController extends Controller
             'sns' => 'required|size:9',
             'educationalSupport' => '',
             'neeTypeDisease' => 'required_if:neeTypeAnotherDisease,true|string',
-            'functionalAnalysis' => ''
+            'functionalAnalysis' => '',
+            'typeENE' => 'required',
+            'durationENE' => ''
         ]);
 
         $user->name = $dados['name'];
         $user->email = $dados['email'];
         $user->number = $dados['number'];
         $user->phoneNumber = $dados['phoneNumber'];
-        $user->birthDate = $dados['birthDate'];
+        $user->birthDate = (new Carbon($dados['birthDate']))->format('Y-m-d');
         $user->residence = $dados['residence'];
         $user->zipCode = $dados['zipCode'];
         $user->area = $dados['area'];
@@ -91,10 +93,10 @@ class ServiceController extends Controller
         $user->identificationNumber = $dados['identificationNumber'];
         $user->enruledYear = $dados['enruledYear'];
         $user->curricularYear = $dados['curricularYear'];
-        $user->responsibleName = $dados['responsibleName'];
-        $user->responsibleEmail = $dados['responsibleEmail'];
-        $user->responsibleKin = $dados['responsibleKin'];
-        $user->responsiblePhone = $dados['responsiblePhone'];
+//         $user->responsibleName = $dados['responsibleName'];
+//         $user->responsibleEmail = $dados['responsibleEmail'];
+//         $user->responsibleKin = $dados['responsibleKin'];
+//         $user->responsiblePhone = $dados['responsiblePhone'];
         $user->emergencyName = $dados['emergencyName'];
         $user->emergencyPhone = $dados['emergencyPhone'];
         $user->emergencyEmail = $dados['emergencyEmail'];
@@ -107,7 +109,31 @@ class ServiceController extends Controller
         $user->functionalAnalysis = $dados['functionalAnalysis'];
         $user->enee = 'approved';
         $user->type = 'Estudante';
-        $user->typeApplication = 'DGES';
+
+        if($dados['responsibleName']=='null' || $dados['responsibleName']=='undefined'){
+            $user->responsibleName = null;
+        }
+        if($dados['responsibleEmail']=='null' || $dados['responsibleEmail']=='undefined'){
+            $user->responsibleEmail = null;
+        }
+        if($dados['responsibleKin']=='null' || $dados['responsibleKin']=='undefined'){
+            $user->responsibleKin = null;
+        }
+        if($dados['responsiblePhone']=='null' || $dados['responsiblePhone']=='undefined'){
+            $user->responsiblePhone = null;
+        }
+
+        if($dados['typeENE']=='Temporária'){
+            $user->eneeExpirationDate = $dados['durationENE'];
+        }else if($dados['typeENE']=='Permanente'){
+            $user->eneeExpirationDate = null;
+        }
+
+        if(Auth::user()->type == "SA"){
+            $user->typeApplication = 'DGES';
+        }else if(Auth::user()->type == "CaseManager"){
+            $user->typeApplication = 'Gestor de Caso';
+        }
 
         $user->save();
 

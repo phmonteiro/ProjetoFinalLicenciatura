@@ -56,9 +56,9 @@
     var languageStore = this.$store.state.languagePref;
     this.$i18n.locale = languageStore;
     if (languageStore == "en") {
-      this.language = "pt";
-    } else {
       this.language = "en";
+    } else {
+      this.language = "pt";
     }
   }
 };

@@ -57,9 +57,9 @@ class notifyTeachersEachSemester extends Command
             $client = new \GuzzleHttp\Client();
             $aux = str_split(Carbon::now()->year, 2);
             if (Carbon::now()->month >= 9 && Carbon::now()->month <= 12) {
-                $yearLective = Carbon::now()->year . "" . (int) $aux[1] + 1;
+                $yearLective = Carbon::now()->year + "" + (int) $aux[1] + 1;
             } else {
-                $yearLective = $aux[0] . "" . (int) $aux[1] - 1 . ""  . $aux[1];
+                $yearLective = $aux[0] + "" + (int) $aux[1] - 1 + ""  + $aux[1];
             }
             $response = $client->request("GET", 'http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php?anoletivo=' . $yearLective . '&curso=' . $ene->departmentNumber . '&estado=1&naluno=' . $ene->number . '');
             $aux = $response->getBody()->getContents();

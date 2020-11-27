@@ -68,6 +68,8 @@ Vue.component('show-hours', require('./components/caseManager/studentSupportHour
 Vue.component('full-calendar', fullCalendar);
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('add-enee', require('./components/services/eneeAdd').default);
+
 
 // eslint-disable-next-line camelcase
 import {required, email, regex, alpha, digits, numeric, alpha_spaces, between, max, min, alpha_num} from 'vee-validate/dist/rules';

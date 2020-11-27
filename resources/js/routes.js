@@ -364,6 +364,14 @@ const routes = [{
       },
     },
     {
+      path: '/caseManager/addENE',
+      name: 'addENE',
+      component: require('./components/services/eneeAdd.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
+    {
       path: '/caseManager/cmEneeList',
       name: 'cmEneeList',
       component: require('./components/caseManager/cmEneeList.vue').default,

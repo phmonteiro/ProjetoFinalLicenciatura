@@ -14,6 +14,8 @@
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'calendar'}">Calendário</router-link>
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'substitution'}">Substituição</router-link>
             <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'statistics'}">Estatísticas</router-link>
+            <router-link @click.native="toggleNav()" class="nav-link" :to="{name: 'addENE'}">Adicionar Estudante</router-link>
+
           </div>
         </section>
         <b-col cols="12" class="ml-120">

@@ -111,13 +111,13 @@
                   <span>Confirme o email do Coordenador de Curso e peça o parecer do mesmo.</span>
               </p>
               <p v-if="user.coordinatorApproval==1">
-                  <b>O pedido foi aprovado pelo Coordenador de Curso.</b>
+                  <b style="color: #1d643b">O pedido foi aprovado pelo Coordenador de Curso.</b>
               </p>
               <p v-if="user.coordinatorApproval==0">
-                  <b>O pedido foi rejeitado pelo Coordenador de Curso.</b>
+                  <b style="color: #721c24">O pedido foi rejeitado pelo Coordenador de Curso.</b>
               </p>
               <p v-if="user.coordinatorApproval==-1">
-                  <span>Pedido de parecer enviado - a aguardar resposta</span>
+                  <span style="color: #e0a800">Pedido de parecer enviado - a aguardar resposta</span>
                   <br>
               </p>
           </div>
