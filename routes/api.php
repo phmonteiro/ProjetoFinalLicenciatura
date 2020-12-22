@@ -69,6 +69,8 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isDirectorServices')->get('getNee/{id}', 'StudentController@getNee');
     Route::middleware('isStudentOrDirector')->get('getTeachersStudent/{id}', 'StudentController@getTeacherStudent');
     Route::middleware('isDirector')->get('getStudentTutor/{id}', 'StudentController@getStudentTutor');
+    //temporary function!!!!!
+    Route::middleware('isStudent')->put('temporaryEditProfile/{id}', 'StudentController@temporaryEditProfile');
 
     //services
     Route::middleware('isService')->post('setContact/{id}', 'ServiceController@contact');
@@ -99,6 +101,10 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('isDirector')->put('updateStudentSupports', 'SupportController@updateStudentSupports')->name('updateStudentSupports');
     Route::middleware('isDirector')->put('updateEnee', 'DirectorController@updateEnee');
     Route::middleware('isDirectorServices')->get('medicalReport/download/{id}', 'DirectorController@downloadStudentDocuments');
+
+    //Professor
+    Route::middleware('isTeacher')->get('getTeacherSupports', 'TeacherController@getTeacherSupports');
+    Route::middleware('isTeacher')->post('createSummary/{id}', 'TeacherController@createSummary');
 
 
     //Coordinator

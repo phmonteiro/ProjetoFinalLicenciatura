@@ -2,16 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb195418-a0a2-4785-8260-fe10985aff57" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/isTeacher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/SupportSummary.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/student/temporaryEditProfile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/teacher/dashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/teacher/supportRequests.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/notifyTeachersEachSemester.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/notifyTeachersEachSemester.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/isAcademicServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/isAcademicServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/caseManager/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/caseManager/dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/director/eneeOptions.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/services/eneeAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/services/eneeAdd.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/layout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CaseManagerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/coordinator/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/coordinator/dashboard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/editSupportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/editSupportHours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHours.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/student/supportHoursRequestsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/student/supportHoursRequestsList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +215,17 @@
       <workItem from="1603897852963" duration="8773000" />
       <workItem from="1606231340130" duration="639000" />
       <workItem from="1606319623465" duration="10800000" />
+      <workItem from="1606503212036" duration="395000" />
+      <workItem from="1607103968748" duration="21000" />
+      <workItem from="1607363124940" duration="5353000" />
+      <workItem from="1607452418392" duration="325000" />
+      <workItem from="1608303174699" duration="877000" />
+      <workItem from="1608306774060" duration="3613000" />
+      <workItem from="1608409229860" duration="599000" />
+      <workItem from="1608580821186" duration="5665000" />
+      <workItem from="1608649869407" duration="611000" />
+      <workItem from="1608650494822" duration="65000" />
+      <workItem from="1608651118455" duration="4503000" />
     </task>
     <servers />
   </component>
@@ -215,27 +233,17 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="144" y="189" width="618" height="298" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599833279406">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="144" y="189" width="618" height="298" key="#com.intellij.fileTypes.FileTypeChooser/0.27.1366.741@0.27.1366.741" timestamp="1599833279406" />
-    <state x="1952" y="69" width="807" height="804" key="find.popup" timestamp="1606334213360">
+    <state x="1952" y="69" width="807" height="804" key="find.popup" timestamp="1608653628168">
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>
-    <state x="378" y="66" width="884" height="622" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1599655289703" />
-    <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1606334213360" />
-    <state x="444" y="185" width="479" height="465" key="run.anything.popup" timestamp="1597781847506">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="444" y="185" width="479" height="465" key="run.anything.popup/0.27.1366.741@0.27.1366.741" timestamp="1597781847506" />
-    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup" timestamp="1606332513841">
+    <state x="1952" y="69" width="807" height="804" key="find.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1608653628168" />
+    <state x="1990" y="252" width="672" height="677" key="run.anything.popup" timestamp="1608654278586">
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>
-    <state x="443" y="190" width="672" height="478" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1599843941781" />
-    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1606332513841" />
-    <state x="573" y="258" width="498" height="187" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1598534079366">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="1990" y="252" width="672" height="677" key="run.anything.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1608654278585" />
+    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup" timestamp="1608654280844">
+      <screen x="1366" y="0" width="1920" height="1080" />
     </state>
-    <state x="573" y="258" width="498" height="187" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.27.1366.741@0.27.1366.741" timestamp="1598534079366" />
+    <state x="1989" y="238" width="672" height="696" key="search.everywhere.popup/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1608654280844" />
   </component>
 </project>

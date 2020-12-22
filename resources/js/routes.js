@@ -79,6 +79,17 @@ const routes = [{
         middlewareAuth: true,
       },
     },
+    //  TEMPORARY FUNCTION
+    {
+      path: '/student/tempEditProfile',
+      name: 'tempEditProfile',
+      component: require('./components/student/temporaryEditProfile.vue').default,
+      meta: {
+        middlewareAuth: true,
+      },
+    },
+    //   END TEMPORARY FUNCTION
+
     {
       path: '/student/usedServices',
       name: 'usedServices',
@@ -228,6 +239,22 @@ const routes = [{
     path: '/coordinator/editProfile',
     name: 'editProfileCC',
     component: require('./components/coordinator/editProfile.vue').default,
+    meta: {
+      middlewareAuth: true,
+    },
+  }],
+},
+//  TEACHER
+{
+  path: '/teacher',
+  component: require('./components/teacher/dashboard.vue').default,
+  meta: {
+    middlewareAuth: true,
+  },
+  children: [{
+    path: '/teacher/supportRequests',
+    name: 'teacherSupportRequests',
+    component: require('./components/teacher/supportRequests.vue').default,
     meta: {
       middlewareAuth: true,
     },
@@ -466,6 +493,10 @@ router.beforeEach((to, from, next) => {
   }
   if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'CaseManager') {
     next('/caseManager');
+    return;
+  }
+  if (to.fullPath == '/' && store.state.user != null && store.state.user.type == 'Teacher') {
+    next('/teacher');
     return;
   }
   next();

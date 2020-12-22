@@ -1003,4 +1003,164 @@ class StudentController extends Controller
         return response()->json($supports,200);
     }
 
+    public function temporaryEditProfile($id){
+        $user = User::findOrFail($id);
+
+        $dados = $request->validate([
+            'name' => 'required|string',
+            'number' => 'required|integer',
+            'email' => 'required|email',
+            'phoneNumber' => 'required|size:9',
+            'birthDate' => 'required|date',
+            'residence' => 'required|string',
+            'zipCode' => 'required|regex:"\d\d\d\d[-]\d\d\d"',
+            'area' => 'required|string',
+            'identificationDocument' => 'required|string',
+            'identificationNumber' => 'required|integer',
+            'enruledYear' => 'required|size:4',
+            'curricularYear' => 'required|integer|min:0',
+            'responsibleName' => 'string',
+            'responsibleEmail' => '',
+            'responsibleKin' => 'string',
+            'responsiblePhone' => '',
+            'emergencyName' => 'required|string',
+            'emergencyPhone' => 'required|integer|regex:/[0-9]{9}/',
+            'emergencyEmail' => 'required|email',
+            'emergencyKin' => 'required|string',
+            'gender' => 'required|string',
+            'nif' => 'required|size:9',
+            'niss' => 'required|size:11',
+            'sns' => 'required|size:9',
+            'educationalSupport' => '',
+            'neeTypeDisease' => 'required_if:neeTypeAnotherDisease,true|string',
+            'functionalAnalysis' => '',
+        ]);
+
+        for ($i = 0; $i < $request->numberPhotos; $i++) {
+            $file = Input::file('photo' . $i);
+            $ext = $file->getClientOriginalExtension();
+            $uploadedFile = "MedicalReport - " . $dados['number'] . "-" . $i . '.' . $ext;
+            Storage::disk('public')->put('medicalReport/' . $uploadedFile, File::get($file));
+            $medicalFile = new MedicalFile();
+            $medicalFile->email = $user->email;
+            $medicalFile->fileName = $uploadedFile;
+            $medicalFile->save();
+        }
+
+        $user->phoneNumber = $dados['phoneNumber'];
+        $user->birthDate = (new Carbon($dados['birthDate']))->format('Y-m-d');
+        $user->residence = $dados['residence'];
+        $user->zipCode = $dados['zipCode'];
+        $user->area = $dados['area'];
+        $user->identificationDocument = $dados['identificationDocument'];
+        $user->identificationNumber = $dados['identificationNumber'];
+        $user->enruledYear = $dados['enruledYear'];
+        $user->curricularYear = $dados['curricularYear'];
+        $user->responsibleName = $dados['responsibleName'];
+        $user->responsibleEmail = $dados['responsibleEmail'];
+        $user->responsibleKin = $dados['responsibleKin'];
+        $user->responsiblePhone = $dados['responsiblePhone'];
+
+        if($dados['responsibleName']=='null' || $dados['responsibleName']=='undefined'){
+            $user->responsibleName = null;
+        }
+        if($dados['responsibleEmail']=='null' || $dados['responsibleEmail']=='undefined'){
+            $user->responsibleEmail = null;
+        }
+        if($dados['responsibleKin']=='null' || $dados['responsibleKin']=='undefined'){
+            $user->responsibleKin = null;
+        }
+        if($dados['responsiblePhone']=='null' || $dados['responsiblePhone']=='undefined'){
+            $user->responsiblePhone = null;
+        }
+
+        $user->emergencyName = $dados['emergencyName'];
+        $user->emergencyPhone = $dados['emergencyPhone'];
+        $user->emergencyEmail = $dados['emergencyEmail'];
+        $user->emergencyKin = $dados['emergencyKin'];
+        $user->gender = $dados['gender'];
+        $user->nif = $dados['nif'];
+        $user->niss = $dados['niss'];
+        $user->sns = $dados['sns'];
+        $user->educationalSupport = $dados['educationalSupport'];
+        $user->functionalAnalysis = $dados['functionalAnalysis'];
+        $user->enee = 'awaiting';
+        $user->dateEneeRequested = Carbon::now();
+        $user->typeApplication = "Normal";
+
+        $fileName="limite_horas.txt";
+
+        if(Storage::exists($fileName)){
+            $content = Storage::get($fileName);
+            $user->supportHours = (int) $content;
+        }else{
+             $user->supportHours = null;
+        }
+
+        if ($request->neeTypeSight  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Visão';
+            $nee->save();
+        }
+
+        if ($request->neeTypeEaring  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Audição';
+            $nee->save();
+        }
+
+        if ($request->neeTypeMotor  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Motora';
+            $nee->save();
+        }
+
+        if ($request->neeTypeAnotherDisease  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = "Outro";
+            $nee->otherName = $dados["neeTypeDisease"];
+            $nee->save();
+        }
+
+        if ($request->neeTypeCommunication  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Dislexia/Disortografia/Disgrafia';
+            $nee->save();
+        }
+
+        if ($request->neeTypeLearning  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Síndrome de Asperger/Deficit atenção';
+            $nee->save();
+        }
+
+        if ($request->neeTypeMental  == "true") {
+            $nee = new Nee();
+            $nee->studentEmail = $user->email;
+            $nee->name = 'Doenças do Foro Psicológico/neurológico/psiquiátrico';
+            $nee->save();
+        }
+
+        $user->save();
+
+        $history = new History();
+        $history->studentEmail = $user->email;
+        $history->description = "Atualizou as suas informações pessoais!";
+        $history->date = Carbon::now();
+        $history->save();
+
+        //Estudante a dizer que pedido foi enviado com sucesso
+        //Diretor e coordenador de curso recebem email a dizer que têm um novo pedido de estatuto na plataforma
+
+        //EmailController::sendEmail('O seu pedido para estatuto de estudante com necessidades educativas especias foi enviado com sucesso. Obrigado', $user->email, 'Candidatura a estatuto de ENEE', 'Candidatura a estatuto de ENEE');
+        //EmailController::sendEmailWithCC('Tem uma nova candidatura ao pedido de estatuto de estudante com necessidades educativas especiais, para tratar na sua área pessoal. Obrigado', 'email do diretor', 'Novo pedido de ENEE', 'Novo pedido de ENEE', ' email do coordenador');
+
+        return response()->json(new UserResource($user), 201);
+    }
 }

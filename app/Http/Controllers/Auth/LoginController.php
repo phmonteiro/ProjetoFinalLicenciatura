@@ -77,6 +77,13 @@ class LoginController extends Controller
                 return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
             } else {
 
+                //temporary function (add ENEs)
+                    if($user->nif==null){
+                        $redirecionar_formulario_pessoal=false;
+                    }else{
+                        $redirecionar_formulario_pessoal=true;
+                    }
+                //end temporary function
 
                 $users = \Adldap\Laravel\Facades\Adldap::search()->find($request->email);
                 $user->type = $users->title[0];
@@ -112,17 +119,10 @@ class LoginController extends Controller
                 $user->nif = $webServiceUserInfo[$fields[5]];
                 $user->area = $webServiceUserInfo[$fields[6]];
 
-//                 $user->residence = $webServiceUserInfo['DS_MORADA'];
-//                 $user->zipCode = $webServiceUserInfo['CD_POSTAL'].'-'.$webServiceUserInfo['CD_SUBPOS'];
-//                 $user->phoneNumber = $webServiceUserInfo['NR_TELEMOV'];
-//                 $user->birthDate = $webServiceUserInfo['DT_NASCIME']['date'];
-//                 $user->nif = $webServiceUserInfo['NR_CONTRIB'];
-//                 $user->area = $webServiceUserInfo['DISTRITO'];
-
-                    if($user->eneeExpirationDate!=null && Carbon::parse($user->eneeExpirationDate)->isPast()){
-                        $user->enee = "expired";
-                        $user->save();
-                    }
+                if($user->eneeExpirationDate!=null && Carbon::parse($user->eneeExpirationDate)->isPast()){
+                    $user->enee = "expired";
+                    $user->save();
+                }
 
                 $user->save();
 
@@ -162,7 +162,13 @@ class LoginController extends Controller
                 }
 
                 $token = $user->createToken(rand())->accessToken;
-                return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
+                if($redirecionar_formulario_pessoal){
+                    #temporary return: status code 201!!!
+                     return response()->json(['user' => Auth::user()], 201)->header('Authorization', $token);
+                }else{
+                    #main return
+                    return response()->json(['user' => Auth::user()], 200)->header('Authorization', $token);
+                }
             }
         } else {
             auth()->logout();

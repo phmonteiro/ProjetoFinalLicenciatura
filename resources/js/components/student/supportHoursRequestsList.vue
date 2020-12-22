@@ -155,7 +155,7 @@ export default {
           this.loading = false;
           console.log(response);
           this.requests = response.data;
-          pg.makePagination(response.data.data.meta, response.data.data.links);
+          pg.makePagination(response.data.meta, response.data.links);
         })
         .catch((error) => {
           console.log(error);

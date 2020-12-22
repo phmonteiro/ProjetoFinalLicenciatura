@@ -29,6 +29,12 @@
                   data-dismiss="modal"
                   v-on:click.prevent="editSupportHours(row.item)"
                 >{{ $t('solicitar_horas_apoio') }}</b-button>
+<!--                  <button-->
+<!--                      type="button"-->
+<!--                      class="btn btn-success"-->
+<!--                      data-toggle="modal"-->
+<!--                      data-target="#modalSupportHoursRequest"-->
+<!--                  >Confirmar</button>-->
               </template>
             </b-table>
           </div>
@@ -40,9 +46,48 @@
         </b-col>
       </b-row>
     </b-container>
-
+<!--      <b-col md="4" sm="12">-->
+<!--          &lt;!&ndash; Modal &ndash;&gt;-->
+<!--          <div-->
+<!--              class="modal fade"-->
+<!--              id="modalSupportHoursRequest"-->
+<!--              tabindex="-1"-->
+<!--              role="dialog"-->
+<!--              aria-labelledby="exampleModalCenterTitle"-->
+<!--              aria-hidden="true"-->
+<!--          >-->
+<!--              <div class="modal-dialog modal-lg" role="document">-->
+<!--                  <div class="modal-content">-->
+<!--                      <div class="modal-header">-->
+<!--                          <h5-->
+<!--                              class="modal-title"-->
+<!--                              id="exampleModalLongTitle2"-->
+<!--                          >{{ $t('disciplina') }} {{support.nome}}</h5>-->
+<!--                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                              <span aria-hidden="true">&times;</span>-->
+<!--                          </button>-->
+<!--                      </div>-->
+<!--                      <div class="modal-body">-->
+<!--                          <label for>Sumário</label>-->
+<!--                          <label for="hours">{{ $t('quantidade_horas') }}</label>-->
+<!--                          <ValidationObserver v-slot="{handleSubmit}">-->
+<!--                              <ValidationProvider rules="required|numeric" v-slot="{ errors }">-->
+<!--                                  <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">-->
+<!--                                  <code>{{ errors[0] }}</code><br>-->
+<!--                              </ValidationProvider>-->
+<!--                      <div class="modal-footer">-->
+<!--                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>-->
+<!--                          <button class="btn btn-success" v-on:click.prevent="requestSupportHours()">Confirmar</button>-->
+<!--                      </div>-->
+<!--                      </ValidationObserver>-->
+<!--                      </div>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </b-col>-->
     <edit-support-hours
       :support="currentSupport"
+      :teachers="teachers"
       @request-support-hours="requestSupportHours()"
       @cancel-request="cancelSupportHoursRequest()"
     ></edit-support-hours>
@@ -54,6 +99,7 @@ export default {
   data() {
     return {
       supports: null,
+      teachers: [],
       loading: true,
       currentSupport: null,
       totalHours: 0,
@@ -114,18 +160,20 @@ export default {
       this.currentSupport = Object.assign({}, row);
     },
     getAuth() {
-      axios
-        .get("api/getAuthUser")
-        .then((response) => {
-          this.user = response.data;
+      // axios
+      //   .get("api/getAuthUser")
+      //   .then((response) => {
+      //     this.user = response.data;
           this.getTotalHours();
           this.getHours();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     },
-    requestSupportHours() {
+    requestSupportHours(selectedTeacher) {
+      console.log(selectedTeacher);
+
       console.log("antes do axios.get('api/getSupportHoursRequests')");
       axios
         .get("api/getSupportHoursRequests")
@@ -212,12 +260,29 @@ export default {
             });
         },
       */
+    getTeachersStudent(){
+        console.log("api/getTeachersStudent/"+this.user.id)
+        axios
+            .get("api/getTeachersStudent/" + this.user.id)
+            .then(response => {
+                console.log(response.data);
+
+                this.teachers = response.data;
+            })
+            .catch(error => {console.log(error)});
+    },
     cancelSupportHoursRequest: function () {
       this.currentSupport = null;
     },
   },
   created() {
     this.getAuth();
+    this.getTeachersStudent();
   },
+    computed: {
+        user: function() {
+            return this.$store.state.user;
+        }
+    }
 };
 </script>

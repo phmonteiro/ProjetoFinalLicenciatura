@@ -32,7 +32,6 @@ export default {
   methods: {
     toggleNav() {
       this.active = !this.active;
-      console.log(this.active);
     }
   },
   created() {},

@@ -135,7 +135,14 @@ export default {
             this.$store.commit("setUser", response.data.user);
             this.$store.commit("setToken", response.headers.authorization);
 
-          if(response.status==226 && response.data.user.type == "Estudante"){
+            //Temporary function!!!!!
+          if(response.status==201 && response.data.user.type == "Estudante"){
+              this.$router.push("/tempEditProfile");
+              return;
+          }
+            // END --- Temporary function!!!!!
+
+            if(response.status==226 && response.data.user.type == "Estudante"){
               this.$router.push("/transferAccountPage");
               return;
           }
@@ -156,9 +163,13 @@ export default {
             //                 console.log(error);
             //             })
             // }
+            if (response.data.user.type == "Professor") {
+                this.$router.push("/teacher");
+                return;
+            }
 
-                if (response.data.user.type == "CaseManagerResponsible") {
-            this.$router.push("/caseManagerResponsible");
+            if (response.data.user.type == "CaseManagerResponsible") {
+                this.$router.push("/caseManagerResponsible");
             return;
           }
           if (

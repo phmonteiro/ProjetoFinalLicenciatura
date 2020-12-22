@@ -6,8 +6,22 @@
 
         <ValidationObserver v-slot="{handleSubmit}">
         <ValidationProvider rules="required|numeric" v-slot="{ errors }">
-            <input type="text" class="form-control" id="hours" name="hours" v-model="support.hours">
+            <input type="number" class="form-control" id="hours" name="hours" v-model="support.hours">
             <code>{{ errors[0] }}</code><br>
+        </ValidationProvider>
+        <ValidationProvider name="teachers" rules="required" v-slot="{ errors }">
+            <b-form-select
+                v-model="selected_teacher"
+                name="service"
+                class="mb-3"
+                aria-label="Escolher serviço"
+            >
+                <template slot="first">
+                    <option :value="null" disabled>-- {{ $t('selecionar_serviço') }} --</option>
+                </template>
+                <option v-for="teacher in teachers">{{ teacher.name }}</option>
+            </b-form-select>
+            <code>{{ errors[0] }}</code>
         </ValidationProvider>
 
       <button
@@ -31,9 +45,11 @@
 
 <script>
 export default {
-  props: ["support"],
+  props: ["support","teachers"],
   data: function() {
-    return {};
+    return {
+        selected_teacher: null
+    };
   },
   methods: {
     cancel() {
@@ -41,7 +57,7 @@ export default {
         this.$emit("cancel-request");
     },
     request: function() {
-      this.$emit("request-support-hours");
+      this.$emit("request-support-hours", this.selected_teacher);
     }
   }
 };

@@ -42,11 +42,13 @@ class CaseManagerController extends Controller
 
         $newSupportHoursRequest->status = "approved";
 
-        $subject = Subject::where('studentEmail', '=', $newSupportHoursRequest->student_email)->where('subjectCode', '=', $newSupportHoursRequest->subject_code)->first();
+        $newSupportHoursRequest->save();
 
-        $subject->hours += $newSupportHoursRequest->hours;
+//         $subject = Subject::where('studentEmail', '=', $newSupportHoursRequest->student_email)->where('subjectCode', '=', $newSupportHoursRequest->subject_code)->first();
 
-        $subject->save();
+//         $subject->hours += $newSupportHoursRequest->hours;
+
+//         $subject->save();
 
         return response()->json('success', 200);
 
